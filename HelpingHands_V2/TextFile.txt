@@ -1,0 +1,5 @@
+﻿Things to do:
+
+	Add Cookie information ("Firstname", "Lastname", "UserID")
+	Enable the destruction of cookies on the layout
+	Change dapper report in Id

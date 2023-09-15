@@ -43,7 +43,8 @@ namespace HelpingHands_V2.Controllers
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, model.Username),
-                        new Claim(ClaimTypes.Role, "A")
+                        new Claim(ClaimTypes.Role, "A"),
+                        new Claim(ClaimTypes.PrimarySid, model.UserId.ToString()),
 
                     };
 
@@ -58,7 +59,7 @@ namespace HelpingHands_V2.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Nurses");
+                        return RedirectToAction("Dashboard", "Nurses");
                     }
                     
                 }

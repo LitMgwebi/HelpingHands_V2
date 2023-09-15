@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1>Dashboard</h1>
+
+
+<h3>Available Nurses</h3>
+<ul>
+    @foreach (var item in ViewBag.AvailableNurses)
+    {
+        <li>
+            @item
+        </li>
+    }
+</ul>
+
+<h3>Care Visits</h3>
+<ul>
+    @foreach (var item in ViewBag.CareVisits)
+    {
+        <li>
+            @item
+        </li>
+    }
+</ul>
+
+<h3>Contract Status</h3>
+<ul>
+    @foreach (var item in ViewBag.ContractStatus)
+    {
+        <li>
+            @item
+        </li>
+    }
+</ul>
+
+<h3>Contract Visits</h3>
+<ul>
+    @foreach (var item in ViewBag.ContractVisits)
+    {
+        <li>
+            @item
+        </li>
+    }
+</ul>
+
+<h3>Patient Contract</h3>
+<ul>
+    @foreach (var item in ViewBag.PatientContract)
+    {
+        <li>
+            @item
+        </li>
+    }
+</ul>

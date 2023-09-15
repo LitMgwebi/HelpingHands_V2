@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<Grp0444HelpingHandsContext>(options =>
     options.UseSqlServer(connectionString));
+//builder.Services.AddSingleton<Grp0444HelpingHandsContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
@@ -19,6 +20,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LoginPath = "/account/login";
 });
 builder.Services.AddScoped<IAccount, AccountService>();
+builder.Services.AddScoped<INurse, NurseService>();
+builder.Services.AddScoped<IManager, ManagerService>();
 
 var app = builder.Build();
 

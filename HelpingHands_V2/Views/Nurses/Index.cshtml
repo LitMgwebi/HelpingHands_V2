@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HelpingHands_V2.Models.Nurse>
+﻿
 
 @{
     ViewData["Title"] = "Index";
@@ -12,29 +12,14 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Grade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Active)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NurseNavigation)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in ViewBag.Nurses) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Grade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NurseNavigation.UserId)
+                @item.Username
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.NurseId">Edit</a> |

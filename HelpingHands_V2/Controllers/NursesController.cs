@@ -6,23 +6,67 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HelpingHands_V2.Models;
+using HelpingHands_V2.Interfaces;
 
 namespace HelpingHands_V2.Controllers
 {
     public class NursesController : Controller
     {
         private readonly Grp0444HelpingHandsContext _context;
+        private readonly INurse _nurse;
 
-        public NursesController(Grp0444HelpingHandsContext context)
+        public NursesController(Grp0444HelpingHandsContext context, INurse nurse)
         {
+            _nurse = nurse;
             _context = context;
         }
+
+        public IActionResult Dashboard(int id)
+        {
+            try
+            {
+                var assignedConditions = _nurse.NurseAssignedConditions(id);
+                var assignedContracts = _nurse.NurseAssignedContracts(id);
+                var contractType = _nurse.NurseContractType(id, "A");
+                var contractVisits = _nurse.NurseContractVisits(id);
+                var visitRange = _nurse.NurseVisitRange(id, new DateTime(2023, 4, 01), new DateTime(2023, 8, 01));
+
+                if (assignedConditions == null || assignedContracts == null || contractType == null || contractVisits == null || visitRange == null)
+                {
+                    return NotFound();
+                }
+
+                ViewBag.AssignedConditions = assignedConditions;
+                ViewBag.AssignedContracts = assignedContracts;
+                ViewBag.ContractType = contractType;
+                ViewBag.ContractVisits = contractVisits;
+                ViewBag.VisitRange = visitRange;
+                return View();
+                //return new JsonResult(new { content = assignedConditions });
+            } catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
 
         // GET: Nurses
         public async Task<IActionResult> Index()
         {
-            var grp0444HelpingHandsContext = _context.Nurses.Include(n => n.NurseNavigation);
-            return View(await grp0444HelpingHandsContext.ToListAsync());
+            try
+            {
+                var nurses =  _nurse.GetNurses();
+                if (nurses == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.Nurses = nurses;
+                return View(nurses);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         // GET: Nurses/Details/5
