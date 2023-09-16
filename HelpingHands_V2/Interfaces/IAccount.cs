@@ -4,6 +4,6 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface IAccount
     {
-        public Task<IEnumerable<EndUsers>> GetUser(string username);
+        public EndUsers GetUser(string username);
     }
 }

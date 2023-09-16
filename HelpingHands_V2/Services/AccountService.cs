@@ -1,22 +1,36 @@
-﻿using HelpingHands_V2.Interfaces;
+﻿using Dapper;
+using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Data.Entity;
 
 namespace HelpingHands_V2.Services
 {
     public class AccountService: IAccount
     {
-        private readonly Grp0444HelpingHandsContext _context;
-        public AccountService(Grp0444HelpingHandsContext context) => _context = context;
-
-        public async Task<IEnumerable<EndUsers>> GetUser(string username)
+        private readonly Grp0444HelpingHandsContext _db;
+        private readonly IConfiguration _config;
+        public AccountService(Grp0444HelpingHandsContext db, IConfiguration config)
         {
-            var param = new SqlParameter("@Username", username);
+            _db = db;
+            _config = config;
+        }
 
-            var user = await Task.Run(() => _context.EndUsers.FromSqlRaw(@"exec GetUserByUsername @Username", param).ToListAsync());
 
-            return user;
+        public EndUsers GetUser(string username)
+        {
+            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                var sql = "GetUserByUsername";
+                DynamicParameters param = new DynamicParameters();
+                param.Add("Username", username);
+
+                var user = conn.QueryFirstOrDefault<EndUsers>(sql, param, commandType: CommandType.StoredProcedure);
+
+                return user;
+            }
             
         }
     }

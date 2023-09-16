@@ -30,43 +30,56 @@ namespace HelpingHands_V2.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model, string? returnUrl = null)
         {
-            if (ModelState.IsValid)
+            try
             {
-
-                if (string.IsNullOrEmpty(model.Username) && string.IsNullOrEmpty(model.Password))
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("", "Username or Password were no filled in.");
-                }
 
-                if (await ValidateUser(model))
-                {
-                    var claims = new List<Claim>
+                    if (string.IsNullOrEmpty(model.Username) && string.IsNullOrEmpty(model.Password))
                     {
-                        new Claim(ClaimTypes.Name, model.Username),
-                        new Claim(ClaimTypes.Role, "A"),
+                        ModelState.AddModelError("", "Username or Password were not filled in.");
+                    }
+
+                    if (ValidateUser(model))
+                    {
+                        var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, model.Username!),
+                        new Claim(ClaimTypes.Role, model.UserType!),
                         new Claim(ClaimTypes.PrimarySid, model.UserId.ToString()),
 
                     };
 
-                    var claimsIdentity = new ClaimsIdentity(
-                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var claimsIdentity = new ClaimsIdentity(
+                        claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    await HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+                        await HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
 
-                    if (Url.IsLocalUrl(returnUrl))
-                    {
-                        return Redirect("/");
+                        if (Url.IsLocalUrl(returnUrl))
+                        {
+                            return Redirect("/");
+                        }
+                        else
+                        {
+                            if (model.UserType == "A")
+                                return RedirectToAction("Dashboard", "Admin");
+                            else if (model.UserType == "N")
+                                return RedirectToAction("Dashboard", "Nurse", new { id = model.UserId });
+                            else if (model.UserType == "P")
+                                return RedirectToAction("Dashboard", "Patient", new { id = model.UserId });
+                            else
+                                return RedirectToAction("Dashboard", "Manager");
+                        }
+
                     }
                     else
                     {
-                        return RedirectToAction("Dashboard", "Nurses");
+                        ModelState.AddModelError("", "Username or Password is incorrect");
                     }
-                    
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Username or Password is incorrect");
-                }
+            } catch(Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
             }
             return View();
         }
@@ -77,12 +90,18 @@ namespace HelpingHands_V2.Controllers
             return Redirect("/");
         }
 
-        public async Task<bool> ValidateUser(LoginModel model)
+        public bool ValidateUser(LoginModel model)
         {
-            var users =  await _account.GetUser(model.Username);
-            var user = users.FirstOrDefault();
+            var user =  _account.GetUser(model.Username!);
 
-            if(user?.UserId > 0)
+            model.DateOfBirth = user.DateOfBirth;
+            model.Firstname = user.Firstname;
+            model.Lastname = user.Lastname;
+            model.Email = user.Email;
+            model.UserId = user.UserId;
+            model.UserType = user.UserType;
+
+            if (user?.UserId > 0)
             {
                 if(user.Username == model.Username && user.Password == model.Password)
                 {

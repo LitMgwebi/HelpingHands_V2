@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1QwrFZpn5tpfJN/sJLf8bWhMn7sgAKTCWyNcfYp4NSc=",
+  "Hash": "E8s4u3sIAF4u9eLYuXwr1UegNlXIKZCONWOY/q+hBE4=",
   "Source": "HelpingHands_V2",
   "BasePath": "_content/HelpingHands_V2",
   "Mode": "Default",
@@ -1069,6 +1069,57 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\mern.png",
+      "SourceId": "HelpingHands_V2",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\",
+      "BasePath": "_content/HelpingHands_V2",
+      "RelativePath": "Media/mern.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Media\\mern.png"
+    },
+    {
+      "Identity": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\python.jpg",
+      "SourceId": "HelpingHands_V2",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\",
+      "BasePath": "_content/HelpingHands_V2",
+      "RelativePath": "Media/python.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Media\\python.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\react.png",
+      "SourceId": "HelpingHands_V2",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\",
+      "BasePath": "_content/HelpingHands_V2",
+      "RelativePath": "Media/react.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Media\\react.png"
     }
   ]
 }

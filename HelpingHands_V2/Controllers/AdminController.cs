@@ -3,31 +3,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
 {
-    public class PatientController : Controller
+    public class AdminController : Controller
     {
-        public IActionResult Dashboard()
+        public ActionResult Dashboard()
         {
             return View();
         }
-        // GET: PatientController
+
+        // GET: AdminController
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: PatientController/Details/5
+        // GET: AdminController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: PatientController/Create
+        // GET: AdminController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: PatientController/Create
+        // POST: AdminController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -42,13 +43,13 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        // GET: PatientController/Edit/5
+        // GET: AdminController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: PatientController/Edit/5
+        // POST: AdminController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -63,13 +64,13 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        // GET: PatientController/Delete/5
+        // GET: AdminController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: PatientController/Delete/5
+        // POST: AdminController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
