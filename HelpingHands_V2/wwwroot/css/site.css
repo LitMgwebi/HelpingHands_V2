@@ -8,6 +8,10 @@ html {
   }
 }
 
+nav > li:hover{
+    color: red;
+}
+
 html {
   position: relative;
   min-height: 100%;
@@ -15,4 +19,27 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+
+.h-custom {
+    height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+    .h-custom {
+        height: 100%;
+    }
+}
+
+.card {
+    width: 28rem;
+    margin: 1.5rem;
 }

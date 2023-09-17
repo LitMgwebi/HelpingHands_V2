@@ -1,11 +1,24 @@
 ﻿
 @{
     ViewData["Title"] = "Nurse Dashboard";
+    var claimsIdentity = User.Identity as System.Security.Claims.ClaimsIdentity;
+
+        if (claimsIdentity != null)
+        {
+            var c = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+
+            if (c != null)
+            {
+             // <p>
+             //     @c.Type.ToString(); 
+             //     @c.Value.ToString();
+             // </p>   
+            }
+        }
 }
 
-<h1>Nurse Dashboard</h1>
+<h1>Dashboard</h1>
 
-<h3>Assigned Conditions</h3>
 <ul>
     @foreach (var item in ViewBag.AssignedConditions)
     {

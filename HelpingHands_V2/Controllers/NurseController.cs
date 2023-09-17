@@ -10,26 +10,28 @@ using HelpingHands_V2.Interfaces;
 
 namespace HelpingHands_V2.Controllers
 {
-    public class NursesController : Controller
+    public class NurseController : Controller
     {
         private readonly Grp0444HelpingHandsContext _context;
         private readonly INurse _nurse;
+        private readonly IReport _report;
 
-        public NursesController(Grp0444HelpingHandsContext context, INurse nurse)
+        public NurseController(Grp0444HelpingHandsContext context, INurse nurse, IReport report)
         {
             _nurse = nurse;
             _context = context;
+            _report = report;
         }
 
         public IActionResult Dashboard(int id)
         {
             try
             {
-                var assignedConditions = _nurse.NurseAssignedConditions(id);
-                var assignedContracts = _nurse.NurseAssignedContracts(id);
-                var contractType = _nurse.NurseContractType(id, "A");
-                var contractVisits = _nurse.NurseContractVisits(id);
-                var visitRange = _nurse.NurseVisitRange(id, new DateTime(2023, 4, 01), new DateTime(2023, 8, 01));
+                var assignedConditions = _report.NurseAssignedConditions(id);
+                var assignedContracts = _report.NurseAssignedContracts(id);
+                var contractType = _report.NurseContractType(id, "A");
+                var contractVisits = _report.NurseContractVisits(id);
+                var visitRange = _report.NurseVisitRange(id, new DateTime(2023, 4, 01), new DateTime(2023, 8, 01));
 
                 if (assignedConditions == null || assignedContracts == null || contractType == null || contractVisits == null || visitRange == null)
                 {

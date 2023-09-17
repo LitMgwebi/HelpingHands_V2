@@ -20,6 +20,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LoginPath = "/account/login";
 });
 builder.Services.AddScoped<IAccount, AccountService>();
+builder.Services.AddScoped<IReport, ReportService>();
 builder.Services.AddScoped<INurse, NurseService>();
 builder.Services.AddScoped<IManager, ManagerService>();
 

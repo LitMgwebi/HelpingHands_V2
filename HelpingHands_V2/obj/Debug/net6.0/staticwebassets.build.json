@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "E8s4u3sIAF4u9eLYuXwr1UegNlXIKZCONWOY/q+hBE4=",
+  "Hash": "Lp08DAUQOJOHZQl61/IE8HhaiZJY2IGFejwCHhki8Kw=",
   "Source": "HelpingHands_V2",
   "BasePath": "_content/HelpingHands_V2",
   "Mode": "Default",
@@ -1069,6 +1069,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\HelpingHands.png",
+      "SourceId": "HelpingHands_V2",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\",
+      "BasePath": "_content/HelpingHands_V2",
+      "RelativePath": "Media/HelpingHands.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Media\\HelpingHands.png"
     },
     {
       "Identity": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\mern.png",

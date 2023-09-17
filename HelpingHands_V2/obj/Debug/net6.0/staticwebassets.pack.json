@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\HelpingHands_V2.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\HelpingHands.png",
+      "PackagePath": "staticwebassets\\Media\\HelpingHands.png"
+    },
+    {
       "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\mern.png",
       "PackagePath": "staticwebassets\\Media\\mern.png"
     },

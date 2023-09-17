@@ -94,17 +94,17 @@ namespace HelpingHands_V2.Controllers
         {
             var user =  _account.GetUser(model.Username!);
 
-            model.DateOfBirth = user.DateOfBirth;
-            model.Firstname = user.Firstname;
-            model.Lastname = user.Lastname;
-            model.Email = user.Email;
-            model.UserId = user.UserId;
-            model.UserType = user.UserType;
-
             if (user?.UserId > 0)
             {
                 if(user.Username == model.Username && user.Password == model.Password)
                 {
+
+                    model.DateOfBirth = user.DateOfBirth;
+                    model.Firstname = user.Firstname;
+                    model.Lastname = user.Lastname;
+                    model.Email = user.Email;
+                    model.UserId = user.UserId;
+                    model.UserType = user.UserType;
                     return true;
                 }
             }

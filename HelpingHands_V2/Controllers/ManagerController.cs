@@ -6,19 +6,19 @@ namespace HelpingHands_V2.Controllers
 {
     public class ManagerController : Controller
     {
-        private readonly IManager _manager;
+        private readonly IReport _report;
 
-        public ManagerController(IManager manager) => _manager = manager;
+        public ManagerController(IReport report) => _report = report;
 
         public IActionResult Dashboard(int id)
         {
             try
             {
-                var availableNurses = _manager.AvailableNurses(id);
-                var careVisits = _manager.CareVisits(new DateTime(2023, 4, 01), new DateTime(2023, 8, 01));
-                var contractStatus = _manager.ContractStatus("N");
-                var contractVisits = _manager.ContractVisits(4);
-                var patientContract = _manager.PatientContract(id);
+                var availableNurses = _report.AvailableNurses(id);
+                var careVisits = _report.CareVisits(new DateTime(2023, 4, 01), new DateTime(2023, 8, 01));
+                var contractStatus = _report.ContractStatus("N");
+                var contractVisits = _report.ContractVisits(4);
+                var patientContract = _report.PatientContract(id);
                 
                 if(availableNurses == null || careVisits == null || contractStatus == null || contractVisits == null || patientContract == null)
                 {
