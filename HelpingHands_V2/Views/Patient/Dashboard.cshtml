@@ -1,7 +1,114 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Patient Dashboard";
 }
 
-<h1>Patient Dashboard</h1>
+<h1 class="display-1 text-center">Hello @User.FindFirst("FullName")!.Value</h1>
 
+
+<hr />
+<div class="row" style="height: 95vh">
+    <aside class="nav flex-column col-3" style="overflow: scroll; height: 80vh; border-radius:2rem;">
+        <section>
+            <div class="nav-item d-flex justify-content-center">
+                <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
+                    <img src="/Media/plus.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
+                    <div class="card-img-overlay">
+                        <h5 class="card-title" >Create Contract</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item d-flex justify-content-center">
+                <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
+                    <img src="/Media/contract.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
+                    <div class="card-img-overlay">
+                        <h5 class="card-title" style="color:black">Past Contracts</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item d-flex justify-content-center">
+                <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
+                    <img src="/Media/plus.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Add New Condition</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item d-flex justify-content-center">
+                <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
+                    <img src="/Media/condition.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%; object-fit: cover;" />
+                    <div class="card-img-overlay">
+                        <h5 class="card-title" style="color:black">View Chronic Conditions</h5>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </aside>
+    <div class="col-8 text-center card" style=" height: 80vh; border-radius:2rem;">
+        <div class="card-header">Latest Contract</div>
+        <div class="card-body" >
+            <section class="row mx-3">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Contract Number</td>
+                            <td>@ViewBag.ContractId</td>
+                        </tr>
+                        <tr>
+                            <td>Nurse</td>
+                            <td>@ViewBag.Firstname @ViewBag.Lastname</td>
+                        </tr>
+                        <tr>
+                            <td>Wound</td>
+                            <td>@ViewBag.WoundName</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section style="border: 2rem black" >
+                <swiper-container class="mySwiper d-flex justify-content-center; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
+                    @foreach (var item in ViewBag.ContractVisits)
+                    {
+                        <swiper-slide>
+                            <div class=" mb-3" style="height:90%;width: 80%;margin: 2rem auto; padding: 2rem 4rem;">
+                                @if (item.Arrival == null)
+                                {
+                                    <div class="row row-striped">
+                                        <div class="col-2 text-right">
+                                            <h1 class="display-4"><span class="badge badge-secondary"></span>@item.VisitDate.Day</h1>
+                                            <h2>@item.VisitDate.Month</h2>
+                                        </div>
+                                        <div class="col-10">
+                                            <h3 class="text-uppercase"><strong>Next Care Visit scheduled for:</strong></h3>
+                                            <ul class="list-inline">
+                                                <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i>@item.VisitDate.ToString("dddd")</li>
+                                            </ul>
+                                            <p>Nurse will arrive at approximetly  @item.ApproxTime</p>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row row-striped">
+                                        <div class="col-2 text-right">
+                                            <h1 class="display-4"><span class="badge badge-secondary"></span>@item.VisitDate.Day</h1>
+                                            <h2>@item.VisitDate.Month</h2>
+                                        </div>
+                                        <div class="col-10">
+                                            <h3 class="text-uppercase"><strong>Care Visit:</strong></h3>
+                                            <ul class="list-inline">
+                                                <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i>@item.VisitDate.ToString("dddd")</li>
+                                                <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i>@item.Arrival -- @item.Departure</li>
+                                            </ul>
+                                            <p>@item.WoundCondition</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                        </swiper-slide>
+                    }
+                </swiper-container>
+            </section>
+        </div>
+    </div>
+</div>

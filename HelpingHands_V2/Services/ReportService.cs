@@ -31,7 +31,6 @@ namespace HelpingHands_V2.Services
                 return result;
             }
         }
-
         public List<dynamic> NurseAssignedContracts(int NurseId)
         {
             using(var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
@@ -43,7 +42,6 @@ namespace HelpingHands_V2.Services
                 return result;
             }
         }
-
         public List<dynamic> NurseContractType(int NurseId, string status)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
@@ -56,7 +54,6 @@ namespace HelpingHands_V2.Services
                 return result;
             }
         }
-
         public List<dynamic> NurseContractVisits(int ContractId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
@@ -68,7 +65,6 @@ namespace HelpingHands_V2.Services
                 return result;
             }
         }
-
         public List<dynamic> NurseVisitRange(int NurseId, DateTime startDate, DateTime endDate)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))

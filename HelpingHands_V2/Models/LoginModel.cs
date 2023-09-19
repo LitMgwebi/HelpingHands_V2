@@ -24,5 +24,14 @@ namespace HelpingHands_V2.Models
         public DateTime DateOfBirth { get; set; }
 
         public string? Email { get; set; }
+
+        [Display(Name = "Full Name")]
+        public string FullName
+        {
+            get
+            {
+                return Firstname + " " + Lastname;
+            }
+        }
     }
 }

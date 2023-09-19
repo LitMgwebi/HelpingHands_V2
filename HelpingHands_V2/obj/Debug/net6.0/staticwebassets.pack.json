@@ -9,8 +9,36 @@
       "PackagePath": "staticwebassets\\Media\\HelpingHands.png"
     },
     {
+      "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\background.webp",
+      "PackagePath": "staticwebassets\\Media\\background.webp"
+    },
+    {
+      "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\businessInfo.jpg",
+      "PackagePath": "staticwebassets\\Media\\businessInfo.jpg"
+    },
+    {
+      "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\city.jpg",
+      "PackagePath": "staticwebassets\\Media\\city.jpg"
+    },
+    {
+      "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\condition.png",
+      "PackagePath": "staticwebassets\\Media\\condition.png"
+    },
+    {
+      "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\contract.png",
+      "PackagePath": "staticwebassets\\Media\\contract.png"
+    },
+    {
+      "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\management.webp",
+      "PackagePath": "staticwebassets\\Media\\management.webp"
+    },
+    {
       "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\mern.png",
       "PackagePath": "staticwebassets\\Media\\mern.png"
+    },
+    {
+      "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\plus.png",
+      "PackagePath": "staticwebassets\\Media\\plus.png"
     },
     {
       "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\python.jpg",
@@ -19,6 +47,10 @@
     {
       "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\react.png",
       "PackagePath": "staticwebassets\\Media\\react.png"
+    },
+    {
+      "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\suburb.jpg",
+      "PackagePath": "staticwebassets\\Media\\suburb.jpg"
     },
     {
       "Id": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\css\\site.css",

@@ -45,8 +45,9 @@ namespace HelpingHands_V2.Controllers
                         var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, model.Username!),
+                        new Claim("FullName", model.FullName),
                         new Claim(ClaimTypes.Role, model.UserType!),
-                        new Claim(ClaimTypes.PrimarySid, model.UserId.ToString()),
+                        new Claim("UserId", model.UserId.ToString()),
 
                     };
 
@@ -54,6 +55,7 @@ namespace HelpingHands_V2.Controllers
                         claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                         await HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+                        HttpContext.User.AddIdentity(claimsIdentity);
 
                         if (Url.IsLocalUrl(returnUrl))
                         {

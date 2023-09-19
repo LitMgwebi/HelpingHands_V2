@@ -1,12 +1,30 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HelpingHands_V2.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
 {
     public class PatientController : Controller
     {
-        public IActionResult Dashboard()
+        private readonly IReport _report;
+        public PatientController(IReport report)
         {
+            _report = report;
+        }
+
+        public IActionResult Dashboard(int id)
+        {
+            var patientContracts = _report.PatientContract(id);
+            var patientContract = patientContracts.First();
+            IEnumerable<dynamic>? contractVisits = _report.ContractVisits(patientContract.ContractId);
+
+            ViewBag.ContractId = patientContract.ContractId;
+            ViewBag.WoundName = patientContract.WoundName;
+            ViewBag.Firstname = patientContract.Firstname;
+            ViewBag.Lastname = patientContract.Lastname;
+
+            //return new JsonResult(new { patientContract = patientContract });
+            ViewBag.ContractVisits = contractVisits.Reverse();
             return View();
         }
         // GET: PatientController

@@ -1,3 +1,10 @@
+:root {
+    --darkred: #82393d;
+    --yellow: #fccf0e;
+    --orange: #df7625;
+    --paleRed: #c24147;
+}
+
 html {
   font-size: 14px;
 }
@@ -8,17 +15,23 @@ html {
   }
 }
 
+nav {
+    background-image: linear-gradient(to bottom right, var(--paleRed), var(--orange))
+}
+
 nav > li:hover{
     color: red;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+/*    background-image: url("../Media/background.webp");
+    background-color: red;
+    background-blend-mode: screen;*/
 }
 
 .divider:after,
@@ -42,4 +55,9 @@ body {
 .card {
     width: 28rem;
     margin: 1.5rem;
+}
+
+footer {
+    margin-top: 5rem;
+    background-image: linear-gradient(to top left, var(--paleRed), var(--orange))
 }
