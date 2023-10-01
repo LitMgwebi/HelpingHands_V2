@@ -11,11 +11,9 @@ namespace HelpingHands_V2.Services
 {
     public class ReportService: IReport
     {
-        private readonly Grp0444HelpingHandsContext _db;
         private readonly IConfiguration _config;
-        public ReportService(Grp0444HelpingHandsContext db, IConfiguration config) 
+        public ReportService(IConfiguration config) 
         {
-            _db = db;
             _config = config;
         }
 

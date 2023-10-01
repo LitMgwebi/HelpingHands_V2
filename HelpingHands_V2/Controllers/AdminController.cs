@@ -1,13 +1,52 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HelpingHands_V2.Interfaces;
+using HelpingHands_V2.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly Grp0444HelpingHandsContext _context;
+        private readonly INurse _nurse;
+        private readonly IManager _manager;
+        private readonly ISuburb _suburb;
+        private readonly ICity _city;
+
+        public AdminController(Grp0444HelpingHandsContext context, INurse nurse, IManager manager, ISuburb suburb, ICity city)
+        {
+            _context = context;
+            _nurse = nurse;
+            _manager = manager;
+            _suburb = suburb;
+            _city = city;
+        }
+        //[Authorize("A")]
         public ActionResult Dashboard()
         {
-            return View();
+            try
+            {
+                var nurses = _nurse.GetNurses();
+                var managers = _manager.GetManagers();
+                var cities = _city.GetCities();
+                var suburbs = _suburb.GetSuburbs();
+
+                if(nurses == null || managers == null || cities == null || suburbs == null)
+                {
+                    return NotFound();
+                }
+
+                ViewBag.Nurses = nurses;
+                ViewBag.Managers = managers;
+                ViewBag.Cities = cities;
+                ViewBag.Suburbs = suburbs;
+
+                return View();
+            } catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
         }
 
         // GET: AdminController

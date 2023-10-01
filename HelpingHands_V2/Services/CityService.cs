@@ -1,24 +1,20 @@
 ﻿using Dapper;
 using HelpingHands_V2.Interfaces;
-using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace HelpingHands_V2.Services
 {
-    public class NurseService: INurse
+    public class CityService: ICity
     {
         private readonly IConfiguration _config;
-        public NurseService(IConfiguration config)
-        {
-            _config = config;
-        }
-        public List<dynamic> GetNurses()
+        public CityService(IConfiguration config ) => _config = config;
+
+        public List<dynamic> GetCities()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
-
-                var sql = "CRUDNurse";
+                var sql = "CRUDCity";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
                 var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();

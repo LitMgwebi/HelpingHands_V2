@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "CjUk6K38ZQCfvLknYemlTJb7d8xXHS/dmjlZMLDYNms=",
+  "Hash": "ZLgFHbIATTo2ee3JSHsifM6sHwDF5OQ/QphfxJl77Ik=",
   "Source": "HelpingHands_V2",
   "BasePath": "_content/HelpingHands_V2",
   "Mode": "Default",
@@ -1103,6 +1103,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Media\\businessInfo.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\chronicConditions.png",
+      "SourceId": "HelpingHands_V2",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\",
+      "BasePath": "_content/HelpingHands_V2",
+      "RelativePath": "Media/chronicConditions.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Media\\chronicConditions.png"
     },
     {
       "Identity": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\city.jpg",

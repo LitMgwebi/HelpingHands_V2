@@ -23,6 +23,8 @@ builder.Services.AddScoped<IAccount, AccountService>();
 builder.Services.AddScoped<IReport, ReportService>();
 builder.Services.AddScoped<INurse, NurseService>();
 builder.Services.AddScoped<IManager, ManagerService>();
+builder.Services.AddScoped<ICity, CityService>();
+builder.Services.AddScoped<ISuburb, SuburbService>();
 
 var app = builder.Build();
 

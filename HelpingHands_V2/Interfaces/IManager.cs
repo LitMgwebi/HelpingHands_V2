@@ -2,7 +2,6 @@
 {
     public interface IManager
     {
-        
-
+        public List<dynamic> GetManagers();
     }
 }

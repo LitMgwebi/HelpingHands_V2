@@ -16,7 +16,7 @@ html {
 }
 
 nav {
-    background-image: linear-gradient(to bottom right, var(--paleRed), var(--orange))
+    /*background-image: linear-gradient(to bottom right, var(--paleRed), var(--orange))*/
 }
 
 nav > li:hover{
@@ -28,11 +28,6 @@ html {
     min-height: 100%;
 }
 
-body {
-/*    background-image: url("../Media/background.webp");
-    background-color: red;
-    background-blend-mode: screen;*/
-}
 
 .divider:after,
 .divider:before {

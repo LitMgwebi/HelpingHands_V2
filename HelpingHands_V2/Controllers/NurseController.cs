@@ -27,22 +27,14 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                var assignedConditions = _report.NurseAssignedConditions(id);
                 var assignedContracts = _report.NurseAssignedContracts(id);
-                var contractType = _report.NurseContractType(id, "A");
-                var contractVisits = _report.NurseContractVisits(id);
-                var visitRange = _report.NurseVisitRange(id, new DateTime(2023, 4, 01), new DateTime(2023, 8, 01));
+                var newContracts = _report.ContractStatus("N");
+                var contract = assignedContracts.First();
+                IEnumerable<dynamic>? contractVisits = _report.ContractVisits(contract.ContractId);
 
-                if (assignedConditions == null || assignedContracts == null || contractType == null || contractVisits == null || visitRange == null)
-                {
-                    return NotFound();
-                }
-
-                ViewBag.AssignedConditions = assignedConditions;
-                ViewBag.AssignedContracts = assignedContracts;
-                ViewBag.ContractType = contractType;
-                ViewBag.ContractVisits = contractVisits;
-                ViewBag.VisitRange = visitRange;
+                ViewBag.Contract = contract;
+                ViewBag.ContractVisits = contractVisits.Reverse();
+                ViewBag.NewContracts = newContracts;
                 return View();
                 //return new JsonResult(new { content = assignedConditions });
             } catch (Exception ex)
