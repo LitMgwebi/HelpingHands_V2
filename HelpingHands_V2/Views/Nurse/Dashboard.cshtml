@@ -35,7 +35,7 @@
             </div>
         </section>
     </aside>
-    <div class="col-8 text-center" style="height:100vh;">
+    <div class="col-8 text-center" style="height:auto;">
         <div class="row">
             <div class="card" style=" height: 50vh; border-radius:2rem;">
                 <div class="card-header">Latest Contract</div>
@@ -65,7 +65,7 @@
                                             <div class="row row-striped">
                                                 <div class="col-2 text-right">
                                                     <h1 class="display-4"><span class="badge badge-secondary"></span>@item.VisitDate.Day</h1>
-                                                    <h2>@item.VisitDate.Month</h2>
+                                                    <h2>@item.VisitDate.ToString("MMM")</h2>
                                                 </div>
                                                 <div class="col-10">
                                                     <h3 class="text-uppercase"><strong>Next Care Visit scheduled for:</strong></h3>
@@ -81,7 +81,7 @@
                                             <div class="row row-striped">
                                                 <div class="col-2 text-right">
                                                     <h1 class="display-4"><span class="badge badge-secondary"></span>@item.VisitDate.Day</h1>
-                                                    <h2>@item.VisitDate.Month</h2>
+                                                    <h2>@item.VisitDate.ToString("MMM")</h2>
                                                 </div>
                                                 <div class="col-10">
                                                     <h3 class="text-uppercase"><strong>Visit Occured:</strong></h3>
@@ -101,7 +101,7 @@
                     </section>
                 </div>
             </div>
-            <div class="card" style=" height: 30vh; border-radius:2rem;">
+            <div class="card" style=" height: 35vh; border-radius:2rem;">
                 <div class="card-header">Unassigned Contracts</div>
                 <div class="card-body">
                     <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
@@ -111,11 +111,12 @@
                                 <div class=" mb-3" style="width: 80%;margin: 2rem auto;">
                                         <div class="row row-striped">
                                             <div class="col-2 text-right">
+
                                             <h1 class="display-4"><span class="badge badge-secondary"></span>@item.ContractDate.Day</h1>
-                                            <h2>@item.ContractDate.Month.ToString( "MMMM" ) </h2>
+                                            <h2>@item.ContractDate.ToString("MMM") </h2>
                                             </div>
                                             <div class="col-10">
-                                            <h3 class="text-uppercase"><strong>@item.FirstName @item.Firstname @item.Lastname</strong></h3>
+                                            <h3 class="text-uppercase"><strong>@item.PatientFirstname @item.PatientLastname</strong></h3>
                                                 <ul class="list-inline">
                                                     <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i>@item.ContractDate.ToString("dddd")</li>
                                                     <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i>@item.WoundName -- @item.SuburbName</li>

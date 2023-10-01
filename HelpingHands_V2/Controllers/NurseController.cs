@@ -29,14 +29,13 @@ namespace HelpingHands_V2.Controllers
             {
                 var assignedContracts = _report.NurseAssignedContracts(id);
                 var newContracts = _report.ContractStatus("N");
-                var contract = assignedContracts.First();
-                IEnumerable<dynamic>? contractVisits = _report.ContractVisits(contract.ContractId);
+                IEnumerable<dynamic>? contractVisits = _report.ContractVisits(assignedContracts[0].ContractId);
 
-                ViewBag.Contract = contract;
+                ViewBag.Contract = assignedContracts[0];
                 ViewBag.ContractVisits = contractVisits.Reverse();
                 ViewBag.NewContracts = newContracts;
+
                 return View();
-                //return new JsonResult(new { content = assignedConditions });
             } catch (Exception ex)
             {
                 return new JsonResult(new { error = ex.Message });
@@ -45,7 +44,7 @@ namespace HelpingHands_V2.Controllers
 
 
         // GET: Nurses
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             try
             {
