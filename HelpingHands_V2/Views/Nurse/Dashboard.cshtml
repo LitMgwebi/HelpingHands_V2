@@ -3,11 +3,11 @@
     ViewData["Title"] = "Nurse Dashboard";
  }
 
-<h1>Hello @User.FindFirst("FullName")!.Value</h1>
+<h1 class="display-1 text-center">Hello @User.FindFirst("FullName")!.Value</h1>
 
 <hr />
-<div class="row" style="height: 95vh">
-    <aside class="nav flex-column col-3" style="overflow: scroll; height: 80vh; border-radius:2rem;">
+<div class="row" style="height: auto">
+    <aside class="nav flex-column col-3" style="overflow: scroll; height: 85vh; border-radius:2rem;">
         <section>
             <div class="nav-item d-flex justify-content-center">
                 <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
@@ -36,15 +36,15 @@
         </section>
     </aside>
     <div class="col-8 text-center" style="height:auto;">
-        <div class="row">
-            <div class="card" style=" height: 50vh; border-radius:2rem;">
+        <section class="row">
+            <div class="card" style=" height: 55vh; border-radius:2rem;">
                 <div class="card-header">Latest Contract</div>
                 <div class="card-body">
                     <section class="row mx-3">
                         <table class="table">
                             <tbody>
                                 <tr>
-                                    <td>Nurse</td>
+                                    <td>Patient</td>
                                     <td>@ViewBag.Contract.Firstname @ViewBag.Contract.Lastname</td>
                                 </tr>
                                 <tr>
@@ -53,6 +53,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <button>
+                            View More
+                        </button>
                     </section>
                     <section style="">
                         <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
@@ -68,7 +71,7 @@
                                                     <h2>@item.VisitDate.ToString("MMM")</h2>
                                                 </div>
                                                 <div class="col-10">
-                                                    <h3 class="text-uppercase"><strong>Next Care Visit scheduled for:</strong></h3>
+                                                    <h4 class="text-uppercase"><strong>Next Care Visit scheduled for:</strong></h4>
                                                     <ul class="list-inline">
                                                         <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i>@item.VisitDate.ToString("dddd")</li>
                                                     </ul>
@@ -84,7 +87,7 @@
                                                     <h2>@item.VisitDate.ToString("MMM")</h2>
                                                 </div>
                                                 <div class="col-10">
-                                                    <h3 class="text-uppercase"><strong>Visit Occured:</strong></h3>
+                                                    <h4 class="text-uppercase"><strong>Visit Occured:</strong></h4>
                                                     <ul class="list-inline">
                                                         <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i>@item.VisitDate.ToString("dddd")</li>
                                                         <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i>@item.Arrival -- @item.Departure</li>
@@ -130,6 +133,6 @@
                     </swiper-container>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </div>

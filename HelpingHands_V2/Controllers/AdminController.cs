@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
 {
+    [Authorize(Roles = "A")]
     public class AdminController : Controller
     {
         private readonly Grp0444HelpingHandsContext _context;
@@ -22,7 +23,6 @@ namespace HelpingHands_V2.Controllers
             _suburb = suburb;
             _city = city;
         }
-        //[Authorize("A")]
         public ActionResult Dashboard()
         {
             try

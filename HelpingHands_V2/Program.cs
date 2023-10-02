@@ -25,6 +25,8 @@ builder.Services.AddScoped<INurse, NurseService>();
 builder.Services.AddScoped<IManager, ManagerService>();
 builder.Services.AddScoped<ICity, CityService>();
 builder.Services.AddScoped<ISuburb, SuburbService>();
+builder.Services.AddScoped<IVisit, VisitService>();
+builder.Services.AddScoped<IWound, WoundService>();
 
 var app = builder.Build();
 

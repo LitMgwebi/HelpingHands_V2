@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HelpingHands_V2.Models;
 using HelpingHands_V2.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HelpingHands_V2.Controllers
 {
+    [Authorize(Roles = "N")]
     public class NurseController : Controller
     {
         private readonly Grp0444HelpingHandsContext _context;

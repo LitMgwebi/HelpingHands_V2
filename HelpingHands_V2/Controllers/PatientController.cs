@@ -1,9 +1,11 @@
 ﻿using HelpingHands_V2.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
 {
+    [Authorize(Roles ="P")]
     public class PatientController : Controller
     {
         private readonly IReport _report;

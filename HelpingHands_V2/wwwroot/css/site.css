@@ -23,9 +23,11 @@ nav > li:hover{
     color: red;
 }
 
-html {
+body {
     position: relative;
-    min-height: 100%;
+    min-height: 100vh;
+    background-image: linear-gradient(to bottom right, var(--darkred), var(--paleRed)), url("../Media//background.webp");
+    background-blend-mode: screen;
 }
 
 

@@ -22,8 +22,7 @@ namespace HelpingHands_V2.Controllers
             return View();
         }
 
-        [Authorize]
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }

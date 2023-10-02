@@ -1,9 +1,11 @@
 ﻿using HelpingHands_V2.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
 {
+    [Authorize(Roles = "O")]
     public class ManagerController : Controller
     {
         private readonly IReport _report;

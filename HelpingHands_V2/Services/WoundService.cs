@@ -5,19 +5,23 @@ using System.Data;
 
 namespace HelpingHands_V2.Services
 {
-    public class CityService: ICity
+    public class WoundService: IWound
     {
         private readonly IConfiguration _config;
-        string sql = "CRUDCity";
-        public CityService(IConfiguration config ) => _config = config;
-
-        public List<dynamic> GetCities()
+        string sql = "CRUDWound";
+        public WoundService(IConfiguration config)
         {
-            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            _config = config;
+        }
+
+        public List<dynamic> GetWounds()
+        {
+            using(var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
                 var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+
                 return result;
             }
         }
