@@ -19,7 +19,7 @@ namespace HelpingHands_V2.Services
         }
 
 
-        public EndUsers GetUser(string username)
+        public EndUser GetUser(string username)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -27,7 +27,7 @@ namespace HelpingHands_V2.Services
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Username", username);
 
-                var user = conn.QueryFirstOrDefault<EndUsers>(sql, param, commandType: CommandType.StoredProcedure);
+                var user = conn.QueryFirstOrDefault<EndUser>(sql, param, commandType: CommandType.StoredProcedure);
 
                 return user;
             }

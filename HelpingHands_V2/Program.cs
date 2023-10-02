@@ -27,6 +27,8 @@ builder.Services.AddScoped<ICity, CityService>();
 builder.Services.AddScoped<ISuburb, SuburbService>();
 builder.Services.AddScoped<IVisit, VisitService>();
 builder.Services.AddScoped<IWound, WoundService>();
+builder.Services.AddScoped<IBusiness, BusinessService>();
+builder.Services.AddScoped<IOperation, OperationService>();
 
 var app = builder.Build();
 

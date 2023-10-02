@@ -30,36 +30,36 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Dashboard">Dashboard</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Employees
-                                </button>
+                                </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" asp-controller="Manager" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Managers</a></li>
                                     <li><a class="dropdown-item" asp-controller="Nurses" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Nurses</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
-                                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Conditions
-                                </button>
+                                </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" asp-controller="Condition" asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value">Add New</a></li>
                                     <li><a class="dropdown-item" asp-controller="Condition" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">View All</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
-                                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Cities
-                                </button>
+                                </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" asp-controller="City" asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value">Add New</a></li>
                                     <li><a class="dropdown-item" asp-controller="City" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">View All</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
-                                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Suburbs
-                                </button>
+                                </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" asp-controller="Suburb" asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value">Add New</a></li>
                                     <li><a class="dropdown-item" asp-controller="Suburb" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">View All</a></li>
@@ -72,9 +72,9 @@
                                 <a class="nav-link text-dark" asp-controller="Patient" asp-action="Dashboard" asp-route-id="@User.FindFirst("UserId")!.Value">Dashboard</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Contracts
-                                </button>
+                                </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" asp-controller="Contract" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Start New</a></li>
                                     <li><a class="dropdown-item" asp-controller="Contract" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Current Contract</a></li>
@@ -94,9 +94,9 @@
                                 <a class="nav-link text-dark" asp-controller="Nurse" asp-action="Dashboard" asp-route-id="@User.FindFirst("UserId")!.Value">Dashboard</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Contracts
-                                </button>
+                                </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" asp-controller="Contract" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Current Contract</a></li>
                                     <li><a class="dropdown-item" asp-controller="Contract" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Unassigned Contracts</a></li>

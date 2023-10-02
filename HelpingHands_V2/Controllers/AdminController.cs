@@ -14,14 +14,18 @@ namespace HelpingHands_V2.Controllers
         private readonly IManager _manager;
         private readonly ISuburb _suburb;
         private readonly ICity _city;
+        private readonly IBusiness _business;
+        private readonly IOperation _operation;
 
-        public AdminController(Grp0444HelpingHandsContext context, INurse nurse, IManager manager, ISuburb suburb, ICity city)
+        public AdminController(Grp0444HelpingHandsContext context, INurse nurse, IManager manager, ISuburb suburb, ICity city, IBusiness business, IOperation operation)
         {
             _context = context;
             _nurse = nurse;
             _manager = manager;
             _suburb = suburb;
             _city = city;
+            _business = business;
+            _operation = operation;
         }
         public ActionResult Dashboard()
         {
@@ -31,6 +35,8 @@ namespace HelpingHands_V2.Controllers
                 var managers = _manager.GetManagers();
                 var cities = _city.GetCities();
                 var suburbs = _suburb.GetSuburbs();
+                var business = _business.GetBusinessInfo();
+                var operation = _operation.GetOperationHours();
 
                 if(nurses == null || managers == null || cities == null || suburbs == null)
                 {
@@ -41,6 +47,8 @@ namespace HelpingHands_V2.Controllers
                 ViewBag.Managers = managers;
                 ViewBag.Cities = cities;
                 ViewBag.Suburbs = suburbs;
+                ViewBag.Business = business;
+                ViewBag.Operation = operation;
 
                 return View();
             } catch (Exception ex)
