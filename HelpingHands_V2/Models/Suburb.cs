@@ -15,6 +15,8 @@ public partial class Suburb
 
     public bool Active { get; set; }
 
+    public virtual ICollection<BusinessInformation> BusinessInformations { get; set; } = new List<BusinessInformation>();
+
     public virtual ICollection<CareContract> CareContracts { get; set; } = new List<CareContract>();
 
     public virtual City City { get; set; } = null!;

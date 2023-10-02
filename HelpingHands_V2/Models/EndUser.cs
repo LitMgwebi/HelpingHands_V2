@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HelpingHands_V2.Models;
 
-public partial class EndUsers
+public partial class EndUser
 {
     public int UserId { get; set; }
 

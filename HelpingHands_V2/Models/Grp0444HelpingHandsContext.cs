@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 
 namespace HelpingHands_V2.Models;
@@ -18,15 +15,19 @@ public partial class Grp0444HelpingHandsContext : DbContext
     {
     }
 
+    public virtual DbSet<BusinessInformation> BusinessInformations { get; set; }
+
     public virtual DbSet<CareContract> CareContracts { get; set; }
 
     public virtual DbSet<City> Cities { get; set; }
 
     public virtual DbSet<Condition> Conditions { get; set; }
 
-    public virtual DbSet<EndUsers> EndUsers { get; set; }
+    public virtual DbSet<EndUser> EndUsers { get; set; }
 
     public virtual DbSet<Nurse> Nurses { get; set; }
+
+    public virtual DbSet<OperationHour> OperationHours { get; set; }
 
     public virtual DbSet<Patient> Patients { get; set; }
 
@@ -42,10 +43,30 @@ public partial class Grp0444HelpingHandsContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=LITHI_MGWEBI\\SQLEXPRESS;Database=GRP-04-44-HelpingHands;Integrated Security=True;Encrypt=False");
+        => optionsBuilder.UseSqlServer("Server=LITHI_MGWEBI\\SQLEXPRESS;Database=GRP-04-44-HelpingHands;Trusted_Connection=True;Encrypt=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<BusinessInformation>(entity =>
+        {
+            entity.HasKey(e => e.BusinessId);
+
+            entity.ToTable("BusinessInformation");
+
+            entity.Property(e => e.AddressLineOne).HasMaxLength(50);
+            entity.Property(e => e.AddressLineTwo).HasMaxLength(50);
+            entity.Property(e => e.ContactNumber).HasMaxLength(20);
+            entity.Property(e => e.Email).HasMaxLength(40);
+            entity.Property(e => e.Nponumber)
+                .HasMaxLength(15)
+                .HasColumnName("NPONumber");
+            entity.Property(e => e.OrganizationName).HasMaxLength(25);
+
+            entity.HasOne(d => d.Suburb).WithMany(p => p.BusinessInformations)
+                .HasForeignKey(d => d.SuburbId)
+                .HasConstraintName("FK_BusinessInformation_Suburb");
+        });
+
         modelBuilder.Entity<CareContract>(entity =>
         {
             entity.HasKey(e => e.ContractId);
@@ -92,7 +113,7 @@ public partial class Grp0444HelpingHandsContext : DbContext
             entity.Property(e => e.ConditionName).HasMaxLength(30);
         });
 
-        modelBuilder.Entity<EndUsers>(entity =>
+        modelBuilder.Entity<EndUser>(entity =>
         {
             entity.HasKey(e => e.UserId);
 
@@ -125,6 +146,19 @@ public partial class Grp0444HelpingHandsContext : DbContext
                 .HasForeignKey<Nurse>(d => d.NurseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Nurse_EndUser");
+        });
+
+        modelBuilder.Entity<OperationHour>(entity =>
+        {
+            entity.HasKey(e => e.OperationHoursId);
+
+            entity.Property(e => e.CloseTime).HasPrecision(0);
+            entity.Property(e => e.OpenTime).HasPrecision(0);
+            entity.Property(e => e.OperationDay).HasMaxLength(15);
+
+            entity.HasOne(d => d.Business).WithMany(p => p.OperationHours)
+                .HasForeignKey(d => d.BusinessId)
+                .HasConstraintName("FK_OperationHours_BusinessInformation");
         });
 
         modelBuilder.Entity<Patient>(entity =>
