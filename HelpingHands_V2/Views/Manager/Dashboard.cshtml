@@ -5,132 +5,66 @@
 <h2 class="display-2 text-center">Hello @User.Identity?.Name</h2>
 <hr />
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" style="overflow-y:scroll">
         <div class="col-3">
             <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
                 <nav class="nav nav-pills flex-column">
-                    <a class="nav-link" href="#employees">Employees</a>
-                    <nav class="nav nav-pills flex-column">
-                        <a class="nav-link ms-3 my-1" href="#managers">Managers</a>
-                        <a class="nav-link ms-3 my-1" href="#nurses">Nurses</a>
-                    </nav>
-                    <a class="nav-link" href="#locations">Location</a>
-                    <nav class="nav nav-pills flex-column">
-                        <a class="nav-link ms-3 my-1" href="#cities">Cities</a>
-                        <a class="nav-link ms-3 my-1" href="#suburbs">Suburbs</a>
-                    </nav>
+                    <a class="nav-link" href="#newContract">New Contracts</a>
+                    <a class="nav-link" href="#assignedContracts">AssignedContracts</a>
                 </nav>
             </nav>
 
         </div>
-        <div class="col-6">
+        <div class="col-5" style="height:100vh;">
             <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example-2" tabindex="0">
-                <div id="employees" class="gx-5">
-                    <h3>Employees</h3>
-                    <p>A quick look at some employees</p>
-                </div>
-                <div id="managers" class="table-responsive gx-5">
-                    <table class="table table-sm table-hover table-striped">
-                        <caption>Managers</caption>
-                        <thead>
-                            <tr>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Profile</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            @foreach (var manager in ViewBag.Managers)
+                <div id="newContract" class="gx-5">
+                    <h3 class="display-5">New Contracts</h3>
+                    <section style="">
+                        <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
+                            @foreach (var item in ViewBag.NewContracts)
                             {
-                                <tr scope="row">
-                                    <td>@manager.Firstname</td>
-                                    <td>@manager.Lastname</td>
-                                    <td>@manager.Username</td>
-                                    <td>@manager.ProfilePicture</td>
-                                </tr>
+                                <swiper-slide>
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@item.PatientFirstname @item.PatientLastname</h5>
+                                            <h6 class="card-subtitle mb-2 text-body-secondary">@item.WoundName</h6>
+                                            <p class="card-text">@item.AddressLineOne<br />@item.SuburbName</p>
+                                            
+                                            <p >@item.ContractDate.Day @item.ContractDate.ToString("dddd") @item.ContractDate.ToString("MMM")</p>
+                                            <a href="#" class="btn btn-secondary card-link">Assign</a>
+                                        </div>
+                                    </div>
+                                </swiper-slide>
                             }
-                        </tbody>
-                    </table>
-                    <a>...See More</a>
+                        </swiper-container>
+                    </section>
                 </div>
-                <div id="nurses" class="table-responsive">
-                    <table class="table table-sm table-hover table-striped">
-                        <caption>Nurses</caption>
-                        <thead>
-                            <tr>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Profile</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            @foreach (var nurse in ViewBag.Nurses)
+                
+                <div id="assignedContracts">
+                    <h3 class="display-5">Assigned Contracts</h3>
+                    <section style="">
+                        <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
+                            @foreach (var item in ViewBag.AssignedContracts)
                             {
-                                <tr scope="row">
-                                    <td>@nurse.Firstname</td>
-                                    <td>@nurse.Lastname</td>
-                                    <td>@nurse.Username</td>
-                                    <td>@nurse.ProfilePicture</td>
-                                </tr>
+                                <swiper-slide>
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Nurse: @item.NurseFirstname @item.NurseLastname</h5>
+                                            <h5 class="card-title">Patient: @item.PatientFirstname @item.PatientLastname</h5>
+                                            <h6 class="card-subtitle mb-2 text-body-secondary">@item.WoundName</h6>
+                                            <p class="card-text">@item.AddressLineOne<br />@item.SuburbName</p>
+
+                                            <p>Started: @item.StartDate.Day @item.StartDate.ToString("dddd") @item.StartDate.ToString("MMM")</p>
+                                            <a href="#" class="btn btn-secondary card-link">View More</a>
+                                        </div>
+                                    </div>
+                                </swiper-slide>
                             }
-                        </tbody>
-                    </table>
-                    <a>...See More</a>
+                        </swiper-container>
+                    </section>
                 </div>
-                <div id="locations">
-                    <h3>Locations</h3>
-                    <p>A quick look at some locations</p>
-                </div>
-                <div id="cities" class="table-responsive">
-                    <table class="table table-sm table-hover table-striped">
-                        <caption>Cities</caption>
-                        <thead>
-                            <tr>
-                                <th scope="col">City Name</th>
-                                <th scope="col">City Abbreviation</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            @foreach (var city in ViewBag.Cities)
-                            {
-                                <tr scope="row">
-                                    <td>@city.CityName</td>
-                                    <td>@city.CityAbbreviation</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <a>...See More</a>
-                </div>
-                <div id="suburbs" class="table-responsive">
-                    <table class="table table-sm table-hover table-striped">
-                        <caption>Suburbs</caption>
-                        <thead>
-                            <tr>
-                                <th scope="col">Suburb Name</th>
-                                <th scope="col">Postal Code</th>
-                                <th scope="col">City</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            @foreach (var suburb in ViewBag.Suburbs)
-                            {
-                                <tr scope="row">
-                                    <td>@suburb.SuburbName</td>
-                                    <td>@suburb.PostalCode</td>
-                                    <td>@suburb.CityName</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <a>...See More</a>
-                </div>
+               
             </div>
-        </div>
-        <div class="col-3">
-            <h3>Helping Hands informations</h3>
         </div>
     </div>
 </div>

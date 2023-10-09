@@ -11,17 +11,17 @@ namespace HelpingHands_V2.Controllers
     {
         private readonly Grp0444HelpingHandsContext _context;
         private readonly INurse _nurse;
-        private readonly IManager _manager;
+        private readonly IEndUser _user;
         private readonly ISuburb _suburb;
         private readonly ICity _city;
         private readonly IBusiness _business;
         private readonly IOperation _operation;
 
-        public AdminController(Grp0444HelpingHandsContext context, INurse nurse, IManager manager, ISuburb suburb, ICity city, IBusiness business, IOperation operation)
+        public AdminController(Grp0444HelpingHandsContext context, INurse nurse, IEndUser user, ISuburb suburb, ICity city, IBusiness business, IOperation operation)
         {
             _context = context;
             _nurse = nurse;
-            _manager = manager;
+            _user = user;
             _suburb = suburb;
             _city = city;
             _business = business;
@@ -32,7 +32,7 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 var nurses = _nurse.GetNurses();
-                var managers = _manager.GetManagers();
+                var managers = _user.GetManagers();
                 var cities = _city.GetCities();
                 var suburbs = _suburb.GetSuburbs();
                 var business = _business.GetBusinessInfo();

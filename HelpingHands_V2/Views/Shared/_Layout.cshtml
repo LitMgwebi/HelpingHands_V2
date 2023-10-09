@@ -13,13 +13,17 @@
     <header>
         <nav class="navbar nav-pills navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <div class="nav col-4">
+                <div class="nav col-3">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src="/Media/HelpingHands.png" width="55" height="50" class="d-inline-block align-top" alt="Helping Hands">
                         
                     </a>
+                    @if (User.Identity!.IsAuthenticated)
+                    {
+                        <p>Hello @User.FindFirst("FullName")!.Value</p>
+                    }
                 </div>
-                <div class="collapse navbar-collapse navbar-expand-lg d-sm-inline-flex col-8">
+                <div class="collapse navbar-collapse navbar-expand-lg d-sm-inline-flex col-6">
                     <ul class="navbar-nav flex-grow-1 justify-content-center">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -120,6 +124,8 @@
                             </li>
                         }
                     </ul>
+                </div>
+                <div class="col-3">
                     <ul class="nav navbar-nav flex-grow-1 justify-content-end ">
                         @if (User.Identity!.IsAuthenticated)
                         {
@@ -127,15 +133,16 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Details" asp-action="User">Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="EndUser" asp-action="Logout">Logout</a>
                             </li>
-                        } else
+                        }
+                        else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="EndUser" asp-action="Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Signup">Signup</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="EndUser" asp-action="Signup">Signup</a>
                             </li>
                         }
                     </ul>

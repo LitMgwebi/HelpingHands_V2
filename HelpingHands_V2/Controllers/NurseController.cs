@@ -25,20 +25,30 @@ namespace HelpingHands_V2.Controllers
             _report = report;
         }
 
-        public IActionResult Dashboard(int id)
+       public IActionResult Dashboard(int id)
         {
             try
             {
-                var assignedContracts = _report.NurseAssignedContracts(id);
-                var newContracts = _report.ContractStatus("N");
-                IEnumerable<dynamic>? contractVisits = _report.ContractVisits(assignedContracts[0].ContractId);
+                DateTime currentDate = DateTime.Now;
+                List<dynamic> assignedContracts = _report.NurseAssignedContracts(id);
+                List<object> nextVisit = new List<object> { };
+                foreach (var contract in assignedContracts)
+                {
+                    IEnumerable<dynamic>? contractVisits = _report.ContractVisits(contract.ContractId);
 
-                ViewBag.Contract = assignedContracts[0];
-                ViewBag.ContractVisits = contractVisits.Reverse();
-                ViewBag.NewContracts = newContracts;
+                    var result = DateTime.Compare(contractVisits.Last().VisitDate, currentDate);
 
+                    if (result > 0)
+                    {
+                        nextVisit.Add(contractVisits.Last());
+                    }
+                }
+
+                    ViewBag.NextVisit = nextVisit;
+                ViewBag.Contracts = (List<object>)assignedContracts;
                 return View();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new JsonResult(new { error = ex.Message });
             }
@@ -50,7 +60,7 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                var nurses =  _nurse.GetNurses();
+                var nurses = _nurse.GetNurses();
                 if (nurses == null)
                 {
                     return NotFound();
@@ -193,14 +203,14 @@ namespace HelpingHands_V2.Controllers
             {
                 _context.Nurses.Remove(nurse);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool NurseExists(int id)
         {
-          return (_context.Nurses?.Any(e => e.NurseId == id)).GetValueOrDefault();
+            return (_context.Nurses?.Any(e => e.NurseId == id)).GetValueOrDefault();
         }
     }
 }

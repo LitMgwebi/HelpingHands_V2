@@ -19,16 +19,20 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.AccessDeniedPath = "/account/login";
     options.LoginPath = "/account/login";
 });
-builder.Services.AddScoped<IAccount, AccountService>();
+builder.Services.AddScoped<IEndUser, EndUserService>();
 builder.Services.AddScoped<IReport, ReportService>();
 builder.Services.AddScoped<INurse, NurseService>();
-builder.Services.AddScoped<IManager, ManagerService>();
 builder.Services.AddScoped<ICity, CityService>();
 builder.Services.AddScoped<ISuburb, SuburbService>();
 builder.Services.AddScoped<IVisit, VisitService>();
 builder.Services.AddScoped<IWound, WoundService>();
 builder.Services.AddScoped<IBusiness, BusinessService>();
 builder.Services.AddScoped<IOperation, OperationService>();
+builder.Services.AddScoped<ICondition, ConditionService>();
+builder.Services.AddScoped<IContract, ContractService>();
+builder.Services.AddScoped<IPatient, PatientService>();
+builder.Services.AddScoped<IPrefferedSuburb, PrefferedSuburbService>();
+builder.Services.AddScoped<IPatientCondition, PatientConditionService>();
 
 var app = builder.Build();
 

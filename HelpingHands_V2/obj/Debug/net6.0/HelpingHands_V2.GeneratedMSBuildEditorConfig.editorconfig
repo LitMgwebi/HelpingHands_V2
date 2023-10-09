@@ -16,12 +16,12 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\lithi\OneDrive\Documents\Github\HelpingHands_V2\HelpingHands_V2
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Account/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Admin/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kVXNlclxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Home/About.cshtml]

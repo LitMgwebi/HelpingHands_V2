@@ -1,138 +1,84 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Nurse Dashboard";
- }
+}
 
-<h1 class="display-1 text-center">Hello @User.FindFirst("FullName")!.Value</h1>
-
-<hr />
-<div class="row" style="height: auto">
-    <aside class="nav flex-column col-3" style="overflow: scroll; height: 85vh; border-radius:2rem;">
-        <section>
-            <div class="nav-item d-flex justify-content-center">
+<div class="container-fluid" style="height: auto">
+    <section class="row">
+        <swiper-container class="mySwiper d-flex justify-content-center; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
+            <swiper-slide class="justify-content-center">
                 <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
                     <img src="/Media/contract.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
                     <div class="card-img-overlay">
                         <h5 class="card-title" style="color:black">Past Contracts</h5>
                     </div>
                 </div>
-            </div>
-            <div class="nav-item d-flex justify-content-center">
+            </swiper-slide>
+            <swiper-slide class="justify-content-center">
                 <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
                     <img src="/Media/plus.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
                     <div class="card-img-overlay">
                         <h5 class="card-title">Add New Condition</h5>
                     </div>
                 </div>
-            </div>
-            <div class="nav-item d-flex justify-content-center">
+            </swiper-slide>
+            <swiper-slide class="justify-content-center">
                 <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
                     <img src="/Media/condition.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%; object-fit: cover;" />
                     <div class="card-img-overlay">
                         <h5 class="card-title" style="color:black">View Chronic Conditions</h5>
                     </div>
                 </div>
-            </div>
-        </section>
-    </aside>
-    <div class="col-8 text-center" style="height:auto;">
-        <section class="row">
-            <div class="card" style=" height: 55vh; border-radius:2rem;">
-                <div class="card-header">Latest Contract</div>
-                <div class="card-body">
-                    <section class="row mx-3">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td>Patient</td>
-                                    <td>@ViewBag.Contract.Firstname @ViewBag.Contract.Lastname</td>
-                                </tr>
-                                <tr>
-                                    <td>Wound</td>
-                                    <td>@ViewBag.Contract.WoundName</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <button>
-                            View More
-                        </button>
-                    </section>
-                    <section style="">
-                        <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
-                            @foreach (var item in ViewBag.ContractVisits)
+            </swiper-slide>
+        </swiper-container>
+    </section>
+    <section class="row">
+        <div class="card col-6" style=" height: auto; border-radius:2rem;">
+            <div class="card-header">Upcoming Visits</div>
+            <div class="card-body">
+                <table>
+                    @if (ViewBag.NextVisit.Count == 0)
+                    {
+                        <p>No Upcoming visits</p>
+                    }
+                    else
+                    {
+
+                        <thead>
+                            <tr>
+                                <th scole="col">Patient</th>
+                                <th scole="col">Date</th>
+                                <th scole="col">Time</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(int i = 0; i < ViewBag.NextVisit.Count; i++)
                             {
-                                <swiper-slide>
-                                    <div class=" mb-3" style="width: 80%;margin: 2rem auto;">
-                                        @if (item.Arrival == null)
-                                        {
-                                            <div class="row row-striped">
-                                                <div class="col-2 text-right">
-                                                    <h1 class="display-4"><span class="badge badge-secondary"></span>@item.VisitDate.Day</h1>
-                                                    <h2>@item.VisitDate.ToString("MMM")</h2>
-                                                </div>
-                                                <div class="col-10">
-                                                    <h4 class="text-uppercase"><strong>Next Care Visit scheduled for:</strong></h4>
-                                                    <ul class="list-inline">
-                                                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i>@item.VisitDate.ToString("dddd")</li>
-                                                    </ul>
-                                                    <p>Arrival set for: @item.ApproxTime</p>
-                                                </div>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="row row-striped">
-                                                <div class="col-2 text-right">
-                                                    <h1 class="display-4"><span class="badge badge-secondary"></span>@item.VisitDate.Day</h1>
-                                                    <h2>@item.VisitDate.ToString("MMM")</h2>
-                                                </div>
-                                                <div class="col-10">
-                                                    <h4 class="text-uppercase"><strong>Visit Occured:</strong></h4>
-                                                    <ul class="list-inline">
-                                                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i>@item.VisitDate.ToString("dddd")</li>
-                                                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i>@item.Arrival -- @item.Departure</li>
-                                                    </ul>
-                                                    <p>@item.WoundCondition</p>
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
+                                <tr>
+                                    <td>
 
-                                </swiper-slide>
+                                        @ViewBag.Contracts[i].PatientFirstname
+                                        @ViewBag.Contracts[i].PatientLastname
+                                    </td>
+                                    <td>
+                                        @ViewBag.NextVisit[i].VisitDate.Day
+                                        @ViewBag.NextVisit[i].VisitDate.ToString("MMM")
+                                    </td>
+                                    <td>
+                                        @ViewBag.NextVisit[i].ApproxTime
+                                    </td>
+                                    <td>
+                                        <button class="btn">Update</button>
+                                        <button class="btn">History</button>
+                                        <button class="btn">Contract</button>
+                                    </td>
+                                </tr>
                             }
-                        </swiper-container>
-                    </section>
-                </div>
-            </div>
-            <div class="card" style=" height: 35vh; border-radius:2rem;">
-                <div class="card-header">Unassigned Contracts</div>
-                <div class="card-body">
-                    <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
-                        @foreach (var item in ViewBag.NewContracts)
-                        {
-                            <swiper-slide>
-                                <div class=" mb-3" style="width: 80%;margin: 2rem auto;">
-                                        <div class="row row-striped">
-                                            <div class="col-2 text-right">
+                        </tbody>
+                    }
+                </table>
 
-                                            <h1 class="display-4"><span class="badge badge-secondary"></span>@item.ContractDate.Day</h1>
-                                            <h2>@item.ContractDate.ToString("MMM") </h2>
-                                            </div>
-                                            <div class="col-10">
-                                            <h3 class="text-uppercase"><strong>@item.PatientFirstname @item.PatientLastname</strong></h3>
-                                                <ul class="list-inline">
-                                                    <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i>@item.ContractDate.ToString("dddd")</li>
-                                                    <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i>@item.WoundName -- @item.SuburbName</li>
-                                                </ul>
-                                                <p>@item.WoundCondition</p>
-                                            </div>
-                                        </div>
-                                </div>
-                            </swiper-slide>
-                        }
-                    </swiper-container>
-                </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 </div>

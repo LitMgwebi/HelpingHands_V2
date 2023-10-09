@@ -9,34 +9,35 @@ namespace HelpingHands_V2.Controllers
     public class ManagerController : Controller
     {
         private readonly IReport _report;
+        private readonly IVisit _visit;
 
-        public ManagerController(IReport report) => _report = report;
+        public ManagerController(IReport report, IVisit visit)
+        {
+            _report = report;
+            _visit = visit;
+        }
 
-        public IActionResult Dashboard(int id)
+        public IActionResult Dashboard()
         {
             try
             {
-                var availableNurses = _report.AvailableNurses(id);
-                var careVisits = _report.CareVisits(new DateTime(2023, 4, 01), new DateTime(2023, 8, 01));
-                var contractStatus = _report.ContractStatus("N");
-                var contractVisits = _report.ContractVisits(4);
-                var patientContract = _report.PatientContract(id);
+                var newContracts = _report.ContractStatus("N");
+                var assignedContracts = _report.ContractStatus("A");
+                var visits = _visit.GetVisits();
                 
-                if(availableNurses == null || careVisits == null || contractStatus == null || contractVisits == null || patientContract == null)
+                if(newContracts == null || assignedContracts == null || visits == null)
                 {
                     return NotFound();
                 }
 
-                ViewBag.AvailableNurses = availableNurses;
-                ViewBag.CareVisits = careVisits;
-                ViewBag.ContractStatus = contractStatus;
-                ViewBag.ContractVisits = contractVisits;
-                ViewBag.PatientContract = patientContract;
+                ViewBag.NewContracts = newContracts;
+                ViewBag.AssignedContracts = assignedContracts;
+                ViewBag.Visits = visits;
 
                 return View();
             } catch(Exception ex)
             {
-                return new JsonResult(new { error = ex });
+                return new JsonResult(new { error = ex.Message });
             }
         }
 
