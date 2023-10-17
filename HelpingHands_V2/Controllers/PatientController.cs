@@ -8,26 +8,44 @@ namespace HelpingHands_V2.Controllers
     [Authorize(Roles ="P")]
     public class PatientController : Controller
     {
+        private readonly IPatient _patient;
         private readonly IReport _report;
-        public PatientController(IReport report)
+        public PatientController(IReport report, IPatient patient)
         {
             _report = report;
+            _patient = patient;
         }
 
         public IActionResult Dashboard(int id)
         {
-            var patientContracts = _report.PatientContract(id);
-            var patientContract = patientContracts.First();
-            IEnumerable<dynamic>? contractVisits = _report.ContractVisits(patientContract.ContractId);
+            try
+            {
+                DateTime currentDate = DateTime.Now;
+                var patientContracts = _report.PatientContract(id);
+                var patientContract = patientContracts.First();
+                List<dynamic> nextVisit = new List<dynamic>();
+                List<dynamic>? contractVisits = _report.ContractVisits(patientContract.ContractId);
 
-            ViewBag.ContractId = patientContract.ContractId;
-            ViewBag.WoundName = patientContract.WoundName;
-            ViewBag.Firstname = patientContract.Firstname;
-            ViewBag.Lastname = patientContract.Lastname;
+                var latestVisit = contractVisits.Last();
 
-            //return new JsonResult(new { patientContract = patientContract });
-            ViewBag.ContractVisits = contractVisits.Reverse();
-            return View();
+                var result = DateTime.Compare(latestVisit.VisitDate, currentDate);
+
+                if (result > 0)
+                {
+                    nextVisit.Add(latestVisit);
+                    contractVisits.RemoveAt(1);
+                }
+                ViewBag.PatientContract = patientContract;
+
+                //return new JsonResult(new { patientContract = patientContract });
+                ViewBag.ContractVisits = contractVisits.AsEnumerable().Reverse();
+                ViewBag.NextVisit = nextVisit;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
         }
         // GET: PatientController
         public ActionResult Index()

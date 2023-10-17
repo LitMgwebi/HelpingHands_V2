@@ -1,35 +1,30 @@
 ﻿@{
     ViewData["Title"] = "Nurse Dashboard";
 }
+<h2 class="display-4 text-center">Nurse Dashboard</h2>
 
+
+<hr />
 <div class="container-fluid" style="height: auto">
-    <section class="row">
-        <swiper-container class="mySwiper d-flex justify-content-center; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
-            <swiper-slide class="justify-content-center">
-                <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
-                    <img src="/Media/contract.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
-                    <div class="card-img-overlay">
-                        <h5 class="card-title" style="color:black">Past Contracts</h5>
-                    </div>
-                </div>
-            </swiper-slide>
-            <swiper-slide class="justify-content-center">
-                <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
-                    <img src="/Media/plus.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Add New Condition</h5>
-                    </div>
-                </div>
-            </swiper-slide>
-            <swiper-slide class="justify-content-center">
-                <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
-                    <img src="/Media/condition.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%; object-fit: cover;" />
-                    <div class="card-img-overlay">
-                        <h5 class="card-title" style="color:black">View Chronic Conditions</h5>
-                    </div>
-                </div>
-            </swiper-slide>
-        </swiper-container>
+    <section class="row" style="overflow-x: scroll">
+        <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
+            <img src="/Media/contract.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
+            <div class="card-img-overlay">
+                <h5 class="card-title" style="color:black">Past Contracts</h5>
+            </div>
+        </div>
+        <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
+            <img src="/Media/plus.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
+            <div class="card-img-overlay">
+                <h5 class="card-title">Add New Condition</h5>
+            </div>
+        </div>
+        <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
+            <img src="/Media/condition.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%; object-fit: cover;" />
+            <div class="card-img-overlay">
+                <h5 class="card-title" style="color:black">View Chronic Conditions</h5>
+            </div>
+        </div>
     </section>
     <section class="row">
         <div class="card col-6" style=" height: auto; border-radius:2rem;">
@@ -38,7 +33,9 @@
                 <table>
                     @if (ViewBag.NextVisit.Count == 0)
                     {
-                        <p>No Upcoming visits</p>
+                        <tr>
+                            <td>No Upcoming visits</td>
+                        </tr>
                     }
                     else
                     {
@@ -52,7 +49,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for(int i = 0; i < ViewBag.NextVisit.Count; i++)
+                            @for (int i = 0; i < ViewBag.NextVisit.Count; i++)
                             {
                                 <tr>
                                     <td>
