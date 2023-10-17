@@ -74,23 +74,28 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        // GET: Nurses/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Nurses/Profile/5
+        public IActionResult Profile(int? id)
         {
-            if (id == null || _context.Nurses == null)
+            try
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var nurse = await _context.Nurses
-                .Include(n => n.NurseNavigation)
-                .FirstOrDefaultAsync(m => m.NurseId == id);
-            if (nurse == null)
+                var nurse = _nurse.GetNurse(id);
+                if (nurse == null)
+                {
+                    return NotFound();
+                }
+
+                ViewBag.Nurse = nurse;
+                return View();
+            } catch(Exception ex)
             {
-                return NotFound();
+                return new JsonResult(new { error = ex.Message });
             }
-
-            return View(nurse);
         }
 
         // GET: Nurses/Create

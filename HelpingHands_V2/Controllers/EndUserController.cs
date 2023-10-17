@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using HelpingHands_V2.Models;
 using HelpingHands_V2.Interfaces;
-using System.Drawing;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -21,6 +20,31 @@ namespace HelpingHands_V2.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Profile(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var user = _account.GetUserById(id);
+
+                if (user == null)
+                    return NotFound();
+
+                ViewBag.User = user;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -94,7 +118,7 @@ namespace HelpingHands_V2.Controllers
 
         public bool ValidateUser(LoginModel model)
         {
-            var user =  _account.GetUser(model.Username!);
+            var user =  _account.GetUserByUsername(model.Username!);
 
             if (user?.UserId > 0)
             {

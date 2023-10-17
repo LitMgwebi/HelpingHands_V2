@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "Cities";
+}
+
+<h2 class="display-4 text-center">Cities</h2>
+
+<p>
+    <a asp-action="Create">Add New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">City Name</th>
+            <th scope="col">City Abbreviation</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        @foreach (var city in ViewBag.Cities)
+        {
+            <tr scope="row">
+                <td>@city.CityName</td>
+                <td>@city.CityAbbreviation</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@city.CityId">Edit</a>
+                    <a asp-action="Details" asp-route-id="@city.CityId">Details</a>
+                    <a asp-action="Delete" asp-route-id="@city.CityId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -3,5 +3,7 @@
     public interface INurse
     {
         public List<dynamic> GetNurses();
+
+        public dynamic GetNurse(int? id);
     }
 }

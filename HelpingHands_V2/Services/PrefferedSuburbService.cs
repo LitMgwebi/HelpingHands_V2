@@ -21,5 +21,31 @@
                 return result;
             }
         }
+
+        public dynamic GetPrefferedSuburbByNurse(int? id)
+        {
+            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("NurseId", id);
+                param.Add("Command", "GetOne");
+
+                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+        }
+
+        public dynamic GetPrefferedSuburbBySuburb(int? id)
+        {
+            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("SuburbId", id);
+                param.Add("Command", "GetOne");
+
+                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+        }
     }
 }

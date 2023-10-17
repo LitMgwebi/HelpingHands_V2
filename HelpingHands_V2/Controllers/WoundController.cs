@@ -1,4 +1,5 @@
 ﻿using HelpingHands_V2.Interfaces;
+using HelpingHands_V2.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
@@ -25,6 +26,30 @@ namespace HelpingHands_V2.Controllers
                 ViewBag.Wounds = wounds;
                 return View();
 
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Details(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var wound = _wound.GetWound(id);
+
+                if (wound == null)
+                    return NotFound();
+
+                ViewBag.Wound = wound;
+                return View();
             }
             catch (Exception ex)
             {

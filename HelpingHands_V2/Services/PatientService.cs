@@ -22,5 +22,18 @@ namespace HelpingHands_V2.Services
                 return result;
             }
         }
+
+        public dynamic GetPatient(int? id)
+        {
+            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("PatientId", id);
+                param.Add("Command", "GetOne");
+
+                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+        }
     }
 }

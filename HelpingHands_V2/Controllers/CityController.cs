@@ -21,13 +21,36 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.City = city;
+                ViewBag.Cities = city;
                 return View();
 
             }
             catch (Exception ex)
             {
                 return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Details(int? id)
+        {
+            try
+            {
+                if(id == null)
+                {
+                    return NotFound();
+                }
+
+                var city = _city.GetCity(id);
+
+                if(city == null)
+                    return NotFound();
+
+                ViewBag.City = city;
+                return View();
+            } catch (Exception ex)
+            {
+                return new JsonResult(new {error = ex.Message});
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using HelpingHands_V2.Interfaces;
+using HelpingHands_V2.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,13 +51,46 @@ namespace HelpingHands_V2.Controllers
         // GET: PatientController
         public ActionResult Index()
         {
-            return View();
+            try
+            {
+                var patients = _patient.GetPatients();
+
+                if (patients == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.Patients = patients;
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
         }
 
         // GET: PatientController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var patient = _patient.GetPatient(id);
+
+                if (patient == null)
+                    return NotFound();
+
+                ViewBag.Patient = patient;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
         }
 
         // GET: PatientController/Create

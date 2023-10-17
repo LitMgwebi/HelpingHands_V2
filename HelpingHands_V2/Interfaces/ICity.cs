@@ -3,5 +3,7 @@
     public interface ICity
     {
         public List<dynamic> GetCities();
+
+        public dynamic GetCity(int? id);
     }
 }

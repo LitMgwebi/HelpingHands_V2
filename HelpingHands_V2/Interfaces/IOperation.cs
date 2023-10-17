@@ -3,5 +3,7 @@
     public interface IOperation
     {
         public List<dynamic> GetOperationHours();
+
+        public dynamic GetOperation(int? id);
     }
 }

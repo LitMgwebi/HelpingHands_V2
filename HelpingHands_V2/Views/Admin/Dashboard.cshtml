@@ -51,7 +51,7 @@
                             }
                         </tbody>
                     </table>
-                    <a href="#">...See More</a>
+                    <a asp-controller="Manager" asp-action="Index">...See More</a>
                 </div>
                 <div id="nurses" class="table-responsive">
                     <h4 class="display-6">Nurses</h4>
@@ -76,7 +76,7 @@
                             }
                         </tbody>
                     </table>
-                    <a href="#">...See More</a>
+                    <a asp-controller="Nurse" asp-action="Index">...See More</a>
                 </div>
                 <div id="locations">
                     <h3 class="display-4">Locations</h3>
@@ -101,7 +101,7 @@
                             }
                         </tbody>
                     </table>
-                    <a href="#">...See More</a>
+                    <a asp-controller="City" asp-action="Index">...See More</a>
                 </div>
                 <div id="suburbs" class="table-responsive">
                     <h4 class="display-6">Suburbs</h4>
@@ -124,7 +124,7 @@
                             }
                         </tbody>
                     </table>
-                    <a href="#">...See More</a>
+                    <a asp-controller="Suburb" asp-action="Index">...See More</a>
                 </div>
             </div>
         </div>
@@ -132,12 +132,16 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-header">@ViewBag.Business.OrganizationName</div>
                 <div class="card-body">
-                    <p class="card-text">@ViewBag.Business.AddressLineOne <br/>@ViewBag.Business.AddressLineTwo<br/>
-                    @ViewBag.Business.SuburbName</p>
+                    <p class="card-text">
+                        @ViewBag.Business.AddressLineOne <br />@ViewBag.Business.AddressLineTwo<br />
+                        @ViewBag.Business.SuburbName
+                    </p>
                     <a href="mailto: @ViewBag.Business.Email" class="card-link">@ViewBag.Business.Email</a>
                     <a href="tel:@ViewBag.Business.ContactNumber" class="card-link">@ViewBag.Business.ContactNumber</a>
-                    <br/>
-                    <button>Edit</button>
+                    <br />
+                    <a asp-controller="Business" asp-action="Index">
+                        Edit
+                    </a>
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
@@ -150,7 +154,7 @@
                         <li class="list-group-item">@item.OperationDay  @item.OpenTime - @item.CloseTime</li>
                     }
                 </ul>
-                <button>Edit</button>
+                <a asp-controller="Operation" asp-action="Index">Edit</a>
             </div>
         </div>
     </div>

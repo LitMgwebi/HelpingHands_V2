@@ -3,5 +3,9 @@
     public interface IPrefferedSuburb
     {
         public List<dynamic> GetPrefferedSuburbs();
+
+        public dynamic GetPrefferedSuburbByNurse(int? id);
+
+        public dynamic GetPrefferedSuburbBySuburb(int? id);
     }
 }

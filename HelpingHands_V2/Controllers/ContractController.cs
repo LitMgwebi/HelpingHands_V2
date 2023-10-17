@@ -30,5 +30,29 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
             }
         }
+
+        [HttpGet]
+        public IActionResult Details(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var contract = _contract.GetContract(id);
+
+                if (contract == null)
+                    return NotFound();
+
+                ViewBag.Contract = contract;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
     }
 }

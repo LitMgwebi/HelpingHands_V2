@@ -3,5 +3,7 @@
     public interface IWound
     {
         public List<dynamic> GetWounds();
+
+        public dynamic GetWound(int? id);
     }
 }

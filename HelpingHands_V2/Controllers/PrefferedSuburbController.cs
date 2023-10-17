@@ -30,5 +30,29 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
             }
         }
+
+        [HttpGet]
+        public IActionResult Details(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var ps = _ps.GetPrefferedSuburbBySuburb(id);
+
+                if (ps == null)
+                    return NotFound();
+
+                ViewBag.PrefferedSuburb = ps;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
     }
 }
