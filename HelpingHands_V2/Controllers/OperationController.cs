@@ -1,6 +1,7 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -56,5 +57,40 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
             }
         }
+
+        public IActionResult Create()
+        {
+            try
+            {
+                return View();
+            } catch(Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("OperationDay, OpenTime, CloseTime, BusinessId, Active")]OperationHour operationHour)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    
+                    _op.AddOperationHours(operationHour);
+                    ViewBag.Message = "Record Added successfully;";
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewBag.Message = "Operation unsuccessful";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+                //ViewBag.Message = "Operation unsuccessful";
+                //return View();
+            }
+        }
+
     }
 }

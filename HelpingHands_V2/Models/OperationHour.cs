@@ -13,9 +13,9 @@ public partial class OperationHour
 
     public TimeSpan? CloseTime { get; set; }
 
-    public bool Active { get; set; }
+    public bool Active { get; set; } = true;
 
-    public int? BusinessId { get; set; }
+    public int? BusinessId { get; set; } = 1;
 
     public virtual BusinessInformation? Business { get; set; }
 }

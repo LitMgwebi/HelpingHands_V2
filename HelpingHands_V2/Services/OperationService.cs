@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using HelpingHands_V2.Interfaces;
+using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -13,6 +14,7 @@ namespace HelpingHands_V2.Services
         {
             _config = config;
         }
+
         public List<dynamic> GetOperationHours()
         {
             using(var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
@@ -35,6 +37,28 @@ namespace HelpingHands_V2.Services
 
                 var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
+            }
+        }
+
+        public async void AddOperationHours(OperationHour operation)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("OperationDay", operation.OperationDay);
+                    param.Add("OpenTime", operation.OpenTime);
+                    param.Add("CloseTime", operation.CloseTime);
+                    param.Add("BusinessId", operation.BusinessId);
+                    param.Add("Active", operation.Active);
+                    param.Add("Command", "Insert");
+
+                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                }
+            } catch (Exception)
+            {
+                throw;
             }
         }
     }

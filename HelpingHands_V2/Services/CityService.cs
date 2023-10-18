@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using HelpingHands_V2.Interfaces;
+using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -32,6 +33,27 @@ namespace HelpingHands_V2.Services
 
                 var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
+            }
+        }
+
+        public async void AddCity(City city)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("CityName", city.CityName);
+                    param.Add("CityAbbreviation", city.CityAbbreviation);
+                    param.Add("Active", city.Active);
+                    param.Add("Command", "Insert");
+
+                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

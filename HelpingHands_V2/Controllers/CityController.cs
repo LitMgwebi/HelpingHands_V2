@@ -1,4 +1,5 @@
 ﻿using HelpingHands_V2.Interfaces;
+using HelpingHands_V2.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
@@ -51,6 +52,42 @@ namespace HelpingHands_V2.Controllers
             } catch (Exception ex)
             {
                 return new JsonResult(new {error = ex.Message});
+            }
+        }
+
+        public IActionResult Create()
+        {
+            try
+            {
+                return View();
+            } catch(Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(City city)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    _city.AddCity(city);
+                    ViewBag.Message = "Record Added successfully;";
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewBag.Message = "Operation unsuccessful";
+                return new JsonResult(new { error = "Operation Unsuccessful" });
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+                //ViewBag.Message = "Operation unsuccessful";
+                //return View();
             }
         }
     }
