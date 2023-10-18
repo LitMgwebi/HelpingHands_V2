@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace HelpingHands_V2.Models;
 
@@ -7,13 +8,16 @@ public partial class Suburb
 {
     public int SuburbId { get; set; }
 
+    [DisplayName("Suburb Name")]
     public string SuburbName { get; set; } = null!;
 
+    [DisplayName("Postal Code")]
     public int PostalCode { get; set; }
 
+    [DisplayName("City Name")]
     public int CityId { get; set; }
 
-    public bool Active { get; set; }
+    public bool Active { get; set; } = true;
 
     public virtual ICollection<BusinessInformation> BusinessInformations { get; set; } = new List<BusinessInformation>();
 
