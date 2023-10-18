@@ -56,5 +56,42 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
             }
         }
+
+        public IActionResult Create()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("ConditionName, ConditionDescription, Active")] Condition condition)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    _condition.AddCondition(condition);
+                    ViewBag.Message = "Record Added successfully;";
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewBag.Message = "Operation unsuccessful";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+                //ViewBag.Message = "Operation unsuccessful";
+                //return View();
+            }
+        }
+
+
     }
 }

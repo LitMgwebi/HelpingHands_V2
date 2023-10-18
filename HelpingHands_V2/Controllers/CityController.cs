@@ -68,7 +68,7 @@ namespace HelpingHands_V2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(City city)
+        public IActionResult Create([Bind("CityName, CityAbbreviation, Active")]City city)
         {
             try
             {

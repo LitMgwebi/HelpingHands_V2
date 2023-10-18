@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using HelpingHands_V2.Interfaces;
+using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -36,6 +37,28 @@ namespace HelpingHands_V2.Services
 
                 var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
+            }
+        }
+
+        public async void AddWound(Wound wound)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("WoundName", wound.WoundName);
+                    param.Add("Grade", wound.Grade);
+                    param.Add("WoundDescription", wound.WoundDescription);
+                    param.Add("Active", wound.Active);
+                    param.Add("Command", "Insert");
+
+                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

@@ -56,5 +56,40 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
             }
         }
+
+        public IActionResult Create()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("WoundName, Grade, WoundDescription, Active")] Wound wound)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    _wound.AddWound(wound);
+                    ViewBag.Message = "Record Added successfully;";
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewBag.Message = "Operation unsuccessful";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+                //ViewBag.Message = "Operation unsuccessful";
+                //return View();
+            }
+        }
     }
 }
