@@ -45,6 +45,18 @@ namespace HelpingHands_V2.Services
             }
         }
 
+        public List<dynamic> GetUsers()
+        {
+            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                var sql = "CRUDUser";
+                DynamicParameters param = new DynamicParameters();
+                param.Add("Command", "GetAll");
+                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
         public dynamic GetUserById(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))

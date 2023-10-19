@@ -1,0 +1,66 @@
+﻿@model IEnumerable<HelpingHands_V2.Models.CareContract>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 class="display-4 text-center">Active Contracts</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractComment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nurse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Wound)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Contracts)
+        {
+        <tr>
+            <td>
+                @item.ContractStatus
+            </td>
+            <td>
+                @item.ContractDate.Day @item.ContractDate.ToString("MMM")
+            </td>
+            <td>
+                @item.ContractComment
+            </td>
+            <td>
+                @item.NurseFirstname @item.NurseLastname
+            </td>
+            <td>
+                @item.PatientFirstname @item.PatientLastname
+            </td>
+            <td>
+                @item.WoundName
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ContractId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ContractId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ContractId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

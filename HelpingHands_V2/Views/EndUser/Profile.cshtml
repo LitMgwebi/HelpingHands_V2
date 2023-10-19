@@ -1,0 +1,85 @@
+﻿@model HelpingHands_V2.Models.EndUser
+
+@{
+    ViewData["Title"] = "Profile";
+    var Enduser = ViewBag.User;
+}
+
+<h1>Profile</h1>
+
+<div>
+    <h4>EndUser</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+        <dd class = "col-sm-10">
+            @Enduser.Username
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Firstname)
+        </dt>
+        <dd class = "col-sm-10">
+            @Enduser.Firstname
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Lastname)
+        </dt>
+        <dd class = "col-sm-10">
+            @Enduser.Lastname
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd class = "col-sm-10">
+            @Enduser.DateOfBirth.Day @Enduser.DateOfBirth.ToString("MMMM") @Enduser.DateOfBirth.ToString("yyy")
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Enduser.Email
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd class = "col-sm-10">
+            @Enduser.Gender
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContactNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Enduser.ContactNumber
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Idnumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Enduser.Idnumber
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UserType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Enduser.UserType
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfilePicture)
+        </dt>
+        <dd class = "col-sm-10">
+            @Enduser.ProfilePicture
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfilePictureName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Enduser.ProfilePictureName
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Enduser.UserId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

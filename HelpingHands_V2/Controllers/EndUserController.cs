@@ -18,7 +18,22 @@ namespace HelpingHands_V2.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            try
+            {
+                var accounts = _account.GetUsers();
+
+                if (accounts == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.Accounts = accounts;
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
         }
 
         [HttpGet]

@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using HelpingHands_V2.Interfaces;
+using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -23,13 +24,26 @@ namespace HelpingHands_V2.Services
             }
         }
 
-        public dynamic GetPatientConditionByPatient(int? id)
+        public List<dynamic> GetPatientConditionsByPatient(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("PatientId", id);
-                param.Add("Command", "GetOne");
+                param.Add("Command", "ByPatients");
+
+                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
+        public dynamic GetOnePatientConditionByPatient(int? id)
+        {
+            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("PatientId", id);
+                param.Add("Command", "ByPatients");
 
                 var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
@@ -46,6 +60,27 @@ namespace HelpingHands_V2.Services
 
                 var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
+            }
+        }
+
+        public async void AddPatientCondition(PatientCondition patientCondition)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("PatientId", patientCondition.PatientId);
+                    param.Add("ConditionId", patientCondition.ConditionId);
+                    param.Add("Active", patientCondition.Active);
+                    param.Add("Command", "Insert");
+
+                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

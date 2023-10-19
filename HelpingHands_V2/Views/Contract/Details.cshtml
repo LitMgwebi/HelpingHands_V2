@@ -1,0 +1,83 @@
+﻿@model HelpingHands_V2.Models.CareContract
+@{
+    ViewData["Title"] = "Details";
+    var Contract = ViewBag.Contract;
+}
+
+<h1>Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContractStatus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Contract.ContractStatus
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContractDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Contract.ContractDate.Day @Contract.ContractDate.ToString("dddd") @Contract.ContractDate.ToString("MMM")
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AddressLineOne)
+        </dt>
+        <dd class = "col-sm-10">
+            @Contract.AddressLineOne
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AddressLineTwo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Contract.AddressLineTwo
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Contract.StartDate.Day @Contract.StartDate.ToString("dddd") @Contract.StartDate.ToString("MMM")
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Contract.EndDate.Day @Contract.EndDate.ToString("dddd") @Contract.EndDate.ToString("MMM")
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContractComment)
+        </dt>
+        <dd class = "col-sm-10">
+            @Contract.ContractComment
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nurse)
+        </dt>
+        <dd class = "col-sm-10">
+            @Contract.NurseFirstname @Contract.NurseLastname
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Patient)
+        </dt>
+        <dd class = "col-sm-10">
+            @Contract.PatientFirstname @Contract.PatientLastname
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Suburb)
+        </dt>
+        <dd class = "col-sm-10">
+            @Contract.SuburbName
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Wound)
+        </dt>
+        <dd class = "col-sm-10">
+            @Contract.WoundName
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Contract.ContractId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

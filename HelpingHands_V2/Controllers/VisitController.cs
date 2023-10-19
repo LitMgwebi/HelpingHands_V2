@@ -1,6 +1,7 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -54,6 +55,36 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        public IActionResult Create(int id)
+        {
+            try
+            {
+                ViewBag.ContractId = id;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("ContractId, VisitDate, ApproxTime, Arrival, Departure, WoundCondition, Note, Active")] Visit visit)
+        {
+            try
+            {
+                _visit.AddVisit(visit);
+                ViewBag.Message = "Record Added successfully;";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+                //ViewBag.Message = "Operation unsuccessful";
+                //return View();
             }
         }
     }

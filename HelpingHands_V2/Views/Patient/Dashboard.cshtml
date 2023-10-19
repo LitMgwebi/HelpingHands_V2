@@ -28,10 +28,12 @@
             </div>
         </div>
         <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
-            <img src="/Media/condition.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%; object-fit: cover;" />
-            <div class="card-img-overlay">
-                <h5 class="card-title" style="color:black">View Chronic Conditions</h5>
-            </div>
+            <a asp-controller="PatientCondition" asp-action="IndexForPatient" asp-route-id=@User.FindFirst("UserId")!.Value>
+                <img src="/Media/condition.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%; object-fit: cover;" />
+                <div class="card-img-overlay">
+                    <h5 class="card-title" style="color:black">View Chronic Conditions</h5>
+                </div>
+            </a>
         </div>
     </section>
     <section class="row">

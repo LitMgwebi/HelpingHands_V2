@@ -15,7 +15,7 @@ public partial class Visit
     [DisplayName("Visit Date")]
     public DateTime VisitDate { get; set; }
 
-    [DisplayName("Approximate Time")]
+    [DisplayName("Approximate Time of Arrival")]
     public TimeSpan? ApproxTime { get; set; }
 
     [DisplayName("Arrival Time")]
