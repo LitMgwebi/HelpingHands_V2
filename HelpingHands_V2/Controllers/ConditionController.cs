@@ -23,7 +23,7 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.Condition = condition;
+                ViewBag.Conditions = condition;
                 return View();
 
             }

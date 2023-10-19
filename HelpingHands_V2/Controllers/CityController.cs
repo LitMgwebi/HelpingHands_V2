@@ -65,7 +65,6 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
             }
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("CityName, CityAbbreviation, Active")]City city)
