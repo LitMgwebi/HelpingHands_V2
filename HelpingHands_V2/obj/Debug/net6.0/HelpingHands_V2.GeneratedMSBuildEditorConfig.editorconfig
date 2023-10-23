@@ -68,6 +68,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kVXNlclxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kVXNlclxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Home/About.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -116,6 +120,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3BlcmF0aW9uXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/PatientCondition/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudENvbmRpdGlvblxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/PatientCondition/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudENvbmRpdGlvblxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -130,6 +138,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/PrefferedSuburb/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlZmZlcmVkU3VidXJiXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/PrefferedSuburb/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlZmZlcmVkU3VidXJiXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/PrefferedSuburb/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlZmZlcmVkU3VidXJiXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/PrefferedSuburb/IndexForNurse.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlZmZlcmVkU3VidXJiXEluZGV4Rm9yTnVyc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Shared/Error.cshtml]

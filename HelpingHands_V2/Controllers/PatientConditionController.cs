@@ -17,6 +17,7 @@ namespace HelpingHands_V2.Controllers
             _condition = condition;
             _patient = patient;
         }
+
         public IActionResult Index()
         {
             try
@@ -58,16 +59,16 @@ namespace HelpingHands_V2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? patientId, int? conditionId)
         {
             try
             {
-                if (id == null)
+                if (patientId == null && conditionId == null)
                 {
                     return NotFound();
                 }
 
-                var pc = _pc.GetOnePatientConditionByPatient(id);
+                var pc = _pc.GetOnePatientCondition(patientId, conditionId);
 
                 if (pc == null)
                     return NotFound();
@@ -81,15 +82,14 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
             try
             {
                 var conditions = _condition.GetConditions();
-                var patients = _patient.GetPatients();
 
                 ViewData["ConditionId"] = new SelectList(conditions, "ConditionId", "ConditionName");
-                ViewData["PatientId"] = new SelectList(patients, "PatientId", "PatientId");
+                ViewData["PatientId"] = id;
                 return View();
             }
             catch (Exception ex)
@@ -105,7 +105,7 @@ namespace HelpingHands_V2.Controllers
             {
                 _pc.AddPatientCondition(patientCondition);
                 ViewBag.Message = "Record Added successfully;";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
             }
             catch (Exception ex)
             {

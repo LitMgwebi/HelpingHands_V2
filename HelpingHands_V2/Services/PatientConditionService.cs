@@ -37,13 +37,14 @@ namespace HelpingHands_V2.Services
             }
         }
 
-        public dynamic GetOnePatientConditionByPatient(int? id)
+        public dynamic GetOnePatientCondition(int? patientId, int? conditionId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
-                param.Add("PatientId", id);
-                param.Add("Command", "ByPatients");
+                param.Add("PatientId", patientId);
+                param.Add("ConditionId", conditionId);
+                param.Add("Command", "GetOne");
 
                 var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
                 return result;

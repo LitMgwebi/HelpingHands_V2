@@ -11,5 +11,7 @@ namespace HelpingHands_V2.Interfaces
         public dynamic GetUserById(int? id);
 
         public List<dynamic> GetUsers();
+
+        public void AddUser(EndUser user);
     }
 }

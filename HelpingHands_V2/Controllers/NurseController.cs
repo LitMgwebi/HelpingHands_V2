@@ -99,9 +99,9 @@ namespace HelpingHands_V2.Controllers
         }
 
         // GET: Nurses/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            ViewData["NurseId"] = new SelectList(_context.EndUsers, "UserId", "UserId");
+            ViewData["NurseId"] = id;
             return View();
         }
 

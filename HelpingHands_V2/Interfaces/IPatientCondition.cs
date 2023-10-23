@@ -10,7 +10,7 @@ namespace HelpingHands_V2.Interfaces
 
         public dynamic GetPatientConditionByCondition(int? id);
 
-        public dynamic GetOnePatientConditionByPatient(int? id);
+        public dynamic GetOnePatientCondition(int? patientId, int? conditionId);
 
         public void AddPatientCondition(PatientCondition patientCondition);
     }

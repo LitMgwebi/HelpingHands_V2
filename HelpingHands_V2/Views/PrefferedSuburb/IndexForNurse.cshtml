@@ -1,0 +1,42 @@
+﻿@model IEnumerable<HelpingHands_V2.Models.PrefferedSuburb>
+
+@{
+    ViewData["Title"] = "IndexForNurse";
+}
+
+<h1>IndexForNurse</h1>
+
+<p>
+    <a asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nurse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suburb)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.PrefferedSuburbs)
+        {
+            <tr>
+                <td>
+                    @item.NurseFirstname @item.NurseLastname
+                </td>
+                <td>
+                    @item.SuburbName
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-nurseId="@item.NurseId" asp-route-suburbId="@item.SuburbId>Edit</a> |
+                    <a asp-action="Details" asp-route-nurseId="@item.NurseId" asp-route-suburbId="@item.SuburbId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.NurseId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

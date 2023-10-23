@@ -110,6 +110,10 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Patient" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Patients</a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="PrefferedSuburb" asp-action="IndexForNurse" asp-route-id="@User.FindFirst("UserId")!.Value">Prefered Suburbs</a>
+                            </li>
                         } 
                         else if (User.IsInRole("O"))
                         {
@@ -142,7 +146,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="EndUser" asp-action="Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="EndUser" asp-action="Signup">Signup</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="EndUser" asp-action="Register">Register</a>
                             </li>
                         }
                     </ul>

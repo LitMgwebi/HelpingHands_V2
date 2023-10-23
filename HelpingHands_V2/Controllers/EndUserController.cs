@@ -65,7 +65,6 @@ namespace HelpingHands_V2.Controllers
         {
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model, string? returnUrl = null)
         {
@@ -129,6 +128,34 @@ namespace HelpingHands_V2.Controllers
         {
             HttpContext.SignOutAsync();
             return Redirect("/");
+        }
+
+        public IActionResult Register()
+        {
+            try
+            {
+                return View();
+            } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Register([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user)
+        {
+            try
+            {
+                _account.AddUser(user);
+                ViewBag.Message = "Record Added successfully;";
+                if (user.ApplicationType == "N")
+                    return RedirectToAction("Create", "Nurse", new { id = user.UserId});
+                else
+                    return RedirectToAction("Create", "Patient", new { id = user.UserId });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+                //ViewBag.Message = "Operation unsuccessful";
+                //return View();
+            }
         }
 
         public bool ValidateUser(LoginModel model)

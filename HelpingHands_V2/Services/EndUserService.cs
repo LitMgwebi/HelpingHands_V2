@@ -70,5 +70,38 @@ namespace HelpingHands_V2.Services
                 return result;
             }
         }
+
+        public async void AddUser(EndUser user)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    var sql = "CRUDUser";
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("Username", user.Username);
+                    param.Add("Firstname", user.Firstname);
+                    param.Add("Lastname", user.Lastname);
+                    param.Add("DateOfBirth", user.DateOfBirth);
+                    param.Add("Email", user.Email);
+                    param.Add("Password", user.Password);
+                    param.Add("Gender", user.Gender);
+                    param.Add("ContactNumber", user.ContactNumber);
+                    param.Add("Idnumber", user.Idnumber);
+                    param.Add("UserType", user.UserType);
+                    param.Add("ApplicationType", user.ApplicationType);
+                    param.Add("ProfilePicture", user.ProfilePicture);
+                    param.Add("ProfilePictureName", user.ProfilePictureName);
+                    param.Add("Active", user.Active);
+                    param.Add("Command", "Insert");
+
+                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
