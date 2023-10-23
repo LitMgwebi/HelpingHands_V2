@@ -6,15 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
 {
-    [Authorize(Roles ="P")]
+    [Authorize(Roles = "N, A, O")]
     public class PatientController : Controller
     {
         private readonly IPatient _patient;
         private readonly IReport _report;
-        public PatientController(IReport report, IPatient patient)
+        private readonly IEndUser _user;
+        public PatientController(IReport report, IPatient patient, IEndUser user)
         {
             _report = report;
             _patient = patient;
+            _user = user;
         }
 
         public IActionResult Dashboard(int id)
@@ -70,7 +72,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         // GET: PatientController/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Profile(int? id)
         {
             try
             {
@@ -80,11 +82,13 @@ namespace HelpingHands_V2.Controllers
                 }
 
                 var patient = _patient.GetPatient(id);
+                var user = _user.GetUserById(id);
 
                 if (patient == null)
                     return NotFound();
 
                 ViewBag.Patient = patient;
+                ViewBag.User = user;
                 return View();
             }
             catch (Exception ex)

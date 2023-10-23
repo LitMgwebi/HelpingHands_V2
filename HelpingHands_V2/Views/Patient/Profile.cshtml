@@ -1,0 +1,115 @@
+﻿@model HelpingHands_V2.Models.Patient
+
+@{
+    ViewData["Title"] = "Profile";
+    var User = ViewBag.User;
+    var Patient = ViewBag.Patient;
+}
+
+<h1>Profile</h1>
+<div>
+    <h4>Patient</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Username
+        </dt>
+        <dd class="col-sm-10">
+            @Patient.Username
+        </dd>
+        <dt class="col-sm-2">
+            First Name
+        </dt>
+        <dd class="col-sm-10">
+            @Patient.Firstname
+        </dd>
+        <dt class="col-sm-2">
+            Last Name
+        </dt>
+        <dd class="col-sm-10">
+            @Patient.Lastname
+        </dd>
+        <dt class="col-sm-2">
+            Date Of Birth
+        </dt>
+        <dd class="col-sm-10">
+            @User.DateOfBirth.Day @User.DateOfBirth.ToString("MMMM") @User.DateOfBirth.ToString("yyy")
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @User.Email
+        </dd>
+        <dt class="col-sm-2">
+            Gender
+        </dt>
+        <dd class="col-sm-10">
+            @User.Gender
+        </dd>
+        <dt class="col-sm-2">
+            Contact Number
+        </dt>
+        <dd class="col-sm-10">
+            @User.ContactNumber
+        </dd>
+        <dt class="col-sm-2">
+            ID Number
+        </dt>
+        <dd class="col-sm-10">
+            @User.IDNumber
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AddressLineOne)
+        </dt>
+        <dd class = "col-sm-10">
+            @Patient.AddressLineOne
+        </dd>
+        @if (@Patient.AddressLineTwo != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AddressLineTwo)
+            </dt>
+            <dd class="col-sm-10">
+                @Patient.AddressLineTwo
+            </dd>
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suburb)
+        </dt>
+        <dd class="col-sm-10">
+            @Patient.SuburbName
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Icename)
+        </dt>
+        <dd class = "col-sm-10">
+            @Patient.ICEName
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Icenumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Patient.ICENumber
+        </dd>
+        @if (@Patient.AdditionalInfo != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AdditionalInfo)
+            </dt>
+            <dd class="col-sm-10">
+                @Patient.AdditionalInfo
+            </dd>
+        }
+        <dt class="col-sm-2">
+            Profile Picture
+        </dt>
+        <dd class="col-sm-10">
+            @User.ProfilePicture
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Patient.PatientId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

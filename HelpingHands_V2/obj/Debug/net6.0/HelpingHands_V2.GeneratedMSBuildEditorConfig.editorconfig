@@ -96,16 +96,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcRGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Operation/Create.cshtml]
@@ -138,6 +138,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/PrefferedSuburb/Create.cshtml]

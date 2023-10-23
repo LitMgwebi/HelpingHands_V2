@@ -11,21 +11,23 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HelpingHands_V2.Controllers
 {
-    [Authorize(Roles = "N")]
+    [Authorize(Roles = "N, A, O")]
     public class NurseController : Controller
     {
         private readonly Grp0444HelpingHandsContext _context;
         private readonly INurse _nurse;
         private readonly IReport _report;
+        private readonly IEndUser _user;
 
-        public NurseController(Grp0444HelpingHandsContext context, INurse nurse, IReport report)
+        public NurseController(Grp0444HelpingHandsContext context, INurse nurse, IReport report, IEndUser user)
         {
             _nurse = nurse;
             _context = context;
             _report = report;
+            _user = user;
         }
 
-       public IActionResult Dashboard(int id)
+        public IActionResult Dashboard(int id)
         {
             try
             {
@@ -85,12 +87,14 @@ namespace HelpingHands_V2.Controllers
                 }
 
                 var nurse = _nurse.GetNurse(id);
+                var user = _user.GetUserById(id);
                 if (nurse == null)
                 {
                     return NotFound();
                 }
 
                 ViewBag.Nurse = nurse;
+                ViewBag.User = user;
                 return View();
             } catch(Exception ex)
             {
