@@ -1,0 +1,63 @@
+﻿@model HelpingHands_V2.Models.Patient
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Patient</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PatientId" class="control-label"></label>
+                <input asp-for="PatientId" placeholder="@ViewBag.PatientId" value="@ViewBag.PatientId" />
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressLineOne" class="control-label"></label>
+                <input asp-for="AddressLineOne" class="form-control" />
+                <span asp-validation-for="AddressLineOne" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressLineTwo" class="control-label"></label>
+                <input asp-for="AddressLineTwo" class="form-control" />
+                <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SuburbId" class="control-label"></label>
+                <select asp-for="SuburbId" class ="form-control" asp-items="ViewBag.SuburbId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Icename" class="control-label"></label>
+                <input asp-for="Icename" class="form-control" />
+                <span asp-validation-for="Icename" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Icenumber" class="control-label"></label>
+                <input asp-for="Icenumber" class="form-control" />
+                <span asp-validation-for="Icenumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdditionalInfo" class="control-label"></label>
+                <input asp-for="AdditionalInfo" class="form-control" />
+                <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

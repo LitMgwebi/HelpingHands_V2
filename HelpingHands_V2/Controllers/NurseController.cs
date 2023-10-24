@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HelpingHands_V2.Controllers
 {
-    [Authorize(Roles = "N, A, O")]
+    //[Authorize(Roles = "N, A, O")]
     public class NurseController : Controller
     {
         private readonly Grp0444HelpingHandsContext _context;
@@ -57,7 +57,6 @@ namespace HelpingHands_V2.Controllers
         }
 
 
-        // GET: Nurses
         public async Task<IActionResult> Index()
         {
             try
@@ -75,8 +74,6 @@ namespace HelpingHands_V2.Controllers
                 return BadRequest(ex);
             }
         }
-
-        // GET: Nurses/Profile/5
         public async Task<IActionResult> Profile(int? id)
         {
             try
@@ -102,7 +99,6 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        // GET: Nurses/Create
         public IActionResult Create(int id)
         {
             try
@@ -112,9 +108,6 @@ namespace HelpingHands_V2.Controllers
             } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
         }
 
-        // POST: Nurses/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NurseId,Grade,Active")] Nurse nurse)
@@ -127,7 +120,6 @@ namespace HelpingHands_V2.Controllers
             } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
         }
 
-        // GET: Nurses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Nurses == null)
@@ -144,9 +136,6 @@ namespace HelpingHands_V2.Controllers
             return View(nurse);
         }
 
-        // POST: Nurses/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("NurseId,Grade,Active")] Nurse nurse)
@@ -180,7 +169,6 @@ namespace HelpingHands_V2.Controllers
             return View(nurse);
         }
 
-        // GET: Nurses/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Nurses == null)
@@ -199,7 +187,6 @@ namespace HelpingHands_V2.Controllers
             return View(nurse);
         }
 
-        // POST: Nurses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

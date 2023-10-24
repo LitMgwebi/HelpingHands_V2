@@ -3,6 +3,7 @@ using HelpingHands_V2.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -12,11 +13,13 @@ namespace HelpingHands_V2.Controllers
         private readonly IPatient _patient;
         private readonly IReport _report;
         private readonly IEndUser _user;
-        public PatientController(IReport report, IPatient patient, IEndUser user)
+        private readonly ISuburb _suburb;
+        public PatientController(IReport report, IPatient patient, IEndUser user, ISuburb suburb)
         {
             _report = report;
             _patient = patient;
             _user = user;
+            _suburb = suburb;
         }
 
         public IActionResult Dashboard(int id)
@@ -50,7 +53,8 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
             }
         }
-        // GET: PatientController
+
+
         public async Task<IActionResult> Index()
         {
             try
@@ -71,7 +75,6 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        // GET: PatientController/Details/5
         public async Task<IActionResult> Profile(int? id)
         {
             try
@@ -97,26 +100,30 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        // GET: PatientController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: PatientController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(int id)
         {
             try
             {
+                var suburbs = await _suburb.GetSuburbs();
+                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                ViewData["PatientId"] = id;
+                return View();
+            } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("PatientId, AddressLineOne, AddressLineTwo, SuburbId, Icename, Icenumber, AdditionalInfo, Active")]Patient patient)
+        {
+            try
+            {
+                await _patient.AddPateint(patient);
+                ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
         }
+
 
         // GET: PatientController/Edit/5
         public ActionResult Edit(int id)
