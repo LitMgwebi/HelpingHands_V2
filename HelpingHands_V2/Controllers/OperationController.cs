@@ -14,11 +14,11 @@ namespace HelpingHands_V2.Controllers
             _op = op;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var operation = _op.GetOperationHours();
+                var operation = await _op.GetOperationHours();
 
                 if (operation == null)
                 {
@@ -35,7 +35,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var op = _op.GetOperation(id);
+                var op = await _op.GetOperation(id);
 
                 if (op == null)
                     return NotFound();
@@ -63,26 +63,21 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 return View();
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("OperationDay, OpenTime, CloseTime, BusinessId, Active")]OperationHour operationHour)
+        public async Task<IActionResult> Create([Bind("OperationDay, OpenTime, CloseTime, BusinessId, Active")] OperationHour operationHour)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    
-                    _op.AddOperationHours(operationHour);
-                    ViewBag.Message = "Record Added successfully;";
-                    return RedirectToAction(nameof(Index));
-                }
-                ViewBag.Message = "Operation unsuccessful";
-                return View();
+                await _op.AddOperationHours(operationHour);
+                ViewBag.Message = "Record Added successfully;";
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {

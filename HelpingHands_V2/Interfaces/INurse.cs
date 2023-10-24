@@ -1,9 +1,13 @@
-﻿namespace HelpingHands_V2.Interfaces
+﻿using HelpingHands_V2.Models;
+
+namespace HelpingHands_V2.Interfaces
 {
     public interface INurse
     {
-        public List<dynamic> GetNurses();
+        public Task<IEnumerable<dynamic>> GetNurses();
 
-        public dynamic GetNurse(int? id);
+        public Task<object> GetNurse(int? id);
+
+        public Task<dynamic> AddNurse(Nurse nurse);
     }
 }

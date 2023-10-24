@@ -13,11 +13,11 @@ namespace HelpingHands_V2.Controllers
             _wound = wound;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var wounds = _wound.GetWounds();
+                var wounds = await _wound.GetWounds();
 
                 if (wounds == null)
                 {
@@ -34,7 +34,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var wound = _wound.GetWound(id);
+                var wound = await _wound.GetWound(id);
 
                 if (wound == null)
                     return NotFound();
@@ -70,19 +70,14 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("WoundName, Grade, WoundDescription, Active")] Wound wound)
+        public async Task<IActionResult> Create([Bind("WoundName, Grade, WoundDescription, Active")] Wound wound)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
+                await _wound.AddWound(wound);
+                ViewBag.Message = "Record Added successfully;";
+                return RedirectToAction(nameof(Index));
 
-                    _wound.AddWound(wound);
-                    ViewBag.Message = "Record Added successfully;";
-                    return RedirectToAction(nameof(Index));
-                }
-                ViewBag.Message = "Operation unsuccessful";
-                return View();
             }
             catch (Exception ex)
             {

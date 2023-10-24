@@ -22,13 +22,13 @@ namespace HelpingHands_V2.Controllers
             _suburb = suburb;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var contracts = _contract.GetContracts();
+                var contracts = await _contract.GetContracts();
 
-                if(contracts == null)
+                if (contracts == null)
                 {
                     return NotFound();
                 }
@@ -42,7 +42,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var contract = _contract.GetContract(id);
+                var contract = await _contract.GetContract(id);
 
                 if (contract == null)
                     return NotFound();
@@ -65,14 +65,14 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             try
             {
-                var patients = _patient.GetPatients();
-                var nurses = _nurse.GetNurses();
-                var wounds = _wound.GetWounds();
-                var suburbs = _suburb.GetSuburbs();
+                var patients = await _patient.GetPatients();
+                var nurses = await _nurse.GetNurses();
+                var wounds = await _wound.GetWounds();
+                var suburbs = await _suburb.GetSuburbs();
 
                 ViewData["PatientId"] = new SelectList(patients, "PatientId", "PatientId");
                 ViewData["NurseId"] = new SelectList(nurses, "NurseId", "NurseId");
@@ -87,11 +87,11 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ContractStatus, ContractDate, PatientId, NurseId, WoundId, AddressLineOne, AddressLineTwo, SuburbId, StartDate, EndDate, ContractComment, Active")] CareContract contract)
+        public async Task<IActionResult> Create([Bind("ContractStatus, ContractDate, PatientId, NurseId, WoundId, AddressLineOne, AddressLineTwo, SuburbId, StartDate, EndDate, ContractComment, Active")] CareContract contract)
         {
             try
             {
-                _contract.AddContract(contract);
+                await _contract.AddContract(contract);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(Index));
             }

@@ -12,19 +12,19 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDPatientCondition";
         public PatientConditionService(IConfiguration config) => _config = config;
 
-        public List<dynamic> GetPatientConditions()
+        public async Task<IEnumerable<dynamic>> GetPatientConditions()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public List<dynamic> GetPatientConditionsByPatient(int? id)
+        public async Task<IEnumerable<dynamic>> GetPatientConditionsByPatient(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -32,12 +32,12 @@ namespace HelpingHands_V2.Services
                 param.Add("PatientId", id);
                 param.Add("Command", "ByPatients");
 
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public dynamic GetOnePatientCondition(int? patientId, int? conditionId)
+        public async Task<object> GetOnePatientCondition(int? patientId, int? conditionId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -46,12 +46,12 @@ namespace HelpingHands_V2.Services
                 param.Add("ConditionId", conditionId);
                 param.Add("Command", "GetOne");
 
-                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public dynamic GetPatientConditionByCondition(int? id)
+        public async Task<object> GetPatientConditionByCondition(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -59,12 +59,12 @@ namespace HelpingHands_V2.Services
                 param.Add("ConditionId", id);
                 param.Add("Command", "GetOne");
 
-                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public async void AddPatientCondition(PatientCondition patientCondition)
+        public async Task<dynamic> AddPatientCondition(PatientCondition patientCondition)
         {
             try
             {
@@ -76,7 +76,8 @@ namespace HelpingHands_V2.Services
                     param.Add("Active", patientCondition.Active);
                     param.Add("Command", "Insert");
 
-                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
                 }
             }
             catch (Exception)

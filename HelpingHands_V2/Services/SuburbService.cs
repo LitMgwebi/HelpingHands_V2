@@ -12,18 +12,18 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDSuburb";
         public SuburbService(IConfiguration config) => _config = config;
 
-        public List<dynamic> GetSuburbs()
+        public async Task<IEnumerable<dynamic>> GetSuburbs()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public dynamic GetSuburb(int? id)
+        public async Task<object> GetSuburb(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -31,12 +31,12 @@ namespace HelpingHands_V2.Services
                 param.Add("SuburbId", id);
                 param.Add("Command", "GetOne");
 
-                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public async void AddSuburb(Suburb suburb)
+        public async Task<dynamic> AddSuburb(Suburb suburb)
         {
             try
             {
@@ -49,7 +49,8 @@ namespace HelpingHands_V2.Services
                     param.Add("Active", suburb.Active);
                     param.Add("Command", "Insert");
 
-                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
                 }
             }
             catch (Exception)

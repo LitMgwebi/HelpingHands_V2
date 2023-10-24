@@ -27,16 +27,16 @@ namespace HelpingHands_V2.Controllers
             _business = business;
             _operation = operation;
         }
-        public ActionResult Dashboard()
+        public async Task<IActionResult> Dashboard()
         {
             try
             {
-                var nurses = _nurse.GetNurses();
-                var managers = _user.GetManagers();
-                var cities = _city.GetCities();
-                var suburbs = _suburb.GetSuburbs();
-                var business = _business.GetBusinessInfo();
-                var operation = _operation.GetOperationHours();
+                var nurses = await _nurse.GetNurses();
+                var managers = await _user.GetManagers();
+                var cities = await _city.GetCities();
+                var suburbs = await _suburb.GetSuburbs();
+                var business = await _business.GetBusinessInfo();
+                var operation = await _operation.GetOperationHours();
 
                 if(nurses == null || managers == null || cities == null || suburbs == null)
                 {

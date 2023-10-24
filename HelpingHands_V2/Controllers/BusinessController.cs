@@ -11,11 +11,11 @@ namespace HelpingHands_V2.Controllers
         {
             this.business = business;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var businessInfo = business.GetBusinessInfo();
+                var businessInfo = await business.GetBusinessInfo();
 
                 if(businessInfo == null)
                 {

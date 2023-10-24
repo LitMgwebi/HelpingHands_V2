@@ -4,10 +4,10 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface ICondition
     {
-        public List<dynamic> GetConditions();
+        public Task<IEnumerable<dynamic>> GetConditions();
 
-        public dynamic GetCondition(int? id);
+        public Task<object> GetCondition(int? id);
 
-        public void AddCondition(Condition condition);
+        public Task<dynamic> AddCondition(Condition condition);
     }
 }

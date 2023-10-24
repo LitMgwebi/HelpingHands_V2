@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
 {
-    [Authorize(Roles = "N, A, O")]
+    //[Authorize(Roles = "N, A, O")]
     public class PatientController : Controller
     {
         private readonly IPatient _patient;
@@ -51,11 +51,11 @@ namespace HelpingHands_V2.Controllers
             }
         }
         // GET: PatientController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var patients = _patient.GetPatients();
+                var patients = await _patient.GetPatients();
 
                 if (patients == null)
                 {
@@ -72,7 +72,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         // GET: PatientController/Details/5
-        public ActionResult Profile(int? id)
+        public async Task<IActionResult> Profile(int? id)
         {
             try
             {
@@ -81,8 +81,8 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var patient = _patient.GetPatient(id);
-                var user = _user.GetUserById(id);
+                var patient = await _patient.GetPatient(id);
+                var user = await _user.GetUserById(id);
 
                 if (patient == null)
                     return NotFound();

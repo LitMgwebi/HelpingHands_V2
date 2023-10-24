@@ -13,11 +13,11 @@ namespace HelpingHands_V2.Controllers
             _condition = condition;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var condition = _condition.GetConditions();
+                var condition = await _condition.GetConditions();
 
                 if (condition == null)
                 {
@@ -34,7 +34,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var condition = _condition.GetCondition(id);
+                var condition = await _condition.GetCondition(id);
 
                 if (condition == null)
                     return NotFound();
@@ -70,19 +70,13 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ConditionName, ConditionDescription, Active")] Condition condition)
+        public async Task<IActionResult> Create([Bind("ConditionName, ConditionDescription, Active")] Condition condition)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-
-                    _condition.AddCondition(condition);
-                    ViewBag.Message = "Record Added successfully;";
-                    return RedirectToAction(nameof(Index));
-                }
-                ViewBag.Message = "Operation unsuccessful";
-                return View();
+                await _condition.AddCondition(condition);
+                ViewBag.Message = "Record Added successfully;";
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {

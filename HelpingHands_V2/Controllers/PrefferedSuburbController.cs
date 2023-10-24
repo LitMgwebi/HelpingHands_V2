@@ -17,11 +17,12 @@ namespace HelpingHands_V2.Controllers
             _suburb = suburb;
             _nurse = nurse;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var ps = _ps.GetPrefferedSuburbs();
+                var ps = await _ps.GetPrefferedSuburbs();
 
                 if (ps == null)
                 {
@@ -37,11 +38,11 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult IndexForNurse(int? id)
+        public async Task<IActionResult> IndexForNurse(int? id)
         {
             try
             {
-                var ps = _ps.GetPrefferedSuburbsByNurse(id);
+                var ps = await _ps.GetPrefferedSuburbsByNurse(id);
 
                 if (ps == null)
                 {
@@ -58,7 +59,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? nurseId, int? suburbId)
+        public async Task<IActionResult> Details(int? nurseId, int? suburbId)
         {
             try
             {
@@ -67,7 +68,7 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var ps = _ps.GetPrefferedSuburb(nurseId, suburbId);
+                var ps = await _ps.GetPrefferedSuburb(nurseId, suburbId);
 
                 if (ps == null)
                     return NotFound();
@@ -81,11 +82,11 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(int id)
         {
             try
             {
-                var suburbs  = _suburb.GetSuburbs();
+                var suburbs = await _suburb.GetSuburbs();
 
                 ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 ViewData["NurseId"] = id;
@@ -98,11 +99,11 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("NurseId, SuburbId, Active")] PrefferedSuburb prefferedSuburb)
+        public async Task<IActionResult> Create([Bind("NurseId, SuburbId, Active")] PrefferedSuburb prefferedSuburb)
         {
             try
             {
-                _ps.AddPrefferedSuburb(prefferedSuburb);
+                await _ps.AddPrefferedSuburb(prefferedSuburb);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(IndexForNurse), new { id = prefferedSuburb.NurseId });
             }

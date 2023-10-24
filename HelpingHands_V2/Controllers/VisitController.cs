@@ -14,11 +14,11 @@ namespace HelpingHands_V2.Controllers
             _visit = visit;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var visits = _visit.GetVisits();
+                var visits = await _visit.GetVisits();
 
                 if (visits == null)
                 {
@@ -35,7 +35,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var visit = _visit.GetVisit(id);
+                var visit = await _visit.GetVisit(id);
 
                 if (visit == null)
                     return NotFound();
@@ -72,11 +72,11 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ContractId, VisitDate, ApproxTime, Arrival, Departure, WoundCondition, Note, Active")] Visit visit)
+        public async Task<IActionResult> Create([Bind("ContractId, VisitDate, ApproxTime, Arrival, Departure, WoundCondition, Note, Active")] Visit visit)
         {
             try
             {
-                _visit.AddVisit(visit);
+                await _visit.AddVisit(visit);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(Index));
             }

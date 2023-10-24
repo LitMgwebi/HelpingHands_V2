@@ -11,19 +11,19 @@
         string sql = "CRUDCondition";
         public ConditionService(IConfiguration config) => _config = config;
 
-        public List<dynamic> GetConditions()
+        public async Task<IEnumerable<dynamic>> GetConditions()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public dynamic GetCondition(int? id)
+        public async Task<object> GetCondition(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -31,12 +31,12 @@
                 param.Add("ConditionId", id);
                 param.Add("Command", "GetOne");
 
-                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public async void AddCondition(Condition condition)
+        public async Task<dynamic> AddCondition(Condition condition)
         {
             try
             {
@@ -48,7 +48,8 @@
                     param.Add("Active", condition.Active);
                     param.Add("Command", "Insert");
 
-                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
                 }
             }
             catch (Exception)

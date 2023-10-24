@@ -4,10 +4,10 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface IWound
     {
-        public List<dynamic> GetWounds();
+        public Task<IEnumerable<dynamic>> GetWounds();
 
-        public dynamic GetWound(int? id);
+        public Task<object> GetWound(int? id);
 
-        public void AddWound(Wound wound);
+        public Task<dynamic> AddWound(Wound wound);
     }
 }

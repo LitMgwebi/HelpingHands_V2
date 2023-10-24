@@ -4,10 +4,10 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface ISuburb
     {
-        public List<dynamic> GetSuburbs();
+        public Task<IEnumerable<dynamic>> GetSuburbs();
 
-        public dynamic GetSuburb(int? id);
+        public Task<object> GetSuburb(int? id);
 
-        public void AddSuburb(Suburb suburb);
+        public Task<dynamic> AddSuburb(Suburb suburb);
     }
 }

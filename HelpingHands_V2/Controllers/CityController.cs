@@ -12,11 +12,11 @@ namespace HelpingHands_V2.Controllers
         {
             _city = city;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var city = _city.GetCities();
+                var city = await _city.GetCities();
 
                 if (city == null)
                 {
@@ -33,25 +33,26 @@ namespace HelpingHands_V2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             try
             {
-                if(id == null)
+                if (id == null)
                 {
                     return NotFound();
                 }
 
-                var city = _city.GetCity(id);
+                var city = await _city.GetCity(id);
 
-                if(city == null)
+                if (city == null)
                     return NotFound();
 
                 ViewBag.City = city;
                 return View();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                return new JsonResult(new {error = ex.Message});
+                return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -60,27 +61,21 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 return View();
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("CityName, CityAbbreviation, Active")]City city)
+        public async Task<IActionResult> Create([Bind("CityName, CityAbbreviation, Active")] City city)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-
-                    _city.AddCity(city);
-                    ViewBag.Message = "Record Added successfully;";
-                    return RedirectToAction(nameof(Index));
-                }
-                ViewBag.Message = "Operation unsuccessful";
-                return new JsonResult(new { error = "Operation Unsuccessful" });
-                return View();
+                await _city.AddCity(city);
+                ViewBag.Message = "Record Added successfully;";
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {

@@ -4,14 +4,13 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface IEndUser
     {
-        public EndUser GetUserByUsername(string username);
+        public Task<IEnumerable<dynamic>> GetManagers();
+        public Task<IEnumerable<dynamic>> GetUsers();
 
-        public List<dynamic> GetManagers();
+        public Task<object> GetUserById(int? id);
+        public Task<EndUser> GetUserByUsername(string username);
 
-        public dynamic GetUserById(int? id);
 
-        public List<dynamic> GetUsers();
-
-        public void AddUser(EndUser user);
+        public Task<dynamic> AddUser(EndUser user);
     }
 }

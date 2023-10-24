@@ -4,15 +4,15 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface IPrefferedSuburb
     {
-        public List<dynamic> GetPrefferedSuburbs();
+        public Task<IEnumerable<dynamic>> GetPrefferedSuburbs();
 
-        public List<dynamic> GetPrefferedSuburbsByNurse(int? id);
+        public Task<IEnumerable<dynamic>> GetPrefferedSuburbsByNurse(int? id);
 
-        public dynamic GetPrefferedSuburb(int? nurseId, int? suburbId);
+        public Task<object> GetPrefferedSuburb(int? nurseId, int? suburbId);
 
-        public dynamic GetPrefferedSuburbBySuburb(int? id);
+        public Task<object> GetPrefferedSuburbBySuburb(int? id);
 
-        public void AddPrefferedSuburb(PrefferedSuburb prefferedSuburb);
+        public Task<dynamic> AddPrefferedSuburb(PrefferedSuburb prefferedSuburb);
 
     }
 }

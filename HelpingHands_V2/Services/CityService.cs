@@ -12,18 +12,18 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDCity";
         public CityService(IConfiguration config ) => _config = config;
 
-        public List<dynamic> GetCities()
+        public async Task<IEnumerable<dynamic>> GetCities()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public dynamic GetCity(int? id)
+        public async Task<dynamic> GetCity(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -31,12 +31,12 @@ namespace HelpingHands_V2.Services
                 param.Add("CityId", id);
                 param.Add("Command", "GetOne");
 
-                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public async void AddCity(City city)
+        public async Task<dynamic> AddCity(City city)
         {
             try
             {
@@ -48,7 +48,8 @@ namespace HelpingHands_V2.Services
                     param.Add("Active", city.Active);
                     param.Add("Command", "Insert");
 
-                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
                 }
             }
             catch (Exception)

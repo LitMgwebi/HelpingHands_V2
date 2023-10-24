@@ -2,6 +2,6 @@
 {
     public interface IBusiness
     {
-        public dynamic GetBusinessInfo();
+        public Task<object> GetBusinessInfo();
     }
 }

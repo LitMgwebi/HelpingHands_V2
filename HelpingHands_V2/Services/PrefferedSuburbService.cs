@@ -11,19 +11,19 @@
         string sql = "CRUDPrefferedSuburb";
         public PrefferedSuburbService(IConfiguration config) => _config = config;
 
-        public List<dynamic> GetPrefferedSuburbs()
+        public async Task<IEnumerable<dynamic>> GetPrefferedSuburbs()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public List<dynamic> GetPrefferedSuburbsByNurse(int? id)
+        public async Task<IEnumerable<dynamic>> GetPrefferedSuburbsByNurse(int? id)
         {
             try
             {
@@ -33,7 +33,7 @@
                     param.Add("NurseId", id);
                     param.Add("Command", "ByNurses");
 
-                    var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+                    var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
                     return result;
                 }
             }
@@ -43,7 +43,7 @@
             }
         }
 
-        public dynamic GetPrefferedSuburb(int? nurseId, int? suburbId)
+        public async Task<object> GetPrefferedSuburb(int? nurseId, int? suburbId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -52,12 +52,12 @@
                 param.Add("SuburbId", suburbId);
                 param.Add("Command", "GetOne");
 
-                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public dynamic GetPrefferedSuburbBySuburb(int? id)
+        public async Task<object> GetPrefferedSuburbBySuburb(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -65,12 +65,12 @@
                 param.Add("SuburbId", id);
                 param.Add("Command", "GetOne");
 
-                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public async void AddPrefferedSuburb(PrefferedSuburb prefferedSuburb)
+        public async Task<dynamic> AddPrefferedSuburb(PrefferedSuburb prefferedSuburb)
         {
             try
             {
@@ -82,7 +82,8 @@
                     param.Add("Active", prefferedSuburb.Active);
                     param.Add("Command", "Insert");
 
-                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
                 }
             }
             catch (Exception)

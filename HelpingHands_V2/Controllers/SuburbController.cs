@@ -16,11 +16,11 @@ namespace HelpingHands_V2.Controllers
             _city = city;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var suburbs = _suburb.GetSuburbs();
+                var suburbs = await _suburb.GetSuburbs();
 
                 if (suburbs == null)
                 {
@@ -37,7 +37,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var suburb = _suburb.GetSuburb(id);
+                var suburb = await _suburb.GetSuburb(id);
 
                 if (suburb == null)
                     return NotFound();
@@ -60,11 +60,11 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             try
             {
-                var cities = _city.GetCities();
+                var cities = await _city.GetCities();
                 ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
                 return View();
             }
@@ -75,11 +75,11 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("SuburbName, PostalCode, CityId, Active")] Suburb suburb)
+        public async Task<IActionResult> Create([Bind("SuburbName, PostalCode, CityId, Active")] Suburb suburb)
         {
             try
             {
-                _suburb.AddSuburb(suburb);
+                await _suburb.AddSuburb(suburb);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(Index));
             }

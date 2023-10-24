@@ -12,19 +12,19 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDCareContract";
         public ContractService(IConfiguration config) => _config = config;
 
-        public List<dynamic> GetContracts()
+        public async Task<IEnumerable<dynamic>> GetContracts()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = conn.Query(sql, param, commandType:  CommandType.StoredProcedure).ToList();
+                var result = await conn.QueryAsync(sql, param, commandType:  CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public dynamic GetContract(int? id)
+        public async Task<object> GetContract(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -32,12 +32,12 @@ namespace HelpingHands_V2.Services
                 param.Add("ContractId", id);
                 param.Add("Command", "GetOne");
 
-                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public async void AddContract(CareContract contract)
+        public async Task<dynamic> AddContract(CareContract contract)
         {
             try
             {
@@ -58,7 +58,8 @@ namespace HelpingHands_V2.Services
                     param.Add("Active", contract.Active);
                     param.Add("Command", "Insert");
 
-                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
                 }
             }
             catch (Exception)

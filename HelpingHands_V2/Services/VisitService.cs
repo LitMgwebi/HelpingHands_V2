@@ -12,19 +12,19 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDVisit";
         public VisitService(IConfiguration config) => _config = config;
 
-        public List<dynamic> GetVisits()
+        public async Task<IEnumerable<dynamic>> GetVisits()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public dynamic GetVisit(int? id)
+        public async Task<object> GetVisit(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -32,12 +32,12 @@ namespace HelpingHands_V2.Services
                 param.Add("VisitId", id);
                 param.Add("Command", "GetOne");
 
-                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public async void AddVisit(Visit visit)
+        public async Task<dynamic> AddVisit(Visit visit)
         {
             try
             {
@@ -54,7 +54,9 @@ namespace HelpingHands_V2.Services
                     param.Add("Active", visit.Active);
                     param.Add("Command", "Insert");
 
-                    await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+
+                    return result;
                 }
             }
             catch (Exception)

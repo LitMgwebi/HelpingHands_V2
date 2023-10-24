@@ -16,11 +16,11 @@ namespace HelpingHands_V2.Controllers
             _account = account;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var accounts = _account.GetUsers();
+                var accounts = await _account.GetUsers();
 
                 if (accounts == null)
                 {
@@ -37,7 +37,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Profile(int? id)
+        public async Task<IActionResult> Profile(int? id)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var user = _account.GetUserById(id);
+                var user = await _account.GetUserById(id);
 
                 if (user == null)
                     return NotFound();
@@ -78,7 +78,7 @@ namespace HelpingHands_V2.Controllers
                         ModelState.AddModelError("", "Username or Password were not filled in.");
                     }
 
-                    if (ValidateUser(model))
+                    if (await ValidateUser(model))
                     {
                         var claims = new List<Claim>
                     {
@@ -139,16 +139,57 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user)
+        public async Task<IActionResult> Register([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user, string? returnUrl = null)
         {
             try
             {
-                _account.AddUser(user);
+                if (user.ApplicationType == "A" || user.ApplicationType == "P")
+                {
+                    user.UserType = user.ApplicationType;
+                    await _account.AddUser(user);
+                } else
+                {
+                    await _account.AddUser(user);
+                }
                 ViewBag.Message = "Record Added successfully;";
-                if (user.ApplicationType == "N")
-                    return RedirectToAction("Create", "Nurse", new { id = user.UserId});
+
+                if (await RegisterValidateUser(user))
+                {
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, user.Username!),
+                        new Claim(ClaimTypes.Role, user.ApplicationType!),
+                        new Claim("FullName", user.FullName),
+                        new Claim("UserId", user.UserId.ToString()),
+
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    await HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+                    HttpContext.User.AddIdentity(claimsIdentity);
+
+                    if (Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect("/");
+                    }
+                    else
+                    {
+                        if (user.ApplicationType == "A")
+                            return RedirectToAction("Dashboard", "Admin");
+                        else if (user.ApplicationType == "N")
+                            return RedirectToAction("Create", "Nurse", new { id = user.UserId });
+                        else if (user.ApplicationType == "P")
+                            return RedirectToAction("Create", "Patient", new { id = user.UserId });
+                        else
+                            return RedirectToAction("Dashboard", "Manager");
+                    }
+                }
                 else
-                    return RedirectToAction("Create", "Patient", new { id = user.UserId });
+                {
+                    return new JsonResult(new { error = "User is not validated" });
+                }
             }
             catch (Exception ex)
             {
@@ -158,9 +199,9 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public bool ValidateUser(LoginModel model)
+        public async Task<bool> ValidateUser(LoginModel model)
         {
-            var user =  _account.GetUserByUsername(model.Username!);
+            var user =  await _account.GetUserByUsername(model.Username!);
 
             if (user?.UserId > 0)
             {
@@ -173,6 +214,21 @@ namespace HelpingHands_V2.Controllers
                     model.Email = user.Email;
                     model.UserId = user.UserId;
                     model.UserType = user.UserType;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<bool> RegisterValidateUser(EndUser model)
+        {
+            var user = await _account.GetUserByUsername(model.Username!);
+
+            if (user?.UserId > 0)
+            {
+                if (user.Username == model.Username && user.Password == model.Password)
+                {
+                    model.UserId = user.UserId;
                     return true;
                 }
             }

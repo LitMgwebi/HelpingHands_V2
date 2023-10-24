@@ -18,11 +18,11 @@ namespace HelpingHands_V2.Controllers
             _patient = patient;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var pc = _pc.GetPatientConditions();
+                var pc = await _pc.GetPatientConditions();
 
                 if (pc == null)
                 {
@@ -38,11 +38,11 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult IndexForPatient(int? id)
+        public async Task<IActionResult> IndexForPatient(int? id)
         {
             try
             {
-                var pc = _pc.GetPatientConditionsByPatient(id);
+                var pc = await _pc.GetPatientConditionsByPatient(id);
 
                 if (pc == null)
                 {
@@ -59,7 +59,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? patientId, int? conditionId)
+        public async Task<IActionResult> Details(int? patientId, int? conditionId)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var pc = _pc.GetOnePatientCondition(patientId, conditionId);
+                var pc = await _pc.GetOnePatientCondition(patientId, conditionId);
 
                 if (pc == null)
                     return NotFound();
@@ -82,11 +82,11 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(int id)
         {
             try
             {
-                var conditions = _condition.GetConditions();
+                var conditions = await _condition.GetConditions();
 
                 ViewData["ConditionId"] = new SelectList(conditions, "ConditionId", "ConditionName");
                 ViewData["PatientId"] = id;
@@ -99,11 +99,11 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("PatientId, ConditionId, Active")] PatientCondition patientCondition)
+        public async Task<IActionResult> Create([Bind("PatientId, ConditionId, Active")] PatientCondition patientCondition)
         {
             try
             {
-                _pc.AddPatientCondition(patientCondition);
+                await _pc.AddPatientCondition(patientCondition);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
             }

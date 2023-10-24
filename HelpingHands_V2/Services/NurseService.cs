@@ -15,18 +15,18 @@ namespace HelpingHands_V2.Services
             _config = config;
         }
 
-        public List<dynamic> GetNurses()
+        public async Task<IEnumerable<dynamic>> GetNurses()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public dynamic GetNurse(int? id)
+        public async Task<object> GetNurse(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -34,8 +34,30 @@ namespace HelpingHands_V2.Services
                 param.Add("NurseId", id);
                 param.Add("Command", "GetOne");
 
-                var result = conn.QuerySingleOrDefault(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
+            }
+        }
+
+        public async Task<dynamic> AddNurse(Nurse nurse)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("NurseId", nurse.NurseId);
+                    param.Add("Grade", nurse.Grade);
+                    param.Add("Active", nurse.Active);
+                    param.Add("Command", "Insert");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

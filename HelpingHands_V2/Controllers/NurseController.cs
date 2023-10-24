@@ -58,11 +58,11 @@ namespace HelpingHands_V2.Controllers
 
 
         // GET: Nurses
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var nurses = _nurse.GetNurses();
+                var nurses = await _nurse.GetNurses();
                 if (nurses == null)
                 {
                     return NotFound();
@@ -77,7 +77,7 @@ namespace HelpingHands_V2.Controllers
         }
 
         // GET: Nurses/Profile/5
-        public IActionResult Profile(int? id)
+        public async Task<IActionResult> Profile(int? id)
         {
             try
             {
@@ -86,8 +86,8 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var nurse = _nurse.GetNurse(id);
-                var user = _user.GetUserById(id);
+                var nurse = await _nurse.GetNurse(id);
+                var user = await _user.GetUserById(id);
                 if (nurse == null)
                 {
                     return NotFound();
@@ -105,8 +105,11 @@ namespace HelpingHands_V2.Controllers
         // GET: Nurses/Create
         public IActionResult Create(int id)
         {
-            ViewData["NurseId"] = id;
-            return View();
+            try
+            {
+                ViewData["NurseId"] = id;
+                return View();
+            } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
         }
 
         // POST: Nurses/Create
@@ -116,14 +119,12 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NurseId,Grade,Active")] Nurse nurse)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(nurse);
-                await _context.SaveChangesAsync();
+                await _nurse.AddNurse(nurse);
+                ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["NurseId"] = new SelectList(_context.EndUsers, "UserId", "UserId", nurse.NurseId);
-            return View(nurse);
+            } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
         }
 
         // GET: Nurses/Edit/5

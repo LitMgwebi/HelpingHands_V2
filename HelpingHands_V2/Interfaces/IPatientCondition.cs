@@ -4,14 +4,14 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface IPatientCondition
     {
-        public List<dynamic> GetPatientConditions();
+        public Task<IEnumerable<dynamic>> GetPatientConditions();
 
-        public List<dynamic> GetPatientConditionsByPatient(int? id);
+        public Task<IEnumerable<dynamic>> GetPatientConditionsByPatient(int? id);
 
-        public dynamic GetPatientConditionByCondition(int? id);
+        public Task<object> GetPatientConditionByCondition(int? id);
 
-        public dynamic GetOnePatientCondition(int? patientId, int? conditionId);
+        public Task<object> GetOnePatientCondition(int? patientId, int? conditionId);
 
-        public void AddPatientCondition(PatientCondition patientCondition);
+        public Task<dynamic> AddPatientCondition(PatientCondition patientCondition);
     }
 }

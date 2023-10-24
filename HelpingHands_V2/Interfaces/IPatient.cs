@@ -2,8 +2,8 @@
 {
     public interface IPatient
     {
-        public List<dynamic> GetPatients();
+        public Task<IEnumerable<dynamic>> GetPatients();
 
-        public dynamic GetPatient(int? id);
+        public Task<object> GetPatient(int? id);
     }
 }
