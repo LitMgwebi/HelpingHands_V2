@@ -86,6 +86,57 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
+                var condition = await _condition.GetCondition(id);
+
+                if (condition == null)
+                    return NotFound();
+
+                ViewBag.Condition = condition;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("ConditionId, ConditionName, ConditionDescription, Active")] Condition condition)
+        {
+            try
+            {
+                await _condition.UpdateCondition(condition);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete([Bind("ConditionId")] int ConditionId)
+        {
+            try
+            {
+                await _condition.DeleteCondition(ConditionId);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
     }
 }

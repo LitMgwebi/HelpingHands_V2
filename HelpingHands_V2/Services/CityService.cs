@@ -6,11 +6,11 @@ using System.Data;
 
 namespace HelpingHands_V2.Services
 {
-    public class CityService: ICity
+    public class CityService : ICity
     {
         private readonly IConfiguration _config;
         string sql = "CRUDCity";
-        public CityService(IConfiguration config ) => _config = config;
+        public CityService(IConfiguration config) => _config = config;
 
         public async Task<IEnumerable<dynamic>> GetCities()
         {
@@ -58,7 +58,7 @@ namespace HelpingHands_V2.Services
             }
         }
 
-        public async Task<dynamic> UpdateCity(dynamic city)
+        public async Task<dynamic> UpdateCity(City city)
         {
             try
             {
@@ -83,15 +83,19 @@ namespace HelpingHands_V2.Services
 
         public async Task<dynamic> DeleteCity(int id)
         {
-            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            try
             {
-                DynamicParameters param = new DynamicParameters();
-                param.Add("CityId", id);
-                param.Add("Command", "Delete");
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("CityId", id);
+                    param.Add("Command", "Delete");
 
-                var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
-                return result;
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
             }
+            catch (Exception) { throw; }
         }
     }
 }

@@ -57,5 +57,45 @@
                 throw;
             }
         }
+
+        public async Task<dynamic> UpdateCondition(Condition condition)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("ConditionId", condition.ConditionId);
+                    param.Add("ConditionName", condition.ConditionName);
+                    param.Add("ConditionDescription", condition.ConditionDescription);
+                    param.Add("Active", condition.Active);
+                    param.Add("Command", "Update");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<dynamic> DeleteCondition(int id)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("ConditionId", id);
+                    param.Add("Command", "Delete");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception) { throw; }
+        }
     }
 }

@@ -86,5 +86,58 @@ namespace HelpingHands_V2.Controllers
                 //return View();
             }
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var wound = await _wound.GetWound(id);
+
+                if (wound == null)
+                    return NotFound();
+
+                ViewBag.Wound = wound;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("WoundId, WoundName, Grade, WoundDescription, Active")] Wound wound)
+        {
+            try
+            {
+                await _wound.UpdateWound(wound);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete([Bind("WoundId")] int WoundId)
+        {
+            try
+            {
+                await _wound.DeleteWound(WoundId);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
     }
 }

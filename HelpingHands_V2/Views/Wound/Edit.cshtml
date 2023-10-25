@@ -1,0 +1,42 @@
+﻿@model HelpingHands_V2.Models.Wound
+
+@{
+    ViewData["Title"] = "Edit";
+    var Wound = ViewBag.Wound;
+}
+
+<h1>Edit</h1>
+
+<h4>Wound</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="WoundId" value="@Wound.WoundId" type="hidden"/>
+            <div class="form-group">
+                <label asp-for="WoundName" class="control-label"></label>
+                <input asp-for="WoundName" class="form-control" value="@Wound.WoundName" />
+                <span asp-validation-for="WoundName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Grade" class="control-label"></label>
+                <input asp-for="Grade" class="form-control" value="@Wound.Grade" />
+                <span asp-validation-for="Grade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WoundDescription" class="control-label"></label>
+                <input asp-for="WoundDescription" class="form-control" value="@Wound.WoundDescription" />
+                <span asp-validation-for="WoundDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

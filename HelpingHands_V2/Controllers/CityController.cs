@@ -69,7 +69,7 @@ namespace HelpingHands_V2.Controllers
             }
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] 
         public async Task<IActionResult> Create([Bind("CityName, CityAbbreviation, Active")] City city)
         {
             try
@@ -108,7 +108,6 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
             }
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("CityId, CityName, CityAbbreviation, Active")] City city)
