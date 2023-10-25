@@ -1,6 +1,7 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -82,6 +83,59 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
                 //ViewBag.Message = "Operation unsuccessful";
                 //return View();
+            }
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var city = await _city.GetCity(id);
+
+                if (city == null)
+                    return NotFound();
+
+                ViewBag.City = city;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("CityId, CityName, CityAbbreviation, Active")] City city)
+        {
+            try
+            {
+                await _city.UpdateCity(city);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete([Bind("CityId")]int CityId)
+        {
+            try
+            {
+                await _city.DeleteCity(CityId);
+                return RedirectToAction(nameof(Index));
+            } catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
             }
         }
     }

@@ -9,5 +9,9 @@ namespace HelpingHands_V2.Interfaces
         public Task<object> GetCity(int? id);
 
         public Task<dynamic> AddCity(City city);
+
+        public Task<dynamic> UpdateCity(dynamic city);
+
+        public Task<dynamic> DeleteCity(int id);
     }
 }
