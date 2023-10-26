@@ -12,5 +12,7 @@ namespace HelpingHands_V2.Interfaces
 
 
         public Task<dynamic> AddUser(EndUser user);
+        public Task<dynamic> UpdateUser(EndUser user);
+        public Task<dynamic> DeleteUser(int id);
     }
 }

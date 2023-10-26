@@ -1,0 +1,92 @@
+﻿@model HelpingHands_V2.Models.EndUser
+
+@{
+    ViewData["Title"] = "Edit";
+    var User = ViewBag.User;
+}
+
+<h1>Edit</h1>
+
+<h4>EndUser</h4>
+<hr />
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-5">
+            <input asp-for="UserId" value="@User.UserId" type="hidden" />
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" value="@User.Username" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Firstname" class="control-label"></label>
+                <input asp-for="Firstname" class="form-control" value="@User.Firstname" />
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lastname" class="control-label"></label>
+                <input asp-for="Lastname" class="form-control" value="@User.Lastname" />
+                <span asp-validation-for="Lastname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" type="date" value="@User.DateOfBirth.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" value="@User.Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" value="@User.Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <select asp-for="Gender" class="form-control" value="@User.Gender">
+                    <option>Female</option>
+                    <option>Male</option>
+                    <option>Non-binary</option>
+                    <option>Gender Fluid</option>
+                    <option>Other</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactNumber" class="control-label"></label>
+                <input asp-for="ContactNumber" class="form-control" value="@User.ContactNumber" />
+                <span asp-validation-for="ContactNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Idnumber" class="control-label"></label>
+                <input asp-for="Idnumber" class="form-control" value="@User.IDNumber" />
+                <span asp-validation-for="Idnumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="UserType" class="form-control" value="@User.UserType" type="hidden" />
+            </div>
+            <div class="form-group">
+                <input asp-for="ApplicationType" class="form-control" value="@User.ApplicationType" type="hidden" />
+            </div>
+            @* <div class="form-group">
+            <label asp-for="ProfilePicture" class="control-label"></label>
+            <input asp-for="ProfilePicture" class="form-control" value="@User.ProfilePicture" />
+            <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="ProfilePictureName" class="control-label"></label>
+            <input asp-for="ProfilePictureName" class="form-control" value="@User.ProfilePictureName" />
+            <span asp-validation-for="ProfilePictureName" class="text-danger"></span>
+            </div> *@
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</form>

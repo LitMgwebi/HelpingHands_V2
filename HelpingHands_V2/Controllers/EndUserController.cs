@@ -199,6 +199,60 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var user = await _account.GetUserById(id);
+
+                if (user == null)
+                    return NotFound();
+
+                ViewBag.User = user;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("UserId, Username, Firstname, Lastname, DateOfBirth, Email, Password, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user)
+        {
+            try
+            {
+                // If Role = Admin, return to Index. else if role = P || M return to profile
+                await _account.UpdateUser(user);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete([Bind("UserId")] int UserId)
+        {
+            try
+            {
+                await _account.DeleteUser(UserId);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
         public async Task<bool> ValidateUser(LoginModel model)
         {
             var user =  await _account.GetUserByUsername(model.Username!);

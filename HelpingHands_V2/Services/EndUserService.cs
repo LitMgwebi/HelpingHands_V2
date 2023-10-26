@@ -104,5 +104,58 @@ namespace HelpingHands_V2.Services
                 throw;
             }
         }
+
+        public async Task<dynamic> UpdateUser(EndUser user)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    var sql = "CRUDUser";
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("UserId", user.UserId);
+                    param.Add("Username", user.Username);
+                    param.Add("Firstname", user.Firstname);
+                    param.Add("Lastname", user.Lastname);
+                    param.Add("DateOfBirth", user.DateOfBirth);
+                    param.Add("Email", user.Email);
+                    param.Add("Password", user.Password);
+                    param.Add("Gender", user.Gender);
+                    param.Add("ContactNumber", user.ContactNumber);
+                    param.Add("IDNumber", user.Idnumber);
+                    param.Add("UserType", user.UserType);
+                    param.Add("ApplicationType", user.ApplicationType);
+                    //param.Add("ProfilePicture", user.ProfilePicture);
+                    //param.Add("ProfilePictureName", user.ProfilePictureName);
+                    param.Add("Active", user.Active);
+                    param.Add("Command", "Update");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<dynamic> DeleteUser(int id)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    var sql = "CRUDUser";
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("UserId", id);
+                    param.Add("Command", "Delete");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception) { throw; }
+        }
     }
 }
