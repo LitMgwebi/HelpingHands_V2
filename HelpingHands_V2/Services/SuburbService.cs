@@ -58,5 +58,46 @@ namespace HelpingHands_V2.Services
                 throw;
             }
         }
+
+        public async Task<dynamic> UpdateSuburb(Suburb suburb)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("SuburbId", suburb.SuburbId);
+                    param.Add("SuburbName", suburb.SuburbName);
+                    param.Add("PostalCode", suburb.PostalCode);
+                    param.Add("CityId", suburb.CityId);
+                    param.Add("Active", suburb.Active);
+                    param.Add("Command", "Update");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<dynamic> DeleteSuburb(int id)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("SuburbId", id);
+                    param.Add("Command", "Delete");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception) { throw; }
+        }
     }
 }

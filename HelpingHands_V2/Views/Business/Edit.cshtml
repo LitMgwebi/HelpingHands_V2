@@ -36,7 +36,7 @@
             <div class="form-group">
                 <label asp-for="SuburbId" class="control-label"></label>
                 <select asp-for="SuburbId" class="form-control" asp-items="ViewBag.SuburbId">
-                    <option value="@Bi.SuburbId" selected>@Bi.SuburbName</option>
+                    <option value="@Bi.SuburbId" selected disabled>@Bi.SuburbName</option>
                 </select>
                 <span asp-validation-for="SuburbId" class="text-danger"></span>
             </div>

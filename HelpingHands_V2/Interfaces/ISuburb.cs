@@ -9,5 +9,9 @@ namespace HelpingHands_V2.Interfaces
         public Task<object> GetSuburb(int? id);
 
         public Task<dynamic> AddSuburb(Suburb suburb);
+
+        public Task<dynamic> UpdateSuburb(Suburb suburb);
+
+        public Task<dynamic> DeleteSuburb(int id);
     }
 }

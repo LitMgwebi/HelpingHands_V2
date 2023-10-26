@@ -90,5 +90,60 @@ namespace HelpingHands_V2.Controllers
                 //return View();
             }
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var cities = await _city.GetCities();
+                var suburb = await _suburb.GetSuburb(id);
+
+                if (suburb == null)
+                    return NotFound();
+
+                ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
+                ViewBag.Suburb = suburb;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("SuburbId, SuburbName, PostalCode, CityId, Active")] Suburb suburb)
+        {
+            try
+            {
+                await _suburb.UpdateSuburb(suburb);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete([Bind("SuburbId")] int SuburbId)
+        {
+            try
+            {
+                await _suburb.DeleteSuburb(SuburbId);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
     }
 }
