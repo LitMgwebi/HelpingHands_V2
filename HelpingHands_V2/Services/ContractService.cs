@@ -67,5 +67,54 @@ namespace HelpingHands_V2.Services
                 throw;
             }
         }
+
+        public async Task<dynamic> UpdateContract(CareContract contract)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("ContractId", contract.ContractId);
+                    param.Add("ContractStatus", contract.ContractStatus);
+                    param.Add("ContractDate", contract.ContractDate);
+                    param.Add("PatientId", contract.PatientId);
+                    param.Add("NurseId", contract.NurseId);
+                    param.Add("WoundId", contract.WoundId);
+                    param.Add("AddressLineOne", contract.AddressLineOne);
+                    param.Add("AddressLineTwo", contract.AddressLineTwo);
+                    param.Add("SuburbId", contract.SuburbId);
+                    param.Add("StartDate", contract.StartDate);
+                    param.Add("EndDate", contract.EndDate);
+                    param.Add("ContractComment", contract.ContractComment);
+                    param.Add("Active", contract.Active);
+                    param.Add("Command", "Update");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<dynamic> DeleteContract(int id)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("ContractId", id);
+                    param.Add("Command", "Delete");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception) { throw; }
+        }
     }
 }

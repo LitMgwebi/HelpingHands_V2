@@ -87,5 +87,57 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var op = await _op.GetOperation(id);
+
+                if (op == null)
+                    return NotFound();
+
+                ViewBag.Operation = op;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("OperationHoursId, OperationDay, OpenTime, CloseTime, BusinessId, Active")] OperationHour operationHour)
+        {
+            try
+            {
+                await _op.UpdateOperationHour(operationHour);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete([Bind("OperationHoursId")] int OperationHoursId)
+        {
+            try
+            {
+                await _op.DeleteOperationHour(OperationHoursId);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
     }
 }

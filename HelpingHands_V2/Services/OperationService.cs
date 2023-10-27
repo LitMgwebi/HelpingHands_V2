@@ -62,5 +62,47 @@ namespace HelpingHands_V2.Services
                 throw;
             }
         }
+
+        public async Task<dynamic> UpdateOperationHour(OperationHour operation)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("OperationHoursId", operation.OperationHoursId);
+                    param.Add("OperationDay", operation.OperationDay);
+                    param.Add("OpenTime", operation.OpenTime);
+                    param.Add("CloseTime", operation.CloseTime);
+                    param.Add("BusinessId", 1);
+                    param.Add("Active", operation.Active);
+                    param.Add("Command", "Update");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<dynamic> DeleteOperationHour(int id)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("OperationHoursId", id);
+                    param.Add("Command", "Delete");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception) { throw; }
+        }
     }
 }

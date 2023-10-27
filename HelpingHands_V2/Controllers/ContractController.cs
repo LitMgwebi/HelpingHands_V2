@@ -103,6 +103,64 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
+                var contract = await _contract.GetContract(id);
+                var patients = await _patient.GetPatients();
+                var nurses = await _nurse.GetNurses();
+                var wounds = await _wound.GetWounds();
+                var suburbs = await _suburb.GetSuburbs();
+
+                if (contract == null || patients == null || nurses == null|| wounds == null|| suburbs == null)
+                    return NotFound();
+
+                ViewData["PatientId"] = new SelectList(patients, "PatientId", "PatientId");
+                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "NurseId");
+                ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
+                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                ViewBag.Contract = contract;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("ContractId, ContractStatus, ContractDate, PatientId, NurseId, WoundId, AddressLineOne, AddressLineTwo, SuburbId, StartDate, EndDate, ContractComment, Active")] CareContract contract)
+        {
+            try
+            {
+                await _contract.UpdateContract(contract);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete([Bind("ContractId")] int ContractId)
+        {
+            try
+            {
+                await _contract.DeleteContract(ContractId);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
     }
 }

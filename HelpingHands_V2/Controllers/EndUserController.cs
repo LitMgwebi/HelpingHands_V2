@@ -238,6 +238,7 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
+        // Sql query to soft delete Nurse/Patient with the same userId
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete([Bind("UserId")] int UserId)

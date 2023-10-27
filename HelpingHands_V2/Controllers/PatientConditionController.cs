@@ -114,5 +114,60 @@ namespace HelpingHands_V2.Controllers
                 //return View();
             }
         }
+
+        public async Task<IActionResult> Edit(int? patientId, int? conditionId)
+        {
+            try
+            {
+                if (patientId == null && conditionId == null)
+                {
+                    return NotFound();
+                }
+
+                var pc = await _pc.GetOnePatientCondition(patientId, conditionId);
+                var conditions = await _condition.GetConditions();
+
+                if (pc == null || conditions == null)
+                    return NotFound();
+
+                ViewData["ConditionId"] = new SelectList(conditions, "ConditionId", "ConditionName");
+                ViewBag.PatientCondition = pc;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("PatientId, ConditionId, Active")] PatientCondition patientCondition)
+        {
+            try
+            {
+                await _pc.UpdatePatientCondition(patientCondition);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete([Bind("PatientId, ConditionId, Active")] PatientCondition patientCondition)
+        {
+            try
+            {
+                await _pc.DeletePatientCondition(patientCondition);
+                return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
     }
 }

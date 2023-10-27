@@ -114,5 +114,20 @@ namespace HelpingHands_V2.Controllers
                 //return View();
             }
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete([Bind("NurseId, SuburbId, Active")] PrefferedSuburb prefferedSuburb)
+        {
+            try
+            {
+                await _ps.DeletePrefferedSuburb(prefferedSuburb);
+                return RedirectToAction(nameof(IndexForNurse), new { id = prefferedSuburb.NurseId });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
     }
 }

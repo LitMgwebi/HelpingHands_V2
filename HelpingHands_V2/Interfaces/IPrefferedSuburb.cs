@@ -14,5 +14,7 @@ namespace HelpingHands_V2.Interfaces
 
         public Task<dynamic> AddPrefferedSuburb(PrefferedSuburb prefferedSuburb);
 
+        public Task<dynamic> DeletePrefferedSuburb(PrefferedSuburb prefferedSuburb);
+
     }
 }

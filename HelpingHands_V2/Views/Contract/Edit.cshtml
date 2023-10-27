@@ -1,0 +1,121 @@
+﻿@model HelpingHands_V2.Models.CareContract
+
+@{
+    ViewData["Title"] = "Edit";
+    var Contract = ViewBag.Contract;
+}
+
+<h1>Edit</h1>
+
+<h4>CareContract</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="ContractId" value="@Contract.ContractId" type="hidden" />
+            <div class="form-group">
+                <label asp-for="ContractStatus" class="control-label"></label>
+                <input asp-for="ContractStatus" value="@Contract.ContractStatus" class="form-control" />
+                <span asp-validation-for="ContractStatus" class="text-danger"></span>
+            </div>
+            @if (Contract.ContractDate != null)
+            {
+                <div class="form-group">
+                    <label asp-for="ContractDate" class="control-label"></label>
+                    <input asp-for="ContractDate" value="@Contract.ContractDate.ToString("yyyy-MM-dd")" type="date" class="form-control" />
+                    <span asp-validation-for="ContractDate" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label asp-for="ContractDate" class="control-label"></label>
+                    <input asp-for="ContractDate" type="date" class="form-control" />
+                    <span asp-validation-for="ContractDate" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="PatientId" class="control-label"></label>
+                <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId">
+                    <option value="@Contract.PatientId">@Contract.PatientFirstname</option>
+                </select>
+                <span asp-validation-for="PatientId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NurseId" class="control-label"></label>
+                <select asp-for="NurseId" class="form-control" asp-items="ViewBag.NurseId">
+                    <option value="@Contract.NurseId">@Contract.NurseFirstname</option>
+                </select>
+                <span asp-validation-for="NurseId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WoundId" class="control-label"></label>
+                <select asp-for="WoundId" class="form-control" asp-items="ViewBag.WoundId">
+                    <option value="@Contract.WoundId">@Contract.WoundName</option>
+                </select>
+                <span asp-validation-for="WoundId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressLineOne" class="control-label"></label>
+                <input asp-for="AddressLineOne" value="@Contract.AddressLineOne" class="form-control" />
+                <span asp-validation-for="AddressLineOne" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressLineTwo" class="control-label"></label>
+                <input asp-for="AddressLineTwo" value="@Contract.AddressLineOne" class="form-control" />
+                <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SuburbId" class="control-label"></label>
+                <select asp-for="SuburbId" class="form-control" asp-items="ViewBag.SuburbId">
+                    <option value="@Contract.SuburbId">@Contract.SuburbName</option>
+                </select>
+                <span asp-validation-for="SuburbId" class="text-danger"></span>
+            </div>
+            @if (Contract.StartDate != null)
+            {
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <input asp-for="StartDate" value="@Contract.StartDate.ToString("yyyy-MM-dd")" type="date" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <input asp-for="StartDate" type="date" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+            }
+            @if (Contract.EndDate != null)
+            {
+                <div class="form-group">
+                    <label asp-for="EndDate" class="control-label"></label>
+                    <input asp-for="EndDate" value="@Contract.EndDate.ToString("yyyy-MM-dd")" type="date" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+            }else{
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" type="date" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            }
+            <div class="form-group">
+                <label asp-for="ContractComment" class="control-label"></label>
+                <input asp-for="ContractComment" value="@Contract.ContractComment" class="form-control" />
+                <span asp-validation-for="ContractComment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

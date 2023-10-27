@@ -58,4 +58,8 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Visit.VisitId">Edit</a> |
     <a asp-action="Index">Back to List</a>
+    <form asp-action="Delete">
+        <input asp-for="VisitId" value="@Visit.VisitId" type="hidden" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+    </form>
 </div>

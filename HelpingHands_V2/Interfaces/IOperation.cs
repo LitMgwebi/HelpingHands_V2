@@ -9,5 +9,9 @@ namespace HelpingHands_V2.Interfaces
         public Task<object> GetOperation(int? id);
 
         public Task<dynamic> AddOperationHours(OperationHour operation);
+
+        public Task<dynamic> UpdateOperationHour(OperationHour operation);
+
+        public Task<dynamic> DeleteOperationHour(int id);
     }
 }

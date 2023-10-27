@@ -13,5 +13,9 @@ namespace HelpingHands_V2.Interfaces
         public Task<object> GetOnePatientCondition(int? patientId, int? conditionId);
 
         public Task<dynamic> AddPatientCondition(PatientCondition patientCondition);
+
+        public Task<dynamic> UpdatePatientCondition(PatientCondition patientCondition);
+
+        public Task<dynamic> DeletePatientCondition(PatientCondition patientCondition);
     }
 }

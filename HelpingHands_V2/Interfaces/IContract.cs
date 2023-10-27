@@ -9,5 +9,9 @@ namespace HelpingHands_V2.Interfaces
         public Task<object> GetContract(int? id);
 
         public Task<dynamic> AddContract(CareContract contract);
+
+        public Task<dynamic> UpdateContract(CareContract contract);
+
+        public Task<dynamic> DeleteContract(int id);
     }
 }

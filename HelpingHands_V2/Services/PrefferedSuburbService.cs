@@ -91,5 +91,23 @@
                 throw;
             }
         }
+
+        public async Task<dynamic> DeletePrefferedSuburb(PrefferedSuburb prefferedSuburb)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("NurseId", prefferedSuburb.NurseId);
+                    param.Add("SuburbId", prefferedSuburb.SuburbId);
+                    param.Add("Command", "Delete");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception) { throw; }
+        }
     }
 }
