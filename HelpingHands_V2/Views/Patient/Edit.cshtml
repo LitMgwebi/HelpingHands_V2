@@ -1,0 +1,79 @@
+﻿@model HelpingHands_V2.Models.Patient
+
+@{
+    ViewData["Title"] = "Edit";
+    var Patient = ViewBag.Patient;
+}
+
+<h1>Edit</h1>
+
+<h4>Patient</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="PatientId" value="@Patient.PatientId" type="hidden" />
+            @if (@Patient.AddressLineOne == null)
+            {
+            <div class="form-group">
+                <label asp-for="AddressLineOne" class="control-label"></label>
+                <input asp-for="AddressLineOne" class="form-control" />
+                <span asp-validation-for="AddressLineOne" class="text-danger"></span>
+                </div>
+            } else
+            {
+                <div class="form-group">
+                    <label asp-for="AddressLineOne" class="control-label"></label>
+                    <input asp-for="AddressLineOne" value="@Patient.AddressLineOne" class="form-control" />
+                    <span asp-validation-for="AddressLineOne" class="text-danger"></span>
+                </div>
+            }
+            @if (@Patient.AddressLineTwo == null)
+            {
+                <div class="form-group">
+                    <label asp-for="AddressLineTwo" class="control-label"></label>
+                    <input asp-for="AddressLineTwo" class="form-control" />
+                    <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
+                </div>
+            } else
+            {
+                <div class="form-group">
+                    <label asp-for="AddressLineTwo" class="control-label"></label>
+                    <input asp-for="AddressLineTwo" value="@Patient.AddressLineTwo" class="form-control" />
+                    <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="SuburbId" class="control-label"></label>
+                <select asp-for="SuburbId" class="form-control" asp-items="ViewBag.SuburbId">
+                    <option value="@Patient.SuburbId">@Patient.SuburbName</option>
+                </select>
+                <span asp-validation-for="SuburbId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Icename" class="control-label"></label>
+                <input asp-for="Icename" value="@Patient.ICEName" class="form-control" />
+                <span asp-validation-for="Icename" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Icenumber" class="control-label"></label>
+                <input asp-for="Icenumber" value="@Patient.ICENumber" class="form-control" />
+                <span asp-validation-for="Icenumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdditionalInfo" class="control-label"></label>
+                <input asp-for="AdditionalInfo" value="@Patient.AdditionalInfo" class="form-control" />
+                <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

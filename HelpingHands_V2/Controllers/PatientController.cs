@@ -1,5 +1,6 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +55,6 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-
         public async Task<IActionResult> Index()
         {
             try
@@ -100,7 +100,6 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-
         public async Task<IActionResult> Create(int id)
         {
             try
@@ -126,44 +125,63 @@ namespace HelpingHands_V2.Controllers
 
 
         // GET: PatientController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: PatientController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int? id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var patient = await _patient.GetPatient(id);
+                var user = await _user.GetUserById(id);
+                var suburbs = await _suburb.GetSuburbs();
+
+                if (patient == null || user == null || suburbs == null)
+                    return NotFound();
+
+                ViewBag.Patient = patient;
+                ViewBag.User = user;
+                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 return View();
             }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
         }
-
-        // GET: PatientController/Delete/5
-        public ActionResult Delete(int id)
+        // POST: PatientController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("PatientId, AddressLineOne, AddressLineTwo, SuburbId, Icename, Icenumber, AdditionalInfo, Active")] Patient patient)
         {
-            return View();
+            try
+            {
+                await _patient.UpdatePatient(patient);
+                return RedirectToAction(nameof(Profile), new { id = patient.PatientId });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
         }
 
         // POST: PatientController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete([Bind("PatientId")] int PatientId)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await _patient.DeletePatient(PatientId);
+                await _user.DeleteUser(PatientId);
+                await HttpContext.SignOutAsync();
+                return Redirect("/");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return new JsonResult(new { error = ex.Message });
             }
         }
     }

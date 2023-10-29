@@ -246,7 +246,8 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 await _account.DeleteUser(UserId);
-                return RedirectToAction(nameof(Index));
+                await HttpContext.SignOutAsync();
+                return Redirect("/");
             }
             catch (Exception ex)
             {

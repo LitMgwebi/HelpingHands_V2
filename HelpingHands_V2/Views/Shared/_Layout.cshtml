@@ -133,9 +133,22 @@
                     <ul class="nav navbar-nav flex-grow-1 justify-content-end ">
                         @if (User.Identity!.IsAuthenticated)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="EndUser" asp-action="Profile" asp-route-id="@User.FindFirst("UserId")!.Value">Profile</a>
-                            </li>
+                            @if (User.IsInRole("N"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Nurse" asp-action="Profile" asp-route-id="@User.FindFirst("UserId")!.Value">Profile</a>
+                                </li>
+                            } else if (User.IsInRole("P"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Profile" asp-route-id="@User.FindFirst("UserId")!.Value">Profile</a>
+                                </li>
+                            } else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="EndUser" asp-action="Profile" asp-route-id="@User.FindFirst("UserId")!.Value">Profile</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="EndUser" asp-action="Logout">Logout</a>
                             </li>

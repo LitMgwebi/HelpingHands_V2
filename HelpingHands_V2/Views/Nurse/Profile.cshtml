@@ -63,7 +63,7 @@
             ID Number
         </dt>
         <dd class = "col-sm-10">
-            @User.IDNumber
+            @User.Idnumber
         </dd>
         <dt class = "col-sm-2">
             Profile Picture
@@ -76,4 +76,8 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Nurse.NurseId">Edit</a> |
     <a asp-action="Index">Back to List</a>
+    <form asp-action="Delete">
+        <input asp-for="NurseId" value="@Nurse.NurseId" type="hidden" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+    </form>
 </div>

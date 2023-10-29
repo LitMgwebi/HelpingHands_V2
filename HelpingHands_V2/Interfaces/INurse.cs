@@ -9,5 +9,9 @@ namespace HelpingHands_V2.Interfaces
         public Task<object> GetNurse(int? id);
 
         public Task<dynamic> AddNurse(Nurse nurse);
+
+        public Task<dynamic> UpdateNurse(Nurse nurse);
+
+        public Task<dynamic> DeleteNurse(int id);
     }
 }

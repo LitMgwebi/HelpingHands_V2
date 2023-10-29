@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    var Nurse = ViewBag.Nurse;
 }
 
 <h1>Edit</h1>
@@ -12,16 +13,11 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="NurseId" />
+            <input asp-for="NurseId" value="@Nurse.NurseId" type="hidden" />
             <div class="form-group">
                 <label asp-for="Grade" class="control-label"></label>
-                <input asp-for="Grade" class="form-control" />
+                <input asp-for="Grade" value="@Nurse.Grade" class="form-control" />
                 <span asp-validation-for="Grade" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
-                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

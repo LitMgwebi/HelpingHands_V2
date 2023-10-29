@@ -63,5 +63,49 @@ namespace HelpingHands_V2.Services
                 throw;
             }
         }
+
+        public async Task<dynamic> UpdatePatient(Patient patient)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("PatientId", patient.PatientId);
+                    param.Add("AddressLineOne", patient.AddressLineOne);
+                    param.Add("AddressLineTwo", patient.AddressLineTwo);
+                    param.Add("SuburbId", patient.SuburbId);
+                    param.Add("ICEName", patient.Icename);
+                    param.Add("ICENumber", patient.Icenumber);
+                    param.Add("AdditionalInfo", patient.AdditionalInfo);
+                    param.Add("Active", patient.Active);
+                    param.Add("Command", "Update");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<dynamic> DeletePatient(int id)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                {
+                    DynamicParameters param = new DynamicParameters();
+                    param.Add("PatientId", id);
+                    param.Add("Command", "Delete");
+
+                    var result = await conn.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    return result;
+                }
+            }
+            catch (Exception) { throw; }
+        }
     }
 }

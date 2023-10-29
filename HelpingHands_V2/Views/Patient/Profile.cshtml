@@ -59,12 +59,15 @@
         <dd class="col-sm-10">
             @User.IDNumber
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressLineOne)
-        </dt>
-        <dd class = "col-sm-10">
-            @Patient.AddressLineOne
-        </dd>
+        @if (@Patient.AddressLineOne != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AddressLineOne)
+            </dt>
+            <dd class="col-sm-10">
+                @Patient.AddressLineOne
+            </dd>
+        }
         @if (@Patient.AddressLineTwo != null)
         {
             <dt class="col-sm-2">
@@ -112,4 +115,8 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Patient.PatientId">Edit</a> |
     <a asp-action="Index">Back to List</a>
+    <form asp-action="Delete">
+        <input asp-for="PatientId" value="@Patient.PatientId" type="hidden" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+    </form>
 </div>

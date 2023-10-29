@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using HelpingHands_V2.Models;
 using HelpingHands_V2.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel;
+using Microsoft.AspNetCore.Authentication;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -56,7 +58,6 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-
         public async Task<IActionResult> Index()
         {
             try
@@ -74,6 +75,7 @@ namespace HelpingHands_V2.Controllers
                 return BadRequest(ex);
             }
         }
+
         public async Task<IActionResult> Profile(int? id)
         {
             try
@@ -107,7 +109,6 @@ namespace HelpingHands_V2.Controllers
                 return View();
             } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NurseId,Grade,Active")] Nurse nurse)
@@ -122,92 +123,61 @@ namespace HelpingHands_V2.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Nurses == null)
+            try
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var nurse = await _context.Nurses.FindAsync(id);
-            if (nurse == null)
-            {
-                return NotFound();
+                var nurse = await _nurse.GetNurse(id);
+                var user = await _user.GetUserById(id);
+                if (nurse == null)
+                {
+                    return NotFound();
+                }
+
+                ViewBag.Nurse = nurse;
+                ViewBag.User = user;
+                return View();
             }
-            ViewData["NurseId"] = new SelectList(_context.EndUsers, "UserId", "UserId", nurse.NurseId);
-            return View(nurse);
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("NurseId,Grade,Active")] Nurse nurse)
+        public async Task<IActionResult> Edit([Bind("NurseId,Grade,Active")] Nurse nurse)
         {
-            if (id != nurse.NurseId)
+            try
             {
-                return NotFound();
+                await _nurse.UpdateNurse(nurse);
+                return RedirectToAction(nameof(Profile), new { id = nurse.NurseId });
             }
-
-            if (ModelState.IsValid)
+            catch (Exception ex)
             {
-                try
-                {
-                    _context.Update(nurse);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!NurseExists(nurse.NurseId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return new JsonResult(new { error = ex.Message });
             }
-            ViewData["NurseId"] = new SelectList(_context.EndUsers, "UserId", "UserId", nurse.NurseId);
-            return View(nurse);
         }
 
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Nurses == null)
-            {
-                return NotFound();
-            }
-
-            var nurse = await _context.Nurses
-                .Include(n => n.NurseNavigation)
-                .FirstOrDefaultAsync(m => m.NurseId == id);
-            if (nurse == null)
-            {
-                return NotFound();
-            }
-
-            return View(nurse);
-        }
-
-        [HttpPost, ActionName("Delete")]
+        
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete([Bind("NurseId")] int NurseId)
         {
-            if (_context.Nurses == null)
+            try
             {
-                return Problem("Entity set 'Grp0444HelpingHandsContext.Nurses'  is null.");
+                await _nurse.DeleteNurse(NurseId);
+                await _user.DeleteUser(NurseId);
+                await HttpContext.SignOutAsync();
+                return Redirect("/");
             }
-            var nurse = await _context.Nurses.FindAsync(id);
-            if (nurse != null)
+            catch (Exception ex)
             {
-                _context.Nurses.Remove(nurse);
+                return new JsonResult(new { error = ex.Message });
             }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
-        private bool NurseExists(int id)
-        {
-            return (_context.Nurses?.Any(e => e.NurseId == id)).GetValueOrDefault();
-        }
     }
 }
