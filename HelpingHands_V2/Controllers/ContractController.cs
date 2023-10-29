@@ -139,6 +139,7 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                //return new JsonResult(new { content = contract });
                 await _contract.UpdateContract(contract);
                 return RedirectToAction(nameof(Index));
             }
