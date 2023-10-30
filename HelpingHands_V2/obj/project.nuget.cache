@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "lYUJxe7B4x8avyDTXoPm2C4TN52nZOX5/RjHHAcUqY0u1L6vRzQTQWzOiM9HwHMtTxRUTz+qsKHOcxz64llsmw==",
+  "dgSpecHash": "JYSeInmAVFA9jKwlyAXzHSgXEulOrmH9Cz2rEVBfmglt2i5mce6/uJPBgoeVHrvCqWu2lzpMISx1EiJso3rcbg==",
   "success": true,
   "projectFilePath": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\HelpingHands_V2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lithi\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\lithi\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
+    "C:\\Users\\lithi\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\lithi\\.nuget\\packages\\dapper\\2.0.151\\dapper.2.0.151.nupkg.sha512",
     "C:\\Users\\lithi\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\lithi\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",

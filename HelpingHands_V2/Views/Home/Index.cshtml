@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var Business = ViewBag.Business;
 }
 
 <div class="text-center">
@@ -7,4 +8,29 @@
 </div>
 <div class="row">
     <h3>Here you will...</h3>
+    <div class="col-3">
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">@Business.OrganizationName</div>
+            <div class="card-body">
+                <p class="card-text">
+                    @Business.AddressLineOne <br />@Business.AddressLineTwo<br />
+                    @Business.SuburbName
+                </p>
+                <a href="mailto: @Business.Email" class="card-link">@Business.Email</a>
+                <a href="tel:@Business.ContactNumber" class="card-link">@Business.ContactNumber</a>
+                <br />
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+                Operational Hours:
+            </div>
+            <ul class="list-group list-group-flush">
+                @foreach (var item in ViewBag.Operation)
+                {
+                    <li class="list-group-item">@item.OperationDay  @item.OpenTime - @item.CloseTime</li>
+                }
+            </ul>
+        </div>
+    </div>
 </div>

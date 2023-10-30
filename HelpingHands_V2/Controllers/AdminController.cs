@@ -9,7 +9,6 @@ namespace HelpingHands_V2.Controllers
     [Authorize(Roles = "A")]
     public class AdminController : Controller
     {
-        private readonly Grp0444HelpingHandsContext _context;
         private readonly INurse _nurse;
         private readonly IEndUser _user;
         private readonly ISuburb _suburb;
@@ -17,9 +16,8 @@ namespace HelpingHands_V2.Controllers
         private readonly IBusiness _business;
         private readonly IOperation _operation;
 
-        public AdminController(Grp0444HelpingHandsContext context, INurse nurse, IEndUser user, ISuburb suburb, ICity city, IBusiness business, IOperation operation)
+        public AdminController(INurse nurse, IEndUser user, ISuburb suburb, ICity city, IBusiness business, IOperation operation)
         {
-            _context = context;
             _nurse = nurse;
             _user = user;
             _suburb = suburb;

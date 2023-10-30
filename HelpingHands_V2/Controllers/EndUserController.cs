@@ -117,13 +117,14 @@ namespace HelpingHands_V2.Controllers
                         ModelState.AddModelError("", "Username or Password is incorrect");
                     }
                 }
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new JsonResult(new { error = ex.Message });
             }
             return View();
         }
-    
+
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
@@ -135,7 +136,8 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 return View();
-            } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
+            }
+            catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -143,14 +145,7 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                if (user.ApplicationType == "A" || user.ApplicationType == "P")
-                {
-                    user.UserType = user.ApplicationType;
-                    await _account.AddUser(user);
-                } else
-                {
-                    await _account.AddUser(user);
-                }
+                await _account.AddUser(user);
                 ViewBag.Message = "Record Added successfully;";
 
                 if (await RegisterValidateUser(user))
@@ -158,7 +153,7 @@ namespace HelpingHands_V2.Controllers
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.Username!),
-                        new Claim(ClaimTypes.Role, user.ApplicationType!),
+                        new Claim(ClaimTypes.Role, user.UserType!),
                         new Claim("FullName", user.FullName),
                         new Claim("UserId", user.UserId.ToString()),
 
@@ -176,11 +171,11 @@ namespace HelpingHands_V2.Controllers
                     }
                     else
                     {
-                        if (user.ApplicationType == "A")
+                        if (user.UserType == "A")
                             return RedirectToAction("Dashboard", "Admin");
-                        else if (user.ApplicationType == "N")
+                        else if (user.UserType == "N")
                             return RedirectToAction("Create", "Nurse", new { id = user.UserId });
-                        else if (user.ApplicationType == "P")
+                        else if (user.UserType == "P")
                             return RedirectToAction("Create", "Patient", new { id = user.UserId });
                         else
                             return RedirectToAction("Dashboard", "Manager");
@@ -257,11 +252,11 @@ namespace HelpingHands_V2.Controllers
 
         public async Task<bool> ValidateUser(LoginModel model)
         {
-            var user =  await _account.GetUserByUsername(model.Username!);
+            var user = await _account.GetUserByUsername(model.Username!);
 
             if (user?.UserId > 0)
             {
-                if(user.Username == model.Username && user.Password == model.Password)
+                if (user.Username == model.Username && user.Password == model.Password)
                 {
 
                     model.DateOfBirth = user.DateOfBirth;

@@ -85,6 +85,7 @@ namespace HelpingHands_V2.Services
                     param.Add("DateOfBirth", user.DateOfBirth);
                     param.Add("Email", user.Email);
                     param.Add("Password", user.Password);
+                    //param.Add("Password", BCrypt.Net.BCrypt.HashPassword(user.Password));
                     param.Add("Gender", user.Gender);
                     param.Add("ContactNumber", user.ContactNumber);
                     param.Add("IDNumber", user.Idnumber);
