@@ -13,32 +13,41 @@ public partial class CareContract
     public string ContractStatus { get; set; } = null!;
 
     [DisplayName("Contract Date")]
+    [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
+    [DataType(DataType.Date)]
     public DateTime ContractDate { get; set; }
 
-    [DisplayName("Patient Name")]
+    [DisplayName("Patient")]
     public int PatientId { get; set; }
 
-    [DisplayName("Nurse Name")]
+    [DisplayName("Nurse")]
     public int? NurseId { get; set; }
 
-    [DisplayName("Wound Name")]
+    [DisplayName("Wound")]
     public int? WoundId { get; set; }
 
-    [DisplayName("First Address Line")]
+    [DataType(DataType.MultilineText)]
+    [DisplayName("Address Line 1")]
     public string? AddressLineOne { get; set; }
 
-    [DisplayName("Second Address Line")]
+    [DataType(DataType.MultilineText)]
+    [DisplayName("Address Line 2")]
     public string? AddressLineTwo { get; set; }
 
-    [DisplayName("Suburb Name")]
+    [DisplayName("Suburb")]
     public int? SuburbId { get; set; }
 
     [DisplayName("Start Date")]
+    [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
+    [DataType(DataType.Date)]
     public DateTime? StartDate { get; set; }
 
     [DisplayName("End Date")]
+    [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
+    [DataType(DataType.Date)]
     public DateTime? EndDate { get; set; }
 
+    [DataType(DataType.MultilineText)]
     [DisplayName("Contract Comment")]
     public string? ContractComment { get; set; }
 

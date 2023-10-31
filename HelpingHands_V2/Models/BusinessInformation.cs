@@ -15,20 +15,26 @@ public partial class BusinessInformation
     [DisplayName("NPO Number")]
     public string? Nponumber { get; set; }
 
-    [DisplayName("First Address Line")]
+    [DisplayName("Address Line 1")]
+    [DataType(DataType.MultilineText)]
     public string? AddressLineOne { get; set; }
 
-    [DisplayName("Second Address Line")]
+    [DisplayName("Address Line 2")]
+    [DataType(DataType.MultilineText)]
     public string? AddressLineTwo { get; set; }
 
-    [DisplayName("Suburb Name")]
+    [DisplayName("Suburb")]
     public int? SuburbId { get; set; }
 
     [DisplayName("Contract Number")]
-    [Phone(ErrorMessage ="Please enter a phone number")]
+    [Required(ErrorMessage = "Please enter a contact number")]
+    [Phone(ErrorMessage ="Please enter a valid contact number")]
+    [DataType(DataType.PhoneNumber)]
     public string? ContactNumber { get; set; }
 
-    [EmailAddress(ErrorMessage ="Please enter an email address")]
+    [DataType(DataType.EmailAddress)]
+    [Required(ErrorMessage = "Please enter an email address")]
+    [EmailAddress(ErrorMessage ="Please enter a valid email address")]
     public string? Email { get; set; }
 
     public bool Active { get; set; } = true;

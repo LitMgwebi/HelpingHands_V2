@@ -9,10 +9,12 @@ public partial class City
 {
     public int CityId { get; set; }
 
-    [Display(Name = "City Name")]
+    [Display(Name = "City")]
+    [DataType(DataType.Text)]
     public string CityName { get; set; } = null!;
 
-    [DisplayName("City Abbreviation")]
+    [DisplayName("Abbreviation")]
+    [DataType(DataType.Text)]
     public string CityAbbreviation { get; set; } = null!;
 
     public bool Active { get; set; } = true;

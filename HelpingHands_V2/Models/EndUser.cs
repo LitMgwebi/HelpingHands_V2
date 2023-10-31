@@ -23,28 +23,32 @@ public partial class EndUser
 
     [Required(ErrorMessage = "Please enter your date of birth")]
     [DisplayName("Date of Birth")]
+    [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
+    [DataType(DataType.Date)]
     public DateTime DateOfBirth { get; set; }
 
-    [Required(ErrorMessage = "Please enter your email")]
-    [EmailAddress(ErrorMessage = "Please enter the correct email")]
+    [DataType(DataType.EmailAddress)]
+    [Required(ErrorMessage = "Please enter an email address")]
+    [EmailAddress(ErrorMessage = "Please enter a valid email address")]
     public string Email { get; set; } = null!;
 
+    [DataType(DataType.Password)]
     [Required(ErrorMessage = "Please enter your password")]
     public string Password { get; set; } = null!;
 
     [Required(ErrorMessage = "Please enter your gender")]
     public string Gender { get; set; } = null!;
 
-    [Required(ErrorMessage = "Please enter your Contact Number")]
-    [DisplayName("Contact Number")]
-    [Phone(ErrorMessage = "Please enter the contact number.")]
+    [DisplayName("Contract Number")]
+    [Required(ErrorMessage = "Please enter a contact number")]
+    [Phone(ErrorMessage = "Please enter a valid contact number")]
     public string ContactNumber { get; set; } = null!;
 
     [Required(ErrorMessage = "Please enter your ID Number")]
     [DisplayName("ID Number")]
     public string? Idnumber { get; set; }
 
-    [DisplayName("Display Name")]
+    [DisplayName("User Type")]
     public string? UserType { get; set; }
 
     [DisplayName("Application Type")]
