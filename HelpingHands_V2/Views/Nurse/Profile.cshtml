@@ -78,6 +78,6 @@
     <a asp-action="Index">Back to List</a>
     <form asp-action="Delete">
         <input asp-for="NurseId" value="@Nurse.NurseId" type="hidden" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Nurse.Firstname @Nurse.Lastname?')" class="btn btn-danger" /> |
     </form>
 </div>

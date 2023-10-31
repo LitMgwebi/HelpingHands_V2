@@ -27,6 +27,6 @@
     <a asp-action="Index">Back to List</a> |
     <form asp-action="Delete">
         <input asp-for="CityId" value="@City.CityId" type="hidden" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @City.CityName?')" class="btn btn-danger" /> |
     </form>
 </div>

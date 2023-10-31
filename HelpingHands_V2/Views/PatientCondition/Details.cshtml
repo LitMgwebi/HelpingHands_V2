@@ -32,6 +32,6 @@
         <input asp-for="PatientId" value="@PC.PatientId" type="hidden" />
         <input asp-for="ConditionId" value="@PC.ConditionId" type="hidden" />
         <input asp-for="Active" value="@PC.Active" type="hidden" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" /> |
     </form>
 </div>
