@@ -104,7 +104,9 @@
             }
             <div class="form-group">
                 <label asp-for="ContractComment" class="control-label"></label>
-                <input asp-for="ContractComment" value="@Contract.ContractComment" class="form-control" />
+                <textarea name="ContractComment" class="form-control" rows="3" autofocus>
+                    @Contract.ContractComment
+                </textarea>
                 <span asp-validation-for="ContractComment" class="text-danger"></span>
             </div>
             <div class="form-group">

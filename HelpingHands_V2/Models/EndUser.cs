@@ -24,10 +24,10 @@ public partial class EndUser
     [Required(ErrorMessage = "Please enter your date of birth")]
     [DisplayName("Date of Birth")]
     [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
-    [DataType(DataType.Date)]
+    [DataType(DataType.Date, ErrorMessage = "Please enter a valid date")]
     public DateTime DateOfBirth { get; set; }
 
-    [DataType(DataType.EmailAddress)]
+    [DataType(DataType.EmailAddress, ErrorMessage = "Please enter a valid email address")]
     [Required(ErrorMessage = "Please enter an email address")]
     [EmailAddress(ErrorMessage = "Please enter a valid email address")]
     public string Email { get; set; } = null!;
@@ -35,6 +35,11 @@ public partial class EndUser
     [DataType(DataType.Password)]
     [Required(ErrorMessage = "Please enter your password")]
     public string Password { get; set; } = null!;
+
+    [DataType(DataType.Password)]
+    [Display(Name = "Confirm password")]
+    [Compare(nameof(Password), ErrorMessage = "The password and confirmation password do not match.")]
+    public string? ConfirmPassword { get; set; }
 
     [Required(ErrorMessage = "Please enter your gender")]
     public string Gender { get; set; } = null!;

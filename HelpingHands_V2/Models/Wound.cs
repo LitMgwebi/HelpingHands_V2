@@ -14,6 +14,7 @@ public partial class Wound
     [Required(ErrorMessage = "Please enter a the name of the wound")]
     public string WoundName { get; set; } = null!;
 
+    [Required(ErrorMessage ="Please enter the grade level of the wound")]
     public string? Grade { get; set; }
 
     [DisplayName("Wound Description")]

@@ -74,8 +74,8 @@ namespace HelpingHands_V2.Controllers
                 var wounds = await _wound.GetWounds();
                 var suburbs = await _suburb.GetSuburbs();
 
-                ViewData["PatientId"] = new SelectList(patients, "PatientId", "PatientId");
-                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "NurseId");
+                ViewData["PatientId"] = new SelectList(patients, "PatientId", "Fullname");
+                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                 ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
                 ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 return View();

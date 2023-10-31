@@ -39,12 +39,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="WoundCondition" class="control-label"></label>
-                <input asp-for="WoundCondition" class="form-control" value="@Visit.WoundCondition" />
+                <textarea name="WoundCondition" class="form-control" rows="3" autofocus>
+                    @Visit.WoundCondition
+                </textarea>
                 <span asp-validation-for="WoundCondition" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Note" class="control-label"></label>
-                <input asp-for="Note" class="form-control" value="@Visit.Note" />
+                <textarea name="Note" class="form-control" rows="3" autofocus>
+                    @Visit.Note
+                </textarea>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
             <div class="form-group">
