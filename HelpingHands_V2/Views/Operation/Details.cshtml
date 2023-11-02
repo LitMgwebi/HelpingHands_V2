@@ -6,10 +6,11 @@
 }
 
 <h2 class="display-4 text-center">Details</h2>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<hr />
 
-<div>
-    <hr />
-    <dl class="row">
+<div class="row">
+    <dl>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.OperationDay)
         </dt>
@@ -31,10 +32,9 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Operation.OperationHoursId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Operation.OperationHoursId" class="btn btn-success">Edit</a>
     <form asp-action="Delete">
         <input asp-for="OperationHoursId" value="@Operation.OperationHoursId" type="hidden" />
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" />
     </form>
 </div>

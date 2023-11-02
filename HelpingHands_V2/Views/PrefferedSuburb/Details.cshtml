@@ -5,11 +5,11 @@
     var PS = ViewBag.PrefferedSuburb;
 }
 
-<h1>Details</h1>
+<h2 class="display-4 text-center">Details</h2>
+<a asp-action="IndexForNurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
 
+<hr />
 <div>
-    <h4>PrefferedSuburb</h4>
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nurse)
@@ -25,9 +25,7 @@
         </dd>
     </dl>
 </div>
-<div>
-    @* @Html.ActionLink("Edit", "Edit", new {  id = @PS.NurseId  }) | *@
-    <a asp-action="IndexForNurse" asp-route-id="@User.FindFirst("UserId")!.Value">Back to List</a>
+<div class="btn-group" role="group" aria-label="Control Panel">
     <form asp-action="Delete">
         <input asp-for="NurseId" value="@PS.NurseId" type="hidden" />
         <input asp-for="SuburbId" value="@PS.SuburbId" type="hidden" />

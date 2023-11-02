@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<HelpingHands_V2.Models.Patient>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Patients";
 }
 
-<h1>Index</h1>
+<h2 class="display-4 text-center">Patients</h2>
 
 <table class="table" id="myTable">
     <thead>
@@ -47,9 +47,7 @@
                     @item.ICENumber
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.PatientId">Edit</a> |
-                    <a asp-action="Profile" asp-route-id="@item.PatientId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.PatientId">Delete</a>
+                    <a asp-action="Profile" asp-route-id="@item.PatientId" class="btn btn-info">Details</a>
                 </td>
             </tr>
         }

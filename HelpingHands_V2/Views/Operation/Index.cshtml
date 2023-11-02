@@ -4,10 +4,8 @@
 }
 
 <h2 class="display-4 text-center">Operational Hours</h2>
-
-<p>
-    <a asp-action="Create">Add New</a>
-</p>
+<hr />
+<a asp-action="Create" class="btn btn-primary">Create New</a>
 
 <table class="table" id="myTable">
     <thead>
@@ -32,9 +30,7 @@
                 <td>@item.OpenTime</td>
                 <td>@item.CloseTime</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.OperationHoursId">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.OperationHoursId">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.OperationHoursId">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.OperationHoursId" class="btn btn-info">View</a>
                 </td>
             </tr>
         }

@@ -4,11 +4,12 @@
     var Contract = ViewBag.Contract;
 }
 
-<h1>Details</h1>
+<h2 class="display-4 text-center">Contract Details</h2>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<hr />
 
-<div>
-    <hr />
-    <dl class="row">
+<div class="row">
+    <dl>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ContractStatus)
         </dt>
@@ -77,11 +78,10 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Contract.ContractId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="btn-group" role="group" aria-label="Control Panel">
+    <a asp-action="Edit" asp-route-id="@Contract.ContractId" class="btn btn-success">Edit</a>
     <form asp-action="Delete">
         <input asp-for="ContractId" value="@Contract.ContractId" type="hidden" />
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete contract: #@Contract.ContractId?')" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete contract: #@Contract.ContractId?')" class="btn btn-danger" />
     </form>
 </div>

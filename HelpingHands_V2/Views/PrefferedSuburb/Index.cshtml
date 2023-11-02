@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<HelpingHands_V2.Models.PrefferedSuburb>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Preferred Suburbs";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h2 class="display-4 text-center">Preferred Suburbs</h2>
+<hr />
+<a asp-action="Create" class="btn btn-primary">Create New</a>
 <table class="table" id="myTable">
     <thead>
         <tr>
@@ -24,19 +22,17 @@
     <tbody>
         @foreach (var item in ViewBag.PrefferedSuburbs)
         {
-        <tr>
-            <td>
-                @item.NurseFirstname @item.NurseLastname
-            </td>
-            <td>
-                @item.SuburbName
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+            <tr>
+                <td>
+                    @item.NurseFirstname @item.NurseLastname
+                </td>
+                <td>
+                    @item.SuburbName
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-nurseId="@item.NurseId" asp-route-suburbId="@item.SuburbId" class="btn btn-info">View</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

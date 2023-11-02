@@ -1,16 +1,16 @@
 ﻿@model HelpingHands_V2.Models.BusinessInformation
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Business Information";
     var Bi = ViewBag.BusinessInfo;
 }
 
-<h1>Details</h1>
+<h2 class="display-4 text-center">Business Information</h2>
+<hr />
+<a asp-action="Dashboard" asp-controller="Admin" class="btn btn-secondary">Back</a>
 
-<div>
-    <h4>BusinessInformation</h4>
-    <hr />
-    <dl class="row">
+<div class="row">
+    <dl>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.OrganizationName)
         </dt>
@@ -55,7 +55,6 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Bi.BusinessId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+    <a asp-action="Edit" asp-route-id="@Bi.BusinessId" class="btn btn-success">Edit</a>
 </div>

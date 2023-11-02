@@ -86,6 +86,7 @@ namespace HelpingHands_V2.Controllers
                         new Claim("FullName", model.FullName),
                         new Claim(ClaimTypes.Role, model.UserType!),
                         new Claim("UserId", model.UserId.ToString()),
+                        new Claim("Username", model.Username!)
 
                     };
 

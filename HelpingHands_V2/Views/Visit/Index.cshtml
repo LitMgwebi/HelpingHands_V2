@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<HelpingHands_V2.Models.Visit>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Visits";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h2 class="display-4 text-center">Visits</h2>
+<hr />
+<a asp-action="Create" class="btn btn-primary">Create New</a>
 <table class="table" id="myTable">
     <thead>
         <tr>
@@ -33,28 +31,26 @@
     <tbody>
         @foreach (var item in ViewBag.Visits)
         {
-        <tr>
-            <td>
-                @item.VisitDate.Day @item.VisitDate.ToString("MMM")
-            </td>
-            <td>
-                @item.Arrival
-            </td>
-            <td>
-                @item.Departure
-            </td>
-            <td>
-                @item.WoundCondition
-            </td>
-            <td>
-                @item.ContractId
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.VisitId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.VisitId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.VisitId">Delete</a>
-            </td>
-        </tr>
-}
+            <tr>
+                <td>
+                    @item.VisitDate.Day @item.VisitDate.ToString("MMM")
+                </td>
+                <td>
+                    @item.Arrival
+                </td>
+                <td>
+                    @item.Departure
+                </td>
+                <td>
+                    @item.WoundCondition
+                </td>
+                <td>
+                    @item.ContractId
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

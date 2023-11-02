@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<HelpingHands_V2.Models.CareContract>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Contracts";
 }
 
-<h2 class="display-4 text-center">Active Contracts</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h2 class="display-4 text-center">Contracts</h2>
+<hr />
+<a asp-action="Create" class="btn btn-primary">Create New</a>
 <table class="table" id="myTable">
     <thead>
         <tr>
@@ -36,31 +34,29 @@
     <tbody>
         @foreach (var item in ViewBag.Contracts)
         {
-        <tr>
-            <td>
-                @item.ContractStatus
-            </td>
-            <td>
-                @item.ContractDate.Day @item.ContractDate.ToString("MMM")
-            </td>
-            <td>
-                @item.ContractComment
-            </td>
-            <td>
-                @item.NurseFirstname @item.NurseLastname
-            </td>
-            <td>
-                @item.PatientFirstname @item.PatientLastname
-            </td>
-            <td>
-                @item.WoundName
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ContractId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ContractId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ContractId">Delete</a>
-            </td>
-        </tr>
-}
+            <tr>
+                <td>
+                    @item.ContractStatus
+                </td>
+                <td>
+                    @item.ContractDate.Day @item.ContractDate.ToString("MMM")
+                </td>
+                <td>
+                    @item.ContractComment
+                </td>
+                <td>
+                    @item.NurseFirstname @item.NurseLastname
+                </td>
+                <td>
+                    @item.PatientFirstname @item.PatientLastname
+                </td>
+                <td>
+                    @item.WoundName
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

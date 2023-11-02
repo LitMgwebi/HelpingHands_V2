@@ -5,7 +5,8 @@
     var Visit = ViewBag.Visit;
 }
 
-<h1>Details</h1>
+<h2 class="display-4 text-center">Visit Details</h2>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
 
 <div>
     <h4>Visit</h4>
@@ -55,9 +56,8 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Visit.VisitId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="btn-group" role="group" aria-label="Control Panel">
+    <a asp-action="Edit" asp-route-id="@Visit.VisitId" class="btn btn-success">Edit</a>
     <form asp-action="Delete">
         <input asp-for="VisitId" value="@Visit.VisitId" type="hidden" />
         <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete visit: #@Visit.VisitId?')" class="btn btn-danger" /> |

@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<HelpingHands_V2.Models.PatientCondition>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Patient's Conditions";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value">Create New</a>
-</p>
+<h2 class="display-4 text-center">@User.FindFirst("FullName")!.Value's Conditions</h2>
+<hr />
+<a asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-primary">Create New</a>
 <table class="table" id="myTable">
     <thead>
         <tr>
@@ -32,9 +30,7 @@
                     @item.PatientFirstname @item.PatientLastname
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-patientId="@item.PatientId" asp-route-conditionId="@item.ConditionId">Edit</a> |
-                    <a asp-action="Details" asp-route-patientId="@item.PatientId" asp-route-conditionId="@item.ConditionId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.PatientId">Delete</a>
+                    <a asp-action="Details" asp-route-patientId="@item.PatientId" asp-route-conditionId="@item.ConditionId" class="btn btn-info">View</a>
                 </td>
             </tr>
         }

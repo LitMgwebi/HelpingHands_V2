@@ -1,11 +1,9 @@
-﻿
-
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Nurses";
 }
 
-<h1>Index</h1>
-
+<h2 class="display-4 text-center">Nurses</h2>
+<hr />
 <table class="table" id="myTable">
     <thead>
         <tr>
@@ -17,26 +15,25 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in ViewBag.Nurses) {
-        <tr>
-            <td>
-                @item.Username
-            </td>
-            <td>
-                @item.Firstname
-            </td>
-            <td>
-                @item.Lastname
-            </td>
-            <td>
-                @item.Grade
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.NurseId">Edit</a> |
-                <a asp-action="Profile" asp-route-id="@item.NurseId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.NurseId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in ViewBag.Nurses)
+        {
+            <tr>
+                <td>
+                    @item.Username
+                </td>
+                <td>
+                    @item.Firstname
+                </td>
+                <td>
+                    @item.Lastname
+                </td>
+                <td>
+                    @item.Grade
+                </td>
+                <td>
+                    <a asp-action="Profile" asp-route-id="@item.NurseId" class="btn btn-info">View</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

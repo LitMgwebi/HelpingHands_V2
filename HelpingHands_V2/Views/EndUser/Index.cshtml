@@ -1,15 +1,12 @@
 ﻿@model IEnumerable<HelpingHands_V2.Models.EndUser>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Employees";
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table" id="myTable">
+<h2 class="display-4 text-center">Employees</h2>
+<hr />
+<a asp-action="Create" class="btn btn-primary">Create New</a>
+<table id="myTable" class="table">
     <thead>
         <tr>
             <th>
@@ -39,15 +36,15 @@
     <tbody>
         @foreach (var item in ViewBag.Accounts)
         {
-        <tr>
-            <td>
-                @item.Username
-            </td>
-            <td>
-                @item.Firstname
-            </td>
-            <td>
-                @item.Lastname
+            <tr>
+                <td>
+                    @item.Username
+                </td>
+                <td>
+                    @item.Firstname
+                </td>
+                <td>
+                    @item.Lastname
                 </td>
                 <td>
                     @item.Email
@@ -55,18 +52,31 @@
                 <td>
                     @item.ContactNumber
                 </td>
-            <td>
-                @item.UserType
-            </td>
-            <td>
-                @item.ProfilePicture
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                <a asp-action="Profile" asp-route-id="@item.UserId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
-            </td>
-        </tr>
-}
+                <td>
+                    @if (@item.UserType == "A")
+                    {
+                        <p>Admin</p>
+                    }
+                    else if (@item.UserType == "P")
+                    {
+                        <p>Patient</p>
+                    }
+                    else if (@item.UserType == "N")
+                    {
+                        <p>Nurse</p>
+                    }
+                    else
+                    {
+                        <p>Manager</p>
+                    }
+                </td>
+                <td>
+                    @item.ProfilePicture
+                </td>
+                <td>
+                    <a asp-action="Profile" asp-route-id="@item.UserId" class="btn btn-info">View</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

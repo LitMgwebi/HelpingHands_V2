@@ -5,12 +5,12 @@
     var Condition = ViewBag.Condition;
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Condition</h4>
+<h2 class="display-4 text-center">@Condition.ConditionName Details</h2>
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>
     <hr />
-    <dl class="row">
+
+<div class="row">
+    <dl>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ConditionName)
         </dt>
@@ -25,11 +25,10 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Condition.ConditionId">Edit</a> |
-    <a asp-action="Index">Back to List</a>|
+<div class="btn-group" role="group" aria-label="Control Panel">
+    <a asp-action="Edit" asp-route-id="@Condition.ConditionId" class="btn btn-success">Edit</a>
     <form asp-action="Delete">
         <input asp-for="ConditionId" value="@Condition.ConditionId" type="hidden" />
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @Condition.ConditionName?')" lass="btn btn-danger" /> |
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @Condition.ConditionName?')" lass="btn btn-danger" />
     </form>
 </div>

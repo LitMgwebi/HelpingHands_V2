@@ -5,11 +5,11 @@
     var PC = ViewBag.PatientCondition;
 }
 
-<h1>Details</h1>
+<h2 class="display-4 text-center">Details</h2>
+<a asp-action="IndexForPatient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
 
+<hr />
 <div>
-    <h4>PatientCondition</h4>
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Condition)
@@ -25,13 +25,11 @@
         </dd>
     </dl>
 </div>
-<div>
-    @* @Html.ActionLink("Edit", "Edit", new {  id = @PC.PatientId  }) | *@
-    <a asp-action="IndexForPatient" asp-route-id="@User.FindFirst("UserId")!.Value">Back to List</a>
+<div class="btn-group" role="group" aria-label="Control Panel">
     <form asp-action="Delete">
         <input asp-for="PatientId" value="@PC.PatientId" type="hidden" />
         <input asp-for="ConditionId" value="@PC.ConditionId" type="hidden" />
         <input asp-for="Active" value="@PC.Active" type="hidden" />
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" />
     </form>
 </div>

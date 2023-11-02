@@ -1,12 +1,13 @@
 ﻿@model HelpingHands_V2.Models.Wound
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = ViewBag.Wound.WoundName;
     var Wound = ViewBag.Wound;
 }
 
-<h1>Details</h1>
-
+<h2 class="display-4 text-center">@Wound.WoundName Details</h2>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<hr/>
 <div>
     <h4>Wound</h4>
     <hr />
@@ -31,11 +32,10 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Wound.WoundId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="btn-group" role="group" aria-label="Control Panel">
+    <a asp-action="Edit" asp-route-id="@Wound.WoundId" class="btn btn-success">Edit</a>
     <form asp-action="Delete">
         <input asp-for="WoundId" value="@Wound.WoundId" type="hidden" />
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @Wound.WoundName?')" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @Wound.WoundName?')" class="btn btn-danger" />
     </form>
 </div>

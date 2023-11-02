@@ -1,89 +1,90 @@
 ﻿@model HelpingHands_V2.Models.EndUser
 
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = @User.FindFirst("Username")!.Value;
     var Enduser = ViewBag.User;
 }
 
-<h1>Profile</h1>
+<h2 class="dislay-4 text-center">@User.FindFirst("FullName")!.Value's Profile</h2>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
 
-<div>
-    <h4>EndUser</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
+<hr />
+<div class="row">
+    <dl class="col-6">
+        <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Username)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-8">
             @Enduser.Username
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Firstname)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-8">
             @Enduser.Firstname
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Lastname)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-8">
             @Enduser.Lastname
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.DateOfBirth)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-8">
             @Enduser.DateOfBirth.Day @Enduser.DateOfBirth.ToString("MMMM") @Enduser.DateOfBirth.ToString("yyy")
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-8">
             @Enduser.Email
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Gender)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-8">
             @Enduser.Gender
         </dd>
-        <dt class = "col-sm-2">
+    </dl>
+    <dl class="col-6">
+        <dt class="col-4">
             @Html.DisplayNameFor(model => model.ContactNumber)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-8">
             @Enduser.ContactNumber
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Idnumber)
         </dt>
-        <dd class = "col-sm-10">
-            @Enduser.Idnumber
+        <dd class="col-sm-8">
+            @Enduser.IDNumber
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.UserType)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-8">
             @Enduser.UserType
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.ProfilePicture)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-8">
             @Enduser.ProfilePicture
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.ProfilePictureName)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-8">
             @Enduser.ProfilePictureName
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Enduser.UserId">Edit</a> |
-    <a asp-action="Index">Back to List</a>|
+<div class="btn-group" role="group" aria-label="Control Panel">
+    <a asp-action="Edit" asp-route-id="@Enduser.UserId" class="btn btn-success">Edit</a>
     <form asp-action="Delete">
         <input asp-for="UserId" value="@Enduser.UserId" type="hidden" />
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Enduser.Firstname @Enduser.Lastname?')" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Enduser.Firstname @Enduser.Lastname?')" class="btn btn-danger" />
     </form>
 </div>
