@@ -117,7 +117,7 @@ namespace HelpingHands_V2.Controllers
             {
                 await _nurse.AddNurse(nurse);
                 ViewBag.Message = "Record Added successfully;";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Dashboard), new {id = nurse.NurseId});
             } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
         }
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using HelpingHands_V2.Models;
+using BC = BCrypt.Net.BCrypt;
 using HelpingHands_V2.Interfaces;
 
 namespace HelpingHands_V2.Controllers
@@ -77,7 +78,6 @@ namespace HelpingHands_V2.Controllers
                     {
                         ModelState.AddModelError("", "Username or Password were not filled in.");
                     }
-
                     if (await ValidateUser(model))
                     {
                         var claims = new List<Claim>
@@ -146,17 +146,20 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                string tempPassword = user.Password;
+                user.Password = BC.HashPassword(user.Password);
                 await _account.AddUser(user);
                 ViewBag.Message = "Record Added successfully;";
 
-                if (await RegisterValidateUser(user))
+                if (await RegisterValidateUser(user, tempPassword))
                 {
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.Username!),
-                        new Claim(ClaimTypes.Role, user.UserType!),
                         new Claim("FullName", user.FullName),
+                        new Claim(ClaimTypes.Role, user.UserType!),
                         new Claim("UserId", user.UserId.ToString()),
+                        new Claim("Username", user.Username!)
 
                     };
 
@@ -257,7 +260,7 @@ namespace HelpingHands_V2.Controllers
 
             if (user?.UserId > 0)
             {
-                if (user.Username == model.Username && user.Password == model.Password)
+                if (user.Username == model.Username && BC.Verify(model.Password, user.Password))
                 {
 
                     model.DateOfBirth = user.DateOfBirth;
@@ -272,15 +275,15 @@ namespace HelpingHands_V2.Controllers
             return false;
         }
 
-        public async Task<bool> RegisterValidateUser(EndUser model)
+        public async Task<bool> RegisterValidateUser(EndUser user, string password)
         {
-            var user = await _account.GetUserByUsername(model.Username!);
+            var account = await _account.GetUserByUsername(user.Username!);
 
-            if (user?.UserId > 0)
+            if (account?.UserId > 0)
             {
-                if (user.Username == model.Username && user.Password == model.Password)
+                if (account.Username == user.Username && BC.Verify(password, account.Password))
                 {
-                    model.UserId = user.UserId;
+                    user.UserId = account.UserId;
                     return true;
                 }
             }

@@ -4,6 +4,7 @@ using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using BC = BCrypt.Net.BCrypt;
 using System.Data.Entity;
 
 namespace HelpingHands_V2.Services
@@ -57,7 +58,7 @@ namespace HelpingHands_V2.Services
             }
         }
 
-        public async Task<EndUser> GetUserByUsername(string username)
+        public async Task<dynamic> GetUserByUsername(string username)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -65,7 +66,7 @@ namespace HelpingHands_V2.Services
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Username", username);
 
-                var user = await conn.QueryFirstOrDefaultAsync<EndUser>(sql, param, commandType: CommandType.StoredProcedure);
+                var user = await conn.QueryFirstOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
 
                 return user;
             }
@@ -85,7 +86,7 @@ namespace HelpingHands_V2.Services
                     param.Add("DateOfBirth", user.DateOfBirth);
                     param.Add("Email", user.Email);
                     param.Add("Password", user.Password);
-                    //param.Add("Password", BCrypt.Net.BCrypt.HashPassword(user.Password));
+                    //param.Add("Password", BC.HashPassword(user.Password));
                     param.Add("Gender", user.Gender);
                     param.Add("ContactNumber", user.ContactNumber);
                     param.Add("IDNumber", user.Idnumber);

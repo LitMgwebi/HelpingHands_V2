@@ -8,7 +8,7 @@ namespace HelpingHands_V2.Interfaces
         public Task<IEnumerable<dynamic>> GetUsers();
 
         public Task<object> GetUserById(int? id);
-        public Task<EndUser> GetUserByUsername(string username);
+        public Task<dynamic> GetUserByUsername(string username);
 
 
         public Task<dynamic> AddUser(EndUser user);

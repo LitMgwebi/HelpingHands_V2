@@ -32,8 +32,9 @@ public partial class EndUser
     [EmailAddress(ErrorMessage = "Please enter a valid email address")]
     public string Email { get; set; } = null!;
 
-    [DataType(DataType.Password)]
     [Required(ErrorMessage = "Please enter your password")]
+    [DataType(DataType.Password)]
+    [Display(Name = "Password")]
     public string Password { get; set; } = null!;
 
     [DataType(DataType.Password)]
