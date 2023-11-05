@@ -58,12 +58,12 @@ public partial class EndUser
     public string? UserType { get; set; }
 
     [DisplayName("Application Type")]
-    public string? ApplicationType { get; set; }
+    public string? ApplicationType { get; set; } = null;
 
     [DisplayName("Profile Picture")]
-    public byte[]? ProfilePicture { get; set; }
+    public byte[]? ProfilePicture { get; set; } = null;
 
-    public string? ProfilePictureName { get; set; }
+    public string? ProfilePictureName { get; set; } = null;
 
     public bool Active { get; set; } = true;
 

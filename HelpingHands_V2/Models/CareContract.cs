@@ -10,7 +10,7 @@ public partial class CareContract
     public int ContractId { get; set; }
 
     [DisplayName("Contract Status")]
-    public string ContractStatus { get; set; } = null!;
+    public string? ContractStatus { get; set; }
 
     [DisplayName("Contract Date")]
     [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
@@ -22,7 +22,7 @@ public partial class CareContract
     public int PatientId { get; set; }
 
     [DisplayName("Nurse")]
-    public int? NurseId { get; set; }
+    public int? NurseId { get; set; } = null;
 
     [DisplayName("Wound")]
     public int? WoundId { get; set; }
@@ -34,7 +34,7 @@ public partial class CareContract
 
     [DataType(DataType.MultilineText)]
     [DisplayName("Address Line 2")]
-    public string? AddressLineTwo { get; set; }
+    public string? AddressLineTwo { get; set; } = null;
 
     [DisplayName("Suburb")]
     public int? SuburbId { get; set; }
@@ -43,13 +43,13 @@ public partial class CareContract
     [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
     [DataType(DataType.Date, ErrorMessage ="Please enter a valid date")]
     [Required(ErrorMessage = "Please enter the contract's starting date")]
-    public DateTime? StartDate { get; set; }
+    public DateTime? StartDate { get; set; } = null;
 
     [DisplayName("End Date")]
     [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
     [DataType(DataType.Date, ErrorMessage = "Please enter a valid date")]
     [Required(ErrorMessage = "Please enter the contract's ending date")]
-    public DateTime? EndDate { get; set; }
+    public DateTime? EndDate { get; set; } = null;
 
     [DataType(DataType.MultilineText)]
     [DisplayName("Contract Comment")]

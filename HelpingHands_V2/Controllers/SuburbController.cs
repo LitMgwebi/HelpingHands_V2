@@ -79,6 +79,11 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Message = "Model state not valid";
+                    return View();
+                }
                 await _suburb.AddSuburb(suburb);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(Index));
@@ -121,6 +126,11 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Message = "Model state not valid";
+                    return View();
+                }
                 await _suburb.UpdateSuburb(suburb);
                 return RedirectToAction(nameof(Index));
             }

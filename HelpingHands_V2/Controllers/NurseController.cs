@@ -34,22 +34,32 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 DateTime currentDate = DateTime.Now;
-                List<dynamic> assignedContracts = _report.NurseAssignedContracts(id);
+                List<dynamic> assignedContracts = new List<dynamic> { };
+                List<dynamic> unassignedContracts = new List<dynamic> { };
+                List<dynamic> contractVisits = new List<dynamic> { };
                 List<object> nextVisit = new List<object> { };
-                foreach (var contract in assignedContracts)
+
+                assignedContracts = _report.NurseAssignedContracts(id);
+                unassignedContracts = _report.ContractStatus("N");
+                if (assignedContracts.Count > 0)
                 {
-                    IEnumerable<dynamic>? contractVisits = _report.ContractVisits(contract.ContractId);
-
-                    var result = DateTime.Compare(contractVisits.Last().VisitDate, currentDate);
-
-                    if (result > 0)
+                    foreach (var contract in assignedContracts)
                     {
-                        nextVisit.Add(contractVisits.Last());
+                        contractVisits = _report.ContractVisits(contract.ContractId);
+
+                        if(contractVisits.Count > 0)
+                        {
+                            var result = DateTime.Compare(contractVisits.Last().VisitDate, currentDate);
+                            if (result > 0)
+                            {
+                                nextVisit.Add(contractVisits.Last());
+                            }
+                        }
                     }
                 }
-
-                    ViewBag.NextVisit = nextVisit;
-                ViewBag.Contracts = (List<object>)assignedContracts;
+                ViewBag.UnassignedContracts = unassignedContracts;
+                ViewBag.NextVisit = nextVisit;
+                ViewBag.Contracts = assignedContracts;
                 return View();
             }
             catch (Exception ex)
@@ -95,7 +105,8 @@ namespace HelpingHands_V2.Controllers
                 ViewBag.Nurse = nurse;
                 ViewBag.User = user;
                 return View();
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new JsonResult(new { error = ex.Message });
             }
@@ -107,7 +118,8 @@ namespace HelpingHands_V2.Controllers
             {
                 ViewData["NurseId"] = id;
                 return View();
-            } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
+            }
+            catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -115,10 +127,16 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Message = "Model state not valid";
+                    return View();
+                }
                 await _nurse.AddNurse(nurse);
                 ViewBag.Message = "Record Added successfully;";
-                return RedirectToAction(nameof(Dashboard), new {id = nurse.NurseId});
-            } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
+                return RedirectToAction(nameof(Dashboard), new { id = nurse.NurseId });
+            }
+            catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -152,6 +170,11 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Message = "Model state not valid";
+                    return View();
+                }
                 await _nurse.UpdateNurse(nurse);
                 return RedirectToAction(nameof(Profile), new { id = nurse.NurseId });
             }
@@ -161,7 +184,7 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete([Bind("NurseId")] int NurseId)

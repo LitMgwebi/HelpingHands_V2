@@ -1,5 +1,6 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -22,6 +23,7 @@ namespace HelpingHands_V2.Controllers
             _suburb = suburb;
         }
 
+        [Authorize(Roles = "O, A")]
         public async Task<IActionResult> Index()
         {
             try
@@ -65,16 +67,17 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
+        [Authorize(Roles = "P")]
         public async Task<IActionResult> Create()
         {
             try
             {
-                var patients = await _patient.GetPatients();
+                DateTime currentDate = DateTime.Now;
                 var nurses = await _nurse.GetNurses();
                 var wounds = await _wound.GetWounds();
                 var suburbs = await _suburb.GetSuburbs();
 
-                ViewData["PatientId"] = new SelectList(patients, "PatientId", "Fullname");
+                ViewData["CurrentDate"] = DateTime.Now;
                 ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                 ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
                 ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
@@ -92,8 +95,8 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 await _contract.AddContract(contract);
-                ViewBag.Message = "Record Added successfully;";
-                return RedirectToAction(nameof(Index));
+                //ViewBag.Message = "Record Added successfully;";
+                return RedirectToAction("Dashboard", "Patient", new {id = contract.PatientId});
             }
             catch (Exception ex)
             {
@@ -112,6 +115,7 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
+                DateTime currentDate = DateTime.Now;
                 var contract = await _contract.GetContract(id);
                 var patients = await _patient.GetPatients();
                 var nurses = await _nurse.GetNurses();
@@ -121,6 +125,7 @@ namespace HelpingHands_V2.Controllers
                 if (contract == null || patients == null || nurses == null|| wounds == null|| suburbs == null)
                     return NotFound();
 
+                ViewData["CurrentDate"] = DateTime.Now;
                 ViewData["PatientId"] = new SelectList(patients, "PatientId", "PatientId");
                 ViewData["NurseId"] = new SelectList(nurses, "NurseId", "NurseId");
                 ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
@@ -139,9 +144,15 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                //if (!ModelState.IsValid)
+                //{
+                //    return new JsonResult(new { error = "ModelState not valid" });
+                //    ViewBag.Message = "Model state not valid";
+                //    return View();
+                //}
                 //return new JsonResult(new { content = contract });
                 await _contract.UpdateContract(contract);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Dashboard", "Nurse", new {id = contract.NurseId});
             }
             catch (Exception ex)
             {

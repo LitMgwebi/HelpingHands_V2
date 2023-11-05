@@ -142,10 +142,24 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user, string? returnUrl = null)
+        public async Task<IActionResult> Register([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user, IFormFile file, string? returnUrl = null)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Message = "Model state not valid";
+                    return View();
+                }
+                var fileName = Path.GetFileName(file.FileName);
+
+                user.ProfilePictureName = fileName;
+                using (var target = new MemoryStream())
+                {
+                    file.CopyTo(target);
+                    user.ProfilePicture = target.ToArray();
+                }
+
                 string tempPassword = user.Password;
                 user.Password = BC.HashPassword(user.Password);
                 await _account.AddUser(user);
@@ -226,7 +240,13 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Message = "Model state not valid";
+                    return View();
+                }
                 // If Role = Admin, return to Index. else if role = P || M return to profile
+                user.Password = BC.HashPassword(user.Password);
                 await _account.UpdateUser(user);
                 return RedirectToAction(nameof(Index));
             }

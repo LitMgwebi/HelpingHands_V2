@@ -74,6 +74,11 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Message = "Model state not valid";
+                    return View();
+                }
                 await _condition.AddCondition(condition);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(Index));
@@ -114,6 +119,11 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Message = "Model state not valid";
+                    return View();
+                }
                 await _condition.UpdateCondition(condition);
                 return RedirectToAction(nameof(Index));
             }

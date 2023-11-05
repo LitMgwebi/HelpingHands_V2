@@ -10,10 +10,12 @@
     <section class="row" style="overflow-x:scroll">
 
         <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
-            <img src="/Media/plus.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
-            <div class="card-img-overlay">
-                <h5 class="card-title">Create Contract</h5>
-            </div>
+            <a asp-controller="Contract" asp-action="Create">
+                <img src="/Media/plus.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
+                <div class="card-img-overlay">
+                    <h5 class="card-title">Create Contract</h5>
+                </div>
+            </a>
         </div>
         <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
             <img src="/Media/contract.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
@@ -40,48 +42,61 @@
         <div class="col-7 text-center card" style=" height: auto; border-radius:2rem;">
             <div class="card-header">Latest Contract</div>
             <div class="card-body">
-                <section class="row mx-3">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>Nurse</td>
-                                <td>@ViewBag.PatientContract.Firstname @ViewBag.PatientContract.Lastname</td>
-                            </tr>
-                            <tr>
-                                <td>Wound</td>
-                                <td>@ViewBag.PatientContract.WoundName</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-                <section style="border: 2rem black">
-                    <h5>Wound Progress</h5>
-                    <table>
-                        @foreach (var item in ViewBag.ContractVisits)
-                        {
-                            <tr>
-                                <td>
-                                    @item.VisitDate.Day
-                                    @item.VisitDate.ToString("MMMM")
-                                </td>
-                                <td>
-                                    @if (@item.WoundCondition == null)
+                @if (ViewBag.PatientContract != null)
+                {
+                    <section class="row mx-3">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Nurse</td>
+                                    @if (ViewBag.PatientContract.NurseFirstname != null)
                                     {
+                                        <td>@ViewBag.PatientContract.NurseFirstname @ViewBag.PatientContract.NurseLastname</td>
+                                    } else
+                                    {
+                                        <td>No Nurse Assigned yet</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>Wound</td>
+                                    <td>@ViewBag.PatientContract.WoundName</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                    <section style="border: 2rem black">
+                        <h5>Wound Progress</h5>
+                        <table>
+                            @foreach (var item in ViewBag.ContractVisits)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.VisitDate.Day
+                                        @item.VisitDate.ToString("MMMM")
+                                    </td>
+                                    <td>
+                                        @if (@item.WoundCondition == null)
+                                        {
 
-                                        <p>...</p>
-                                    }
-                                    else
-                                    {
-                                        @item.WoundCondition
-                                    }
-                                </td>
-                                <td>
-                                    <button class="btn">View More</button>
-                                </td>
-                            </tr>
-                        }
-                    </table>
-                </section>
+                                            <p>...</p>
+                                        }
+                                        else
+                                        {
+                                            @item.WoundCondition
+                                        }
+                                    </td>
+                                    <td>
+                                        <button class="btn">View More</button>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </section>
+                }
+                else
+                {
+                    <p>No Current Contract</p>
+                }
             </div>
         </div>
         <div class="card col-4" style=" height: auto; border-radius:2rem;">

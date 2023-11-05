@@ -29,29 +29,34 @@ namespace HelpingHands_V2.Controllers
             {
                 DateTime currentDate = DateTime.Now;
                 var patientContracts = _report.PatientContract(id);
-                var patientContract = patientContracts.First();
-                List<dynamic> nextVisit = new List<dynamic>();
-                List<dynamic>? contractVisits = _report.ContractVisits(patientContract.ContractId);
-
-                var latestVisit = contractVisits.Last();
-
-                var result = DateTime.Compare(latestVisit.VisitDate, currentDate);
-
-                if (result > 0)
+                List<dynamic> nextVisit = new List<dynamic> { };
+                List<dynamic>? contractVisits = new List<dynamic> { };
+                if (patientContracts.Count > 0)
                 {
-                    nextVisit.Add(latestVisit);
-                    contractVisits.RemoveAt(1);
-                }
-                ViewBag.PatientContract = patientContract;
+                    var patientContract = patientContracts.FirstOrDefault();
 
-                //return new JsonResult(new { patientContract = patientContract });
-                ViewBag.ContractVisits = contractVisits.AsEnumerable().Reverse();
+                    contractVisits = _report.ContractVisits(patientContract!.ContractId);
+
+                    if(contractVisits.Count > 0)
+                    {
+                        var latestVisit = contractVisits.LastOrDefault();
+                        var result = DateTime.Compare(latestVisit!.VisitDate, currentDate);
+
+                        if (result > 0)
+                        {
+                            nextVisit.Add(latestVisit);
+                            contractVisits.RemoveAt(1);
+                        }
+                    }
+                    ViewBag.PatientContract = patientContract;
+                }
+                ViewBag.ContractVisits = contractVisits;
                 ViewBag.NextVisit = nextVisit;
                 return View();
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                return new JsonResult(new { error = ex.Message, content = ex.Data, moreContent = ex.Source, innerException = ex.InnerException });
             }
         }
 
@@ -116,6 +121,11 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Message = "Model state not valid";
+                    return View();
+                }
                 await _patient.AddPateint(patient);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(Dashboard), new {id = patient.PatientId});
@@ -158,6 +168,11 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Message = "Model state not valid";
+                    return View();
+                }
                 await _patient.UpdatePatient(patient);
                 return RedirectToAction(nameof(Profile), new { id = patient.PatientId });
             }

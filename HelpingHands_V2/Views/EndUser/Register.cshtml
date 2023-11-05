@@ -13,10 +13,14 @@
         <div class="col-5">
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">@@</span>
+                    <input asp-for="Username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
+                </div>
+
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="Firstname" class="control-label"></label>
                 <input asp-for="Firstname" class="form-control" />
                 <span asp-validation-for="Firstname" class="text-danger"></span>
@@ -25,10 +29,15 @@
                 <label asp-for="Lastname" class="control-label"></label>
                 <input asp-for="Lastname" class="form-control" />
                 <span asp-validation-for="Lastname" class="text-danger"></span>
+            </div> *@
+            <div class="input-group">
+                <span class="input-group-text">First and last name</span>
+                <input asp-for="Firstname" type="text" aria-label="First name" class="form-control">
+                <input asp-for="Lastname" type="text" aria-label="Last name" class="form-control">
             </div>
             <div class="form-group">
                 <label asp-for="DateOfBirth" class="control-label"></label>
-                <input asp-for="DateOfBirth" class="form-control" type="date"/>
+                <input asp-for="DateOfBirth" class="form-control" type="date" />
                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,13 +47,24 @@
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" type="password" />
+                <div class="input-group mb-3">
+                    <div class="input-group-text">
+                        <input class="form-check-input mt-0" type="checkbox" value="Show" aria-label="Checkbox for following text input">
+                    </div>
+                    <input asp-for="Password" class="form-control" type="password" aria-label="Text input with checkbox">
+                </div>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" type="password" />
+
+                <div class="input-group mb-3">
+                    <div class="input-group-text">
+                        <input class="form-check-input mt-0" type="checkbox" value="Show" aria-label="Checkbox for following text input">
+                    </div>
+                    <input asp-for="ConfirmPassword" class="form-control" type="password" aria-label="Text input with checkbox">
+                </div>
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
         </div>
@@ -82,11 +102,17 @@
                 </select>
                 <span asp-validation-for="UserType" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <d@* iv class="form-group">
                 <label asp-for="ProfilePicture" class="control-label"></label>
-                <input asp-for="ProfilePicture" class="form-control" type="file"/>
+                <input asp-for="ProfilePicture" class="form-control" type="file" />
+                <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+            </div> *@
+            <div class="input-group mb-3">
+                <input name="file" type="file" class="form-control" id="inputGroupFile02">
+                <label asp-for="ProfilePicture" class="input-group-text" for="inputGroupFile02"></label>
                 <span asp-validation-for="ProfilePicture" class="text-danger"></span>
             </div>
+
         </div>
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-primary" />

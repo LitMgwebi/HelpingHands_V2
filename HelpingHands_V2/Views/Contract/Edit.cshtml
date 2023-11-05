@@ -12,6 +12,14 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="ContractId" value="@Contract.ContractId" type="hidden" />
+            <input asp-for="ContractStatus" value="A" hidden/>
+            <input asp-for="PatientId" hidden value="@Contract.PatientId" />
+            <input asp-for="WoundId" hidden value="@Contract.WoundId" />
+            <input asp-for="AddressLineOne" value="@Contract.AddressLineOne" hidden />
+            <input asp-for="AddressLineTwo" value="@Contract.AddressLineTwo" hidden />
+            <input asp-for="SuburbId" value="@Contract.SuburbId" hidden />
+            <input asp-for="ContractComment" value="@Contract.ContractComment" hidden />
+            <input asp-for="NurseId" value="@User.FindFirst("UserId")!.Value" hidden readonly />
             <div class="form-group">
                 <label asp-for="ContractStatus" class="control-label"></label>
                 <input asp-for="ContractStatus" value="@Contract.ContractStatus" class="form-control" />
@@ -33,44 +41,6 @@
                     <span asp-validation-for="ContractDate" class="text-danger"></span>
                 </div>
             }
-            <div class="form-group">
-                <label asp-for="PatientId" class="control-label"></label>
-                <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId">
-                    <option value="@Contract.PatientId">@Contract.PatientFirstname</option>
-                </select>
-                <span asp-validation-for="PatientId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NurseId" class="control-label"></label>
-                <select asp-for="NurseId" class="form-control" asp-items="ViewBag.NurseId">
-                    <option value="@Contract.NurseId">@Contract.NurseFirstname</option>
-                </select>
-                <span asp-validation-for="NurseId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WoundId" class="control-label"></label>
-                <select asp-for="WoundId" class="form-control" asp-items="ViewBag.WoundId">
-                    <option value="@Contract.WoundId">@Contract.WoundName</option>
-                </select>
-                <span asp-validation-for="WoundId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddressLineOne" class="control-label"></label>
-                <input asp-for="AddressLineOne" value="@Contract.AddressLineOne" class="form-control" />
-                <span asp-validation-for="AddressLineOne" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddressLineTwo" class="control-label"></label>
-                <input asp-for="AddressLineTwo" value="@Contract.AddressLineOne" class="form-control" />
-                <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SuburbId" class="control-label"></label>
-                <select asp-for="SuburbId" class="form-control" asp-items="ViewBag.SuburbId">
-                    <option value="@Contract.SuburbId">@Contract.SuburbName</option>
-                </select>
-                <span asp-validation-for="SuburbId" class="text-danger"></span>
-            </div>
             @if (Contract.StartDate != null)
             {
                 <div class="form-group">
@@ -83,7 +53,7 @@
             {
                 <div class="form-group">
                     <label asp-for="StartDate" class="control-label"></label>
-                    <input asp-for="StartDate" type="date" class="form-control" />
+                    <input asp-for="StartDate" type="date" class="form-control" value="ViewBag.CurrentDate"/>
                     <span asp-validation-for="StartDate" class="text-danger"></span>
                 </div>
             }
@@ -101,13 +71,6 @@
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
             }
-            <div class="form-group">
-                <label asp-for="ContractComment" class="control-label"></label>
-                <textarea name="ContractComment" class="form-control" rows="3" autofocus>
-                    @Contract.ContractComment
-                </textarea>
-                <span asp-validation-for="ContractComment" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-secondary">Cancel</a>

@@ -27,55 +27,146 @@
         </div>
     </section>
     <section class="row">
-        <div class="card col-6" style=" height: auto; border-radius:2rem;">
+        <div class="card col-3" style=" height: auto; border-radius:2rem;">
             <div class="card-header">Upcoming Visits</div>
             <div class="card-body">
-                <table>
-                    @if (ViewBag.NextVisit.Count == 0)
-                    {
-                        <tr>
-                            <td>No Upcoming visits</td>
-                        </tr>
-                    }
-                    else
-                    {
-
-                        <thead>
+                <section class="row mx-3" style="border: 2rem black">
+                    <table>
+                        @if (ViewBag.NextVisit.Count == 0)
+                        {
                             <tr>
-                                <th scole="col">Patient</th>
-                                <th scole="col">Date</th>
-                                <th scole="col">Time</th>
-                                <th></th>
+                                <td>No Upcoming visits</td>
+                                <td>Schedule Visit</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < ViewBag.NextVisit.Count; i++)
-                            {
-                                <tr>
-                                    <td>
+                        }
+                        else
+                        {
 
-                                        @ViewBag.Contracts[i].PatientFirstname
-                                        @ViewBag.Contracts[i].PatientLastname
-                                    </td>
-                                    <td>
-                                        @ViewBag.NextVisit[i].VisitDate.Day
-                                        @ViewBag.NextVisit[i].VisitDate.ToString("MMM")
-                                    </td>
-                                    <td>
-                                        @ViewBag.NextVisit[i].ApproxTime
-                                    </td>
-                                    <td>
-                                        <button class="btn">Update</button>
-                                        <button class="btn">History</button>
-                                        <button class="btn">Contract</button>
-                                    </td>
+                            <thead>
+                                <tr>
+                                    <th scole="col">Patient</th>
+                                    <th scole="col">Date</th>
+                                    <th scole="col">Time</th>
+                                    <th></th>
                                 </tr>
-                            }
-                        </tbody>
-                    }
-                </table>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < ViewBag.NextVisit.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+
+                                            @ViewBag.Contracts[i].PatientFirstname
+                                            @ViewBag.Contracts[i].PatientLastname
+                                        </td>
+                                        <td>
+                                            @ViewBag.NextVisit[i].VisitDate.Day
+                                            @ViewBag.NextVisit[i].VisitDate.ToString("MMM")
+                                        </td>
+                                        <td>
+                                            @ViewBag.NextVisit[i].ApproxTime
+                                        </td>
+                                        <td>
+                                            <button class="btn">Update</button>
+                                            <button class="btn">History</button>
+                                            <button class="btn">Contract</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        }
+                    </table>
+                </section>
 
             </div>
+        </div>
+        <div class="card col-7" style=" height: auto; border-radius:2rem;">
+            @if (ViewBag.Contracts.Count > 0)
+            {
+                <div class="card-header">Latest Contract</div>
+                <div class="card-body">
+                    <section>
+                        <h4>Your latest contracts</h4>
+                    </section>
+                    <section class="row mx-3">
+                        <table class="table">
+                            @foreach(var Contract in ViewBag.Contracts)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>Patient</td>
+                                        <td>@Contract.PatientFirstname @Contract.PatientLastname</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wound</td>
+                                        <td>@Contract.WoundName</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contract Date</td>
+                                        <td>@Contract.ContractDate.ToString("yyyy-mmmm-dd")</td>
+                                    </tr>
+                                    <tr>
+                                        <a asp-controller="Visit" asp-action="Create" asp-route-id="@Contract.ContractId">Schedule new visit</a>
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+                    </section>
+                </div>
+
+            }
+            else
+            {
+                <div class="card-header">Unassigned Contracts</div>
+                <div class="card-body">
+                    <section>
+                        <h4>You have no assigned contracts. Here are a list of some available:</h4>
+                    </section>
+                    <table>
+                        @if (ViewBag.UnassignedContracts.Count == 0)
+                        {
+                            <tr>
+                                <td>No New Contracts</td>
+                            </tr>
+                        }
+                        else
+                        {
+
+                            <thead>
+                                <tr>
+                                    <th class="col-3">Patient</th>
+                                    <th class="col-3">Contract Date</th>
+                                    <th class="col-3">Suburb</th>
+                                    <th class="col-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.UnassignedContracts)
+                                {
+                                    <tr>
+                                        <td>
+
+                                            @item.PatientFirstname
+                                            @item.PatientLastname
+                                        </td>
+                                        <td>
+                                            @item.ContractDate.Day
+                                            @item.ContractDate.ToString("MMMM")
+                                        </td>
+                                        <td>
+                                            @item.SuburbName
+                                        </td>
+                                        <td>
+                                            <a asp-controller="Contract" asp-action="Edit" asp-route-id="@item.ContractId">Apply</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        }
+                    </table>
+
+                </div>
+            }
         </div>
     </section>
 </div>

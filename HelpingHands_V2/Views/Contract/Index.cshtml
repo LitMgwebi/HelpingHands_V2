@@ -6,7 +6,10 @@
 
 <h2 class="display-4 text-center">Contracts</h2>
 <hr />
-<a asp-action="Create" class="btn btn-primary">Create New</a>
+@if (User.IsInRole("P"))
+{
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+}
 <table class="table" id="myTable">
     <thead>
         <tr>
