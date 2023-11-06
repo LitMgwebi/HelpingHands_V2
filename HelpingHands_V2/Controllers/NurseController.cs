@@ -37,7 +37,7 @@ namespace HelpingHands_V2.Controllers
                 List<dynamic> assignedContracts = new List<dynamic> { };
                 List<dynamic> unassignedContracts = new List<dynamic> { };
                 List<dynamic> contractVisits = new List<dynamic> { };
-                List<object> nextVisit = new List<object> { };
+                List<dynamic> nextVisit = new List<dynamic> { };
 
                 assignedContracts = _report.NurseAssignedContracts(id);
                 unassignedContracts = _report.ContractStatus("N");
@@ -47,15 +47,25 @@ namespace HelpingHands_V2.Controllers
                     {
                         contractVisits = _report.ContractVisits(contract.ContractId);
 
-                        if(contractVisits.Count > 0)
+                        if (contractVisits.Count > 0)
                         {
-                            var result = DateTime.Compare(contractVisits.Last().VisitDate, currentDate);
-                            if (result > 0)
+                            foreach (var visit in contractVisits)
                             {
-                                nextVisit.Add(contractVisits.Last());
+                                nextVisit.Add(visit);
                             }
                         }
                     }
+                }
+                if (nextVisit.Count > 0)
+                {
+                    for (int i = 0; i < nextVisit.Count - 1; i++)
+                        for (int j = 0; j < nextVisit.Count - i - 1; j++)
+                            if (nextVisit[j].VisitDate > nextVisit[j + 1].VisitDate)
+                            { 
+                                var tempVar = nextVisit[j];
+                                nextVisit[j] = nextVisit[j + 1];
+                                nextVisit[j + 1] = tempVar;
+                            }
                 }
                 ViewBag.UnassignedContracts = unassignedContracts;
                 ViewBag.NextVisit = nextVisit;
@@ -199,6 +209,34 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+
+        public IActionResult VisitRange()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult VisitRange(int NurseId, DateTime StartDate, DateTime EndDate)
+        {
+            try
+            {
+                var visitRange = _report.NurseVisitRange(NurseId, StartDate, EndDate);
+                ViewBag.VisitRange = visitRange;
+                return View();
+            } catch(Exception ex)
+            {
+                return new JsonResult(new {error= ex.Message});
             }
         }
 

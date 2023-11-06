@@ -1,10 +1,12 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HelpingHands_V2.Controllers
 {
+    [Authorize(Roles ="N")]
     public class VisitController : Controller
     {
         private readonly IVisit _visit;
@@ -75,14 +77,10 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    ViewBag.Message = "Model state not valid";
-                    return View();
-                }
+                var userId = HttpContext.User.FindFirst("UserId")!.Value;
                 await _visit.AddVisit(visit);
                 ViewBag.Message = "Record Added successfully;";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Dashboard", "Nurse", new {id = userId});
             }
             catch (Exception ex)
             {

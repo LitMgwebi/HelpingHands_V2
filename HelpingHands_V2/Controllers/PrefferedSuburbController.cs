@@ -103,11 +103,6 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    ViewBag.Message = "Model state not valid";
-                    return View();
-                }
                 await _ps.AddPrefferedSuburb(prefferedSuburb);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(IndexForNurse), new { id = prefferedSuburb.NurseId });

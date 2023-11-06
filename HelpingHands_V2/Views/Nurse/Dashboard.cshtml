@@ -27,12 +27,12 @@
         </div>
     </section>
     <section class="row">
-        <div class="card col-3" style=" height: auto; border-radius:2rem;">
+        <div class="card col-5" style=" height: auto; border-radius:2rem;">
             <div class="card-header">Upcoming Visits</div>
             <div class="card-body">
                 <section class="row mx-3" style="border: 2rem black">
                     <table>
-                        @if (ViewBag.NextVisit.Count == 0)
+                         @if (ViewBag.NextVisit.Count == 0)
                         {
                             <tr>
                                 <td>No Upcoming visits</td>
@@ -51,18 +51,18 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr>
                                 @for (int i = 0; i < ViewBag.NextVisit.Count; i++)
                                 {
-                                    <tr>
-                                        <td>
+                                       @* <td>
 
                                             @ViewBag.Contracts[i].PatientFirstname
                                             @ViewBag.Contracts[i].PatientLastname
-                                        </td>
-                                        <td>
+                                        </td>*@
+                                        <td> 
                                             @ViewBag.NextVisit[i].VisitDate.Day
                                             @ViewBag.NextVisit[i].VisitDate.ToString("MMM")
-                                        </td>
+                                        </td> 
                                         <td>
                                             @ViewBag.NextVisit[i].ApproxTime
                                         </td>
@@ -71,28 +71,25 @@
                                             <button class="btn">History</button>
                                             <button class="btn">Contract</button>
                                         </td>
-                                    </tr>
-                                }
+                                    }
+                                </tr>
                             </tbody>
-                        }
+                        } 
                     </table>
                 </section>
 
             </div>
         </div>
-        <div class="card col-7" style=" height: auto; border-radius:2rem;">
+        <div class="card col-6" style=" height: auto; border-radius:2rem;">
             @if (ViewBag.Contracts.Count > 0)
             {
                 <div class="card-header">Latest Contract</div>
                 <div class="card-body">
                     <section>
-                        <h4>Your latest contracts</h4>
-                    </section>
-                    <section class="row mx-3">
                         <table class="table">
+                            <tbody>
                             @foreach(var Contract in ViewBag.Contracts)
                             {
-                                <tbody>
                                     <tr>
                                         <td>Patient</td>
                                         <td>@Contract.PatientFirstname @Contract.PatientLastname</td>
@@ -103,13 +100,14 @@
                                     </tr>
                                     <tr>
                                         <td>Contract Date</td>
-                                        <td>@Contract.ContractDate.ToString("yyyy-mmmm-dd")</td>
+                                        <td>@Contract.ContractDate.Day @Contract.ContractDate.ToString("MMMM")</td>
                                     </tr>
                                     <tr>
-                                        <a asp-controller="Visit" asp-action="Create" asp-route-id="@Contract.ContractId">Schedule new visit</a>
+                                        <a asp-controller="Visit" asp-action="Create" asp-route-id="@Contract.ContractId" class="btn btn-outline-primary">Schedule new visit</a>
+                                        <a asp-controller="Contract" asp-action="Details" asp-route-id="@Contract.ContractId" class="btn btn-outline-dark">View Contract</a>
                                     </tr>
-                                </tbody>
-                            }
+                                }
+                            </tbody>
                         </table>
                     </section>
                 </div>

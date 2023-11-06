@@ -7,7 +7,24 @@
 }
 
 <h2 class="display-4 text-center">Profile</h2>
-<a asp-action="Index" class="btn btn-secondary">Back to List</a>
+
+@if (User.IsInRole("P"))
+{
+    <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+}
+else if (User.IsInRole("N"))
+{
+    <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+}
+else if (User.IsInRole("O"))
+{
+    <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Back</a>
+}
+else
+{
+    <a asp-action="Dashboard" asp-controller="Admin" class="btn btn-secondary">Back</a>
+}
+
 <hr />
 <div>
     <dl class="row">

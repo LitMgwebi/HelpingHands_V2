@@ -1,0 +1,66 @@
+﻿@model IEnumerable<HelpingHands_V2.Models.CareContract>
+
+@{
+    ViewData["Title"] = "IndexForUser";
+    var Contract = ViewBag.Contract;
+}
+
+<h2 class="display-4 text-center">Your Contracts</h2>
+
+@if (User.IsInRole("P"))
+{
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+}
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractComment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nurse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Wound)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Contracts)
+        {
+            <tr>
+                <td>
+                    @item.ContractStatus
+                </td>
+                <td>
+                    @item.ContractDate.Day @item.ContractDate.ToString("MMM")
+                </td>
+                <td>
+                    @item.ContractComment
+                </td>
+                <td>
+                    @item.NurseFirstname @item.NurseLastname
+                </td>
+                <td>
+                    @item.PatientFirstname @item.PatientLastname
+                </td>
+                <td>
+                    @item.WoundName
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

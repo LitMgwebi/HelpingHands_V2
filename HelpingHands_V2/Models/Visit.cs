@@ -23,17 +23,17 @@ public partial class Visit
 
     [DisplayName("Arrival Time")]
     [DataType(DataType.Time)]
-    public TimeSpan? Arrival { get; set; }
+    public TimeSpan? Arrival { get; set; } = null;
 
     [DisplayName("Departure Time")]
     [DataType(DataType.Time)]
-    public TimeSpan? Departure { get; set; }
+    public TimeSpan? Departure { get; set; } = null;
 
     [DisplayName("Wound Condition")]
-    public string? WoundCondition { get; set; }
+    public string? WoundCondition { get; set; } = null;
 
     [DataType(DataType.MultilineText)]
-    public string? Note { get; set; }
+    public string? Note { get; set; } = null;
 
     public bool Active { get; set; } = true;
 

@@ -13,14 +13,16 @@ namespace HelpingHands_V2.Controllers
         private readonly INurse _nurse;
         private readonly IWound _wound;
         private readonly ISuburb _suburb;
+        private readonly IReport _report;
 
-        public ContractController(IContract contract, IPatient patient, INurse nurse, IWound wound, ISuburb suburb)
+        public ContractController(IContract contract, IPatient patient, INurse nurse, IWound wound, ISuburb suburb, IReport report)
         {
             _contract = contract;
             _patient = patient;
             _nurse = nurse;
             _wound = wound;
             _suburb = suburb;
+            _report = report;
         }
 
         [Authorize(Roles = "O, A")]
@@ -43,6 +45,24 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
+        public IActionResult IndexForUser(int id)
+        {
+            try
+            {
+                var contracts = _report.PatientContract(id);
+
+                //if (contracts == null)
+                //{
+                //    return NotFound();
+                //}
+                ViewBag.Contracts = contracts;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message, ex.Source });
+            }
+        }
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
@@ -106,6 +126,7 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
+        [Authorize(Roles ="A,O,N")]
         public async Task<IActionResult> Edit(int? id)
         {
             try
