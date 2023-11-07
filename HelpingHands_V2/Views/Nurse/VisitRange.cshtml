@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<HelpingHands_V2.Models.Visit>
 @{
     ViewData["Title"] = "VisitRange";
     var Range = ViewBag.VisitRange;
@@ -8,7 +8,7 @@
 
 <section class="row">
     <form asp-action="VisitRange">
-        <input name="NurseId" value="@User.FindFirst("UserId")!.Value"/>
+        <input name="NurseId" value="@User.FindFirst("UserId")!.Value" hidden/>
         <div class="form-group">
             <label class="control-label">Start</label>
             <input name="StartDate" type="date" class="form-control" required/>
@@ -25,15 +25,90 @@
 </section>
 
 <section class="row">
-    @if(Range != null)
-    {
-
-        @foreach (var item in Range)
-        {
-            <p>@item</p>
-        }
-    } else
-    {
-        <p>Please enter a date range</p>
-    }
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.VisitDate)
+                </th>
+                <th>
+                    Patient
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApproxTime)
+                </th>
+                <th>
+                    Wound
+                </th>
+                <th>
+                    Suburb
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Arrival)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WoundCondition)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Contract)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Range.Count > 0)
+            {
+                @foreach (var item in Range)
+                {
+                    <tr>
+                        <td>
+                            @item.VisitDate.Day @item.VisitDate.ToString("MMM")
+                        </td>
+                        <td>
+                            @item.PatientFirstname @item.PatientLastname
+                        </td>
+                        <td>
+                            @item.ApproxTime
+                        </td>
+                        <td>
+                            @item.WoundName
+                        </td>
+                        <td>
+                            @item.SuburbName
+                        </td>
+                        @if (item.Arrival != null)
+                        {
+                            <td>
+                                @item.Arrival
+                            </td>
+                        }
+                        else
+                        {
+                            <td>N/A</td>
+                        }
+                        @if (item.WoundCondition != null)
+                        {
+                            <td>
+                                @item.WoundCondition
+                            </td>
+                        }
+                        else
+                        {
+                            <td>N/A</td>
+                        }
+                        <td>
+                            @item.ContractId
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <h5>No Visits were found</h5>
+            }
+        </tbody>
+    </table>
 </section>

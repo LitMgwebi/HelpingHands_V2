@@ -1,0 +1,98 @@
+﻿@model IEnumerable<HelpingHands_V2.Models.Visit>
+
+@{
+    ViewData["Title"] = "Visits";
+    var Visits = ViewBag.Visits;
+}
+
+<h2 class="display-4 text-center">Visits</h2>
+
+@if (User.IsInRole("N"))
+{
+    <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+}
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VisitDate)
+            </th>
+            <th>
+                Patient
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApproxTime)
+            </th>
+            <th>
+                Wound
+            </th>
+            <th>
+                Suburb
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Arrival)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WoundCondition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contract)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Visits.Count > 0)
+        {
+            @foreach (var item in Visits)
+            {
+                <tr>
+                    <td>
+                        @item.VisitDate.Day @item.VisitDate.ToString("MMM")
+                    </td>
+                    <td>
+                        @item.PatientFirstname @item.PatientLastname
+                    </td>
+                    <td>
+                        @item.ApproxTime
+                    </td>
+                    <td>
+                        @item.WoundName
+                    </td>
+                    <td>
+                        @item.SuburbName
+                    </td>
+                    @if (item.Arrival != null)
+                    {
+                        <td>
+                            @item.Arrival
+                        </td>
+                    } else
+                    {
+                        <td>N/A</td>
+                    }
+                    @if (item.WoundCondition != null)
+                    {
+                        <td>
+                            @item.WoundCondition
+                        </td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+                    <td>
+                        @item.ContractId
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <h5>No Visits were found</h5>
+        }
+    </tbody>
+</table>

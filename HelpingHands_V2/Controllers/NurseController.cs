@@ -29,6 +29,7 @@ namespace HelpingHands_V2.Controllers
             _user = user;
         }
 
+
         public IActionResult Dashboard(int id)
         {
             try
@@ -78,6 +79,7 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
+
         public async Task<IActionResult> Index()
         {
             try
@@ -95,7 +97,6 @@ namespace HelpingHands_V2.Controllers
                 return BadRequest(ex);
             }
         }
-
         public async Task<IActionResult> Profile(int? id)
         {
             try
@@ -148,6 +149,7 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
         }
+
 
         public async Task<IActionResult> Edit(int? id)
         {
@@ -217,6 +219,8 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                List<dynamic> visitRange = new List<dynamic> { };
+                ViewBag.VisitRange = visitRange;
                 return View();
             }
             catch (Exception ex)
@@ -224,7 +228,6 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
             }
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult VisitRange(int NurseId, DateTime StartDate, DateTime EndDate)
@@ -240,5 +243,28 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
+
+        public IActionResult Visits(int id, string command)
+        {
+            try
+            {
+                List<dynamic> visits = new List<dynamic> { };
+                DateTime currentDate = DateTime.Now;
+                if (command == "upcoming")
+                {
+                    visits = _report.NurseVisitRange(id, currentDate, currentDate.AddYears(20));
+                } 
+                else if(command == "past")
+                {
+                    visits = _report.NurseVisitRange(id, currentDate.AddYears(-20), currentDate);
+                }
+                ViewBag.Visits = visits;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
     }
 }

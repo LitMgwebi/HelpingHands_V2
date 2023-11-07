@@ -45,11 +45,28 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult IndexForUser(int id)
+        public IActionResult IndexForUser(int id, string command)
         {
             try
             {
-                var contracts = _report.PatientContract(id);
+                List<dynamic> contracts = new List<dynamic> { };
+                
+                if (command == "patient")
+                {
+                    contracts = _report.PatientContract(id);
+                } 
+                else if(command == "current")
+                {
+                    contracts = _report.NurseAssignedContracts(id);
+                } 
+                else if (command == "unassigned")
+                {
+                    contracts = _report.NurseContractType(id, "N");
+                } 
+                else if (command == "past")
+                {
+                    contracts = _report.NurseContractType(id, "C");
+                }
 
                 //if (contracts == null)
                 //{

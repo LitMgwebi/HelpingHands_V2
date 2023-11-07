@@ -1,14 +1,19 @@
 ﻿@model IEnumerable<HelpingHands_V2.Models.CareContract>
 
 @{
-    ViewData["Title"] = "IndexForUser";
-    var Contract = ViewBag.Contract;
+    ViewData["Title"] = "Contracts";
+    var Contracts = ViewBag.Contracts;
 }
 
-<h2 class="display-4 text-center">Your Contracts</h2>
+<h2 class="display-4 text-center">Contracts</h2>
 
+@if (User.IsInRole("N"))
+{
+    <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+}
 @if (User.IsInRole("P"))
 {
+    <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 }
 <table class="table" id="myTable">
@@ -20,15 +25,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.ContractDate)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContractComment)
-            </th>
+            @if (User.IsInRole("P"))
+            {
             <th>
                 @Html.DisplayNameFor(model => model.Nurse)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Patient)
-            </th>
+            }
+            @if (User.IsInRole("N") || User.IsInRole("A") || User.IsInRole("O"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Patient)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.Wound)
             </th>
@@ -36,31 +47,43 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.Contracts)
+        @if (Contracts.Count > 0)
         {
-            <tr>
-                <td>
-                    @item.ContractStatus
-                </td>
-                <td>
-                    @item.ContractDate.Day @item.ContractDate.ToString("MMM")
-                </td>
-                <td>
-                    @item.ContractComment
-                </td>
-                <td>
-                    @item.NurseFirstname @item.NurseLastname
-                </td>
-                <td>
-                    @item.PatientFirstname @item.PatientLastname
-                </td>
-                <td>
-                    @item.WoundName
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
-                </td>
-            </tr>
+            @foreach (var item in Contracts)
+            {
+                <tr>
+                    <td>
+                        @item.ContractStatus
+                    </td>
+                    <td>
+                        @item.ContractDate.Day @item.ContractDate.ToString("MMMM")
+                    </td>
+                    @if (User.IsInRole("P"))
+                    {
+                        <td>
+                            @item.NurseFirstname @item.NurseLastname
+                        </td>
+                    }
+                    @if (User.IsInRole("N") || User.IsInRole("A") || User.IsInRole("O"))
+                    {
+                        <td>
+                            @item.PatientFirstname @item.PatientLastname
+                        </td>
+                        <td>
+                            @item.StartDate.Day @item.StartDate.ToString("MMMM")
+                        </td>
+                    }
+                    <td>
+                        @item.WoundName
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
+                    </td>
+                </tr>
+            }
+        } else
+        {
+            <h5>No Contracts were found</h5>
         }
     </tbody>
 </table>

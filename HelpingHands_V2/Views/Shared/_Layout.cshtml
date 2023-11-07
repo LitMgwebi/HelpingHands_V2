@@ -91,7 +91,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" asp-controller="Contract" asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value">Start New</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value">All Contract</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient">All Contract</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">
@@ -111,19 +111,19 @@
                                     Contracts
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Current Contracts</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Unassigned Contracts</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Past Contracts</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="current">Current Contracts</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="unassigned">Unassigned Contracts</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="past">Past Contracts</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Reports
+                                    Visits
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" asp-controller="Nurse" asp-action="UpcomingVisits" asp-route-id="@User.FindFirst("UserId")!.Value">Upcoming Visits</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Nurse" asp-action="Visits" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="upcoming">Upcoming Visits</a></li>
                                     <li><a class="dropdown-item" asp-controller="Nurse" asp-action="VisitRange">Visits within range</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Nurse" asp-action="PastVisits" asp-route-id="@User.FindFirst("UserId")!.Value">Past Contracts</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Nurse" asp-action="Visits" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="past">Past Visits</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">

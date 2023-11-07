@@ -17,7 +17,7 @@ public partial class Visit
     [DataType(DataType.Date)]
     public DateTime VisitDate { get; set; }
 
-    [DisplayName("Approximate Time of Arrival")]
+    [DisplayName("Approx. Time of Arrival")]
     [DataType(DataType.Time)]
     public TimeSpan? ApproxTime { get; set; }
 

@@ -37,9 +37,10 @@ public partial class EndUser
     [Display(Name = "Password")]
     public string Password { get; set; } = null!;
 
+    [Required(ErrorMessage = "Please confirm your password")]
     [DataType(DataType.Password)]
     [Display(Name = "Confirm password")]
-    [Compare(nameof(Password), ErrorMessage = "The password and confirmation password do not match.")]
+    [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
     public string? ConfirmPassword { get; set; }
 
     [Required(ErrorMessage = "Please enter your gender")]

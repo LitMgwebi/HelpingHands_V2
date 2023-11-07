@@ -142,23 +142,24 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user, IFormFile file, string? returnUrl = null)
+        public async Task<IActionResult> Register([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password,ConfirmPassword, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user,  string? returnUrl = null)
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    ViewBag.Message = "Model state not valid";
-                    return View();
-                }
-                var fileName = Path.GetFileName(file.FileName);
+                //if (!ModelState.IsValid)
+                //{
+                    //var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    //ViewBag.Message = "Model state not valid";
+                    //return new JsonResult(new { error = errors, user = user });
+                //}
+                //var fileName = Path.GetFileName(file.FileName);
 
-                user.ProfilePictureName = fileName;
-                using (var target = new MemoryStream())
-                {
-                    file.CopyTo(target);
-                    user.ProfilePicture = target.ToArray();
-                }
+                //user.ProfilePictureName = fileName;
+                //using (var target = new MemoryStream())
+                //{
+                //    file.CopyTo(target);
+                //    user.ProfilePicture = target.ToArray();
+                //}
 
                 string tempPassword = user.Password;
                 user.Password = BC.HashPassword(user.Password);
