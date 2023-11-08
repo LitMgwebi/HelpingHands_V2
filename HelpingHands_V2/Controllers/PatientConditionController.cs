@@ -103,11 +103,11 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    ViewBag.Message = "Model state not valid";
-                    return View();
-                }
+                //if (!ModelState.IsValid)
+                //{
+                //    ViewBag.Message = "Model state not valid";
+                //    return View();
+                //}
                 await _pc.AddPatientCondition(patientCondition);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
@@ -117,7 +117,7 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
                 //ViewBag.Message = "Operation unsuccessful";
                 //return View();
-            }
+            } 
         }
 
         public async Task<IActionResult> Edit(int? patientId, int? conditionId)

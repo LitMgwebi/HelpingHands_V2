@@ -95,7 +95,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Visit" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Visits</a>
+                                <a class="nav-link text-dark" asp-controller="Visit" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value">Visits</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="PatientCondition" asp-action="IndexForPatient" asp-route-id=@User.FindFirst("UserId")!.Value>Chronic Conditions</a>

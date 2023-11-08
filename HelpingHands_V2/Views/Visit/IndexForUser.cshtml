@@ -1,0 +1,64 @@
+﻿@model IEnumerable<HelpingHands_V2.Models.Visit>
+
+@{
+    ViewData["Title"] = "IndexForUser";
+    var Visits = ViewBag.Visits;
+}
+
+<h2 class="display-4 text-center">Visits</h2>
+@if (User.IsInRole("P"))
+{
+    <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value">Back</a>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VisitDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApproxTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Arrival)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Departure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WoundCondition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contract)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Visits) {
+        <tr>
+                <td>
+                    @item.VisitDate.Day @item.VisitDate.ToString("MMM")
+                </td>
+                <td>
+                    @item.ApproxTime
+                </td>
+                <td>
+                    @item.Arrival
+                </td>
+                <td>
+                    @item.Departure
+                </td>
+                <td>
+                    @item.WoundCondition
+                </td>
+                <td>
+                    @item.ContractId
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
