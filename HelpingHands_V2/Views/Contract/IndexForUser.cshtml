@@ -60,9 +60,14 @@
                     </td>
                     @if (User.IsInRole("P"))
                     {
+                        @if(@item.NurseFirstname == null)
+                        {
+                            <td>N/A</td>
+                        }else {
                         <td>
                             @item.NurseFirstname @item.NurseLastname
-                        </td>
+                            </td>
+                        }
                     }
                     @if (User.IsInRole("N") || User.IsInRole("A") || User.IsInRole("O"))
                     {

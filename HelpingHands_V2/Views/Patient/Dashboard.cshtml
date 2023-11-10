@@ -52,7 +52,8 @@
                                     @if (ViewBag.PatientContract.NurseFirstname != null)
                                     {
                                         <td>@ViewBag.PatientContract.NurseFirstname @ViewBag.PatientContract.NurseLastname</td>
-                                    } else
+                                    }
+                                    else
                                     {
                                         <td>No Nurse Assigned yet</td>
                                     }
@@ -102,44 +103,40 @@
         <div class="card col-4" style=" height: auto; border-radius:2rem;">
             <div class="card-header">Upcoming Visits</div>
             <div class="card-body">
-                <table>
+                <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
                     @if (ViewBag.NextVisit.Count == 0)
                     {
-                        <tr>
-                            <td>No Upcoming visits</td>
-                        </tr>
+                        <swiper-slide>No Upcoming Visits</swiper-slide>
                     }
                     else
                     {
+                        @foreach (var item in ViewBag.NextVisit)
+                        {
+                            <swiper-slide>
+                                <div class="card" style="width:18rem;">
+                                    <div class="card-body">
+                                        <section>
+                                            @item.VisitDate.Day
+                                            @item.VisitDate.ToString("MMMM")
+                                            @item.VisitDate.ToString("yyyy")
+                                        </section>
+                                        <section>
 
-                        <thead>
-                            <tr>
-                                <th scole="col">Date</th>
-                                <th scole="col">Time</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in ViewBag.NextVisit)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.VisitDate.Day
-                                        @item.VisitDate.ToString("MMM")
-                                    </td>
-                                    <td>
-                                        @item.ApproxTime
-                                    </td>
-                                    <td>
-                                        <button class="btn">Update</button>
-                                        <button class="btn">History</button>
-                                        <button class="btn">Contract</button>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
+                                            @item.ApproxTime
+                                        </section>
+                                        
+                                    </div>
+                                    <section class="btn-group card-footer">
+
+                                        <a class="btn">Update</a>
+                                        <a class="btn">History</a>
+                                        <a class="btn">Contract</a>
+                                    </section>
+                                </div>
+                            </swiper-slide>
+                        }
                     }
-                </table>
+                </swiper-container>
 
             </div>
         </div>

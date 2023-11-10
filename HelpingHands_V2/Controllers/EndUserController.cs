@@ -142,15 +142,15 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password,ConfirmPassword, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user,  string? returnUrl = null)
+        public async Task<IActionResult> Register([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password,ConfirmPassword, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user, string? returnUrl = null)
         {
             try
             {
                 //if (!ModelState.IsValid)
                 //{
-                    //var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    //ViewBag.Message = "Model state not valid";
-                    //return new JsonResult(new { error = errors, user = user });
+                //var errors = ModelState.Values.SelectMany(v => v.Errors);
+                //ViewBag.Message = "Model state not valid";
+                //return new JsonResult(new { error = errors, user = user });
                 //}
                 //var fileName = Path.GetFileName(file.FileName);
 
@@ -257,6 +257,62 @@ namespace HelpingHands_V2.Controllers
                 return new JsonResult(new { error = ex.Message });
             }
         }
+
+
+        [HttpGet]
+        public IActionResult ChangePassword(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                ViewBag.UserId = id;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel change)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Message = "Model state not valid";
+                    return View();
+                }
+                var user = await _account.GetUserById(change.UserId);
+                if (BC.Verify(change.CurrentPassword, user.Password))
+                {
+                    user.Password = BC.HashPassword(change.NewPassword);
+                    await _account.UpdateUser(user);
+                    
+                    if (HttpContext.User.IsInRole("P"))
+                        return RedirectToAction("Profile", "Patient", new { id = change.UserId });
+                    else if (HttpContext.User.IsInRole("N"))
+                        return RedirectToAction("Profile", "Nurse", new { id = change.UserId });
+                    else if (HttpContext.User.IsInRole("O"))
+                        return RedirectToAction("Profile", "EndUser", new { id = change.UserId });
+                    else
+                        return RedirectToAction("Profile", "EndUser", new { id = change.UserId });
+
+                }
+                return new JsonResult(new { error = "Password not changes", change, user });
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new { error = ex.Message});
+            }
+        }
+
 
         // Sql query to soft delete Nurse/Patient with the same userId
         [HttpPost]

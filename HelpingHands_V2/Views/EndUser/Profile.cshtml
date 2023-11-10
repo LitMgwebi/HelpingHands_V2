@@ -98,6 +98,7 @@ else
 </div>
 <div class="btn-group" role="group" aria-label="Control Panel">
     <a asp-action="Edit" asp-route-id="@Enduser.UserId" class="btn btn-success">Edit</a>
+    <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Enduser.UserId" class="btn btn-success">ChangePassword</a>
     <form asp-action="Delete">
         <input asp-for="UserId" value="@Enduser.UserId" type="hidden" />
         <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Enduser.Firstname @Enduser.Lastname?')" class="btn btn-danger" />

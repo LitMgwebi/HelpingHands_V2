@@ -40,11 +40,7 @@
             </div>
         </div>
         <div class="col-5">
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" value="@User.Password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
+                <input asp-for="Password" class="form-control" hidden value="@User.Password" />
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
                 <select asp-for="Gender" class="form-control" value="@User.Gender">

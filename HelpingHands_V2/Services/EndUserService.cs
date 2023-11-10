@@ -107,7 +107,7 @@ namespace HelpingHands_V2.Services
             }
         }
 
-        public async Task<dynamic> UpdateUser(EndUser user)
+        public async Task<dynamic> UpdateUser(dynamic user)
         {
             try
             {
