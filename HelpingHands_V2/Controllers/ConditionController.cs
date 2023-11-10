@@ -29,7 +29,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
 
@@ -53,7 +55,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
 
@@ -65,7 +69,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
         [HttpPost]
@@ -76,8 +82,8 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Model state not valid";
-                    return View();
+                    ViewBag.Message = "Not all the information was entered, Please look below for what's missing.";
+                    return View(condition);
                 }
                 await _condition.AddCondition(condition);
                 ViewBag.Message = "Record Added successfully;";
@@ -85,9 +91,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
-                //ViewBag.Message = "Operation unsuccessful";
-                //return View();
+                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
 
@@ -110,7 +116,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
         [HttpPost]
@@ -121,16 +129,17 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Model state not valid";
-                    return View();
+                    ViewBag.Message = "Not all the information was entered, Please look below for what's missing.";
+                    return View(condition);
                 }
                 await _condition.UpdateCondition(condition);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-
-                return new JsonResult(new { error = ex.Message });
+                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
 
@@ -145,7 +154,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
     }

@@ -3,10 +3,15 @@
 @{
     ViewData["Title"] = "Edit";
     var Condition = ViewBag.Condition;
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">Edit @Condition.ConditionName</h2>
 
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 <hr />
 <div class="row">
     <div class="col-md-4">

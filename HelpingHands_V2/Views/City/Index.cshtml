@@ -1,8 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Cities";
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">Cities</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 <hr />
 <a asp-action="Create" class="btn btn-primary">Add New</a>
 

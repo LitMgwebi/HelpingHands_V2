@@ -10,15 +10,18 @@ public partial class Suburb
     public int SuburbId { get; set; }
 
     [DisplayName("Suburb")]
+    [Required(ErrorMessage ="Please enter the name of the suburb.")]
     [DataType(DataType.Text)]
     public string SuburbName { get; set; } = null!;
 
     [DisplayName("Postal Code")]
+    [Required(ErrorMessage = "Please enter the postal code of the suburb.")]
     [DataType(DataType.Text)]
-    public int PostalCode { get; set; }
+    public int? PostalCode { get; set; }
 
     [DisplayName("City")]
-    public int CityId { get; set; }
+    [Required(ErrorMessage = "Please choose a city. If you can't find city, please add it.")]
+    public int? CityId { get; set; }
 
     public bool Active { get; set; } = true;
 

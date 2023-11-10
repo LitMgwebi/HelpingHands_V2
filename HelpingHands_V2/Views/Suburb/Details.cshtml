@@ -3,11 +3,15 @@
 @{
     ViewData["Title"] = @ViewBag.Suburb.SuburbName;
     var Suburb = ViewBag.Suburb;
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">@Suburb.SuburbName Details</h2>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
-
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 <div>
     <h4>Suburb</h4>
     <hr />

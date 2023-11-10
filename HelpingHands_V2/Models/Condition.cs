@@ -10,9 +10,11 @@ public partial class Condition
     public int ConditionId { get; set; }
 
     [DisplayName("Condition Name")]
+    [Required(ErrorMessage ="Please enter the name of the condition")]
     public string ConditionName { get; set; } = null!;
 
     [DisplayName("Description")]
+    [Required(ErrorMessage ="Please enter the description of the condition")]
     [DataType(DataType.MultilineText)]
     public string ConditionDescription { get; set; } = null!;
 

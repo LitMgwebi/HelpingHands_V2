@@ -11,10 +11,12 @@ public partial class City
 
     [Display(Name = "City")]
     [DataType(DataType.Text)]
+    [Required(ErrorMessage ="Please enter the name of the city.")]
     public string CityName { get; set; } = null!;
 
     [DisplayName("Abbreviation")]
     [DataType(DataType.Text)]
+    [Required(ErrorMessage ="Please enter the abbreviation of the city.")]
     public string CityAbbreviation { get; set; } = null!;
 
     public bool Active { get; set; } = true;

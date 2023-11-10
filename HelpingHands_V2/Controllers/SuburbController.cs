@@ -32,7 +32,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -56,7 +58,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -70,7 +74,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
         [HttpPost]
@@ -79,10 +85,13 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("City");
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Model state not valid";
-                    return View();
+                    ViewBag.Message = "Not all the information was entered, Please look below for what's missing.";
+                    var cities = await _city.GetCities();
+                    ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
+                    return View(suburb);
                 }
                 await _suburb.AddSuburb(suburb);
                 ViewBag.Message = "Record Added successfully;";
@@ -90,9 +99,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
-                //ViewBag.Message = "Operation unsuccessful";
-                //return View();
+                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
 
@@ -117,7 +126,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -126,18 +137,22 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("City");
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Model state not valid";
-                    return View();
+                    ViewBag.Message = "Not all the information was entered, Please look below for what's missing.";
+                    var cities = await _city.GetCities();
+                    ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
+                    return View(suburb);
                 }
                 await _suburb.UpdateSuburb(suburb);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -152,7 +167,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
     }
