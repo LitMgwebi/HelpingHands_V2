@@ -2,9 +2,14 @@
 @{
     ViewData["Title"] = "Details";
     var Contract = ViewBag.Contract;
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">Contract Details</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 @if (User.IsInRole("N"))
 {
     <a asp-action="Index" class="btn btn-secondary">Back</a>

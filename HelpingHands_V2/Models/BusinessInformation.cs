@@ -10,13 +10,16 @@ public partial class BusinessInformation
     public int BusinessId { get; set; }
 
     [DisplayName("Organization Name")]
+    [Required(ErrorMessage = "Please enter the name of the organization")]
     public string? OrganizationName { get; set; }
 
     [DisplayName("NPO Number")]
+    [Required(ErrorMessage = "Please enter business NPO number")]
     public string? Nponumber { get; set; }
 
     [DisplayName("Address Line 1")]
     [DataType(DataType.MultilineText)]
+    [Required(ErrorMessage = "Please enter the 1st address line")]
     public string? AddressLineOne { get; set; }
 
     [DisplayName("Address Line 2")]
@@ -24,6 +27,7 @@ public partial class BusinessInformation
     public string? AddressLineTwo { get; set; }
 
     [DisplayName("Suburb")]
+    [Required(ErrorMessage = "Please select a suburb.")]
     public int? SuburbId { get; set; }
 
     [DisplayName("Contract Number")]

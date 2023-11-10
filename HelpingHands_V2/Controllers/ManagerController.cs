@@ -37,7 +37,9 @@ namespace HelpingHands_V2.Controllers
                 return View();
             } catch(Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 

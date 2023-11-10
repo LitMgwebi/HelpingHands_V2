@@ -7,10 +7,11 @@ namespace HelpingHands_V2.Models;
 public partial class PrefferedSuburb
 {
     [Display(Name = "Nurse")]
-    public int NurseId { get; set; }
+    public int? NurseId { get; set; }
 
     [Display(Name = "Suburb")]
-    public int SuburbId { get; set; }
+    [Required(ErrorMessage = "Please select which suburb you want to add")]
+    public int? SuburbId { get; set; }
 
     public bool Active { get; set; } = true;
 

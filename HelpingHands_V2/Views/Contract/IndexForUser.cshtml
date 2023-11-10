@@ -3,9 +3,14 @@
 @{
     ViewData["Title"] = "Contracts";
     var Contracts = ViewBag.Contracts;
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">Contracts</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 
 @if (User.IsInRole("N"))
 {

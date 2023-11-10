@@ -30,7 +30,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -54,7 +56,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -66,7 +70,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -77,7 +83,8 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Model state not valid";
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
                     return View();
                 }
                 await _op.AddOperationHours(operationHour);
@@ -86,9 +93,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
-                //ViewBag.Message = "Operation unsuccessful";
-                //return View();
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -111,7 +118,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -122,7 +131,9 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Model state not valid";
+                    ViewBag.Operation = operationHour;
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
                     return View();
                 }
                 await _op.UpdateOperationHour(operationHour);
@@ -131,7 +142,9 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
 
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -141,12 +154,20 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return RedirectToAction(nameof(Details), new { id = OperationHoursId });
+                }
                 await _op.DeleteOperationHour(OperationHoursId);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return RedirectToAction(nameof(Details), new {id = OperationHoursId});
+                //return new JsonResult(new { error = ex.Message });
             }
         }
     }

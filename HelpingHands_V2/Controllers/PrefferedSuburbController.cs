@@ -34,7 +34,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -54,7 +56,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -78,7 +82,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -94,7 +100,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -103,15 +111,24 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var suburbs = await _suburb.GetSuburbs();
+                    ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                    ViewData["NurseId"] = prefferedSuburb.NurseId;
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return View();
+                }
                 await _ps.AddPrefferedSuburb(prefferedSuburb);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(IndexForNurse), new { id = prefferedSuburb.NurseId });
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
-                //ViewBag.Message = "Operation unsuccessful";
-                //return View();
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -121,12 +138,20 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return RedirectToAction(nameof(Details), new { nurseId = prefferedSuburb.NurseId, suburbId = prefferedSuburb.SuburbId });
+                }
                 await _ps.DeletePrefferedSuburb(prefferedSuburb);
                 return RedirectToAction(nameof(IndexForNurse), new { id = prefferedSuburb.NurseId });
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return RedirectToAction(nameof(Details), new { nurseId = prefferedSuburb.NurseId, suburbId = prefferedSuburb.SuburbId });
+                //return new JsonResult(new { error = ex.Message });
             }
         }
     }

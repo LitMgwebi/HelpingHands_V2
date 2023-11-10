@@ -12,6 +12,7 @@ namespace HelpingHands_V2.Models
         public string? CurrentPassword { get; set; }
 
         [Required(ErrorMessage = "Please enter your new password")]
+        [StringLength(18, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New Password")]
         public string NewPassword { get; set; } = null!;

@@ -15,9 +15,11 @@ public partial class Visit
     [DisplayName("Visit Date")]
     [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
     [DataType(DataType.Date)]
-    public DateTime VisitDate { get; set; }
+    [Required(ErrorMessage ="Please enter the date of the visit")]
+    public DateTime? VisitDate { get; set; }
 
     [DisplayName("Approx. Time of Arrival")]
+    [Required(ErrorMessage = "Please enter the approximate time of the visit")]
     [DataType(DataType.Time)]
     public TimeSpan? ApproxTime { get; set; }
 

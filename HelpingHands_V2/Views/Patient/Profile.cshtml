@@ -4,9 +4,14 @@
     ViewData["Title"] = @User.FindFirst("Username")!.Value;
     var EndUser = ViewBag.User;
     var Patient = ViewBag.Patient;
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">@User.FindFirst("FullName")!.Value's Profile</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 
 @if (User.IsInRole("P"))
 {

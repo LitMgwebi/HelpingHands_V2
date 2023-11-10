@@ -62,7 +62,7 @@ namespace HelpingHands_V2.Controllers
                     for (int i = 0; i < nextVisit.Count - 1; i++)
                         for (int j = 0; j < nextVisit.Count - i - 1; j++)
                             if (nextVisit[j].VisitDate > nextVisit[j + 1].VisitDate)
-                            { 
+                            {
                                 var tempVar = nextVisit[j];
                                 nextVisit[j] = nextVisit[j + 1];
                                 nextVisit[j + 1] = tempVar;
@@ -75,7 +75,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -94,7 +96,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         public async Task<IActionResult> Profile(int? id)
@@ -119,7 +123,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -130,7 +136,12 @@ namespace HelpingHands_V2.Controllers
                 ViewData["NurseId"] = id;
                 return View();
             }
-            catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -140,14 +151,21 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Model state not valid";
+                    ViewData["NurseId"] = nurse.NurseId;
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
                     return View();
                 }
                 await _nurse.AddNurse(nurse);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(Dashboard), new { id = nurse.NurseId });
             }
-            catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
+            catch (Exception ex) 
+            {
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
+            }
         }
 
 
@@ -173,7 +191,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -184,7 +204,11 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Model state not valid";
+                    var user = await _user.GetUserById(nurse.NurseId);
+                    ViewBag.Nurse = nurse;
+                    ViewBag.User = user;
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
                     return View();
                 }
                 await _nurse.UpdateNurse(nurse);
@@ -192,7 +216,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -203,6 +229,12 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return RedirectToAction(nameof(Profile), new { id = NurseId });
+                }
                 await _nurse.DeleteNurse(NurseId);
                 await _user.DeleteUser(NurseId);
                 await HttpContext.SignOutAsync();
@@ -210,7 +242,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return RedirectToAction(nameof(Profile), new {id = NurseId});
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -225,7 +259,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -234,12 +270,21 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return View();
+                }
                 var visitRange = _report.NurseVisitRange(NurseId, StartDate, EndDate);
                 ViewBag.VisitRange = visitRange;
                 return View();
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                return new JsonResult(new {error= ex.Message});
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -253,8 +298,8 @@ namespace HelpingHands_V2.Controllers
                 if (command == "upcoming")
                 {
                     visits = _report.NurseVisitRange(id, currentDate, currentDate.AddYears(20));
-                } 
-                else if(command == "past")
+                }
+                else if (command == "past")
                 {
                     visits = _report.NurseVisitRange(id, currentDate.AddYears(-20), currentDate);
                 }
@@ -263,7 +308,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
     }

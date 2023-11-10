@@ -41,7 +41,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message, ex.Source });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -77,7 +79,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message, ex.Source });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpGet]
@@ -100,7 +104,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -122,7 +128,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -131,15 +139,32 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+
+                    DateTime currentDate = DateTime.Now;
+                    var nurses = await _nurse.GetNurses();
+                    var wounds = await _wound.GetWounds();
+                    var suburbs = await _suburb.GetSuburbs();
+
+                    ViewData["CurrentDate"] = DateTime.Now;
+                    ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
+                    ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
+                    ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return View();
+                }
                 await _contract.AddContract(contract);
-                //ViewBag.Message = "Record Added successfully;";
+                ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction("Dashboard", "Patient", new {id = contract.PatientId});
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
-                //ViewBag.Message = "Operation unsuccessful";
-                //return View();
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -164,8 +189,7 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
 
                 ViewData["CurrentDate"] = DateTime.Now;
-                ViewData["PatientId"] = new SelectList(patients, "PatientId", "PatientId");
-                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "NurseId");
+                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                 ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
                 ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 ViewBag.Contract = contract;
@@ -182,19 +206,32 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                //if (!ModelState.IsValid)
-                //{
-                //    return new JsonResult(new { error = "ModelState not valid" });
-                //    ViewBag.Message = "Model state not valid";
-                //    return View();
-                //}
-                //return new JsonResult(new { content = contract });
+                if (!ModelState.IsValid)
+                {
+
+                    DateTime currentDate = DateTime.Now;
+                    var nurses = await _nurse.GetNurses();
+                    var wounds = await _wound.GetWounds();
+                    var suburbs = await _suburb.GetSuburbs();
+
+                    ViewData["CurrentDate"] = DateTime.Now;
+                    ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
+                    ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
+                    ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                    ViewBag.Contract = contract;
+
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return View();
+                }
                 await _contract.UpdateContract(contract);
                 return RedirectToAction("Dashboard", "Nurse", new {id = contract.NurseId});
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -204,12 +241,20 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return RedirectToAction(nameof(Details), new { id = ContractId });
+                }
                 await _contract.DeleteContract(ContractId);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return RedirectToAction(nameof(Details), new {id = ContractId});
+                //return new JsonResult(new { error = ex.Message });
             }
         }
     }

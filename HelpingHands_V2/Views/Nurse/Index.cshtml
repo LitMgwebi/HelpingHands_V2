@@ -1,8 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Nurses";
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">Nurses</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 <hr />
 <table class="table" id="myTable">
     <thead>

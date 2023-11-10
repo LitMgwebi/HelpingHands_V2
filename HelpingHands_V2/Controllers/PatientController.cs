@@ -56,7 +56,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message, content = ex.Data, moreContent = ex.Source, innerException = ex.InnerException });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -76,7 +78,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -101,7 +105,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -113,7 +119,12 @@ namespace HelpingHands_V2.Controllers
                 ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 ViewData["PatientId"] = id;
                 return View();
-            } catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
+            } catch (Exception ex) {
+
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -123,14 +134,23 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Model state not valid";
+                    var suburbs = await _suburb.GetSuburbs();
+                    ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                    ViewData["PatientId"] = patient.PatientId;
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
                     return View();
                 }
                 await _patient.AddPateint(patient);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(Dashboard), new {id = patient.PatientId});
             }
-            catch (Exception ex) { return new JsonResult(new { error = ex.Message }); }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
+            }
         }
 
 
@@ -158,7 +178,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         // POST: PatientController/Edit/5
@@ -170,7 +192,12 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Model state not valid";
+                    var user = await _user.GetUserById(patient.PatientId);
+                    var suburbs = await _suburb.GetSuburbs();
+                    ViewBag.User = user;
+                    ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
                     return View();
                 }
                 await _patient.UpdatePatient(patient);
@@ -178,7 +205,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -189,6 +218,12 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return RedirectToAction(nameof(Profile), new { id = PatientId });
+                }
                 await _patient.DeletePatient(PatientId);
                 await _user.DeleteUser(PatientId);
                 await HttpContext.SignOutAsync();
@@ -196,7 +231,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return RedirectToAction(nameof(Profile), new { id = PatientId });
+                //return new JsonResult(new { error = ex.Message });
             }
         }
     }

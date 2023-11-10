@@ -88,7 +88,8 @@ namespace HelpingHands_V2.Controllers
                 ModelState.Remove("City");
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Not all the information was entered, Please look below for what's missing.";
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
                     var cities = await _city.GetCities();
                     ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
                     return View(suburb);
@@ -140,7 +141,8 @@ namespace HelpingHands_V2.Controllers
                 ModelState.Remove("City");
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Not all the information was entered, Please look below for what's missing.";
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
                     var cities = await _city.GetCities();
                     ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
                     return View(suburb);
@@ -162,13 +164,19 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return RedirectToAction(nameof(Details), new { id = SuburbId });
+                }
                 await _suburb.DeleteSuburb(SuburbId);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return View();
+                return RedirectToAction(nameof(Details), new {id = SuburbId});
                 //return new JsonResult(new { error = ex.Message });
             }
         }

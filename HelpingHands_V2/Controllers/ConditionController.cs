@@ -82,7 +82,10 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Not all the information was entered, Please look below for what's missing.";
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing:";
+
+                    return new JsonResult(new { errors });
                     return View(condition);
                 }
                 await _condition.AddCondition(condition);
@@ -129,7 +132,9 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Not all the information was entered, Please look below for what's missing.";
+                    ViewBag.Condition = condition;
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
                     return View(condition);
                 }
                 await _condition.UpdateCondition(condition);
@@ -149,14 +154,20 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return RedirectToAction(nameof(Details), new { id = ConditionId });
+                }
                 await _condition.DeleteCondition(ConditionId);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
-                return View();
+                return RedirectToAction(nameof(Details), new { id = ConditionId });
+                //return new JsonResult(new { error = ex.Message });
             }
         }
     }

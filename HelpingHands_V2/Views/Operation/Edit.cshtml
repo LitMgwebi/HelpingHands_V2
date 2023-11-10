@@ -3,9 +3,14 @@
 @{
     ViewData["Title"] = "Edit";
     var Operation = ViewBag.Operation;
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">Edit @Operation.OperationDay Hours</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 
 <hr />
 <div class="row">

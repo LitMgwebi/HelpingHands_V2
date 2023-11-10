@@ -2,9 +2,14 @@
 
 @{
     ViewData["Title"] = "Create";
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">Register Form</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 
 <hr />
 <form asp-action="Register">

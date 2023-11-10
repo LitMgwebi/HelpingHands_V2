@@ -34,7 +34,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -54,7 +56,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -78,7 +82,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -94,7 +100,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -103,21 +111,25 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                //if (!ModelState.IsValid)
-                //{
-                //    ViewBag.Message = "Model state not valid";
-                //    return View();
-                //}
+                if (!ModelState.IsValid)
+                {
+                    var conditions = await _condition.GetConditions();
+                    ViewData["ConditionId"] = new SelectList(conditions, "ConditionId", "ConditionName");
+                    ViewData["PatientId"] = patientCondition.PatientId;
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return View();
+                }
                 await _pc.AddPatientCondition(patientCondition);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
-                //ViewBag.Message = "Operation unsuccessful";
-                //return View();
-            } 
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
+            }
         }
 
         public async Task<IActionResult> Edit(int? patientId, int? conditionId)
@@ -141,7 +153,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -152,7 +166,10 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Message = "Model state not valid";
+                    var conditions = await _condition.GetConditions();
+                    ViewData["ConditionId"] = new SelectList(conditions, "ConditionId", "ConditionName");
+                    ViewData["PatientId"] = patientCondition.PatientId;
+                    ViewBag.Message = "Not all the information was entered, Please look below for what's missing.";
                     return View();
                 }
                 await _pc.UpdatePatientCondition(patientCondition);
@@ -160,8 +177,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -171,12 +189,20 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return RedirectToAction(nameof(Details), new { patientId = patientCondition.PatientId, conditionId = patientCondition.ConditionId });
+                }
                 await _pc.DeletePatientCondition(patientCondition);
                 return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return RedirectToAction(nameof(Details), new {patientId = patientCondition.PatientId, conditionId = patientCondition.ConditionId});
+                //return new JsonResult(new { error = ex.Message });
             }
         }
     }

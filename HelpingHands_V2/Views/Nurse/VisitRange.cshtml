@@ -2,9 +2,14 @@
 @{
     ViewData["Title"] = "VisitRange";
     var Range = ViewBag.VisitRange;
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">Visit Range</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 
 <section class="row">
     <form asp-action="VisitRange">

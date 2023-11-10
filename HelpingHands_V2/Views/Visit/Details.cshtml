@@ -3,9 +3,14 @@
 @{
     ViewData["Title"] = "Details";
     var Visit = ViewBag.Visit;
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">Visit Details</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 
 <div>

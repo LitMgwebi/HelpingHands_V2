@@ -10,14 +10,17 @@ public partial class OperationHour
 
     [Display(Name = "Day of Operation")]
     [DataType(DataType.Text)]
+    [Required(ErrorMessage = "Please enter the day of operation.")]
     public string? OperationDay { get; set; }
 
     [Display(Name = "Opening Time")]
     [DataType(DataType.Time)]
+    [Required(ErrorMessage = "Please enter the opening time.")]
     public TimeSpan? OpenTime { get; set; }
 
     [Display(Name = "Closing Time")]
     [DataType(DataType.Time)]
+    [Required(ErrorMessage = "Please enter the closing time.")]
     public TimeSpan? CloseTime { get; set; }
 
     public bool Active { get; set; } = true;

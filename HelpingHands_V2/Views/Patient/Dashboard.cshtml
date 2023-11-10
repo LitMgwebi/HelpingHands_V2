@@ -1,8 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Patient Dashboard";
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-5 text-center">Patient Dashboard</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 
 
 <hr />

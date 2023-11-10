@@ -1,7 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Admin Dashboard";
+    var Message = ViewBag.Message;
 }
 <h2 class="display-1 text-center">Hello @User.Identity?.Name</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 <hr />
 <div class="container-fluid">
     <div class="row">

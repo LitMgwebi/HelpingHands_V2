@@ -7,10 +7,11 @@ namespace HelpingHands_V2.Models;
 public partial class PatientCondition
 {
     [Display(Name = "Patient")]
-    public int PatientId { get; set; }
+    public int? PatientId { get; set; }
 
     [Display(Name = "Condition")]
-    public int ConditionId { get; set; }
+    [Required(ErrorMessage = "Please select a condition")]
+    public int? ConditionId { get; set; }
 
     public bool Active { get; set; } = true;
 

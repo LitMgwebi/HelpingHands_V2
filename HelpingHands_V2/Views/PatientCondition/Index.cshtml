@@ -2,9 +2,14 @@
 
 @{
     ViewData["Title"] = "Patient Conditions";
+    var Message = ViewBag.Message;
 }
 
-<h2 class="btn btn-primary">Index</h2>
+<h2 class="display-4 text-center">Patient Conditions</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 <hr />
 <a asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-primary">Create New</a>
 <table class="table" id="myTable">

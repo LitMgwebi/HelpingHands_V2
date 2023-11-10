@@ -25,11 +25,12 @@ public partial class CareContract
     public int? NurseId { get; set; } = null;
 
     [DisplayName("Wound")]
+    [Required(ErrorMessage = "Please select the type of wound you have.")]
     public int? WoundId { get; set; }
 
     [DataType(DataType.MultilineText)]
     [DisplayName("Address Line 1")]
-    [Required(ErrorMessage = "Please enter the address")]
+    [Required(ErrorMessage = "Please enter the 1st address line")]
     public string? AddressLineOne { get; set; }
 
     [DataType(DataType.MultilineText)]
@@ -37,18 +38,17 @@ public partial class CareContract
     public string? AddressLineTwo { get; set; } = null;
 
     [DisplayName("Suburb")]
+    [Required(ErrorMessage = "Please select a suburb.")]
     public int? SuburbId { get; set; }
 
     [DisplayName("Start Date")]
     [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
     [DataType(DataType.Date, ErrorMessage ="Please enter a valid date")]
-    [Required(ErrorMessage = "Please enter the contract's starting date")]
     public DateTime? StartDate { get; set; } = null;
 
     [DisplayName("End Date")]
     [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
     [DataType(DataType.Date, ErrorMessage = "Please enter a valid date")]
-    [Required(ErrorMessage = "Please enter the contract's ending date")]
     public DateTime? EndDate { get; set; } = null;
 
     [DataType(DataType.MultilineText)]

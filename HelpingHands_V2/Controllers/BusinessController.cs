@@ -2,6 +2,7 @@
 using HelpingHands_V2.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Diagnostics.Contracts;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -30,7 +31,9 @@ namespace HelpingHands_V2.Controllers
 
             } catch (Exception ex)
             {
-                return new JsonResult(new {error = ex.Message});
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -55,7 +58,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -64,13 +69,24 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var suburbs = await _suburb.GetSuburbs();
+                    ViewBag.BusinessInfo = bi;
+                    ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return View();
+                }
                 await _business.UpdateBusinessInfo(bi);
                 return RedirectToAction(nameof(Details));
             }
             catch (Exception ex)
             {
-
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
             }
         }
     }

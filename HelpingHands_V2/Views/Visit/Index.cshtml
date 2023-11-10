@@ -2,9 +2,14 @@
 
 @{
     ViewData["Title"] = "Visits";
+    var Message = ViewBag.Message;
 }
 
 <h2 class="display-4 text-center">Visits</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
 <hr />
 <a asp-action="Create" class="btn btn-primary">Create New</a>
 <table class="table" id="myTable">
