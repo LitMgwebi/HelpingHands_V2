@@ -89,7 +89,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     var cities = await _city.GetCities();
                     ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
                     return View(suburb);
@@ -142,13 +142,14 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     var cities = await _city.GetCities();
                     ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
-                    return View(suburb);
+                    ViewBag.Suburb = suburb;
+                    return View();
                 }
                 await _suburb.UpdateSuburb(suburb);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new {id = suburb.SuburbId});
             }
             catch (Exception ex)
             {
@@ -167,7 +168,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Details), new { id = SuburbId });
                 }
                 await _suburb.DeleteSuburb(SuburbId);

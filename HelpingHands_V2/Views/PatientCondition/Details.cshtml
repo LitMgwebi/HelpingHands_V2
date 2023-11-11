@@ -11,7 +11,13 @@
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-<a asp-action="IndexForPatient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+@if (User.IsInRole("A") || User.IsInRole("O"))
+{
+    <a asp-action="Index"  class="btn btn-secondary">Back</a>
+} else
+{
+    <a asp-action="IndexForPatient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+}
 
 <hr />
 <div>
@@ -34,7 +40,6 @@
     <form asp-action="Delete">
         <input asp-for="PatientId" value="@PC.PatientId" type="hidden" />
         <input asp-for="ConditionId" value="@PC.ConditionId" type="hidden" />
-        <input asp-for="Active" value="@PC.Active" type="hidden" />
         <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" />
     </form>
 </div>

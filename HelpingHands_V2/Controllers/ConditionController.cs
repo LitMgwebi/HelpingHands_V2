@@ -83,9 +83,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing:";
-
-                    return new JsonResult(new { errors });
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View(condition);
                 }
                 await _condition.AddCondition(condition);
@@ -134,11 +132,11 @@ namespace HelpingHands_V2.Controllers
                 {
                     ViewBag.Condition = condition;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View(condition);
                 }
                 await _condition.UpdateCondition(condition);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new {id = condition.ConditionId});
             }
             catch (Exception ex)
             {
@@ -157,7 +155,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Details), new { id = ConditionId });
                 }
                 await _condition.DeleteCondition(ConditionId);

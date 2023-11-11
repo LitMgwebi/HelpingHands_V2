@@ -76,7 +76,6 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 //return new JsonResult(new { error = ex.Message });
-                ViewBag.Message = ex.Message;
                 return View();
             }
         }
@@ -88,13 +87,15 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    //return new JsonResult(new { errors });
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
 
                 if (string.IsNullOrEmpty(model.Username) && string.IsNullOrEmpty(model.Password))
                 {
-                    ModelState.AddModelError("", "Username or Password were not filled in.");
+                    ViewBag.Message = "Username or Password were not filled in.";
+                    return View();
                 }
                 if (await ValidateUser(model))
                 {
@@ -129,16 +130,19 @@ namespace HelpingHands_V2.Controllers
                         else
                             return RedirectToAction("Dashboard", "Manager");
                     }
-
+                } else
+                {
+                    //return new JsonResult( new {model, message = "could not validate user"});
+                    ViewBag.Message = "Could not validate user. Username or Password is incorrect";
+                    return View();
                 }
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
+                //return new JsonResult(new { error = ex.Message, model });
                 ViewBag.Message = ex.Message;
                 return View();
             }
-            return View();
         }
 
         public IActionResult Logout()
@@ -169,7 +173,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 //var fileName = Path.GetFileName(file.FileName);
@@ -252,7 +256,6 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -263,20 +266,34 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("ConfirmPassword");
+                ModelState.Remove("Password");
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
+                    var account = await _account.GetUserById(user.UserId);
+
+                    if (account == null)
+                        return NotFound();
+
+                    ViewBag.User = account;
                     return View();
                 }
                 // If Role = Admin, return to Index. else if role = P || M return to profile
-                user.Password = BC.HashPassword(user.Password);
-                await _account.UpdateUser(user);
-                return RedirectToAction(nameof(Index));
+                await _account.UpdateUser(user); 
+                
+                if (user.UserType == "A")
+                    return RedirectToAction("Profile", "EndUser", new {id = user.UserId});
+                else if (user.UserType == "N")
+                    return RedirectToAction("Profile", "Nurse", new { id = user.UserId });
+                else if (user.UserType == "P")
+                    return RedirectToAction("Profile", "Patient", new { id = user.UserId });
+                else
+                    return RedirectToAction("Profile", "EndUser", new { id = user.UserId });
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -312,7 +329,8 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
+                    ViewBag.UserId = change.UserId;
                     return View();
                 }
                 var user = await _account.GetUserById(change.UserId);
@@ -352,7 +370,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Profile), new { id = UserId });
                 }
                 await _account.DeleteUser(UserId);

@@ -84,7 +84,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below";
                     return View();
                 }
                 await _city.AddCity(city);
@@ -133,11 +133,11 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.City = city;
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _city.UpdateCity(city);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new {id = city.CityId});
             }
             catch (Exception ex)
             {
@@ -156,7 +156,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Details), new { id = CityId });
                 }
                 await _city.DeleteCity(CityId);

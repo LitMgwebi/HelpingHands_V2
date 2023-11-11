@@ -22,7 +22,7 @@
                     <div asp-validation-summary="ModelOnly" style="color: blue; text-decoration:underline"></div>
                     @if (Message != null)
                     {
-                        <p class="text-decoration-underline text-danger">@Message</p>
+                        <p class="text-decoration-underline" style="color:blue;">@Message</p>
                     }
                     <hr />
                     <!-- Email input -->
@@ -39,7 +39,7 @@
                         <span asp-validation-for="Password" style="color: blue; text-decoration:underline"></span>
                     </div>
 
-                    <div class="d-flex justify-content-between align-items-center">
+                    @* <div class="d-flex justify-content-between align-items-center">
                         <!-- Checkbox -->
                         <div class="form-check mb-0">
                             <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
@@ -48,14 +48,14 @@
                             </label>
                         </div>
                         <a href="#!" class="text-body">Forgot password?</a>
-                    </div>
+                    </div> *@
 
                     <div class="text-center text-lg-start mt-4 pt-2">
                         <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">
                             Login
                         </button>
                         <p class="small fw-bold mt-2 pt-1 mb-0">
-                            Don't have an account? <a href="#!" class="link-danger">Register</a>
+                            Don't have an account? <a asp-action="Register" asp-controller="EndUser" class="link-danger">Register</a>
                         </p>
                     </div>
 

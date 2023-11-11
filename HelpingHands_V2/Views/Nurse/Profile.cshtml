@@ -27,7 +27,7 @@ else if (User.IsInRole("O"))
 }
 else
 {
-    <a asp-action="Dashboard" asp-controller="Admin" class="btn btn-secondary">Back</a>
+    <a asp-action="Index" asp-controller="Nurse" class="btn btn-secondary">Back</a>
 }
 
 <hr />
@@ -97,10 +97,16 @@ else
         </dd>
     </dl>
 </div>
-<div class="btn-group" role="group" aria-label="Control Panel">
-    <a asp-action="Edit" asp-route-id="@Nurse.NurseId" class="btn btn-success">Edit</a><a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Nurse.NurseId" class="btn btn-success">ChangePassword</a>
-    <form asp-action="Delete">
-        <input asp-for="NurseId" value="@Nurse.NurseId" type="hidden" />
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Nurse.Firstname @Nurse.Lastname?')" class="btn btn-danger" />
-    </form>
-</div>
+@if ( User.IsInRole("N") || User.IsInRole("A"))
+{
+    <div class="btn-group" role="group" aria-label="Control Panel">
+        <a asp-action="Edit" asp-route-id="@Nurse.NurseId" class="btn btn-success">Edit</a>
+        <a asp-action="Edit" asp-controller="EndUser" asp-route-id="@Nurse.NurseId" class="btn btn-success">Edit User Info</a>
+        <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Nurse.NurseId" class="btn btn-success">ChangePassword</a>
+        <form asp-action="Delete">
+            <input asp-for="NurseId" value="@Nurse.NurseId" type="hidden" />
+            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Nurse.Firstname @Nurse.Lastname?')" class="btn btn-danger" />
+        </form>
+    </div>
+
+}

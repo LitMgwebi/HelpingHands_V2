@@ -36,7 +36,7 @@
         </dd>
     </dl>
 </div>
-<div>
+<div class="btn-group" role="group" aria-label="Control Panel">
     <a asp-action="Edit" asp-route-id="@Operation.OperationHoursId" class="btn btn-success">Edit</a>
     <form asp-action="Delete">
         <input asp-for="OperationHoursId" value="@Operation.OperationHoursId" type="hidden" />

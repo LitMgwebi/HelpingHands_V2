@@ -51,7 +51,7 @@
                                     Employees
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" asp-controller="Manager" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Managers</a></li>
+                                    <li><a class="dropdown-item" asp-controller="EndUser" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Managers</a></li>
                                     <li><a class="dropdown-item" asp-controller="Nurse" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Nurses</a></li>
                                 </ul>
                             </li>

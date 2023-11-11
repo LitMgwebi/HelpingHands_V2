@@ -2,11 +2,16 @@
 
 @{
     ViewData["Title"] = "Edit";
-    var User = ViewBag.User;
+    var EndUser = ViewBag.User;
     var Message = ViewBag.Message;
 }
-
-<h2 class="display-4 text-center">Edit @User.Firstname @User.Lastname Details</h2>
+@if (User.IsInRole("A"))
+{
+    <h2 class="display-4 text-center">Edit @EndUser.Firstname Details</h2>
+}else
+{
+    <h2 class="display-4 text-center">Edit @EndUser.Firstname @EndUser.Lastname Details</h2>
+}
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
@@ -17,38 +22,42 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
         <div class="col-5">
-            <input asp-for="UserId" value="@User.UserId" type="hidden" />
+            <input asp-for="UserId" value="@EndUser.UserId" type="hidden" />
+            <input asp-for="UserType" class="form-control" value="@EndUser.UserType" type="hidden" />
+            <input asp-for="ApplicationType" class="form-control" value="@EndUser.ApplicationType" type="hidden" />
+            <input asp-for="Password" value="@EndUser.Password" type="hidden" />
+            <input asp-for="ConfirmPassword" value="@EndUser.Password"type="hidden"/>
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" value="@User.Username" />
+                <input asp-for="Username" class="form-control" value="@EndUser.Username" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Firstname" class="control-label"></label>
-                <input asp-for="Firstname" class="form-control" value="@User.Firstname" />
+                <input asp-for="Firstname" class="form-control" value="@EndUser.Firstname" />
                 <span asp-validation-for="Firstname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Lastname" class="control-label"></label>
-                <input asp-for="Lastname" class="form-control" value="@User.Lastname" />
+                <input asp-for="Lastname" class="form-control" value="@EndUser.Lastname" />
                 <span asp-validation-for="Lastname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateOfBirth" class="control-label"></label>
-                <input asp-for="DateOfBirth" class="form-control" type="date" value="@User.DateOfBirth.ToString("yyyy-MM-dd")" />
+                <input asp-for="DateOfBirth" class="form-control" type="date" value="@EndUser.DateOfBirth.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" value="@User.Email" />
+                <input asp-for="Email" class="form-control" value="@EndUser.Email" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
         </div>
         <div class="col-5">
-                <input asp-for="Password" class="form-control" hidden value="@User.Password" />
+            <input asp-for="Password" class="form-control" hidden value="@EndUser.Password" />
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="form-control" value="@User.Gender">
+                <select asp-for="Gender" class="form-control" value="@EndUser.Gender">
                     <option>Female</option>
                     <option>Male</option>
                     <option>Non-binary</option>
@@ -59,19 +68,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="ContactNumber" class="control-label"></label>
-                <input asp-for="ContactNumber" class="form-control" value="@User.ContactNumber" />
+                <input asp-for="ContactNumber" class="form-control" value="@EndUser.ContactNumber" />
                 <span asp-validation-for="ContactNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Idnumber" class="control-label"></label>
-                <input asp-for="Idnumber" class="form-control" value="@User.IDNumber" />
+                <input asp-for="Idnumber" class="form-control" value="@EndUser.IDNumber" />
                 <span asp-validation-for="Idnumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="UserType" class="form-control" value="@User.UserType" type="hidden" />
-            </div>
-            <div class="form-group">
-                <input asp-for="ApplicationType" class="form-control" value="@User.ApplicationType" type="hidden" />
             </div>
             @* <div class="form-group">
             <label asp-for="ProfilePicture" class="control-label"></label>

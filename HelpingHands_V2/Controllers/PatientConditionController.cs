@@ -111,13 +111,15 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("Condition");
+                ModelState.Remove("Patient");
                 if (!ModelState.IsValid)
                 {
                     var conditions = await _condition.GetConditions();
                     ViewData["ConditionId"] = new SelectList(conditions, "ConditionId", "ConditionName");
                     ViewData["PatientId"] = patientCondition.PatientId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _pc.AddPatientCondition(patientCondition);
@@ -189,10 +191,12 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("Condition");
+                ModelState.Remove("Patient");
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Details), new { patientId = patientCondition.PatientId, conditionId = patientCondition.ConditionId });
                 }
                 await _pc.DeletePatientCondition(patientCondition);

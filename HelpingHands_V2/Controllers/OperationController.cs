@@ -1,10 +1,12 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HelpingHands_V2.Controllers
 {
+    [Authorize(Roles = "A")]
     public class OperationController : Controller
     {
         private readonly IOperation _op;
@@ -84,7 +86,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _op.AddOperationHours(operationHour);
@@ -133,7 +135,7 @@ namespace HelpingHands_V2.Controllers
                 {
                     ViewBag.Operation = operationHour;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _op.UpdateOperationHour(operationHour);
@@ -157,7 +159,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Details), new { id = OperationHoursId });
                 }
                 await _op.DeleteOperationHour(OperationHoursId);

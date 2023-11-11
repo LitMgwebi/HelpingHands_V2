@@ -19,10 +19,10 @@
             <input asp-for="NurseId" placeholder="@ViewBag.NurseId" value="@ViewBag.NurseId" hidden />
             <div class="form-group">
                 <label asp-for="SuburbId" class="control-label"></label>
-                <select asp-for="SuburbId" class="form-control" name="Suburb" asp-items="ViewBag.SuburbId">
+                <select asp-for="SuburbId" class="form-control" asp-items="ViewBag.SuburbId">
                     <option disabled selected>--- SELECT ---</option>
                 </select>
-                <input asp-for="Suburb" hidden value="Suburb.value"/>
+                <span asp-validation-for="SuburbId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

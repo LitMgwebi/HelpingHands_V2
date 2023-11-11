@@ -153,7 +153,7 @@ namespace HelpingHands_V2.Controllers
                 {
                     ViewData["NurseId"] = nurse.NurseId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _nurse.AddNurse(nurse);
@@ -208,7 +208,7 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Nurse = nurse;
                     ViewBag.User = user;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _nurse.UpdateNurse(nurse);
@@ -232,7 +232,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Profile), new { id = NurseId });
                 }
                 await _nurse.DeleteNurse(NurseId);
@@ -273,7 +273,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 var visitRange = _report.NurseVisitRange(NurseId, StartDate, EndDate);

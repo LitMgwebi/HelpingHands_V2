@@ -139,7 +139,7 @@ namespace HelpingHands_V2.Controllers
                 {
                     ViewBag.ContractId = visit.ContractId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below";
                     return View();
                 }
                 var userId = HttpContext.User.FindFirst("UserId")!.Value;
@@ -189,7 +189,7 @@ namespace HelpingHands_V2.Controllers
                 {
                     ViewBag.Visit = visit;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below";
                     return View();
                 }
                 await _visit.UpdateVisit(visit);
@@ -212,7 +212,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Details), new { id = VisitId });
                 }
                 await _visit.DeleteVisit(VisitId);

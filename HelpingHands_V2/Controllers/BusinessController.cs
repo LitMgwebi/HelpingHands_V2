@@ -1,11 +1,13 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics.Contracts;
 
 namespace HelpingHands_V2.Controllers
 {
+    [Authorize(Roles ="A")]
     public class BusinessController : Controller
     {
         private readonly IBusiness _business;
@@ -69,6 +71,7 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("Suburb");
                 if (!ModelState.IsValid)
                 {
                     var suburbs = await _suburb.GetSuburbs();
@@ -76,7 +79,8 @@ namespace HelpingHands_V2.Controllers
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
 
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return new JsonResult(new { bi, errors });
+                    ViewBag.Message = $"Not all the information required was entered. Please look below";
                     return View();
                 }
                 await _business.UpdateBusinessInfo(bi);

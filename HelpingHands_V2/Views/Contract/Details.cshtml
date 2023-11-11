@@ -80,12 +80,15 @@ else
                 @Contract.ContractComment
             </dd>
         }
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nurse)
-        </dt>
-        <dd class = "col-sm-10">
-            @Contract.NurseFirstname @Contract.NurseLastname
-        </dd>
+        @if (Contract.NurseFirstname != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Nurse)
+            </dt>
+            <dd class="col-sm-10">
+                @Contract.NurseFirstname @Contract.NurseLastname
+            </dd>
+        }
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Patient)
         </dt>

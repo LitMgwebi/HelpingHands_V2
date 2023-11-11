@@ -120,7 +120,7 @@ namespace HelpingHands_V2.Controllers
                 var wounds = await _wound.GetWounds();
                 var suburbs = await _suburb.GetSuburbs();
 
-                ViewData["CurrentDate"] = DateTime.Now;
+                ViewBag.CurrentDate = DateTime.Now;
                 ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                 ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
                 ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
@@ -139,6 +139,13 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("PatientId");
+                ModelState.Remove("StartDate");
+                ModelState.Remove("EndDate");
+                ModelState.Remove("Nurse");
+                ModelState.Remove("Patient");
+                ModelState.Remove("Suburb");
+                ModelState.Remove("Wound");
                 if (!ModelState.IsValid)
                 {
 
@@ -147,13 +154,13 @@ namespace HelpingHands_V2.Controllers
                     var wounds = await _wound.GetWounds();
                     var suburbs = await _suburb.GetSuburbs();
 
-                    ViewData["CurrentDate"] = DateTime.Now;
+                    ViewBag.CurrentDate = DateTime.Now;
                     ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                     ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
 
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _contract.AddContract(contract);
@@ -168,7 +175,7 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        [Authorize(Roles ="A,O,N")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             try
@@ -221,7 +228,7 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Contract = contract;
 
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _contract.UpdateContract(contract);
@@ -244,7 +251,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Details), new { id = ContractId });
                 }
                 await _contract.DeleteContract(ContractId);

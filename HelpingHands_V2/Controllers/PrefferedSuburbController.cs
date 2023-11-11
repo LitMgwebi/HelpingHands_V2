@@ -111,13 +111,16 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("Nurse");
+                ModelState.Remove("Suburb");
                 if (!ModelState.IsValid)
                 {
                     var suburbs = await _suburb.GetSuburbs();
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     ViewData["NurseId"] = prefferedSuburb.NurseId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    return new JsonResult(new { errors, prefferedSuburb });
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _ps.AddPrefferedSuburb(prefferedSuburb);
@@ -138,10 +141,12 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("Nurse");
+                ModelState.Remove("Suburb");
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Details), new { nurseId = prefferedSuburb.NurseId, suburbId = prefferedSuburb.SuburbId });
                 }
                 await _ps.DeletePrefferedSuburb(prefferedSuburb);

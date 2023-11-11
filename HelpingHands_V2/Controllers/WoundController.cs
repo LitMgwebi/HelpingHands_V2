@@ -83,7 +83,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below";
                     return View();
                 }
                 await _wound.AddWound(wound);
@@ -133,11 +133,11 @@ namespace HelpingHands_V2.Controllers
                 {
                     ViewBag.Wound = wound;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below";
                     return View();
                 }
                 await _wound.UpdateWound(wound);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new {id = wound.WoundId});
             }
             catch (Exception ex)
             {
@@ -156,7 +156,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Details), new { id = WoundId });
                 }
                 await _wound.DeleteWound(WoundId);

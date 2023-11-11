@@ -138,7 +138,7 @@ namespace HelpingHands_V2.Controllers
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     ViewData["PatientId"] = patient.PatientId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _patient.AddPateint(patient);
@@ -190,6 +190,8 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("PatientNavigation");
+                ModelState.Remove("Suburb");
                 if (!ModelState.IsValid)
                 {
                     var user = await _user.GetUserById(patient.PatientId);
@@ -197,7 +199,7 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.User = user;
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _patient.UpdatePatient(patient);
@@ -221,7 +223,7 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    ViewBag.Message = $"Not all the information was entered. We found that you are missing: ${errors}";
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Profile), new { id = PatientId });
                 }
                 await _patient.DeletePatient(PatientId);

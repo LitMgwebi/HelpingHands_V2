@@ -5,7 +5,7 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">@User.FindFirst("FullName")!.Value's Conditions</h2>
+<h2 class="display-4 text-center">Your Conditions</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
