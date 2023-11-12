@@ -94,7 +94,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" asp-controller="Contract" asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value">Start New</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient">All Contract</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient">All Contracts</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">
@@ -115,7 +115,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="current">Current Contracts</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="unassigned">Unassigned Contracts</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="unassigned">Assigned Contracts</a></li>
                                     <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="past">Past Contracts</a></li>
                                 </ul>
                             </li>
@@ -136,7 +136,10 @@
                         else if (User.IsInRole("O"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="Dashboard">Dashboard</a>
+                                <a class="nav-link text-dark" asp-controller="Manager" asp-action="Dashboard">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Manager" asp-action="NewContracts" >New Contracts</a>
                             </li>
                         } 
                         else

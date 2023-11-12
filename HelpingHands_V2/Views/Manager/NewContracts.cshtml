@@ -1,0 +1,73 @@
+﻿@model IEnumerable<HelpingHands_V2.Models.CareContract>
+
+@{
+    ViewData["Title"] = "New Contracts";
+    var Contracts = ViewBag.Contracts;
+    var Message = ViewBag.Message;
+}
+
+<h2 class="display-4 text-center">New Contracts</h2>
+@if (Message != null)
+{
+    <p class="text-decoration-underline text-danger">@Message</p>
+}
+@if (User.IsInRole("O"))
+{
+    <a asp-action="Dashboard" asp-controller="Manager" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+}
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractDate)
+            </th>
+            @* @if (User.IsInRole("P"))
+            {
+            <th>
+            @Html.DisplayNameFor(model => model.Nurse)
+            </th>
+            } *@
+            <th>
+                @Html.DisplayNameFor(model => model.Patient)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Wound)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Contracts.Count > 0)
+        {
+            @foreach (var item in Contracts)
+            {
+                <tr>
+                    <td>
+                        @item.ContractStatus
+                    </td>
+                    <td>
+                        @item.ContractDate.Day @item.ContractDate.ToString("MMMM")
+                    </td>
+                    <td>
+                        @item.PatientFirstname @item.PatientLastname
+                    </td>
+                    
+                    <td>
+                        @item.WoundName
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Contract" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <h5>No Contracts were found</h5>
+        }
+    </tbody>
+</table>

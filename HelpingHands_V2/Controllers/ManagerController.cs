@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
 {
-    [Authorize(Roles = "O")]
+    [Authorize(Roles = "O, A")]
     public class ManagerController : Controller
     {
         private readonly IReport _report;
@@ -24,8 +24,8 @@ namespace HelpingHands_V2.Controllers
                 var newContracts = _report.ContractStatus("N");
                 var assignedContracts = _report.ContractStatus("A");
                 var visits = _visit.GetVisits();
-                
-                if(newContracts == null || assignedContracts == null || visits == null)
+
+                if (newContracts == null || assignedContracts == null || visits == null)
                 {
                     return NotFound();
                 }
@@ -35,7 +35,8 @@ namespace HelpingHands_V2.Controllers
                 ViewBag.Visits = visits;
 
                 return View();
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
@@ -43,6 +44,23 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        
+        public IActionResult NewContracts()
+        {
+            try
+            {
+                List<dynamic> contracts = new List<dynamic> { };
+
+                contracts = _report.ContractStatus("N");
+
+                ViewBag.Contracts = contracts;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
+            }
+        }
     }
 }

@@ -139,7 +139,6 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                ModelState.Remove("PatientId");
                 ModelState.Remove("StartDate");
                 ModelState.Remove("EndDate");
                 ModelState.Remove("Nurse");
@@ -175,7 +174,7 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-
+        [Authorize(Roles = "O, A, N")]
         public async Task<IActionResult> Edit(int? id)
         {
             try
@@ -195,7 +194,7 @@ namespace HelpingHands_V2.Controllers
                 if (contract == null || patients == null || nurses == null|| wounds == null|| suburbs == null)
                     return NotFound();
 
-                ViewData["CurrentDate"] = DateTime.Now;
+                ViewBag.CurrentDate = DateTime.Now;
                 ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                 ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
                 ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
@@ -211,34 +210,50 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("ContractId, ContractStatus, ContractDate, PatientId, NurseId, WoundId, AddressLineOne, AddressLineTwo, SuburbId, StartDate, EndDate, ContractComment, Active")] CareContract contract)
         {
+
+            DateTime currentDate = DateTime.Now;
+            var nurses = await _nurse.GetNurses();
+            var wounds = await _wound.GetWounds();
+            var suburbs = await _suburb.GetSuburbs();
             try
             {
+                ModelState.Remove("Nurse");
+                ModelState.Remove("Patient");
+                ModelState.Remove("Suburb");
+                ModelState.Remove("Wound");
                 if (!ModelState.IsValid)
                 {
 
-                    DateTime currentDate = DateTime.Now;
-                    var nurses = await _nurse.GetNurses();
-                    var wounds = await _wound.GetWounds();
-                    var suburbs = await _suburb.GetSuburbs();
-
-                    ViewData["CurrentDate"] = DateTime.Now;
+                    ViewBag.CurrentDate = DateTime.Now;
                     ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                     ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     ViewBag.Contract = contract;
 
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    return new JsonResult(new { errors, contract });
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _contract.UpdateContract(contract);
-                return RedirectToAction("Dashboard", "Nurse", new {id = contract.NurseId});
+                if (HttpContext.User.IsInRole("N"))
+                {
+                    return RedirectToAction("Dashboard", "Nurse", new { id = contract.NurseId });
+                } else
+                {
+                    return RedirectToAction("NewContracts", "Manager");
+                }
             }
             catch (Exception ex)
             {
+                ViewBag.CurrentDate = DateTime.Now;
+                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
+                ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
+                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                ViewBag.Contract = contract;
+                return new JsonResult(new { error = ex.Message, contract });
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -255,7 +270,13 @@ namespace HelpingHands_V2.Controllers
                     return RedirectToAction(nameof(Details), new { id = ContractId });
                 }
                 await _contract.DeleteContract(ContractId);
-                return RedirectToAction(nameof(Index));
+                if (HttpContext.User.IsInRole("P"))
+                {
+                    return RedirectToAction(nameof(IndexForUser), new {id = HttpContext.User.FindFirst("UserId")!.Value, command = "patient"});
+                } else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
             catch (Exception ex)
             {
