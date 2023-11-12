@@ -214,14 +214,12 @@ namespace HelpingHands_V2.Controllers
                     }
                     else
                     {
-                        if (user.UserType == "A")
-                            return RedirectToAction("Dashboard", "Admin");
-                        else if (user.UserType == "N")
+                        if (user.UserType == "N")
                             return RedirectToAction("Create", "Nurse", new { id = user.UserId });
                         else if (user.UserType == "P")
                             return RedirectToAction("Create", "Patient", new { id = user.UserId });
                         else
-                            return RedirectToAction("Dashboard", "Manager");
+                            return RedirectToAction("Dashboard", "Admin");
                     }
                 }
                 else

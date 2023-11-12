@@ -135,12 +135,15 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("PatientNavigation");   
+                ModelState.Remove("Suburb");   
                 if (!ModelState.IsValid)
                 {
                     var suburbs = await _suburb.GetSuburbs();
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     ViewData["PatientId"] = patient.PatientId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    return new JsonResult(new {patient,  errors});
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }

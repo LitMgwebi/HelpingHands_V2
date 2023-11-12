@@ -147,16 +147,18 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("NurseNavigation");
                 if (!ModelState.IsValid)
                 {
                     ViewData["NurseId"] = nurse.NurseId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    return new JsonResult(new { errors, nurse });
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 await _nurse.AddNurse(nurse);
                 ViewBag.Message = "Record Added successfully;";
-                return RedirectToAction(nameof(Dashboard), new { id = nurse.NurseId });
+                return RedirectToAction("Dashboard", "Admin", new { id = HttpContext.User.FindFirst("UserId")!.Value });
             }
             catch (Exception ex) 
             {
