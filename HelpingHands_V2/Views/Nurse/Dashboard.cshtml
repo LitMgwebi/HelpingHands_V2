@@ -37,16 +37,8 @@
             <div class="card-body">
                 <section class="row mx-3" style="border: 2rem black">
                     <table>
-                         @if (ViewBag.NextVisit.Count == 0)
+                         @if (ViewBag.NextVisits.Count > 0)
                         {
-                            <tr>
-                                <td>No Upcoming visits</td>
-                                <td>Schedule Visit</td>
-                            </tr>
-                        }
-                        else
-                        {
-
                             <thead>
                                 <tr>
                                     <th scole="col">Patient</th>
@@ -57,19 +49,19 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                @for (int i = 0; i < ViewBag.NextVisit.Count; i++)
-                                {
-                                       @* <td>
+                                    @for (int i = 0; i < ViewBag.NextVisits.Count; i++)
+                                    {
+                                        <td>
 
                                             @ViewBag.Contracts[i].PatientFirstname
                                             @ViewBag.Contracts[i].PatientLastname
-                                        </td>*@
-                                        <td> 
-                                            @ViewBag.NextVisit[i].VisitDate.Day
-                                            @ViewBag.NextVisit[i].VisitDate.ToString("MMM")
-                                        </td> 
+                                        </td>
                                         <td>
-                                            @ViewBag.NextVisit[i].ApproxTime
+                                            @ViewBag.NextVisits[i].VisitDate.Day
+                                            @ViewBag.NextVisits[i].VisitDate.ToString("MMM")
+                                        </td>
+                                        <td>
+                                            @ViewBag.NextVisits[i].ApproxTime
                                         </td>
                                         <td>
                                             <button class="btn">Update</button>
@@ -79,6 +71,14 @@
                                     }
                                 </tr>
                             </tbody>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>No Upcoming visits</td>
+                                <td>Schedule Visit</td>
+                            </tr>
+                            
                         } 
                     </table>
                 </section>

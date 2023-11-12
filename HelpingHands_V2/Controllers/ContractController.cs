@@ -47,7 +47,7 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult IndexForUser(int id, string command)
+        public async Task<IActionResult> IndexForUser(int id, string command)
         {
             try
             {
@@ -55,19 +55,19 @@ namespace HelpingHands_V2.Controllers
                 
                 if (command == "patient")
                 {
-                    contracts = _report.PatientContract(id);
+                    contracts = await _report.PatientContract(id);
                 } 
                 else if(command == "current")
                 {
-                    contracts = _report.NurseAssignedContracts(id);
+                    contracts = await _report.NurseAssignedContracts(id);
                 } 
                 else if (command == "unassigned")
                 {
-                    contracts = _report.NurseContractType(id, "N");
+                    contracts = await _report.NurseContractType(id, "N");
                 } 
                 else if (command == "past")
                 {
-                    contracts = _report.NurseContractType(id, "C");
+                    contracts = await _report.NurseContractType(id, "C");
                 }
 
                 //if (contracts == null)
@@ -231,7 +231,7 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Contract = contract;
 
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    return new JsonResult(new { errors, contract });
+                    //return new JsonResult(new { errors, contract });
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }

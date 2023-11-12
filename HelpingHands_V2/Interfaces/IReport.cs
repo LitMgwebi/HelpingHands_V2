@@ -4,15 +4,15 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface IReport
     {
-        public List<dynamic> NurseAssignedConditions(int NurseId);
-        public List<dynamic> NurseAssignedContracts(int id);
-        public List<dynamic> NurseContractType(int id, string status);
-        public List<dynamic> NurseContractVisits(int id);
-        public List<dynamic> NurseVisitRange(int id, DateTime startDate, DateTime endDate);
-        public List<dynamic> AvailableNurses(int suburbId);
-        public List<dynamic> CareVisits(DateTime startDate, DateTime endDate);
-        public List<dynamic> ContractStatus(string status);
-        public List<dynamic> ContractVisits(int contractId);
-        public List<dynamic> PatientContract(int PatientId);
+        public Task<List<dynamic>> NurseAssignedConditions(int NurseId);
+        public Task<List<dynamic>> NurseAssignedContracts(int id);
+        public Task<List<dynamic>> NurseContractType(int id, string status);
+        public Task<List<dynamic>> NurseContractVisits(int id);
+        public Task<List<dynamic>> NurseVisitRange(int id, DateTime startDate, DateTime endDate);
+        public Task<List<dynamic>> AvailableNurses(int suburbId);
+        public Task<List<dynamic>> CareVisits(DateTime startDate, DateTime endDate);
+        public Task<List<dynamic>> ContractStatus(string status);
+        public Task<List<dynamic>> ContractVisits(int contractId);
+        public Task<List<dynamic>> PatientContract(int PatientId);
     }
 }

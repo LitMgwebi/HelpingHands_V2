@@ -23,19 +23,19 @@ namespace HelpingHands_V2.Controllers
             _suburb = suburb;
         }
 
-        public IActionResult Dashboard(int id)
+        public async Task<IActionResult> Dashboard(int id)
         {
+            List<dynamic> nextVisit = new List<dynamic> { };
+            List<dynamic>? contractVisits = new List<dynamic> { };
             try
             {
                 DateTime currentDate = DateTime.Now;
-                var patientContracts = _report.PatientContract(id);
-                List<dynamic> nextVisit = new List<dynamic> { };
-                List<dynamic>? contractVisits = new List<dynamic> { };
+                var patientContracts = await _report.PatientContract(id);
                 if (patientContracts.Count > 0)
                 {
                     var patientContract = patientContracts.FirstOrDefault();
 
-                    contractVisits = _report.ContractVisits(patientContract!.ContractId);
+                    contractVisits = await _report.ContractVisits(patientContract!.ContractId);
 
                     if(contractVisits.Count > 0)
                     {
@@ -56,7 +56,10 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Message = ex.Message;
+                //return new JsonResult(new { nextVisit, contractVisits, ex.Message });
+                ViewBag.ContractVisits = contractVisits;
+                ViewBag.NextVisit = nextVisit;
+                ViewBag.Message = ex.Message + nextVisit + contractVisits;
                 return View();
                 //return new JsonResult(new { error = ex.Message });
             }

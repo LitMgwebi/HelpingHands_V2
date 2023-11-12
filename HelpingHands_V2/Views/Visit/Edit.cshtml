@@ -13,14 +13,11 @@
 }
 <hr />
 <div class="row">
+    <form asp-action="Edit">
     <div class="col-md-4">
-        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="VisitId" value="@Visit.VisitId" type="hidden" />
-            <div class="form-group">
-                <label asp-for="ContractId" class="control-label"></label>
-                <input asp-for="ContractId" type="text" value="@Visit.ContractId" class="form-control" readonly/>
-            </div>
+                <input asp-for="ContractId" type="text" value="@Visit.ContractId" class="form-control" hidden/>
             <div class="form-group">
                 <label asp-for="VisitDate" class="control-label"></label>
                 <input asp-for="VisitDate" class="form-control" type="date" value="@Visit.VisitDate.ToString("yyyy-MM-dd")" />
@@ -36,6 +33,9 @@
                 <input asp-for="Arrival" type="time" class="form-control" value="@Visit.Arrival" />
                 <span asp-validation-for="Arrival" class="text-danger"></span>
             </div>
+            
+        </div>
+        <div class="col-md-4">
             <div class="form-group">
                 <label asp-for="Departure" class="control-label"></label>
                 <input asp-for="Departure" type="time" class="form-control" value="@Visit.Departure" />
@@ -55,10 +55,10 @@
                 </textarea>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
 </div>

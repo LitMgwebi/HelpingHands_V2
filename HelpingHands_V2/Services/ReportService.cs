@@ -17,7 +17,7 @@ namespace HelpingHands_V2.Services
             _config = config;
         }
 
-        public List<dynamic> NurseAssignedConditions(int NurseId)
+        public async Task<List<dynamic>> NurseAssignedConditions(int NurseId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -25,22 +25,22 @@ namespace HelpingHands_V2.Services
                 var sql = "NurseAssignedConditions";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("NurseId", NurseId);
-                var result =  conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
-                return result;
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                return result.AsList();
             }
         }
-        public List<dynamic> NurseAssignedContracts(int NurseId)
+        public async Task<List<dynamic>> NurseAssignedContracts(int NurseId)
         {
             using(var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 var sql = "NurseAssignedContracts";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("NurseId", NurseId);
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
-                return result;
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                return result.AsList();
             }
         }
-        public List<dynamic> NurseContractType(int NurseId, string status)
+        public async Task<List<dynamic>> NurseContractType(int NurseId, string status)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -48,22 +48,22 @@ namespace HelpingHands_V2.Services
                 DynamicParameters param = new DynamicParameters();
                 param.Add("NurseId", NurseId);
                 param.Add("Status", status);
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
-                return result;
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                return result.AsList();
             }
         }
-        public List<dynamic> NurseContractVisits(int ContractId)
+        public async Task<List<dynamic>> NurseContractVisits(int ContractId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 var sql = "NurseContractVisits";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("ContractId", ContractId);
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
-                return result;
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                return result.AsList();
             }
         }
-        public List<dynamic> NurseVisitRange(int NurseId, DateTime startDate, DateTime endDate)
+        public async Task<List<dynamic>> NurseVisitRange(int NurseId, DateTime startDate, DateTime endDate)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -72,22 +72,22 @@ namespace HelpingHands_V2.Services
                 param.Add("NurseId", NurseId);
                 param.Add("StartDate", startDate);
                 param.Add("EndDate", endDate);
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
-                return result;
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                return result.AsList();
             }
         }
-        public List<dynamic> AvailableNurses(int suburbId)
+        public async Task<List<dynamic>> AvailableNurses(int suburbId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 var sql = "ManagerAvailableNurses";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("SuburbId", suburbId);
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
-                return result;
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                return result.AsList();
             }
         }
-        public List<dynamic> CareVisits(DateTime startDate, DateTime endDate)
+        public async Task<List<dynamic>> CareVisits(DateTime startDate, DateTime endDate)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -95,43 +95,42 @@ namespace HelpingHands_V2.Services
                 DynamicParameters param = new DynamicParameters();
                 param.Add("StartDate", startDate);
                 param.Add("EndDate", endDate);
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
-                return result;
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                return result.AsList();
             }
         }
-        public List<dynamic> ContractStatus(string status)
+        public async Task<List<dynamic>> ContractStatus(string status)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 var sql = "ManagerContractStatus";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Status", status);
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
-                return result;
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                return result.AsList();
             }
         }
-        public List<dynamic> ContractVisits(int contractId)
+        public async Task<List<dynamic>> ContractVisits(int contractId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 var sql = "ManagerContractVisits";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("ContractId", contractId);
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
-                return result;
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                return result.AsList();
             }
         }
-        public List<dynamic> PatientContract(int patientId)
+        public async Task<List<dynamic>> PatientContract(int patientId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 var sql = "ManagerPatientContract";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("PatientId", patientId);
-                var result = conn.Query(sql, param, commandType: CommandType.StoredProcedure).ToList();
-                return result;
+                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                return result.AsList();
             }
         }
-
     }
 }

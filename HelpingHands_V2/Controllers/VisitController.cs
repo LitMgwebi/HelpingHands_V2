@@ -38,7 +38,7 @@ namespace HelpingHands_V2.Controllers
                 return View();
             }
         }
-        public IActionResult IndexForUser(int id)
+        public async Task<IActionResult> IndexForUser(int id, string command)
         {
             try
             {
@@ -46,39 +46,55 @@ namespace HelpingHands_V2.Controllers
                 List<dynamic> contractVisits = new List<dynamic> { };
                 List<dynamic> nextVisit = new List<dynamic> { };
 
-                contracts = _report.PatientContract(id);
-                if (contracts.Count > 0)
+                if (command== "nurse")
                 {
-                    foreach (var contract in contracts)
-                    {
-                        contractVisits = _report.ContractVisits(contract.ContractId);
+                        contractVisits = await _report.ContractVisits(id);
 
-                        if (contractVisits.Count > 0)
+                    ViewBag.Visits = contractVisits;
+                    //if (contractVisits.Count > 0)
+                    //    {
+                    //        foreach (var visit in contractVisits)
+                    //        {
+                    //            nextVisit.Add(visit);
+                    //        }
+                    //    }
+                } else
+                {
+                    contracts = await _report.PatientContract(id);
+                    if (contracts.Count > 0)
+                    {
+                        foreach (var contract in contracts)
                         {
-                            foreach (var visit in contractVisits)
+                            contractVisits = _report.ContractVisits(contract.ContractId);
+
+                            if (contractVisits.Count > 0)
                             {
-                                nextVisit.Add(visit);
+                                foreach (var visit in contractVisits)
+                                {
+                                    nextVisit.Add(visit);
+                                }
                             }
                         }
                     }
-                }
-                if (nextVisit.Count > 0)
-                {
-                    for (int i = 0; i < nextVisit.Count - 1; i++)
-                        for (int j = 0; j < nextVisit.Count - i - 1; j++)
-                            if (nextVisit[j].VisitDate > nextVisit[j + 1].VisitDate)
-                            {
-                                var tempVar = nextVisit[j];
-                                nextVisit[j] = nextVisit[j + 1];
-                                nextVisit[j + 1] = tempVar;
-                            }
+                    if (nextVisit.Count > 0)
+                    {
+                        for (int i = 0; i < nextVisit.Count - 1; i++)
+                            for (int j = 0; j < nextVisit.Count - i - 1; j++)
+                                if (nextVisit[j].VisitDate > nextVisit[j + 1].VisitDate)
+                                {
+                                    var tempVar = nextVisit[j];
+                                    nextVisit[j] = nextVisit[j + 1];
+                                    nextVisit[j + 1] = tempVar;
+                                }
+                    }
+
+                    ViewBag.Visits = nextVisit;
                 }
 
                 //if (contracts == null)
                 //{
                 //    return NotFound();
                 //}
-                ViewBag.Visits = nextVisit;
                 return View();
             }
             catch (Exception ex)
@@ -135,10 +151,12 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("Contract");
                 if (!ModelState.IsValid)
                 {
                     ViewBag.ContractId = visit.ContractId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    return new JsonResult(new { visit, errors });
                     ViewBag.Message = $"Not all the information required was entered. Please look below";
                     return View();
                 }
@@ -185,6 +203,7 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                ModelState.Remove("Contract");
                 if (!ModelState.IsValid)
                 {
                     ViewBag.Visit = visit;
@@ -193,10 +212,17 @@ namespace HelpingHands_V2.Controllers
                     return View();
                 }
                 await _visit.UpdateVisit(visit);
-                return RedirectToAction(nameof(Index));
+                if (HttpContext.User.IsInRole("N"))
+                {
+                    return RedirectToAction("Visits", "Nurse", new {id = HttpContext.User.FindFirst("UserId")!.Value, command = "upcoming"});
+                } else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
             catch (Exception ex)
             {
+                ViewBag.Visit = visit;
                 //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
@@ -215,8 +241,14 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Details), new { id = VisitId });
                 }
-                await _visit.DeleteVisit(VisitId);
-                return RedirectToAction(nameof(Index));
+                await _visit.DeleteVisit(VisitId); if (HttpContext.User.IsInRole("N"))
+                {
+                    return RedirectToAction("Visits", "Nurse", new { id = HttpContext.User.FindFirst("UserId")!.Value, command = "upcoming" });
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
             catch (Exception ex)
             {

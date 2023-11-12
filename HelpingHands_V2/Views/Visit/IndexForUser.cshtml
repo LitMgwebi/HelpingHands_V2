@@ -13,9 +13,12 @@
 }
 @if (User.IsInRole("P"))
 {
-    <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value">Back</a>
+    <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+} else if (User.IsInRole("N"))
+{
+    <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
 }
-<table class="table">
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th>

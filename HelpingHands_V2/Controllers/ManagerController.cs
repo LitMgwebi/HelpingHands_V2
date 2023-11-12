@@ -44,13 +44,13 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult NewContracts()
+        public async Task<IActionResult> NewContracts()
         {
             try
             {
                 List<dynamic> contracts = new List<dynamic> { };
 
-                contracts = _report.ContractStatus("N");
+                contracts = await _report.ContractStatus("N");
 
                 ViewBag.Contracts = contracts;
                 return View();

@@ -30,23 +30,21 @@ namespace HelpingHands_V2.Controllers
         }
 
 
-        public IActionResult Dashboard(int id)
+        public async Task<IActionResult> Dashboard(int id)
         {
+            List<dynamic> assignedContracts = new List<dynamic> { };
+            List<dynamic> contractVisits = new List<dynamic> { };
+            List<dynamic> nextVisit = new List<dynamic> { };
             try
             {
                 DateTime currentDate = DateTime.Now;
-                List<dynamic> assignedContracts = new List<dynamic> { };
-                List<dynamic> unassignedContracts = new List<dynamic> { };
-                List<dynamic> contractVisits = new List<dynamic> { };
-                List<dynamic> nextVisit = new List<dynamic> { };
 
-                assignedContracts = _report.NurseAssignedContracts(id);
-                unassignedContracts = _report.ContractStatus("N");
+                assignedContracts = await _report.NurseAssignedContracts(id);
                 if (assignedContracts.Count > 0)
                 {
                     foreach (var contract in assignedContracts)
                     {
-                        contractVisits = _report.ContractVisits(contract.ContractId);
+                        contractVisits = await _report.ContractVisits(contract.ContractId);
 
                         if (contractVisits.Count > 0)
                         {
@@ -68,13 +66,13 @@ namespace HelpingHands_V2.Controllers
                                 nextVisit[j + 1] = tempVar;
                             }
                 }
-                ViewBag.UnassignedContracts = unassignedContracts;
-                ViewBag.NextVisit = nextVisit;
-                ViewBag.Contracts = assignedContracts;
+                ViewBag.NextVisits = nextVisit.ToList();
+                ViewBag.Contracts = assignedContracts.ToList();
                 return View();
             }
             catch (Exception ex)
             {
+                return new JsonResult(new { nextVisit, contractVisits, assignedContracts, ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
                 //return new JsonResult(new { error = ex.Message });
@@ -289,7 +287,7 @@ namespace HelpingHands_V2.Controllers
         }
 
 
-        public IActionResult Visits(int id, string command)
+        public async Task<IActionResult> Visits(int id, string command)
         {
             try
             {
@@ -297,11 +295,11 @@ namespace HelpingHands_V2.Controllers
                 DateTime currentDate = DateTime.Now;
                 if (command == "upcoming")
                 {
-                    visits = _report.NurseVisitRange(id, currentDate, currentDate.AddYears(20));
+                    visits = await _report.NurseVisitRange(id, currentDate, currentDate.AddYears(20));
                 }
                 else if (command == "past")
                 {
-                    visits = _report.NurseVisitRange(id, currentDate.AddYears(-20), currentDate);
+                    visits = await _report.NurseVisitRange(id, currentDate.AddYears(-20), currentDate);
                 }
                 ViewBag.Visits = visits;
                 return View();

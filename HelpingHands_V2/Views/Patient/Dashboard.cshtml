@@ -73,29 +73,34 @@
                     <section style="border: 2rem black">
                         <h5>Wound Progress</h5>
                         <table>
-                            @foreach (var item in ViewBag.ContractVisits)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.VisitDate.Day
-                                        @item.VisitDate.ToString("MMMM")
-                                    </td>
-                                    <td>
-                                        @if (@item.WoundCondition == null)
-                                        {
+                            @* @if(ViewBag.ContractVisits.Count > 0){
+                                @foreach (var item in ViewBag.ContractVisits)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.VisitDate.Day
+                                            @item.VisitDate.ToString("MMMM")
+                                        </td>
+                                        <td>
+                                            @if (@item.WoundCondition == null)
+                                            {
 
-                                            <p>...</p>
-                                        }
-                                        else
-                                        {
-                                            @item.WoundCondition
-                                        }
-                                    </td>
-                                    <td>
-                                        <button class="btn">View More</button>
-                                    </td>
-                                </tr>
-                            }
+                                                <p>...</p>
+                                            }
+                                            else
+                                            {
+                                                @item.WoundCondition
+                                            }
+                                        </td>
+                                        <td>
+                                            <button class="btn">View More</button>
+                                        </td>
+                                    </tr>
+                                }
+                            } else
+                            {
+                                <p>No Visits have been recorded</p>
+                            } *@
                         </table>
                     </section>
                 }
@@ -109,11 +114,7 @@
             <div class="card-header">Upcoming Visits</div>
             <div class="card-body">
                 <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
-                    @if (ViewBag.NextVisit.Count == 0)
-                    {
-                        <swiper-slide>No Upcoming Visits</swiper-slide>
-                    }
-                    else
+                   @*  @if (ViewBag.NextVisit.Count > 0)
                     {
                         @foreach (var item in ViewBag.NextVisit)
                         {
@@ -129,7 +130,7 @@
 
                                             @item.ApproxTime
                                         </section>
-                                        
+
                                     </div>
                                     <section class="btn-group card-footer">
 
@@ -141,6 +142,10 @@
                             </swiper-slide>
                         }
                     }
+                    else
+                    {
+                        <swiper-slide>No Upcoming Visits</swiper-slide>
+                    } *@
                 </swiper-container>
 
             </div>
