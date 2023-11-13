@@ -41,9 +41,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Patient)
                 </th>
-                <th>
+                @* <th>
                     @Html.DisplayNameFor(model => model.StartDate)
-                </th>
+                </th> *@
             }
             <th>
                 @Html.DisplayNameFor(model => model.Wound)
@@ -79,9 +79,9 @@
                         <td>
                             @item.PatientFirstname @item.PatientLastname
                         </td>
-                            <td>
+                            @* <td>
                                 @item.StartDate.Day @item.StartDate.ToString("MMMM")
-                            </td>
+                            </td> *@
                     }
                     <td>
                         @item.WoundName

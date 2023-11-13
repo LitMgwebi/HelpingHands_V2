@@ -88,9 +88,9 @@
             </div>
         </div>
         <div class="card col-6" style=" height: auto; border-radius:2rem;">
+            <div class="card-header">Latest Contract</div>
             @if (Contracts.Count > 0)
             {
-                <div class="card-header">Latest Contract</div>
                 <div class="card-body">
                     <section>
                         <table class="table">
@@ -122,55 +122,10 @@
             }
             else
             {
-                <div class="card-header">Unassigned Contracts</div>
-                <div class="card-body">
-                    <section>
-                        <h4>You have no assigned contracts. Here are a list of some available:</h4>
+                <section class="card-body">
+                        <h4>You have no assigned contracts.</h4>
                     </section>
-                    <table>
-                        @if (ViewBag.UnassignedContracts.Count == 0)
-                        {
-                            <tr>
-                                <td>No New Contracts</td>
-                            </tr>
-                        }
-                        else
-                        {
-
-                            <thead>
-                                <tr>
-                                    <th class="col-3">Patient</th>
-                                    <th class="col-3">Contract Date</th>
-                                    <th class="col-3">Suburb</th>
-                                    <th class="col-3"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in ViewBag.UnassignedContracts)
-                                {
-                                    <tr>
-                                        <td>
-
-                                            @item.PatientFirstname
-                                            @item.PatientLastname
-                                        </td>
-                                        <td>
-                                            @item.ContractDate.Day
-                                            @item.ContractDate.ToString("MMMM")
-                                        </td>
-                                        <td>
-                                            @item.SuburbName
-                                        </td>
-                                        <td>
-                                            <a asp-controller="Contract" asp-action="Edit" asp-route-id="@item.ContractId">Apply</a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        }
-                    </table>
-
-                </div>
+      
             }
         </div>
     </section>

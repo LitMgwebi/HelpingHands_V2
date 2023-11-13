@@ -116,7 +116,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="current">Current Contracts</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="unassigned">Assigned Contracts</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="unassigned">Unassigned Contracts</a></li>
                                     <li><a class="dropdown-item" asp-controller="Contract" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="past">Past Contracts</a></li>
                                 </ul>
                             </li>

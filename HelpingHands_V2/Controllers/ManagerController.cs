@@ -94,14 +94,14 @@ namespace HelpingHands_V2.Controllers
         public async Task<IActionResult> VisitRange(int NurseId, DateTime StartDate, DateTime EndDate)
         {
             List<dynamic> visitRange = new List<dynamic> { };
+            var nurses = await _nurse.GetNurses();
+            ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
             try
             {
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    var nurses = await _nurse.GetNurses();
                     ViewBag.VisitRange = visitRange;
-                    ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
@@ -111,8 +111,6 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.VisitRange = visitRange;
-                var nurses = await _nurse.GetNurses();
                 ViewBag.VisitRange = visitRange;
                 ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                 ViewBag.Message = ex.Message;

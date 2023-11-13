@@ -87,7 +87,7 @@ else
             ID Number
         </dt>
         <dd class = "col-sm-8">
-            @EndUser.Idnumber
+            @EndUser.IDNumber
         </dd>
         <dt class = "col-sm-4">
             Profile Picture
@@ -100,7 +100,7 @@ else
 @if ( User.IsInRole("N") || User.IsInRole("A"))
 {
     <div class="btn-group" role="group" aria-label="Control Panel">
-        <a asp-action="Edit" asp-route-id="@Nurse.NurseId" class="btn btn-success">Edit</a>
+        <a asp-action="Edit" asp-route-id="@Nurse.NurseId" class="btn btn-success">Edit Nurse Info</a>
         <a asp-action="Edit" asp-controller="EndUser" asp-route-id="@Nurse.NurseId" class="btn btn-success">Edit User Info</a>
         <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Nurse.NurseId" class="btn btn-success">ChangePassword</a>
         <form asp-action="Delete">
