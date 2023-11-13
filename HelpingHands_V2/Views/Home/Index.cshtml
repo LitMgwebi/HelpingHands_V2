@@ -6,9 +6,9 @@
 <div class="text-center">
     <h1 class="display-1">Welcome to Helping Hands</h1> 
 </div>
-<div class="row">
-    <h3>Here you will...</h3>
-    <div class="col-3">
+<div class="container">
+    <h3 class="display-6 text-center">Primary wound care for the elderly</h3>
+    <section class="row">
         <div class="card" style="width: 18rem;">
             <div class="card-header">@Business.OrganizationName</div>
             <div class="card-body">
@@ -21,16 +21,33 @@
                 <br />
             </div>
         </div>
-        <div class="card" style="width: 18rem;">
+        <div class="card" >
             <div class="card-header">
                 Operational Hours:
             </div>
-            <ul class="list-group list-group-flush">
-                @foreach (var item in ViewBag.Operation)
-                {
-                    <li class="list-group-item">@item.OperationDay  @item.OpenTime - @item.CloseTime</li>
-                }
-            </ul>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Hours of Operation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.Operation)
+                        {
+                            <tr>
+                                <td>
+                                    @item.OperationDay
+                                </td>
+                                <td>
+                                    @item.OpenTime - @item.CloseTime
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    </section>
 </div>

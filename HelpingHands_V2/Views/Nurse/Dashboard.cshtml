@@ -13,7 +13,7 @@
 
 <hr />
 <div class="container-fluid" style="height: auto">
-    <section class="row" style="overflow-x: scroll">
+    @* <section class="row" style="overflow-x: scroll">
         <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
             <img src="/Media/contract.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
             <div class="card-img-overlay">
@@ -32,56 +32,46 @@
                 <h5 class="card-title" style="color:black">View Chronic Conditions</h5>
             </div>
         </div>
-    </section>
+    </section> *@
     <section class="row">
         <div class="card col-5" style=" height: auto; border-radius:2rem;">
             <div class="card-header">Upcoming Visits</div>
             <div class="card-body">
                 <section class="row mx-3" style="border: 2rem black">
-                    <table>
+                    <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
                         @if (Visits.Count > 0)
                         {
-                            <thead>
-                                <tr>
-                                    <th scole="col">Patient</th>
-                                    <th scole="col">Date</th>
-                                    <th scole="col">Time</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    @for (int i = 0; i < ViewBag.NextVisits.Count; i++)
-                                    {
-                                        <td>
+                            @for (int i = 0; i < ViewBag.NextVisits.Count; i++)
+                            {
+                                <swiper-slide>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                @ViewBag.Contracts[i].PatientFirstname
+                                                @ViewBag.Contracts[i].PatientLastname
+                                            </h4>
+                                            <h5 class="card-text">
+                                                @ViewBag.NextVisits[i].VisitDate.Day
+                                                @ViewBag.NextVisits[i].VisitDate.ToString("MMM")
+                                            </h5>
+                                            <h5 class="card-text">
 
-                                            @ViewBag.Contracts[i].PatientFirstname
-                                            @ViewBag.Contracts[i].PatientLastname
-                                        </td>
-                                        <td>
-                                            @ViewBag.NextVisits[i].VisitDate.Day
-                                            @ViewBag.NextVisits[i].VisitDate.ToString("MMM")
-                                        </td>
-                                        <td>
-                                            @ViewBag.NextVisits[i].ApproxTime
-                                        </td>
-                                        <td>
-                                            <button class="btn">Update</button>
-                                            <button class="btn">History</button>
-                                            <button class="btn">Contract</button>
-                                        </td>
-                                    }
-                                </tr>
-                            </tbody>
+                                                @ViewBag.NextVisits[i].ApproxTime
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </swiper-slide>
+                            }
                         }
                         else
                         {
-                            <tr>
-                                <td>No Upcoming visits</td>
-                                <td>Schedule Visit</td>
-                            </tr>
-                            
-                        }  
+                            <div class="card">
+                                <h5>No Upcoming Visits</h5>
+                            </div>
+
+                        }
+                    </swiper-container>
+                    <table>
                     </table>
                 </section>
 
@@ -93,29 +83,32 @@
             {
                 <div class="card-body">
                     <section>
-                        <table class="table">
-                            <tbody>
-                            @foreach(var Contract in ViewBag.Contracts)
+                        <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
+                            @foreach (var Contract in ViewBag.Contracts)
                             {
-                                    <tr>
-                                        <td>Patient</td>
-                                        <td>@Contract.PatientFirstname @Contract.PatientLastname</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Wound</td>
-                                        <td>@Contract.WoundName</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Contract Date</td>
-                                        <td>@Contract.ContractDate.Day @Contract.ContractDate.ToString("MMMM")</td>
-                                    </tr>
-                                    <tr>
-                                        <a asp-controller="Visit" asp-action="Create" asp-route-id="@Contract.ContractId" class="btn btn-outline-primary">Schedule new visit</a>
-                                        <a asp-controller="Contract" asp-action="Details" asp-route-id="@Contract.ContractId" class="btn btn-outline-dark">View Contract</a>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                                <swiper-slide>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                Patient:
+                                                @Contract.PatientFirstname @Contract.PatientLastname
+                                            </h4>
+                                            <h6 class="card-subtitle">
+                                                Wound: @Contract.WoundName
+                                            </h6>
+                                            <h6 class="card-text">
+
+                                                Contract Date: @Contract.ContractDate.Day @Contract.ContractDate.ToString("MMMM")
+                                            </h6>
+                                            <div class="card-footer">
+                                                <a asp-controller="Visit" asp-action="Create" asp-route-id="@Contract.ContractId" class="btn btn-outline-primary">Schedule new visit</a>
+                                                <a asp-controller="Contract" asp-action="Details" asp-route-id="@Contract.ContractId" class="btn btn-outline-dark">View Contract</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </swiper-slide>
+                            }
+                        </swiper-container>
                     </section>
                 </div>
 
@@ -123,9 +116,9 @@
             else
             {
                 <section class="card-body">
-                        <h4>You have no assigned contracts.</h4>
-                    </section>
-      
+                    <h4>You have no assigned contracts.</h4>
+                </section>
+
             }
         </div>
     </section>
