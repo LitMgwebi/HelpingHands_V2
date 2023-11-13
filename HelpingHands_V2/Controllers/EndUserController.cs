@@ -6,6 +6,7 @@ using HelpingHands_V2.Models;
 using BC = BCrypt.Net.BCrypt;
 using HelpingHands_V2.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -234,6 +235,66 @@ namespace HelpingHands_V2.Controllers
                 return View();
             }
         }
+
+        [Authorize(Roles ="A")]
+        public IActionResult AddUser()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddUser([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password,ConfirmPassword, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user, string? returnUrl = null)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
+                    return View();
+                }
+                //var fileName = Path.GetFileName(file.FileName);
+
+                //user.ProfilePictureName = fileName;
+                //using (var target = new MemoryStream())
+                //{
+                //    file.CopyTo(target);
+                //    user.ProfilePicture = target.ToArray();
+                //}
+                string tempPassword = user.Password;
+                user.Password = BC.HashPassword(user.Password);
+                await _account.AddUser(user);
+                ViewBag.Message = "Record Added successfully;";
+                if (await RegisterValidateUser(user, tempPassword))
+                {
+                    if (user.UserType == "N")
+                        return RedirectToAction("Create", "Nurse", new { id = user.UserId });
+                    else
+                        return RedirectToAction("Dashboard", "Admin");
+                }
+                else
+                {
+                    return new JsonResult(new { error = "User is not validated" });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
+            }
+        }
+
 
         public async Task<IActionResult> Edit(int? id)
         {

@@ -127,11 +127,11 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult Create(int id)
+        public IActionResult Create(int? id)
         {
             try
             {
-                ViewData["NurseId"] = id;
+                ViewBag.NurseId = id;
                 return View();
             }
             catch (Exception ex)
@@ -150,7 +150,7 @@ namespace HelpingHands_V2.Controllers
                 ModelState.Remove("NurseNavigation");
                 if (!ModelState.IsValid)
                 {
-                    ViewData["NurseId"] = nurse.NurseId;
+                    ViewBag.NurseId = nurse.NurseId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     return new JsonResult(new { errors, nurse });
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
@@ -162,6 +162,7 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex) 
             {
+                return new JsonResult(new { error = ex.Message, nurse });
                 ViewBag.Message = ex.Message;
                 return View();
                 //return new JsonResult(new { error = ex.Message });

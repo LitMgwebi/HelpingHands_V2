@@ -56,6 +56,7 @@ public partial class EndUser
     [DisplayName("ID Number")]
     public string? Idnumber { get; set; }
 
+    [Required(ErrorMessage = "Please select the user's type")]
     [DisplayName("User Type")]
     public string? UserType { get; set; }
 
