@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Diagnostics.Contracts;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -13,12 +14,14 @@ namespace HelpingHands_V2.Controllers
         private readonly IReport _report;
         private readonly IVisit _visit;
         private readonly INurse _nurse;
+        private readonly IContract _contract;
 
-        public ManagerController(IReport report, IVisit visit, INurse nurse)
+        public ManagerController(IReport report, IVisit visit, INurse nurse, IContract contract)
         {
             _report = report;
             _visit = visit;
             _nurse = nurse;
+            _contract = contract;
         }
 
         public async Task<IActionResult> Dashboard()
@@ -156,6 +159,63 @@ namespace HelpingHands_V2.Controllers
                 ViewBag.Message = ex.Message;
                 return View();
                 //return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        public async Task<IActionResult> ContractDetails(int? id)
+        {
+            List<dynamic> nurses = new List<dynamic> { };
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var contract = await _contract.GetContract(id);
+
+                if (contract == null)
+                    return NotFound();
+
+                ViewBag.Contract = contract;
+                ViewBag.Nurses = nurses;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Contract = new { };
+                ViewBag.Message = ex.Message;
+                return View();
+                //return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ContractDetails(int ContractId)
+        {
+            List<dynamic> nurses = new List<dynamic> { };
+            var contract = await _contract.GetContract(ContractId);
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Contract = contract;
+                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
+                    return View();
+                }
+                nurses = await _report.AvailableNurses(ContractId);
+                ViewBag.Nurses = nurses;
+                ViewBag.Contract = contract;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Nurses = nurses;
+                ViewBag.Contract = contract;
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
     }
