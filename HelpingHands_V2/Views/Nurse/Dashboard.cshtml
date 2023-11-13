@@ -1,13 +1,15 @@
-﻿@{
+﻿@using System.Linq
+@{
     ViewData["Title"] = "Nurse Dashboard";
     var Message = ViewBag.Message;
+    var Visits = ViewBag.NextVisits;
+    var Contracts = ViewBag.Contracts;
 }
 <h2 class="display-4 text-center">Nurse Dashboard</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-
 
 <hr />
 <div class="container-fluid" style="height: auto">
@@ -37,7 +39,7 @@
             <div class="card-body">
                 <section class="row mx-3" style="border: 2rem black">
                     <table>
-                         @if (ViewBag.NextVisits.Count > 0)
+                        @if (Visits.Count > 0)
                         {
                             <thead>
                                 <tr>
@@ -79,14 +81,14 @@
                                 <td>Schedule Visit</td>
                             </tr>
                             
-                        } 
+                        }  
                     </table>
                 </section>
 
             </div>
         </div>
         <div class="card col-6" style=" height: auto; border-radius:2rem;">
-            @if (ViewBag.Contracts.Count > 0)
+            @if (Contracts.Count > 0)
             {
                 <div class="card-header">Latest Contract</div>
                 <div class="card-body">

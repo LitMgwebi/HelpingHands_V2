@@ -66,13 +66,12 @@ namespace HelpingHands_V2.Controllers
                                 nextVisit[j + 1] = tempVar;
                             }
                 }
-                ViewBag.NextVisits = nextVisit.ToList();
-                ViewBag.Contracts = assignedContracts.ToList();
+                ViewBag.NextVisits = nextVisit;
+                ViewBag.Contracts = assignedContracts;
                 return View();
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { nextVisit, contractVisits, assignedContracts, ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
                 //return new JsonResult(new { error = ex.Message });
@@ -152,7 +151,6 @@ namespace HelpingHands_V2.Controllers
                 {
                     ViewBag.NurseId = nurse.NurseId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    return new JsonResult(new { errors, nurse });
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
@@ -160,9 +158,9 @@ namespace HelpingHands_V2.Controllers
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction("Dashboard", "Admin", new { id = HttpContext.User.FindFirst("UserId")!.Value });
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message, nurse });
+                ViewBag.NurseId = nurse.NurseId;
                 ViewBag.Message = ex.Message;
                 return View();
                 //return new JsonResult(new { error = ex.Message });
@@ -267,8 +265,9 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult VisitRange(int NurseId, DateTime StartDate, DateTime EndDate)
+        public async Task<IActionResult> VisitRange(int NurseId, DateTime StartDate, DateTime EndDate)
         {
+            List<dynamic> visitRange = new List<dynamic> { };
             try
             {
                 if (!ModelState.IsValid)
@@ -277,12 +276,13 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
-                var visitRange = _report.NurseVisitRange(NurseId, StartDate, EndDate);
+                visitRange = await _report.NurseVisitRange(NurseId, StartDate, EndDate);
                 ViewBag.VisitRange = visitRange;
                 return View();
             }
             catch (Exception ex)
             {
+                ViewBag.VisitRange = visitRange;
                 ViewBag.Message = ex.Message;
                 return View();
                 //return new JsonResult(new { error = ex.Message });

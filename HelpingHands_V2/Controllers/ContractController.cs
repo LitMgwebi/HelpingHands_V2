@@ -3,6 +3,7 @@ using HelpingHands_V2.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Diagnostics.Contracts;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -85,8 +86,9 @@ namespace HelpingHands_V2.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
+            List<dynamic> visits = new List<dynamic> { };
             try
             {
                 if (id == null)
@@ -95,15 +97,19 @@ namespace HelpingHands_V2.Controllers
                 }
 
                 var contract = await _contract.GetContract(id);
+                visits = await _report.ContractVisits(id);
 
                 if (contract == null)
                     return NotFound();
 
                 ViewBag.Contract = contract;
+                ViewBag.Visits = visits;
                 return View();
             }
             catch (Exception ex)
             {
+                ViewBag.Contract = new { };
+                ViewBag.Visits = visits;
                 ViewBag.Message = ex.Message;
                 return View();
                 //return new JsonResult(new { error = ex.Message });

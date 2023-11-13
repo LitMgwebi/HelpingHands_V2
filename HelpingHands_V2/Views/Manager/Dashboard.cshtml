@@ -1,6 +1,9 @@
-﻿@{
+﻿@using System.Linq
+@{
     ViewData["Title"] = "Manager Dashboard";
     var Message = ViewBag.Message;
+    var NewContracts = ViewBag.NewContracts;
+    var AssignedContracts = ViewBag.AssignedContracts;
 }
 <h2 class="display-2 text-center">Hello @User.Identity?.Name</h2>
 @if (Message != null)
@@ -28,7 +31,7 @@
                     <h3 class="display-5">New Contracts</h3>
                     <section style="">
                         <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
-                            @foreach (var item in ViewBag.NewContracts)
+                            @foreach (var item in NewContracts)
                             {
                                 <swiper-slide>
                                     <div class="card" style="width: 18rem;">
@@ -51,7 +54,7 @@
                     <h3 class="display-5">Assigned Contracts</h3>
                     <section style="">
                         <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
-                            @foreach (var item in ViewBag.AssignedContracts)
+                            @foreach (var item in AssignedContracts)
                             {
                                 <swiper-slide>
                                     <div class="card" style="width: 18rem;">

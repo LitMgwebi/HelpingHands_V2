@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Details";
     var Contract = ViewBag.Contract;
+    var Visits = ViewBag.Visits;
     var Message = ViewBag.Message;
 }
 
@@ -132,4 +133,91 @@ else
         </form>
     }
     
+</div>
+ 
+<div class="row">
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th>
+                    Visit Date
+                </th>
+                <th>
+                    Approximate Time
+                </th>
+                <th>
+                    Arrival
+                </th>
+                <th>
+                    Departure
+                </th>
+                <th>
+                    Wound Condition
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Visits.Count > 0)
+            {
+                @foreach (var item in Visits)
+                {
+                    <tr>
+                        <td>
+                            @item.VisitDate.Day @item.VisitDate.ToString("MMM")
+                        </td>
+                        <td>
+                            @item.ApproxTime
+                        </td>
+                        @if(item.Arrival != null)
+                        {
+                            <td>
+                                @item.Arrival
+                            </td>
+                        } else
+                        {
+                            <td>
+                                N/A
+                            </td>
+                        }
+
+                        @if (item.Departure != null)
+                        {
+                            <td>
+                                @item.Departure
+                            </td>
+                        }
+                        else
+                        {
+
+                            <td>
+                                N/A
+                            </td>
+                        }
+
+                        @if (item.WoundCondition != null)
+                        {
+                            <td>
+                                @item.WoundCondition
+                            </td>
+                        }
+                        else
+                        {
+
+                            <td>
+                                N/A
+                            </td>
+                        }
+                        <td>
+                            <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.VisitId" class="btn btn-info">View More</a>
+                        </td>
+                    </tr>
+                }
+            } else
+            {
+                <h5>No Visits recorded yet</h5>
+            }
+        </tbody>
+    </table>
+
 </div>

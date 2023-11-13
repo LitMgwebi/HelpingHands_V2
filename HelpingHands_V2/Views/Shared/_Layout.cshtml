@@ -139,8 +139,15 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Manager" asp-action="Dashboard">Dashboard</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Manager" asp-action="NewContracts" >New Contracts</a>
+                            <li class="nav-item dropdown">
+                                <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Contracts
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li><a class="dropdown-item" asp-controller="Manager" asp-action="NewContracts">New Contracts</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Manager" asp-action="VisitRange">Visits within range</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Manager" asp-action="ContractRange">Contracts within range</a></li>
+                                </ul>
                             </li>
                         } 
                         else
