@@ -1,7 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Cities";
+﻿@model IEnumerable<HelpingHands_V2.Models.City>
+
+@{
+    ViewData["Title"] = "Index";
     var Message = ViewBag.Message;
 }
+
 
 <h2 class="display-4 text-center">Cities</h2>
 @if (Message != null)
@@ -14,19 +17,28 @@
 <table class="table" id="myTable">
     <thead>
         <tr>
-            <th scope="col">City Name</th>
-            <th scope="col">City Abbreviation</th>
+            <th>
+                @Html.DisplayNameFor(model => model.CityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CityAbbreviation)
+            </th>
             <th></th>
         </tr>
     </thead>
-    <tbody class="table-group-divider">
-        @foreach (var city in ViewBag.Cities)
+    <tbody>
+        @foreach (var item in Model)
         {
-            <tr scope="row">
-                <td>@city.CityName</td>
-                <td>@city.CityAbbreviation</td>
+            <tr>
                 <td>
-                    <a asp-action="Details" asp-route-id="@city.CityId" class="btn btn-info">View</a>
+                    @Html.DisplayFor(modelItem => item.CityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CityAbbreviation)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.CityId" class="btn btn-info">View</a>
+
                 </td>
             </tr>
         }

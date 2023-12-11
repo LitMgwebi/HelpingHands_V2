@@ -23,8 +23,8 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.Cities = city;
-                return View();
+                //ViewBag.Cities = city;
+                return View(city);
 
             }
             catch (Exception ex)
@@ -50,8 +50,8 @@ namespace HelpingHands_V2.Controllers
                 if (city == null)
                     return NotFound();
 
-                ViewBag.City = city;
-                return View();
+                //ViewBag.City = city;
+                return View(city);
             }
             catch (Exception ex)
             {
@@ -113,8 +113,8 @@ namespace HelpingHands_V2.Controllers
                 if (city == null)
                     return NotFound();
 
-                ViewBag.City = city;
-                return View();
+                //ViewBag.City = city;
+                return View(city);
             }
             catch (Exception ex)
             {
@@ -134,7 +134,7 @@ namespace HelpingHands_V2.Controllers
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.City = city;
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View();
+                    return View(city);
                 }
                 await _city.UpdateCity(city);
                 return RedirectToAction(nameof(Details), new {id = city.CityId});
@@ -142,7 +142,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return View();
+                return View(city);
                 //return new JsonResult(new { error = ex.Message });
             }
         }

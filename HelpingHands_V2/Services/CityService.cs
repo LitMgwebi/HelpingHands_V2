@@ -12,18 +12,18 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDCity";
         public CityService(IConfiguration config) => _config = config;
 
-        public async Task<IEnumerable<dynamic>> GetCities()
+        public async Task<IEnumerable<City>> GetCities()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<City>(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public async Task<dynamic> GetCity(int? id)
+        public async Task<City> GetCity(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -31,7 +31,7 @@ namespace HelpingHands_V2.Services
                 param.Add("CityId", id);
                 param.Add("Command", "GetOne");
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync<City>(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }

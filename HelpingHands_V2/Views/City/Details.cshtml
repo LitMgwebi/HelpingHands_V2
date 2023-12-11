@@ -1,37 +1,33 @@
 ﻿@model HelpingHands_V2.Models.City
+
 @{
     ViewData["Title"] = "Details";
-    var City = ViewBag.City;
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">@City.CityName Details</h2>
+<h2 class="display-4 text-center">@Model?.CityName Details</h2>
 <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<hr />
 <div class="row">
+    <hr />
     <dl>
-        <dt class="col-sm-2">
-            City Name:
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CityName)
         </dt>
-        <dd class="col-sm-10">
-            @City.CityName
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CityName)
         </dd>
-        <dt class="col-sm-2">
-            City Abbreviation:
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CityAbbreviation)
         </dt>
-        <dd class="col-sm-10">
-            @City.CityAbbreviation
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CityAbbreviation)
         </dd>
     </dl>
 </div>
-<div class="btn-group" role="group" aria-label="Control Panel">
-    <a asp-action="Edit" asp-route-id="@City.CityId" class="btn btn-success">Edit</a>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.CityId" class="btn btn-success">Edit</a>
     <form asp-action="Delete">
-        <input asp-for="CityId" value="@City.CityId" type="hidden" />
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @City.CityName?')" class="btn btn-danger" />
+        <input asp-for="CityId" value="@Model?.CityId" type="hidden" />
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @Model?.CityName?')" class="btn btn-danger" />
     </form>
 </div>

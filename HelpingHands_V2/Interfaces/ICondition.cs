@@ -4,9 +4,9 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface ICondition
     {
-        public Task<IEnumerable<dynamic>> GetConditions();
+        public Task<IEnumerable<Condition>> GetConditions();
 
-        public Task<object> GetCondition(int? id);
+        public Task<Condition> GetCondition(int? id);
 
         public Task<dynamic> AddCondition(Condition condition);
 

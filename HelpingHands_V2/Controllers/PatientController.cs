@@ -34,9 +34,7 @@ namespace HelpingHands_V2.Controllers
                 if (patientContracts.Count > 0)
                 {
                     var patientContract = patientContracts.FirstOrDefault();
-
                     contractVisits = await _report.ContractVisits(patientContract!.ContractId);
-
                     if(contractVisits.Count > 0)
                     {
                         var latestVisit = contractVisits.LastOrDefault();
@@ -56,12 +54,10 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { nextVisit, contractVisits, ex.Message });
                 ViewBag.ContractVisits = contractVisits;
                 ViewBag.NextVisit = nextVisit;
                 ViewBag.Message = ex.Message + nextVisit + contractVisits;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 

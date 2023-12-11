@@ -76,18 +76,19 @@ namespace HelpingHands_V2.Controllers
         public async Task<IActionResult> VisitRange()
         {
             List<dynamic> visitRange = new List<dynamic> { };
+            var nurses = await _nurse.GetNurses();
             try
             {
-                var nurses = await _nurse.GetNurses();
                 ViewBag.VisitRange = visitRange;
                 ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                 return View();
             }
             catch (Exception ex)
             {
+                ViewBag.VisitRange = visitRange;
+                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -96,13 +97,12 @@ namespace HelpingHands_V2.Controllers
         {
             List<dynamic> visitRange = new List<dynamic> { };
             var nurses = await _nurse.GetNurses();
-            ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.VisitRange = visitRange;
+                    ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }

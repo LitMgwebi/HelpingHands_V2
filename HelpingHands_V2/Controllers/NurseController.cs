@@ -29,7 +29,7 @@ namespace HelpingHands_V2.Controllers
             _user = user;
         }
 
-
+        
         public async Task<IActionResult> Dashboard(int id)
         {
             List<dynamic> assignedContracts = new List<dynamic> { };
@@ -38,14 +38,12 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 DateTime currentDate = DateTime.Now;
-
                 assignedContracts = await _report.NurseAssignedContracts(id);
                 if (assignedContracts.Count > 0)
                 {
                     foreach (var contract in assignedContracts)
                     {
                         contractVisits = await _report.ContractVisits(contract.ContractId);
-
                         if (contractVisits.Count > 0)
                         {
                             foreach (var visit in contractVisits)
@@ -74,7 +72,6 @@ namespace HelpingHands_V2.Controllers
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 

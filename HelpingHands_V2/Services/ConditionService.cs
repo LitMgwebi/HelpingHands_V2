@@ -11,19 +11,19 @@
         string sql = "CRUDCondition";
         public ConditionService(IConfiguration config) => _config = config;
 
-        public async Task<IEnumerable<dynamic>> GetConditions()
+        public async Task<IEnumerable<Condition>> GetConditions()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<Condition>(sql, param, commandType: CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public async Task<object> GetCondition(int? id)
+        public async Task<Condition> GetCondition(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -31,7 +31,7 @@
                 param.Add("ConditionId", id);
                 param.Add("Command", "GetOne");
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync<Condition>(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }

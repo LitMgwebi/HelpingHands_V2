@@ -2,11 +2,10 @@
 
 @{
     ViewData["Title"] = "Edit";
-    var Condition = ViewBag.Condition;
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Edit @Condition.ConditionName</h2>
+<h2 class="display-4 text-center">Edit @Model?.ConditionName</h2>
 
 @if (Message != null)
 {
@@ -17,22 +16,21 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="ConditionId" value="@Condition.ConditionId" type="hidden"/>
+            <input asp-for="ConditionId" type="hidden" />
             <div class="form-group">
                 <label asp-for="ConditionName" class="control-label"></label>
-                <input asp-for="ConditionName" class="form-control" value="@Condition.ConditionName" />
+                <input asp-for="ConditionName" class="form-control" />
                 <span asp-validation-for="ConditionName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ConditionDescription" class="control-label"></label>
-                <textarea name="ConditionDescription" class="form-control" rows="3" autofocus>
-                    @Condition.ConditionDescription
+                <textarea asp-for="ConditionDescription" class="form-control" rows="3" autofocus>
                 </textarea>
                 <span asp-validation-for="ConditionDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                <a asp-action="Details" asp-route-id="@Model?.ConditionId" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>

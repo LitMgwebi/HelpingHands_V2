@@ -10,35 +10,14 @@
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-
 <hr />
 <div class="container-fluid" style="height: auto">
-    @* <section class="row" style="overflow-x: scroll">
-        <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
-            <img src="/Media/contract.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
-            <div class="card-img-overlay">
-                <h5 class="card-title" style="color:black">Past Contracts</h5>
-            </div>
-        </div>
-        <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
-            <img src="/Media/plus.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
-            <div class="card-img-overlay">
-                <h5 class="card-title">Add New Condition</h5>
-            </div>
-        </div>
-        <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
-            <img src="/Media/condition.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%; object-fit: cover;" />
-            <div class="card-img-overlay">
-                <h5 class="card-title" style="color:black">View Chronic Conditions</h5>
-            </div>
-        </div>
-    </section> *@
     <section class="row">
         <div class="card col-5" style=" height: auto; border-radius:2rem;">
             <div class="card-header">Upcoming Visits</div>
             <div class="card-body">
                 <section class="row mx-3" style="border: 2rem black">
-                    <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
+                    <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction">
                         @if (Visits.Count > 0)
                         {
                             @for (int i = 0; i < ViewBag.NextVisits.Count; i++)
@@ -71,10 +50,7 @@
 
                         }
                     </swiper-container>
-                    <table>
-                    </table>
                 </section>
-
             </div>
         </div>
         <div class="card col-6" style=" height: auto; border-radius:2rem;">
@@ -111,14 +87,12 @@
                         </swiper-container>
                     </section>
                 </div>
-
             }
             else
             {
                 <section class="card-body">
                     <h4>You have no assigned contracts.</h4>
                 </section>
-
             }
         </div>
     </section>

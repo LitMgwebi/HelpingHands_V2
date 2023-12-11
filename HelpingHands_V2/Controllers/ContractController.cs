@@ -91,11 +91,6 @@ namespace HelpingHands_V2.Controllers
             List<dynamic> visits = new List<dynamic> { };
             try
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
                 var contract = await _contract.GetContract(id);
                 visits = await _report.ContractVisits(id);
 

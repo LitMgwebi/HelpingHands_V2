@@ -17,14 +17,14 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                var condition = await _condition.GetConditions();
+                var conditions = await _condition.GetConditions();
 
-                if (condition == null)
+                if (conditions == null)
                 {
                     return NotFound();
                 }
-                ViewBag.Conditions = condition;
-                return View();
+                //ViewBag.Conditions = condition;
+                return View(conditions);
 
             }
             catch (Exception ex)
@@ -50,8 +50,8 @@ namespace HelpingHands_V2.Controllers
                 if (condition == null)
                     return NotFound();
 
-                ViewBag.Condition = condition;
-                return View();
+                //ViewBag.Condition = condition;
+                return View(condition);
             }
             catch (Exception ex)
             {
@@ -94,7 +94,7 @@ namespace HelpingHands_V2.Controllers
             {
                 //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
-                return View();
+                return View(condition);
             }
         }
 
@@ -112,8 +112,8 @@ namespace HelpingHands_V2.Controllers
                 if (condition == null)
                     return NotFound();
 
-                ViewBag.Condition = condition;
-                return View();
+                //ViewBag.Condition = condition;
+                return View(condition);
             }
             catch (Exception ex)
             {

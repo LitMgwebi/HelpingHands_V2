@@ -4,9 +4,9 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface ICity
     {
-        public Task<IEnumerable<dynamic>> GetCities();
+        public Task<IEnumerable<City>> GetCities();
 
-        public Task<object> GetCity(int? id);
+        public Task<City> GetCity(int? id);
 
         public Task<dynamic> AddCity(City city);
 
