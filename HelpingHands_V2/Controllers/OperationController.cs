@@ -20,14 +20,14 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                var operation = await _op.GetOperationHours();
+                var operations = await _op.GetOperationHours();
 
-                if (operation == null)
+                if (operations == null)
                 {
                     return NotFound();
                 }
-                ViewBag.Operations = operation;
-                return View();
+                //ViewBag.Operations = operations;
+                return View(operations);
 
             }
             catch (Exception ex)
@@ -53,8 +53,8 @@ namespace HelpingHands_V2.Controllers
                 if (op == null)
                     return NotFound();
 
-                ViewBag.Operation = op;
-                return View();
+                //ViewBag.Operation = op;
+                return View(op);
             }
             catch (Exception ex)
             {
@@ -115,8 +115,8 @@ namespace HelpingHands_V2.Controllers
                 if (op == null)
                     return NotFound();
 
-                ViewBag.Operation = op;
-                return View();
+                //ViewBag.Operation = op;
+                return View(op);
             }
             catch (Exception ex)
             {
@@ -133,10 +133,10 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Operation = operationHour;
+                    //ViewBag.Operation = operationHour;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View();
+                    return View(operationHour);
                 }
                 await _op.UpdateOperationHour(operationHour);
                 return RedirectToAction(nameof(Index));
@@ -145,7 +145,7 @@ namespace HelpingHands_V2.Controllers
             {
 
                 ViewBag.Message = ex.Message;
-                return View();
+                return View(operationHour);
                 //return new JsonResult(new { error = ex.Message });
             }
         }

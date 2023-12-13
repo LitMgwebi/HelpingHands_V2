@@ -15,19 +15,19 @@ namespace HelpingHands_V2.Services
             _config = config;
         }
 
-        public async Task<IEnumerable<dynamic>> GetOperationHours()
+        public async Task<IEnumerable<OperationHour>> GetOperationHours()
         {
             using(var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<OperationHour>(sql, param, commandType: CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public async Task<object> GetOperation(int? id)
+        public async Task<OperationHour> GetOperation(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -35,7 +35,7 @@ namespace HelpingHands_V2.Services
                 param.Add("OperationHoursId", id);
                 param.Add("Command", "GetOne");
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync<OperationHour>(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }

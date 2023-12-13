@@ -4,9 +4,9 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface IOperation
     {
-        public Task<IEnumerable<dynamic>> GetOperationHours();
+        public Task<IEnumerable<OperationHour>> GetOperationHours();
 
-        public Task<object> GetOperation(int? id);
+        public Task<OperationHour> GetOperation(int? id);
 
         public Task<dynamic> AddOperationHours(OperationHour operation);
 

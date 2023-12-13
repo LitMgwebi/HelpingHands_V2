@@ -2,11 +2,10 @@
 
 @{
     ViewData["Title"] = "Edit";
-    var Operation = ViewBag.Operation;
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Edit @Operation.OperationDay Hours</h2>
+<h2 class="display-4 text-center">Edit @Model?.OperationDay Hours</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
@@ -17,25 +16,25 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="OperationHoursId" value="@Operation.OperationHoursId" type="hidden" />
+            <input asp-for="OperationHoursId" value="@Model?.OperationHoursId" type="hidden" />
             <div class="form-group">
                 <label asp-for="OperationDay" class="control-label"></label>
-                <input asp-for="OperationDay" value="@Operation.OperationDay" type="text" class="form-control" />
+                <input asp-for="OperationDay" type="text" class="form-control" />
                 <span asp-validation-for="OperationDay" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="OpenTime" class="control-label"></label>
-                <input asp-for="OpenTime" value="@Operation.OpenTime" type="time" class="form-control" />
+                <input asp-for="OpenTime" type="time" class="form-control" />
                 <span asp-validation-for="OpenTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CloseTime" class="control-label"></label>
-                <input asp-for="CloseTime" value="@Operation.CloseTime" type="time" class="form-control" />
+                <input asp-for="CloseTime" type="time" class="form-control" />
                 <span asp-validation-for="CloseTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                <a asp-action="Details" asp-route-id="@Model?.OperationHoursId" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>

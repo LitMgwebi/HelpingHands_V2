@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Details";
-    var Operation = ViewBag.Operation;
     var Message = ViewBag.Message;
 }
 
@@ -20,26 +19,26 @@
             @Html.DisplayNameFor(model => model.OperationDay)
         </dt>
         <dd class="col-sm-10">
-            @Operation.OperationDay
+            @Html.DisplayFor(modelItem => modelItem.OperationDay)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.OpenTime)
         </dt>
         <dd class="col-sm-10">
-            @Operation.OpenTime
+            @Html.DisplayFor(modelItem => modelItem.OpenTime)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CloseTime)
         </dt>
         <dd class="col-sm-10">
-            @Operation.CloseTime
+            @Html.DisplayFor(modelItem => modelItem.CloseTime)
         </dd>
     </dl>
 </div>
 <div class="btn-group" role="group" aria-label="Control Panel">
-    <a asp-action="Edit" asp-route-id="@Operation.OperationHoursId" class="btn btn-success">Edit</a>
+    <a asp-action="Edit" asp-route-id="@Model?.OperationHoursId" class="btn btn-success">Edit</a>
     <form asp-action="Delete">
-        <input asp-for="OperationHoursId" value="@Operation.OperationHoursId" type="hidden" />
+        <input asp-for="OperationHoursId" value="@Model?.OperationHoursId" type="hidden" />
         <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" />
     </form>
 </div>

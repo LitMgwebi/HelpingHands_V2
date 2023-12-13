@@ -28,12 +28,18 @@
         </tr>
     </thead>
     <tbody class="table-group-divider">
-        @foreach (var item in ViewBag.Operations)
+        @foreach (var item in Model)
         {
             <tr scope="row">
-                <td>@item.OperationDay</td>
-                <td>@item.OpenTime</td>
-                <td>@item.CloseTime</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OperationDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpenTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CloseTime)
+                </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.OperationHoursId" class="btn btn-info">View</a>
                 </td>
