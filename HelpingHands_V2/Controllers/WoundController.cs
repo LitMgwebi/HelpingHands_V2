@@ -23,8 +23,8 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.Wounds = wounds;
-                return View();
+                //ViewBag.Wounds = wounds;
+                return View(wounds);
 
             }
             catch (Exception ex)
@@ -50,8 +50,8 @@ namespace HelpingHands_V2.Controllers
                 if (wound == null)
                     return NotFound();
 
-                ViewBag.Wound = wound;
-                return View();
+                //ViewBag.Wound = wound;
+                return View(wound);
             }
             catch (Exception ex)
             {
@@ -113,8 +113,8 @@ namespace HelpingHands_V2.Controllers
                 if (wound == null)
                     return NotFound();
 
-                ViewBag.Wound = wound;
-                return View();
+                //ViewBag.Wound = wound;
+                return View(wound);
             }
             catch (Exception ex)
             {
@@ -131,10 +131,9 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Wound = wound;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below";
-                    return View();
+                    return View(wound);
                 }
                 await _wound.UpdateWound(wound);
                 return RedirectToAction(nameof(Details), new {id = wound.WoundId});
@@ -143,7 +142,7 @@ namespace HelpingHands_V2.Controllers
             {
                 //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
-                return View();
+                return View(wound);
             }
         }
 

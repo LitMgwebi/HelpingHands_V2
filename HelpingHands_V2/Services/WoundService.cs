@@ -15,19 +15,19 @@ namespace HelpingHands_V2.Services
             _config = config;
         }
 
-        public async Task<IEnumerable<dynamic>> GetWounds()
+        public async Task<IEnumerable<Wound>> GetWounds()
         {
             using(var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<Wound>(sql, param, commandType: CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public async Task<object> GetWound(int? id)
+        public async Task<Wound> GetWound(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -35,7 +35,7 @@ namespace HelpingHands_V2.Services
                 param.Add("WoundId", id);
                 param.Add("Command", "GetOne");
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync<Wound>(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }

@@ -28,17 +28,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.Wounds)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @item.WoundName
+                    @Html.DisplayFor(modelItem => item.WoundName)
                 </td>
                 <td>
-                    @item.Grade
+                    @Html.DisplayFor(modelItem => item.Grade)
                 </td>
                 <td>
-                    @item.WoundDescription
+                    @Html.DisplayFor(modelItem => item.WoundDescription)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.WoundId" class="btn btn-info">View</a>
