@@ -29,10 +29,10 @@
         {
             <tr>
                 <td>
-                    @item.ConditionName
+                    @Html.DisplayFor(model => item.ConditionName)
                 </td>
                 <td>
-                    @item.ConditionDescription
+                    @Html.DisplayFor(model => item.ConditionDescription)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.ConditionId" class="btn btn-info">View</a>
