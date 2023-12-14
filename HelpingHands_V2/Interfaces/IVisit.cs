@@ -4,9 +4,9 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface IVisit
     {
-        public Task<IEnumerable<dynamic>> GetVisits();
+        public Task<IEnumerable<Visit>> GetVisits();
 
-        public Task<object> GetVisit(int? id);
+        public Task<Visit> GetVisit(int? id);
 
         public Task<dynamic> AddVisit(Visit visit);
 

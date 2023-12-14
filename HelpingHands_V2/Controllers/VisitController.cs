@@ -17,7 +17,7 @@ namespace HelpingHands_V2.Controllers
             _report = report;
         }
 
-        [Authorize(Roles ="N, O, A")]
+        [Authorize(Roles = "N, O, A")]
         public async Task<IActionResult> Index()
         {
             try
@@ -28,8 +28,8 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.Visits = visits;
-                return View();
+                //ViewBag.Visits = visits;
+                return View(visits);
             }
             catch (Exception ex)
             {
@@ -43,22 +43,16 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 List<dynamic> contracts = new List<dynamic> { };
-                List<dynamic> contractVisits = new List<dynamic> { };
-                List<dynamic> nextVisit = new List<dynamic> { };
+                List<Visit> contractVisits = new List<Visit> { };
+                List<Visit> nextVisit = new List<Visit> { };
 
-                if (command== "nurse")
+                if (command == "nurse")
                 {
-                        contractVisits = await _report.ContractVisits(id);
-
-                    ViewBag.Visits = contractVisits;
-                    //if (contractVisits.Count > 0)
-                    //    {
-                    //        foreach (var visit in contractVisits)
-                    //        {
-                    //            nextVisit.Add(visit);
-                    //        }
-                    //    }
-                } else
+                    contractVisits = await _report.ContractVisits(id);
+                    //ViewBag.Visits = contractVisits;
+                    return View(contractVisits);
+                }
+                else
                 {
                     contracts = await _report.PatientContract(id);
                     if (contracts.Count > 0)
@@ -66,7 +60,6 @@ namespace HelpingHands_V2.Controllers
                         foreach (var contract in contracts)
                         {
                             contractVisits = _report.ContractVisits(contract.ContractId);
-
                             if (contractVisits.Count > 0)
                             {
                                 foreach (var visit in contractVisits)
@@ -87,15 +80,9 @@ namespace HelpingHands_V2.Controllers
                                     nextVisit[j + 1] = tempVar;
                                 }
                     }
-
-                    ViewBag.Visits = nextVisit;
+                    //ViewBag.Visits = nextVisit;
+                    return View(nextVisit);
                 }
-
-                //if (contracts == null)
-                //{
-                //    return NotFound();
-                //}
-                return View();
             }
             catch (Exception ex)
             {
@@ -119,8 +106,8 @@ namespace HelpingHands_V2.Controllers
                 if (visit == null)
                     return NotFound();
 
-                ViewBag.Visit = visit;
-                return View();
+                //ViewBag.Visit = visit;
+                return View(visit);
             }
             catch (Exception ex)
             {
@@ -163,7 +150,7 @@ namespace HelpingHands_V2.Controllers
                 var userId = HttpContext.User.FindFirst("UserId")!.Value;
                 await _visit.AddVisit(visit);
                 ViewBag.Message = "Record Added successfully;";
-                return RedirectToAction("Dashboard", "Nurse", new {id = userId});
+                return RedirectToAction("Dashboard", "Nurse", new { id = userId });
             }
             catch (Exception ex)
             {
@@ -187,8 +174,8 @@ namespace HelpingHands_V2.Controllers
                 if (visit == null)
                     return NotFound();
 
-                ViewBag.Visit = visit;
-                return View();
+                //ViewBag.Visit = visit;
+                return View(visit);
             }
             catch (Exception ex)
             {
@@ -206,26 +193,27 @@ namespace HelpingHands_V2.Controllers
                 ModelState.Remove("Contract");
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Visit = visit;
+                    //ViewBag.Visit = visit;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below";
-                    return View();
+                    ViewBag.ContractId = visit.ContractId;
+                    return View(visit);
                 }
                 await _visit.UpdateVisit(visit);
                 if (HttpContext.User.IsInRole("N"))
                 {
-                    return RedirectToAction("Visits", "Nurse", new {id = HttpContext.User.FindFirst("UserId")!.Value, command = "upcoming"});
-                } else
+                    return RedirectToAction("Visits", "Nurse", new { id = HttpContext.User.FindFirst("UserId")!.Value, command = "upcoming" });
+                }
+                else
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Details), new {id = visit.VisitId});
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.Visit = visit;
-                //return new JsonResult(new { error = ex.Message });
+                ViewBag.ContractId = visit.ContractId;
                 ViewBag.Message = ex.Message;
-                return View();
+                return View(visit);
             }
         }
 
@@ -241,7 +229,9 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
                     return RedirectToAction(nameof(Details), new { id = VisitId });
                 }
-                await _visit.DeleteVisit(VisitId); if (HttpContext.User.IsInRole("N"))
+                await _visit.DeleteVisit(VisitId); 
+                
+                if (HttpContext.User.IsInRole("N"))
                 {
                     return RedirectToAction("Visits", "Nurse", new { id = HttpContext.User.FindFirst("UserId")!.Value, command = "upcoming" });
                 }
@@ -253,7 +243,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Details), new {id = VisitId});
+                return RedirectToAction(nameof(Details), new { id = VisitId });
                 //return new JsonResult(new { error = ex.Message });
             }
         }

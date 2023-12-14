@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "IndexForUser";
-    var Visits = ViewBag.Visits;
     var Message = ViewBag.Message;
 }
 
@@ -14,7 +13,8 @@
 @if (User.IsInRole("P"))
 {
     <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
-} else if (User.IsInRole("N"))
+}
+else if (User.IsInRole("N"))
 {
     <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
 }
@@ -36,37 +36,32 @@
             <th>
                 @Html.DisplayNameFor(model => model.WoundCondition)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contract)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Visits) {
-        <tr>
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>
-                    @item.VisitDate.Day @item.VisitDate.ToString("MMM")
+                    @Html.DisplayFor(modelItem => item.VisitDate)
                 </td>
                 <td>
-                    @item.ApproxTime
+                    @Html.DisplayFor(modelItem => item.ApproxTime)
                 </td>
                 <td>
-                    @item.Arrival
+                    @Html.DisplayFor(modelItem => item.Arrival)
                 </td>
                 <td>
-                    @item.Departure
+                    @Html.DisplayFor(modelItem => item.Departure)
                 </td>
                 <td>
-                    @item.WoundCondition
-                </td>
-                <td>
-                    @item.ContractId
+                    @Html.DisplayFor(modelItem => item.WoundCondition)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
                 </td>
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>

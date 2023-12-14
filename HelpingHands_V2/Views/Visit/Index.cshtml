@@ -19,6 +19,9 @@
                 @Html.DisplayNameFor(model => model.VisitDate)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ApproxTime)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Arrival)
             </th>
             <th>
@@ -27,30 +30,27 @@
             <th>
                 @Html.DisplayNameFor(model => model.WoundCondition)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contract)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.Visits)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @item.VisitDate.Day @item.VisitDate.ToString("MMM")
+                    @Html.DisplayFor(modelItem => item.VisitDate)
                 </td>
                 <td>
-                    @item.Arrival
+                    @Html.DisplayFor(modelItem => item.ApproxTime)
                 </td>
                 <td>
-                    @item.Departure
+                    @Html.DisplayFor(modelItem => item.Arrival)
                 </td>
                 <td>
-                    @item.WoundCondition
+                    @Html.DisplayFor(modelItem => item.Departure)
                 </td>
                 <td>
-                    @item.ContractId
+                    @Html.DisplayFor(modelItem => item.WoundCondition)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.VisitId" class="btn btn-info">View</a>

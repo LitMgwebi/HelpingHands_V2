@@ -3,7 +3,7 @@ using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Data.Entity.Validation;
+using System.Data.SqlTypes;
 
 namespace HelpingHands_V2.Services
 {
@@ -30,7 +30,7 @@ namespace HelpingHands_V2.Services
                 if (suburbs != null)
                     return suburbs;
                 else
-                    throw new Exception("There are no suburbs available");
+                    throw new SqlNullValueException("There are no suburbs available");
             }
         }
 
@@ -54,7 +54,7 @@ namespace HelpingHands_V2.Services
                 if (suburb != null)
                     return suburb;
                 else
-                    throw new ArgumentNullException("There is Suburb information with the corresponding ID");
+                    throw new SqlNullValueException("There is no Suburb information with the corresponding ID");
             }
         }
 

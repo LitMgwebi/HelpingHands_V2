@@ -3,6 +3,7 @@ using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Data.SqlTypes;
 
 namespace HelpingHands_V2.Services
 {
@@ -12,19 +13,19 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDVisit";
         public VisitService(IConfiguration config) => _config = config;
 
-        public async Task<IEnumerable<dynamic>> GetVisits()
+        public async Task<IEnumerable<Visit>> GetVisits()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<Visit>(sql, param: param, commandType: CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public async Task<object> GetVisit(int? id)
+        public async Task<Visit> GetVisit(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -32,8 +33,12 @@ namespace HelpingHands_V2.Services
                 param.Add("VisitId", id);
                 param.Add("Command", "GetOne");
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
-                return result;
+                var visit = await conn.QuerySingleOrDefaultAsync<Visit>(sql, param: param, commandType: CommandType.StoredProcedure);
+
+                if (visit != null)
+                    return visit;
+                else
+                    throw new SqlNullValueException("There is no Visit information with the corresponding ID");
             }
         }
 

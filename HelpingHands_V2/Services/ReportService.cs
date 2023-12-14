@@ -52,14 +52,20 @@ namespace HelpingHands_V2.Services
                 return result.AsList();
             }
         }
-        public async Task<List<dynamic>> NurseContractVisits(int ContractId)
+        public async Task<List<Visit>> NurseContractVisits(int ContractId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 var sql = "NurseContractVisits";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("ContractId", ContractId);
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<Visit, CareContract, Visit>(sql, (visit, contract) =>
+                {
+                    visit.Contract = contract;
+                    visit.ContractId = contract.ContractId;
+                    return visit;
+                }, splitOn: "ContractId", param: param, commandType: CommandType.StoredProcedure);
+
                 return result.AsList();
             }
         }
@@ -110,14 +116,20 @@ namespace HelpingHands_V2.Services
                 return result.AsList();
             }
         }
-        public async Task<List<dynamic>> ContractVisits(int contractId)
+        public async Task<List<Visit>> ContractVisits(int contractId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 var sql = "ManagerContractVisits";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("ContractId", contractId);
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<Visit, CareContract, Visit>(sql, (visit, contract) =>
+                {
+                    visit.Contract = contract;
+                    visit.ContractId = contract.ContractId;
+                    return visit;
+                }, splitOn: "ContractId", param: param, commandType: CommandType.StoredProcedure);
+
                 return result.AsList();
             }
         }

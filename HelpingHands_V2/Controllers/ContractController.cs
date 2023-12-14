@@ -88,7 +88,7 @@ namespace HelpingHands_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            List<dynamic> visits = new List<dynamic> { };
+            List<Visit> visits = new List<Visit> { };
             try
             {
                 var contract = await _contract.GetContract(id);
