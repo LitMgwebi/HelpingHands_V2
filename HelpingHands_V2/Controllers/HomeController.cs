@@ -12,30 +12,16 @@ namespace HelpingHands_V2.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IBusiness _business;
-        private readonly IOperation _operation;
 
-        public HomeController(ILogger<HomeController> logger, IBusiness business, IOperation operation)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _business = business;
-            _operation = operation;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             try
             {
-                var business = await _business.GetBusinessInfo();
-                var operation = await _operation.GetOperationHours();
-
-                if (business == null || operation == null)
-                {
-                    return NotFound();
-                }
-
-                ViewBag.Business = business;
-                ViewBag.Operation = operation;
                 return View();
             }
             catch (Exception ex)

@@ -13,17 +13,13 @@ namespace HelpingHands_V2.Controllers
         private readonly IEndUser _user;
         private readonly ISuburb _suburb;
         private readonly ICity _city;
-        private readonly IBusiness _business;
-        private readonly IOperation _operation;
 
-        public AdminController(INurse nurse, IEndUser user, ISuburb suburb, ICity city, IBusiness business, IOperation operation)
+        public AdminController(INurse nurse, IEndUser user, ISuburb suburb, ICity city)
         {
             _nurse = nurse;
             _user = user;
             _suburb = suburb;
             _city = city;
-            _business = business;
-            _operation = operation;
         }
 
         public async Task<IActionResult> Dashboard()
@@ -34,8 +30,6 @@ namespace HelpingHands_V2.Controllers
                 var managers = await _user.GetManagers();
                 var cities = await _city.GetCities();
                 var suburbs = await _suburb.GetSuburbs();
-                var business = await _business.GetBusinessInfo();
-                var operation = await _operation.GetOperationHours();
 
                 if(nurses == null || managers == null || cities == null || suburbs == null)
                 {
@@ -46,8 +40,6 @@ namespace HelpingHands_V2.Controllers
                 ViewBag.Managers = managers;
                 ViewBag.Cities = cities;
                 ViewBag.Suburbs = suburbs;
-                ViewBag.Business = business;
-                ViewBag.Operation = operation;
 
                 return View();
             } catch (Exception ex)

@@ -142,34 +142,5 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
-            <div class="card" style="width: 18rem;">
-                <div class="card-header">@ViewBag.Business.OrganizationName</div>
-                <div class="card-body">
-                    <p class="card-text">
-                        @ViewBag.Business.AddressLineOne <br />@ViewBag.Business.AddressLineTwo<br />
-                        @ViewBag.Business.SuburbName
-                    </p>
-                    <a href="mailto: @ViewBag.Business.Email" class="card-link">@ViewBag.Business.Email</a>
-                    <a href="tel:@ViewBag.Business.ContactNumber" class="card-link">@ViewBag.Business.ContactNumber</a>
-                    <br />
-                    <a asp-controller="Business" asp-action="Details">
-                        Edit
-                    </a>
-                </div>
-            </div>
-            <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                    Operational Hours:
-                </div>
-                <ul class="list-group list-group-flush">
-                    @foreach (var item in ViewBag.Operation)
-                    {
-                        <li class="list-group-item">@item.OperationDay  @item.OpenTime - @item.CloseTime</li>
-                    }
-                </ul>
-                <a asp-controller="Operation" asp-action="Index">Edit</a>
-            </div>
-        </div>
     </div>
 </div>

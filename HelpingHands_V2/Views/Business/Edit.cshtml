@@ -2,11 +2,10 @@
 
 @{
     ViewData["Title"] = "Edit";
-    var Bi = ViewBag.BusinessInfo;
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Edit Business Information</h2>@Bi
+<h2 class="display-4 text-center">Edit Business Information</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
@@ -16,42 +15,41 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="BusinessId" value="@Bi.BusinessId" type="hidden" />
+            <input asp-for="BusinessId" value="@Model?.BusinessId" type="hidden" />
             <div class="form-group">
                 <label asp-for="OrganizationName" class="control-label"></label>
-                <input asp-for="OrganizationName" class="form-control" value="@Bi.OrganizationName" />
+                <input asp-for="OrganizationName" class="form-control"/>
                 <span asp-validation-for="OrganizationName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Nponumber" class="control-label"></label>
-                <input asp-for="Nponumber" class="form-control" value="@Bi.NPONumber" />
+                <input asp-for="Nponumber" class="form-control"/>
                 <span asp-validation-for="Nponumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AddressLineOne" class="control-label"></label>
-                <input asp-for="AddressLineOne" class="form-control" value="@Bi.AddressLineOne" />
+                <input asp-for="AddressLineOne" class="form-control"/>
                 <span asp-validation-for="AddressLineOne" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AddressLineTwo" class="control-label"></label>
-                <input asp-for="AddressLineTwo" class="form-control" value="@Bi.AddressLineTwo" />
+                <input asp-for="AddressLineTwo" class="form-control"/>
                 <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SuburbId" class="control-label"></label>
                 <select asp-for="SuburbId" class="form-control" asp-items="ViewBag.SuburbId">
-                    <option value="@Bi.SuburbId" selected>@Bi.SuburbName</option>
                 </select>
                 <span asp-validation-for="SuburbId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ContactNumber" class="control-label"></label>
-                <input asp-for="ContactNumber" class="form-control" value="@Bi.ContactNumber" />
+                <input asp-for="ContactNumber" class="form-control"/>
                 <span asp-validation-for="ContactNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" value="@Bi.Email" />
+                <input asp-for="Email" class="form-control"/>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">

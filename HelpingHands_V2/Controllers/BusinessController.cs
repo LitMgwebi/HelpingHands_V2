@@ -18,6 +18,7 @@ namespace HelpingHands_V2.Controllers
             _business = business;
             _suburb = suburb;
         }
+
         public async Task<IActionResult> Details()
         {
             try
@@ -28,14 +29,13 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.BusinessInfo = businessInfo;
-                return View();
+                //ViewBag.BusinessInfo = businessInfo;
+                return View(businessInfo);
 
             } catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -54,9 +54,9 @@ namespace HelpingHands_V2.Controllers
                 if (businessInfo == null)
                     return NotFound();
 
-                ViewBag.BusinessInfo = businessInfo;
+                //ViewBag.BusinessInfo = businessInfo;
                 ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                return View();
+                return View(businessInfo);
             }
             catch (Exception ex)
             {
@@ -75,13 +75,12 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var suburbs = await _suburb.GetSuburbs();
-                    ViewBag.BusinessInfo = bi;
+                    //ViewBag.BusinessInfo = bi;
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-
-                    var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    return new JsonResult(new { bi, errors });
+                    //var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    //return new JsonResult(new { bi, errors });
                     ViewBag.Message = $"Not all the information required was entered. Please look below";
-                    return View();
+                    return View(bi);
                 }
                 await _business.UpdateBusinessInfo(bi);
                 return RedirectToAction(nameof(Details));

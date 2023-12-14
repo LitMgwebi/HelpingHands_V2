@@ -15,16 +15,26 @@ namespace HelpingHands_V2.Services
             _config = config;
         }
 
-        public async Task<object> GetBusinessInfo()
+        public async Task<BusinessInformation> GetBusinessInfo()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetOne");
                 param.Add("BusinessId", "1");
-                var result = await conn.QueryFirstOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<BusinessInformation, Suburb, BusinessInformation>(sql, (bi, suburb) =>
+                {
+                    bi.Suburb = suburb;
+                    bi.SuburbId = suburb.SuburbId;
+                    return bi;
+                }, splitOn: "SuburbId", param: param, commandType: CommandType.StoredProcedure);
 
-                return result;
+                var bi = result.FirstOrDefault(); 
+
+                if (bi != null) 
+                    return bi;
+                else
+                    throw new ArgumentNullException("There is no Business Information with this corresponding ID");
             }
         }
 
