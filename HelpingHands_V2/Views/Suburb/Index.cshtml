@@ -28,17 +28,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.Suburbs)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @item.SuburbName
+                    @Html.DisplayFor(modelItem => item.SuburbName)
                 </td>
                 <td>
-                    @item.PostalCode
+                    @Html.DisplayFor(modelItem => item.PostalCode)
                 </td>
                 <td>
-                    @item.CityName
+                    @Html.DisplayFor(modelItem => item.City!.CityName)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.SuburbId" class="btn btn-info">View</a>

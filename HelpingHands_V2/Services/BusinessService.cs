@@ -22,6 +22,7 @@ namespace HelpingHands_V2.Services
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetOne");
                 param.Add("BusinessId", "1");
+
                 var result = await conn.QueryAsync<BusinessInformation, Suburb, BusinessInformation>(sql, (bi, suburb) =>
                 {
                     bi.Suburb = suburb;

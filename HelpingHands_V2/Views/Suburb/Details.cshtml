@@ -1,12 +1,11 @@
 ﻿@model HelpingHands_V2.Models.Suburb
 
 @{
-    ViewData["Title"] = @ViewBag.Suburb.SuburbName;
-    var Suburb = ViewBag.Suburb;
+    ViewData["Title"] = "Details";
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">@Suburb.SuburbName Details</h2>
+<h2 class="display-4 text-center">@Model?.SuburbName Details</h2>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 @if (Message != null)
 {
@@ -18,27 +17,27 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.SuburbName)
         </dt>
-        <dd class = "col-sm-10">
-            @Suburb.SuburbName
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SuburbName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PostalCode)
         </dt>
-        <dd class = "col-sm-10">
-            @Suburb.PostalCode
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PostalCode)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.City)
         </dt>
-        <dd class = "col-sm-10">
-            @Suburb.CityName
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.City!.CityName)
         </dd>
     </dl>
 </div>
 <div class="btn-group" role="group" aria-label="Control Panel">
-    <a asp-action="Edit" asp-route-id="@Suburb.SuburbId" class="btn btn-success">Edit</a>
+    <a asp-action="Edit" asp-route-id="@Model?.SuburbId" class="btn btn-success">Edit</a>
     <form asp-action="Delete">
-        <input asp-for="SuburbId" value="@Suburb.SuburbId" type="hidden" />
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @Suburb.SuburbName?')" class="btn btn-danger" />
+        <input asp-for="SuburbId" value="@Model?.SuburbId" type="hidden" />
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @Model?.SuburbName?')" class="btn btn-danger" />
     </form>
 </div>

@@ -3,6 +3,7 @@ using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Data.Entity.Validation;
 
 namespace HelpingHands_V2.Services
 {
@@ -12,18 +13,28 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDSuburb";
         public SuburbService(IConfiguration config) => _config = config;
 
-        public async Task<IEnumerable<dynamic>> GetSuburbs()
+        public async Task<IEnumerable<Suburb>> GetSuburbs()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
-                return result;
+
+                var suburbs = await conn.QueryAsync<Suburb, City, Suburb>(sql, (suburb, city) =>
+                {
+                    suburb.City = city;
+                    suburb.CityId = city.CityId;
+                    return suburb;
+                }, splitOn: "CityId", param: param, commandType: CommandType.StoredProcedure);
+
+                if (suburbs != null)
+                    return suburbs;
+                else
+                    throw new Exception("There are no suburbs available");
             }
         }
 
-        public async Task<object> GetSuburb(int? id)
+        public async Task<Suburb> GetSuburb(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -31,8 +42,19 @@ namespace HelpingHands_V2.Services
                 param.Add("SuburbId", id);
                 param.Add("Command", "GetOne");
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
-                return result;
+                var result = await conn.QueryAsync<Suburb, City, Suburb>(sql, (suburb, city) =>
+                {
+                    suburb.City = city;
+                    suburb.CityId = city.CityId;
+                    return suburb;
+                }, splitOn: "CityId", param: param, commandType: CommandType.StoredProcedure);
+
+                var suburb = result.FirstOrDefault();
+
+                if (suburb != null)
+                    return suburb;
+                else
+                    throw new ArgumentNullException("There is Suburb information with the corresponding ID");
             }
         }
 

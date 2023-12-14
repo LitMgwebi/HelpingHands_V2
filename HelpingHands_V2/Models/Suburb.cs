@@ -29,7 +29,7 @@ public partial class Suburb
 
     public virtual ICollection<CareContract> CareContracts { get; set; } = new List<CareContract>();
 
-    public virtual City City { get; set; } = null!;
+    public virtual City? City { get; set; }
 
     public virtual ICollection<Patient> Patients { get; set; } = new List<Patient>();
 

@@ -26,8 +26,8 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.Suburbs = suburbs;
-                return View();
+                //ViewBag.Suburbs = suburbs;
+                return View(suburbs);
 
             }
             catch (Exception ex)
@@ -52,9 +52,9 @@ namespace HelpingHands_V2.Controllers
 
                 if (suburb == null)
                     return NotFound();
-
-                ViewBag.Suburb = suburb;
-                return View();
+                
+                //ViewBag.Suburb = suburb;
+                return View(suburb);
             }
             catch (Exception ex)
             {
@@ -122,8 +122,8 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
 
                 ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
-                ViewBag.Suburb = suburb;
-                return View();
+                //ViewBag.Suburb = suburb;
+                return View(suburb);
             }
             catch (Exception ex)
             {
@@ -136,6 +136,7 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("SuburbId, SuburbName, PostalCode, CityId, Active")] Suburb suburb)
         {
+            var cities = await _city.GetCities();
             try
             {
                 ModelState.Remove("City");
@@ -143,10 +144,8 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    var cities = await _city.GetCities();
                     ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
-                    ViewBag.Suburb = suburb;
-                    return View();
+                    return View(suburb);
                 }
                 await _suburb.UpdateSuburb(suburb);
                 return RedirectToAction(nameof(Details), new {id = suburb.SuburbId});
@@ -154,7 +153,8 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return View();
+                ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
+                return View(suburb);
                 //return new JsonResult(new { error = ex.Message });
             }
         }
