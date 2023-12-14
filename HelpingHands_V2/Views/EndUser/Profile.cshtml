@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = @User.FindFirst("Username")!.Value;
-    var Enduser = ViewBag.User;
     var Message = ViewBag.Message;
 }
 
@@ -34,38 +33,38 @@ else
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Username)
         </dt>
-        <dd class = "col-sm-8">
-            @Enduser.Username
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Username)
         </dd>
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Firstname)
         </dt>
-        <dd class = "col-sm-8">
-            @Enduser.Firstname
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Firstname)
         </dd>
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Lastname)
         </dt>
-        <dd class = "col-sm-8">
-            @Enduser.Lastname
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Lastname)
         </dd>
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.DateOfBirth)
         </dt>
-        <dd class = "col-sm-8">
-            @Enduser.DateOfBirth.Day @Enduser.DateOfBirth.ToString("MMMM") @Enduser.DateOfBirth.ToString("yyy")
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.DateOfBirth)
         </dd>
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class = "col-sm-8">
-            @Enduser.Email
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Gender)
         </dt>
-        <dd class = "col-sm-8">
-            @Enduser.Gender
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Gender)
         </dd>
     </dl>
     <dl class="col-6">
@@ -73,39 +72,21 @@ else
             @Html.DisplayNameFor(model => model.ContactNumber)
         </dt>
         <dd class="col-8">
-            @Enduser.ContactNumber
+            @Html.DisplayFor(model => model.ContactNumber)
         </dd>
         <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Idnumber)
         </dt>
         <dd class="col-sm-8">
-            @Enduser.IDNumber
+            @Html.DisplayFor(model => model.Idnumber)
         </dd>
-        @* <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.UserType)
-        </dt>
-        <dd class="col-sm-8">
-            @Enduser.UserType
-        </dd>
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.ProfilePicture)
-        </dt>
-        <dd class="col-sm-8">
-            @Enduser.ProfilePicture
-        </dd>
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.ProfilePictureName)
-        </dt>
-        <dd class="col-sm-8">
-            @Enduser.ProfilePictureName
-        </dd> *@
     </dl>
 </div>
 <div class="btn-group" role="group" aria-label="Control Panel">
-    <a asp-action="Edit" asp-route-id="@Enduser.UserId" class="btn btn-success">Edit</a>
-    <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Enduser.UserId" class="btn btn-success">ChangePassword</a>
+    <a asp-action="Edit" asp-route-id="@Model?.UserId" class="btn btn-success">Edit</a>
+    <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Model?.UserId" class="btn btn-success">ChangePassword</a>
     <form asp-action="Delete">
-        <input asp-for="UserId" value="@Enduser.UserId" type="hidden" />
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Enduser.Firstname @Enduser.Lastname?')" class="btn btn-danger" />
+        <input asp-for="UserId" value="@Model?.UserId" type="hidden" />
+        <input type="submit" value="Delete Account" onclick="return confirm('Are you sure you want to delete your account @Model?.Firstname @Model?.Lastname?')" class="btn btn-danger" />
     </form>
 </div>

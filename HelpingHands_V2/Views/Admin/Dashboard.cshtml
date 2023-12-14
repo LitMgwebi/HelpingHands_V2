@@ -41,32 +41,7 @@
                 <div id="employees">
                     <h3 class="display-4">Employees</h3>
                     <p>Employees that are currently operating in Helping Hands</p>
-                </div>
-                <div id="managers" class="table-responsive">
-                    <h4 class="display-6">Office Managers</h4>
-                    <table class="table table-sm table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Profile</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            @foreach (var manager in ViewBag.Managers)
-                            {
-                                <tr scope="row">
-                                    <td>@manager.Firstname</td>
-                                    <td>@manager.Lastname</td>
-                                    <td>@manager.Username</td>
-                                    <td>@manager.ProfilePicture</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <a asp-controller="Manager" asp-action="Index">...See More</a>
-                </div>
+                </div>                
                 <div id="nurses" class="table-responsive">
                     <h4 class="display-6">Nurses</h4>
                     <table class="table table-sm table-hover table-striped">

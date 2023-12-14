@@ -32,30 +32,27 @@
             <th>
                 @Html.DisplayNameFor(model => model.UserType)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProfilePicture)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.Accounts)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @item.Username
+                    @Html.DisplayFor(modelItem => item.Username)
                 </td>
                 <td>
-                    @item.Firstname
+                    @Html.DisplayFor(modelItem => item.Firstname)
                 </td>
                 <td>
-                    @item.Lastname
+                    @Html.DisplayFor(modelItem => item.Lastname)
                 </td>
                 <td>
-                    @item.Email
+                    @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    @item.ContactNumber
+                    @Html.DisplayFor(modelItem => item.ContactNumber)
                 </td>
                 <td>
                     @if (@item.UserType == "A")
@@ -74,9 +71,6 @@
                     {
                         <p>Manager</p>
                     }
-                </td>
-                <td>
-                    @item.ProfilePicture
                 </td>
                 <td>
                     <a asp-action="Profile" asp-route-id="@item.UserId" class="btn btn-info">View</a>

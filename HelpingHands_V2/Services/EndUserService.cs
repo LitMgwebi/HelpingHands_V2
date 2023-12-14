@@ -20,31 +20,31 @@ namespace HelpingHands_V2.Services
         }
 
 
-        public async Task<IEnumerable<dynamic>> GetManagers()
+        public async Task<IEnumerable<EndUser>> GetManagers()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 var sql = "CRUDUser";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "Managers");
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<EndUser>(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public async Task<IEnumerable<dynamic>> GetUsers()
+        public async Task<IEnumerable<EndUser>> GetUsers()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 var sql = "CRUDUser";
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<EndUser>(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public async Task<dynamic> GetUserById(int? id)
+        public async Task<EndUser> GetUserById(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -53,12 +53,12 @@ namespace HelpingHands_V2.Services
                 param.Add("UserId", id);
                 param.Add("Command", "GetOne");
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QuerySingleOrDefaultAsync<EndUser>(sql, param, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public async Task<dynamic> GetUserByUsername(string username)
+        public async Task<EndUser> GetUserByUsername(string username)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -66,7 +66,7 @@ namespace HelpingHands_V2.Services
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Username", username);
 
-                var user = await conn.QueryFirstOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var user = await conn.QueryFirstOrDefaultAsync<EndUser>(sql, param, commandType: CommandType.StoredProcedure);
 
                 return user;
             }

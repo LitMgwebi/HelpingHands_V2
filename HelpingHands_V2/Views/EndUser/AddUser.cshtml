@@ -65,12 +65,8 @@
         <div class="col-5">
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="form-control">
+                <select asp-for="Gender" class="form-control" asp-items="ViewBag.Genders">
                     <option disabled selected>--- SELECT ---</option>
-                    <option>Female</option>
-                    <option>Male</option>
-                    <option>Non-binary</option>
-                    <option>Gender Fluid</option>
                     <option>Other</option>
                 </select>
                 <span asp-validation-for="Gender" class="text-danger"></span>

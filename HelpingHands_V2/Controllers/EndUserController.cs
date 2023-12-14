@@ -29,8 +29,8 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.Accounts = accounts;
-                return View();
+                //ViewBag.Accounts = accounts;
+                return View(accounts);
 
             }
             catch (Exception ex)
@@ -56,8 +56,8 @@ namespace HelpingHands_V2.Controllers
                 if (user == null)
                     return NotFound();
 
-                ViewBag.User = user;
-                return View();
+                //ViewBag.User = user;
+                return View(user);
             }
             catch (Exception ex)
             {
@@ -156,6 +156,9 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                IEnumerable<string> genders = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
+
+                ViewData["Genders"] = new SelectList(genders);
                 return View();
             }
             catch (Exception ex)
@@ -175,6 +178,9 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
+                    IEnumerable<string> genders = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
+
+                    ViewData["Genders"] = new SelectList(genders);
                     return View();
                 }
                 //var fileName = Path.GetFileName(file.FileName);
@@ -231,6 +237,9 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 //return new JsonResult(new { error = ex.Message });
+                IEnumerable<string> genders = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
+
+                ViewData["Genders"] = new SelectList(genders);
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -241,6 +250,9 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                IEnumerable<string> genders = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
+
+                ViewData["Genders"] = new SelectList(genders);
                 return View();
             }
             catch (Exception ex)
@@ -260,6 +272,9 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
+                    IEnumerable<string> genders = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
+
+                    ViewData["Genders"] = new SelectList(genders);
                     return View();
                 }
                 //var fileName = Path.GetFileName(file.FileName);
@@ -290,6 +305,9 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 //return new JsonResult(new { error = ex.Message });
+                IEnumerable<string> genders = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
+
+                ViewData["Genders"] = new SelectList(genders);
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -310,8 +328,11 @@ namespace HelpingHands_V2.Controllers
                 if (user == null)
                     return NotFound();
 
-                ViewBag.User = user;
-                return View();
+                IEnumerable<string> genders = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
+
+                ViewData["Genders"] = new SelectList(genders);
+                //ViewBag.User = user;
+                return View(user);
             }
             catch (Exception ex)
             {
@@ -331,13 +352,15 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    var account = await _account.GetUserById(user.UserId);
+                    //var account = await _account.GetUserById(user.UserId);
 
-                    if (account == null)
-                        return NotFound();
+                    //if (account == null)
+                    //    return NotFound();
 
-                    ViewBag.User = account;
-                    return View();
+                    //ViewBag.User = account;
+
+                    ViewData["Genders"] = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
+                    return View(user);
                 }
                 // If Role = Admin, return to Index. else if role = P || M return to profile
                 await _account.UpdateUser(user); 
@@ -353,24 +376,24 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
+                ViewData["Genders"] = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
                 ViewBag.Message = ex.Message;
-                return View();
+                return View(user);
             }
         }
 
 
         [HttpGet]
-        public IActionResult ChangePassword(int? id)
+        public IActionResult ChangePassword(int id)
         {
             try
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
 
-                ViewBag.UserId = id;
-                return View();
+                //ViewBag.UserId = id;
+                ChangePasswordViewModel change = new ChangePasswordViewModel();
+                change.UserId = id;
+
+                return View(change);
             }
             catch (Exception ex)
             {
@@ -381,7 +404,7 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel change)
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel changePassword)
         {
             try
             {
@@ -389,32 +412,33 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    ViewBag.UserId = change.UserId;
-                    return View();
+                    ViewBag.UserId = changePassword.UserId;
+                    return View(changePassword);
                 }
-                var user = await _account.GetUserById(change.UserId);
-                if (BC.Verify(change.CurrentPassword, user.Password))
+                var user = await _account.GetUserById(changePassword.UserId);
+                if (BC.Verify(changePassword.CurrentPassword, user.Password))
                 {
-                    user.Password = BC.HashPassword(change.NewPassword);
+                    user.Password = BC.HashPassword(changePassword.NewPassword);
                     await _account.UpdateUser(user);
 
                     if (HttpContext.User.IsInRole("P"))
-                        return RedirectToAction("Profile", "Patient", new { id = change.UserId });
+                        return RedirectToAction("Profile", "Patient", new { id = changePassword.UserId });
                     else if (HttpContext.User.IsInRole("N"))
-                        return RedirectToAction("Profile", "Nurse", new { id = change.UserId });
+                        return RedirectToAction("Profile", "Nurse", new { id = changePassword.UserId });
                     else if (HttpContext.User.IsInRole("O"))
-                        return RedirectToAction("Profile", "EndUser", new { id = change.UserId });
+                        return RedirectToAction("Profile", "EndUser", new { id = changePassword.UserId });
                     else
-                        return RedirectToAction("Profile", "EndUser", new { id = change.UserId });
+                        return RedirectToAction("Profile", "EndUser", new { id = changePassword.UserId });
 
                 }
-                return new JsonResult(new { error = "Password not changes", change, user });
+                ViewBag.Message = "Password not changed";
+                return View(changePassword);
             }
             catch (Exception ex)
             {
                 //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
-                return View();
+                return View(changePassword);
             }
         }
 
