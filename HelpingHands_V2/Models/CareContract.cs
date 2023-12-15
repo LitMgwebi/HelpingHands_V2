@@ -59,7 +59,7 @@ public partial class CareContract
 
     public virtual Nurse? Nurse { get; set; }
 
-    public virtual Patient Patient { get; set; } = null!;
+    public virtual Patient? Patient { get; set; }
 
     public virtual Suburb? Suburb { get; set; }
 

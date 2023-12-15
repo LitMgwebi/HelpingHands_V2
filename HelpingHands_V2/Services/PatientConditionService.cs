@@ -4,7 +4,7 @@ using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Data.SqlTypes;
-
+    
 namespace HelpingHands_V2.Services
 {
     public class PatientConditionService: IPatientCondition

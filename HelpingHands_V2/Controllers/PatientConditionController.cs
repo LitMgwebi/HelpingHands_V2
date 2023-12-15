@@ -28,7 +28,6 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                //ViewBag.PatientConditions = pc;
                 return View(pc);
 
             }
@@ -89,7 +88,7 @@ namespace HelpingHands_V2.Controllers
             {
                 var conditions = await _condition.GetConditions();
 
-                ViewData["ConditionId"] = new SelectList(conditions, "ConditionId", "ConditionName");
+                ViewData["Conditions"] = new SelectList(conditions, "ConditionId", "ConditionName");
                 ViewData["PatientId"] = id;
                 return View();
             }
@@ -104,18 +103,18 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PatientId, ConditionId, Active")] PatientCondition patientCondition)
         {
+            var conditions = await _condition.GetConditions();
             try
             {
                 ModelState.Remove("Condition");
                 ModelState.Remove("Patient");
                 if (!ModelState.IsValid)
                 {
-                    var conditions = await _condition.GetConditions();
-                    ViewData["ConditionId"] = new SelectList(conditions, "ConditionId", "ConditionName");
+                    ViewData["Conditions"] = new SelectList(conditions, "ConditionId", "ConditionName");
                     ViewData["PatientId"] = patientCondition.PatientId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View();
+                    return View(patientCondition);
                 }
                 await _pc.AddPatientCondition(patientCondition);
                 ViewBag.Message = "Record Added successfully;";
@@ -123,9 +122,10 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
+                ViewData["Conditions"] = new SelectList(conditions, "ConditionId", "ConditionName");
+                ViewData["PatientId"] = patientCondition.PatientId;
                 ViewBag.Message = ex.Message;
-                return View();
-                //return new JsonResult(new { error = ex.Message });
+                return View(patientCondition);
             }
         }
 

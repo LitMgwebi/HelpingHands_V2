@@ -28,15 +28,13 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.PrefferedSuburbs = ps;
-                return View();
+                return View(ps);
 
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -50,15 +48,13 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.PrefferedSuburbs = ps;
-                return View();
+                return View(ps);
 
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -77,14 +73,12 @@ namespace HelpingHands_V2.Controllers
                 if (ps == null)
                     return NotFound();
 
-                ViewBag.PrefferedSuburb = ps;
-                return View();
+                return View(ps);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -94,7 +88,7 @@ namespace HelpingHands_V2.Controllers
             {
                 var suburbs = await _suburb.GetSuburbs();
 
-                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 ViewData["NurseId"] = id;
                 return View();
             }
@@ -102,26 +96,23 @@ namespace HelpingHands_V2.Controllers
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NurseId, SuburbId, Active")] PrefferedSuburb prefferedSuburb)
         {
+            var suburbs = await _suburb.GetSuburbs();
             try
             {
                 ModelState.Remove("Nurse");
                 ModelState.Remove("Suburb");
                 if (!ModelState.IsValid)
                 {
-                    var suburbs = await _suburb.GetSuburbs();
-                    ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                    ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     ViewData["NurseId"] = prefferedSuburb.NurseId;
-                    var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    return new JsonResult(new { errors, prefferedSuburb });
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View();
+                    return View(prefferedSuburb);
                 }
                 await _ps.AddPrefferedSuburb(prefferedSuburb);
                 ViewBag.Message = "Record Added successfully;";
@@ -129,9 +120,10 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
+                ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                ViewData["NurseId"] = prefferedSuburb.NurseId;
                 ViewBag.Message = ex.Message;
-                return View();
-                //return new JsonResult(new { error = ex.Message });
+                return View(prefferedSuburb);
             }
         }
 
@@ -141,8 +133,6 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                ModelState.Remove("Nurse");
-                ModelState.Remove("Suburb");
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
@@ -156,7 +146,6 @@ namespace HelpingHands_V2.Controllers
             {
                 ViewBag.Message = ex.Message;
                 return RedirectToAction(nameof(Details), new { nurseId = prefferedSuburb.NurseId, suburbId = prefferedSuburb.SuburbId });
-                //return new JsonResult(new { error = ex.Message });
             }
         }
     }

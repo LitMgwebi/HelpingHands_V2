@@ -15,7 +15,7 @@ public partial class PrefferedSuburb
 
     public bool Active { get; set; } = true;
 
-    public virtual Nurse Nurse { get; set; } = null!;
+    public virtual EndUser? Nurse { get; set; }
 
-    public virtual Suburb Suburb { get; set; } = null!;
+    public virtual Suburb? Suburb { get; set; }
 }

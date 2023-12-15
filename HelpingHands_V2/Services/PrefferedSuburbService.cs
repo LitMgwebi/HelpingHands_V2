@@ -5,25 +5,37 @@
     using HelpingHands_V2.Models;
     using Microsoft.Data.SqlClient;
     using System.Data;
+    using System.Data.SqlTypes;
+
     public class PrefferedSuburbService:IPrefferedSuburb
     {
         private readonly IConfiguration _config;
         string sql = "CRUDPrefferedSuburb";
         public PrefferedSuburbService(IConfiguration config) => _config = config;
 
-        public async Task<IEnumerable<dynamic>> GetPrefferedSuburbs()
+        public async Task<IEnumerable<PrefferedSuburb>> GetPrefferedSuburbs()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<PrefferedSuburb, EndUser, Suburb, PrefferedSuburb>(
+                    sql, 
+                    (ps, endUser, suburb) =>
+                    {
+                        ps.Nurse = endUser;
+                        ps.Suburb = suburb;
+                        return ps;
+                    },
+                    splitOn: "UserId, SuburbId",
+                    param: param, 
+                    commandType: CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public async Task<IEnumerable<dynamic>> GetPrefferedSuburbsByNurse(int? id)
+        public async Task<IEnumerable<PrefferedSuburb>> GetPrefferedSuburbsByNurse(int? id)
         {
             try
             {
@@ -33,7 +45,18 @@
                     param.Add("NurseId", id);
                     param.Add("Command", "ByNurses");
 
-                    var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                    var result = await conn.QueryAsync<PrefferedSuburb, EndUser, Suburb, PrefferedSuburb>(
+                     sql,
+                     (ps, endUser, suburb) =>
+                     {
+                         ps.Nurse = endUser;
+                         ps.Suburb = suburb;
+                         return ps;
+                     },
+                     splitOn: "UserId, SuburbId",
+                     param: param,
+                     commandType: CommandType.StoredProcedure);
+
                     return result;
                 }
             }
@@ -43,7 +66,7 @@
             }
         }
 
-        public async Task<object> GetPrefferedSuburb(int? nurseId, int? suburbId)
+        public async Task<PrefferedSuburb> GetPrefferedSuburb(int? nurseId, int? suburbId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -52,21 +75,24 @@
                 param.Add("SuburbId", suburbId);
                 param.Add("Command", "GetOne");
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
-                return result;
-            }
-        }
+                var result = await conn.QueryAsync<PrefferedSuburb, EndUser, Suburb, PrefferedSuburb>(
+                    sql,
+                    (ps, endUser, suburb) =>
+                    {
+                        ps.Nurse = endUser;
+                        ps.Suburb = suburb;
+                        return ps;
+                    },
+                    splitOn: "UserId, SuburbId",
+                    param: param,
+                    commandType: CommandType.StoredProcedure);
 
-        public async Task<object> GetPrefferedSuburbBySuburb(int? id)
-        {
-            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
-            {
-                DynamicParameters param = new DynamicParameters();
-                param.Add("SuburbId", id);
-                param.Add("Command", "GetOne");
+                var ps = result.SingleOrDefault();
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
-                return result;
+                if(ps != null)
+                    return ps;
+                else
+                    throw new SqlNullValueException("There are no Preferred Suburb in the system with the corresponding ID");
             }
         }
 
