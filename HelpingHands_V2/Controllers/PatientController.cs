@@ -29,34 +29,34 @@ namespace HelpingHands_V2.Controllers
             List<dynamic>? contractVisits = new List<dynamic> { };
             try
             {
-                DateTime currentDate = DateTime.Now;
-                var patientContracts = await _report.PatientContract(id);
-                if (patientContracts.Count > 0)
-                {
-                    var patientContract = patientContracts.FirstOrDefault();
-                    contractVisits = await _report.ContractVisits(patientContract!.ContractId);
-                    if(contractVisits.Count > 0)
-                    {
-                        var latestVisit = contractVisits.LastOrDefault();
-                        var result = DateTime.Compare(latestVisit!.VisitDate, currentDate);
+                //DateTime currentDate = DateTime.Now;
+                //var patientContracts = await _report.PatientContract(id);
+                //if (patientContracts.Count > 0)
+                //{
+                //    var patientContract = patientContracts.FirstOrDefault();
+                //    contractVisits = await _report.ContractVisits(patientContract!.ContractId);
+                //    if(contractVisits.Count > 0)
+                //    {
+                //        var latestVisit = contractVisits.LastOrDefault();
+                //        var result = DateTime.Compare(latestVisit!.VisitDate, currentDate);
 
-                        if (result > 0)
-                        {
-                            nextVisit.Add(latestVisit);
-                            contractVisits.RemoveAt(1);
-                        }
-                    }
-                    ViewBag.PatientContract = patientContract;
-                }
-                ViewBag.ContractVisits = contractVisits;
-                ViewBag.NextVisit = nextVisit;
+                //        if (result > 0)
+                //        {
+                //            nextVisit.Add(latestVisit);
+                //            contractVisits.RemoveAt(1);
+                //        }
+                //    }
+                //    ViewBag.PatientContract = patientContract;
+                //}
+                //ViewBag.ContractVisits = contractVisits;
+                //ViewBag.NextVisit = nextVisit;
                 return View();
             }
             catch (Exception ex)
             {
-                ViewBag.ContractVisits = contractVisits;
-                ViewBag.NextVisit = nextVisit;
-                ViewBag.Message = ex.Message + nextVisit + contractVisits;
+                //ViewBag.ContractVisits = contractVisits;
+                //ViewBag.NextVisit = nextVisit;
+                //ViewBag.Message = ex.Message + nextVisit + contractVisits;
                 return View();
             }
         }
@@ -71,8 +71,8 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.Patients = patients;
-                return View();
+                //ViewBag.Patients = patients;
+                return View(patients);
 
             }
             catch (Exception ex)
@@ -93,14 +93,14 @@ namespace HelpingHands_V2.Controllers
                 }
 
                 var patient = await _patient.GetPatient(id);
-                var user = await _user.GetUserById(id);
 
                 if (patient == null)
                     return NotFound();
 
-                ViewBag.Patient = patient;
-                ViewBag.User = user;
-                return View();
+                //ViewBag.Patient = patient;
+                //ViewBag.User = user;
+
+                return View(patient);
             }
             catch (Exception ex)
             {
@@ -167,16 +167,13 @@ namespace HelpingHands_V2.Controllers
                 }
 
                 var patient = await _patient.GetPatient(id);
-                var user = await _user.GetUserById(id);
                 var suburbs = await _suburb.GetSuburbs();
 
-                if (patient == null || user == null || suburbs == null)
+                if (patient == null || suburbs == null)
                     return NotFound();
 
-                ViewBag.Patient = patient;
-                ViewBag.User = user;
                 ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                return View();
+                return View(patient);
             }
             catch (Exception ex)
             {
@@ -192,17 +189,13 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                ModelState.Remove("PatientNavigation");
-                ModelState.Remove("Suburb");
                 if (!ModelState.IsValid)
                 {
-                    var user = await _user.GetUserById(patient.PatientId);
                     var suburbs = await _suburb.GetSuburbs();
-                    ViewBag.User = user;
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View();
+                    return View(patient);
                 }
                 await _patient.UpdatePatient(patient);
                 return RedirectToAction(nameof(Profile), new { id = patient.PatientId });
@@ -210,7 +203,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return View();
+                return View(patient);
                 //return new JsonResult(new { error = ex.Message });
             }
         }

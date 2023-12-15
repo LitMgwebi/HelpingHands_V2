@@ -15,13 +15,13 @@
     <thead>
         <tr>
             <th>
-                Username
+                @Html.DisplayNameFor(model => model.EndUser!.Username)
             </th>
             <th>
-                First Name
+                @Html.DisplayNameFor(model => model.EndUser!.Firstname)
             </th>
             <th>
-                Last Name
+                @Html.DisplayNameFor(model => model.EndUser!.Lastname)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Icename)
@@ -33,23 +33,23 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.Patients)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @item.Username
+                    @Html.DisplayFor(modelItem => item.EndUser!.Username)
                 </td>
                 <td>
-                    @item.Firstname
+                    @Html.DisplayFor(modelItem => item.EndUser!.Firstname)
                 </td>
                 <td>
-                    @item.Lastname
+                    @Html.DisplayFor(modelItem => item.EndUser!.Lastname)
                 </td>
                 <td>
-                    @item.ICEName
+                    @Html.DisplayFor(modelItem => item.Icename)
                 </td>
                 <td>
-                    @item.ICENumber
+                    @Html.DisplayFor(modelItem => item.Icenumber)
                 </td>
                 <td>
                     <a asp-action="Profile" asp-route-id="@item.PatientId" class="btn btn-info">Details</a>

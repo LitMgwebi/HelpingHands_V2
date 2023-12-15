@@ -2,8 +2,6 @@
 
 @{
     ViewData["Title"] = @User.FindFirst("Username")!.Value;
-    var EndUser = ViewBag.User;
-    var Patient = ViewBag.Patient;
     var Message = ViewBag.Message;
 }
 
@@ -34,117 +32,111 @@ else
 <div class="row">
     <dl class="col-6">
         <dt class="col-sm-4">
-            Username
+            @Html.DisplayNameFor(model => model.EndUser!.Username)
         </dt>
         <dd class="col-sm-8">
-            @Patient.Username
+            @Html.DisplayFor(model => model.EndUser!.Username)
         </dd>
         <dt class="col-sm-4">
-            First Name
+            @Html.DisplayNameFor(model => model.EndUser!.Firstname)
         </dt>
         <dd class="col-sm-8">
-            @Patient.Firstname
+            @Html.DisplayFor(model => model.EndUser!.Firstname)
         </dd>
         <dt class="col-sm-4">
-            Last Name
+            @Html.DisplayNameFor(model => model.EndUser!.Lastname)
         </dt>
         <dd class="col-sm-8">
-            @Patient.Lastname
+            @Html.DisplayFor(model => model.EndUser!.Lastname)
         </dd>
         <dt class="col-sm-4">
-            Date Of Birth
+            @Html.DisplayNameFor(model => model.EndUser!.DateOfBirth)
         </dt>
         <dd class="col-sm-8">
-            @EndUser.DateOfBirth.Day @EndUser.DateOfBirth.ToString("MMMM") @EndUser.DateOfBirth.ToString("yyy")
+            @Html.DisplayFor(model => model.EndUser!.DateOfBirth)
         </dd>
         <dt class="col-sm-4">
-            Email
+            @Html.DisplayNameFor(model => model.EndUser!.Email)
         </dt>
         <dd class="col-sm-8">
-            @EndUser.Email
+            @Html.DisplayFor(model => model.EndUser!.Email)
         </dd>
         <dt class="col-sm-4">
-            Gender
+            @Html.DisplayNameFor(model => model.EndUser!.Gender)
         </dt>
         <dd class="col-sm-8">
-            @EndUser.Gender
+            @Html.DisplayFor(model => model.EndUser!.Gender)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.EndUser!.ContactNumber)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.EndUser!.ContactNumber)
         </dd>
     </dl>
     <dl class="col-6">
         <dt class="col-sm-4">
-            Contact Number
+            @Html.DisplayNameFor(model => model.EndUser!.Idnumber)
         </dt>
         <dd class="col-sm-8">
-            @EndUser.ContactNumber
+            @Html.DisplayFor(model => model.EndUser!.Idnumber)
         </dd>
-        <dt class="col-sm-4">
-            ID Number
-        </dt>
-        <dd class="col-sm-8">
-            @EndUser.IDNumber
-        </dd>
-        @if (@Patient.AddressLineOne != null)
+        @if (Model.AddressLineOne != null)
         {
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.AddressLineOne)
             </dt>
             <dd class="col-sm-8">
-                @Patient.AddressLineOne
+                @Html.DisplayFor(model => model.AddressLineOne)
             </dd>
         }
-        @if (@Patient.AddressLineTwo != null)
+        @if (Model.AddressLineTwo != null)
         {
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.AddressLineTwo)
             </dt>
             <dd class="col-sm-8">
-                @Patient.AddressLineTwo
+                @Html.DisplayFor(model => model.AddressLineTwo)
             </dd>
         }
         <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Suburb)
         </dt>
         <dd class="col-sm-8">
-            @Patient.SuburbName
+            @Html.DisplayFor(model => model.Suburb!.SuburbName)
         </dd>
         <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Icename)
         </dt>
         <dd class="col-sm-8">
-            @Patient.ICEName
+            @Html.DisplayFor(model => model.Icename)
         </dd>
         <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Icenumber)
         </dt>
         <dd class="col-sm-8">
-            @Patient.ICENumber
+            @Html.DisplayFor(model => model.Icenumber)
         </dd>
-        @if (@Patient.AdditionalInfo != null)
+        @if (Model.AdditionalInfo != null)
         {
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.AdditionalInfo)
             </dt>
             <dd class="col-sm-8">
-                @Patient.AdditionalInfo
+                @Html.DisplayFor(model => model.AdditionalInfo)
             </dd>
         }
-        <dt class="col-sm-4">
-            Profile Picture
-        </dt>
-        <dd class="col-sm-8">
-            @EndUser.ProfilePicture
-        </dd>
     </dl>
 </div>
 <div class="btn-group" role="group" aria-label="Control Panel">
     @if (User.IsInRole("A") || User.IsInRole("P"))
     {
-        <a asp-action="Edit" asp-route-id="@Patient.PatientId" class="btn btn-success">Edit Patient Info</a>
-        <a asp-action="Edit" asp-controller="EndUser" asp-route-id="@Patient.PatientId" class="btn btn-success">Edit User Info</a>
-        <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Patient.PatientId" class="btn btn-success">ChangePassword</a>
+        <a asp-action="Edit" asp-route-id="@Model?.PatientId" class="btn btn-success">Edit Patient Info</a>
+        <a asp-action="Edit" asp-controller="EndUser" asp-route-id="@Model?.PatientId" class="btn btn-success">Edit User Info</a>
+        <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Model?.PatientId" class="btn btn-success">ChangePassword</a>
         <form asp-action="Delete">
-            <input asp-for="PatientId" value="@Patient.PatientId" type="hidden" />
-            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @Patient.Firstname @Patient.Lastname?')" class="btn btn-danger" />
+            <input asp-for="PatientId" value="@@Model?.PatientId" type="hidden" />
+            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @Model?.EndUser!.Firstname @Model?.EndUser!.Lastname?')" class="btn btn-danger" />
         </form>
     }
 </div>

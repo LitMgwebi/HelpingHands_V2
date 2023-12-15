@@ -43,7 +43,7 @@
             </a>
         </div>
     </section>
-    <section class="row">
+    @* <section class="row">
         <div class="col-7 text-center card" style=" height: auto; border-radius:2rem;">
             <div class="card-header">Latest Contract</div>
             <div class="card-body">
@@ -73,7 +73,7 @@
                     <section style="border: 2rem black">
                         <h5>Wound Progress</h5>
                         <table>
-                            @* @if(ViewBag.ContractVisits.Count > 0){
+                             @if(ViewBag.ContractVisits.Count > 0){
                                 @foreach (var item in ViewBag.ContractVisits)
                                 {
                                     <tr>
@@ -100,7 +100,7 @@
                             } else
                             {
                                 <p>No Visits have been recorded</p>
-                            } *@
+                            } 
                         </table>
                     </section>
                 }
@@ -114,41 +114,10 @@
             <div class="card-header">Upcoming Visits</div>
             <div class="card-body">
                 <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
-                   @*  @if (ViewBag.NextVisit.Count > 0)
-                    {
-                        @foreach (var item in ViewBag.NextVisit)
-                        {
-                            <swiper-slide>
-                                <div class="card" style="width:18rem;">
-                                    <div class="card-body">
-                                        <section>
-                                            @item.VisitDate.Day
-                                            @item.VisitDate.ToString("MMMM")
-                                            @item.VisitDate.ToString("yyyy")
-                                        </section>
-                                        <section>
-
-                                            @item.ApproxTime
-                                        </section>
-
-                                    </div>
-                                    <section class="btn-group card-footer">
-
-                                        <a class="btn">Update</a>
-                                        <a class="btn">History</a>
-                                        <a class="btn">Contract</a>
-                                    </section>
-                                </div>
-                            </swiper-slide>
-                        }
-                    }
-                    else
-                    {
-                        <swiper-slide>No Upcoming Visits</swiper-slide>
-                    } *@
+                  
                 </swiper-container>
 
             </div>
         </div>
-    </section>
+    </section> *@
 </div>

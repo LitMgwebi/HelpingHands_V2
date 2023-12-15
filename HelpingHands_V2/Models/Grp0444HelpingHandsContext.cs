@@ -175,7 +175,7 @@ public partial class Grp0444HelpingHandsContext : DbContext
                 .HasMaxLength(20)
                 .HasColumnName("ICENumber");
 
-            entity.HasOne(d => d.PatientNavigation).WithOne(p => p.Patient)
+            entity.HasOne(d => d.EndUser).WithOne(p => p.Patient)
                 .HasForeignKey<Patient>(d => d.PatientId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Patient_EndUser");

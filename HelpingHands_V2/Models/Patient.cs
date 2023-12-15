@@ -42,7 +42,7 @@ public partial class Patient
 
     public virtual ICollection<PatientCondition> PatientConditions { get; set; } = new List<PatientCondition>();
 
-    public virtual EndUser PatientNavigation { get; set; } = null!;
+    public virtual EndUser? EndUser { get; set; }
 
     public virtual Suburb? Suburb { get; set; }
 }
