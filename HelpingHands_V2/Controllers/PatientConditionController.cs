@@ -28,15 +28,14 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.PatientConditions = pc;
-                return View();
+                //ViewBag.PatientConditions = pc;
+                return View(pc);
 
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -50,15 +49,13 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.PatientConditions = pc;
-                return View();
+                return View(pc);
 
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -77,14 +74,12 @@ namespace HelpingHands_V2.Controllers
                 if (pc == null)
                     return NotFound();
 
-                ViewBag.PatientCondition = pc;
-                return View();
+                return View(pc);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -125,57 +120,6 @@ namespace HelpingHands_V2.Controllers
                 await _pc.AddPatientCondition(patientCondition);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View();
-                //return new JsonResult(new { error = ex.Message });
-            }
-        }
-
-        public async Task<IActionResult> Edit(int? patientId, int? conditionId)
-        {
-            try
-            {
-                if (patientId == null && conditionId == null)
-                {
-                    return NotFound();
-                }
-
-                var pc = await _pc.GetOnePatientCondition(patientId, conditionId);
-                var conditions = await _condition.GetConditions();
-
-                if (pc == null || conditions == null)
-                    return NotFound();
-
-                ViewData["ConditionId"] = new SelectList(conditions, "ConditionId", "ConditionName");
-                ViewBag.PatientCondition = pc;
-                return View();
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View();
-                //return new JsonResult(new { error = ex.Message });
-            }
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("PatientId, ConditionId, Active")] PatientCondition patientCondition)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    var conditions = await _condition.GetConditions();
-                    ViewData["ConditionId"] = new SelectList(conditions, "ConditionId", "ConditionName");
-                    ViewData["PatientId"] = patientCondition.PatientId;
-                    ViewBag.Message = "Not all the information was entered, Please look below for what's missing.";
-                    return View();
-                }
-                await _pc.UpdatePatientCondition(patientCondition);
-                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {

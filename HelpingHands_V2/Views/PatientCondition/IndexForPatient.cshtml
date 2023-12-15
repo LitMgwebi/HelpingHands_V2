@@ -16,23 +16,23 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Condition)
+                @Html.DisplayNameFor(model => model.Condition!.ConditionName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Patient)
+                @Html.DisplayNameFor(model => model.Condition!.ConditionDescription)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.PatientConditions)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @item.ConditionName
+                    @Html.DisplayFor(modelItem => item.Condition!.ConditionName)
                 </td>
                 <td>
-                    @item.PatientFirstname @item.PatientLastname
+                    @Html.DisplayFor(modelItem => item.Condition!.ConditionDescription)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-patientId="@item.PatientId" asp-route-conditionId="@item.ConditionId" class="btn btn-info">View</a>

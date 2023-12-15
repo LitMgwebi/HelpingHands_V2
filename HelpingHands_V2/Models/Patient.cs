@@ -40,7 +40,6 @@ public partial class Patient
 
     public virtual ICollection<CareContract> CareContracts { get; set; } = new List<CareContract>();
 
-    public virtual ICollection<PatientCondition> PatientConditions { get; set; } = new List<PatientCondition>();
 
     public virtual EndUser? EndUser { get; set; }
 

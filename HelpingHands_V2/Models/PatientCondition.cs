@@ -15,7 +15,7 @@ public partial class PatientCondition
 
     public bool Active { get; set; } = true;
 
-    public virtual Condition Condition { get; set; } = null!;
+    public virtual Condition? Condition { get; set; }
 
-    public virtual Patient Patient { get; set; } = null!;
+    public virtual EndUser? Patient { get; set; }
 }

@@ -3,6 +3,7 @@ using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Data.SqlTypes;
 
 namespace HelpingHands_V2.Services
 {
@@ -12,19 +13,29 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDPatientCondition";
         public PatientConditionService(IConfiguration config) => _config = config;
 
-        public async Task<IEnumerable<dynamic>> GetPatientConditions()
+        public async Task<IEnumerable<PatientCondition>> GetPatientConditions()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<PatientCondition, EndUser, Condition, PatientCondition>(
+                    sql,
+                    (pc, endUser, condition) =>
+                    {
+                        pc.Patient = endUser;
+                        pc.Condition = condition;
+                        return pc;
+                    },
+                    splitOn: "UserId, ConditionId",
+                    param: param, 
+                    commandType: CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public async Task<IEnumerable<dynamic>> GetPatientConditionsByPatient(int? id)
+        public async Task<IEnumerable<PatientCondition>> GetPatientConditionsByPatient(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -32,12 +43,23 @@ namespace HelpingHands_V2.Services
                 param.Add("PatientId", id);
                 param.Add("Command", "ByPatients");
 
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<PatientCondition, EndUser, Condition, PatientCondition>(
+                    sql,
+                    (pc, endUser, condition) =>
+                    {
+                        pc.Patient = endUser;
+                        pc.Condition = condition;
+                        return pc;
+                    },
+                    splitOn: "UserId, ConditionId",
+                    param: param,
+                    commandType: CommandType.StoredProcedure);
+
                 return result;
             }
         }
 
-        public async Task<object> GetOnePatientCondition(int? patientId, int? conditionId)
+        public async Task<PatientCondition> GetOnePatientCondition(int? patientId, int? conditionId)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -46,21 +68,24 @@ namespace HelpingHands_V2.Services
                 param.Add("ConditionId", conditionId);
                 param.Add("Command", "GetOne");
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
-                return result;
-            }
-        }
+                var results = await conn.QueryAsync<PatientCondition, EndUser, Condition, PatientCondition>(
+                     sql,
+                     (pc, endUser, condition) =>
+                     {
+                         pc.Patient = endUser;
+                         pc.Condition = condition;
+                         return pc;
+                     },
+                     splitOn: "UserId, ConditionId",
+                     param: param,
+                     commandType: CommandType.StoredProcedure);
 
-        public async Task<object> GetPatientConditionByCondition(int? id)
-        {
-            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
-            {
-                DynamicParameters param = new DynamicParameters();
-                param.Add("ConditionId", id);
-                param.Add("Command", "GetOne");
+                var pc = results.SingleOrDefault();
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
-                return result;
+                if(pc != null)
+                    return pc;
+                else
+                    throw new SqlNullValueException("There are no Patient Condition in the system with the corresponding ID");
             }
         }
 
