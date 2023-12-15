@@ -3,10 +3,11 @@ using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Data.SqlTypes;
 
 namespace HelpingHands_V2.Services
 {
-    public class NurseService: INurse
+    public class NurseService : INurse
     {
         private readonly IConfiguration _config;
         string sql = "CRUDNurse";
@@ -15,18 +16,31 @@ namespace HelpingHands_V2.Services
             _config = config;
         }
 
-        public async Task<IEnumerable<dynamic>> GetNurses()
+        public async Task<IEnumerable<Nurse>> GetNurses()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = await conn.QueryAsync(sql, param, commandType: CommandType.StoredProcedure);
-                return result;
+                var result = await conn.QueryAsync<Nurse, EndUser, Nurse>(
+                    sql,
+                    (nurse, endUser) =>
+                    {
+                        nurse.EndUser = endUser;
+                        return nurse;
+                    },
+                    splitOn: "UserId",
+                    param: param,
+                    commandType: CommandType.StoredProcedure);
+
+                if (result != null)
+                    return result;
+                else
+                    throw new SqlNullValueException("There are no Nurses in the system");
             }
         }
 
-        public async Task<object> GetNurse(int? id)
+        public async Task<Nurse> GetNurse(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -34,8 +48,23 @@ namespace HelpingHands_V2.Services
                 param.Add("NurseId", id);
                 param.Add("Command", "GetOne");
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
-                return result;
+                var results = await conn.QueryAsync<Nurse, EndUser, Nurse>(
+                    sql,
+                    (nurse, endUser) =>
+                    {
+                        nurse.EndUser = endUser;
+                        return nurse;
+                    },
+                    splitOn: "UserId", 
+                    param: param, 
+                    commandType: CommandType.StoredProcedure);
+
+                var nurse = results.SingleOrDefault();
+
+                if (nurse != null)
+                    return nurse;
+                else
+                    throw new SqlNullValueException("There are no Nurses in the system with the corresponding ID");
             }
         }
 

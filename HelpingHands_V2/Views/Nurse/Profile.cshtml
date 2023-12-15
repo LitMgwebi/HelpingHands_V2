@@ -2,8 +2,6 @@
 
 @{
     ViewData["Title"] = @User.FindFirst("Username")!.Value;
-    var EndUser = ViewBag.User;
-    var Nurse = ViewBag.Nurse;
     var Message = ViewBag.Message;
 }
 
@@ -33,79 +31,73 @@ else
 <hr />
 <div class="row">
     <dl class="col-6">
-        <dt class = "col-sm-4">
-            Username
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.EndUser!.Username)
         </dt>
-        <dd class = "col-sm-8">
-            @Nurse.Username
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.EndUser!.Username)
         </dd>
-        <dt class = "col-sm-4">
-            First Name
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.EndUser!.Firstname)
         </dt>
-        <dd class = "col-sm-8">
-            @Nurse.Firstname
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.EndUser!.Firstname)
         </dd>
-        <dt class = "col-sm-4">
-            Last Name
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.EndUser!.Lastname)
         </dt>
-        <dd class = "col-sm-8">
-            @Nurse.Lastname
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.EndUser!.Lastname)
         </dd>
-        <dt class = "col-sm-4">
-            Date Of Birth
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.EndUser!.DateOfBirth)
         </dt>
         <dd class="col-sm-10">
-            @EndUser.DateOfBirth.Day @EndUser.DateOfBirth.ToString("MMMM") @EndUser.DateOfBirth.ToString("yyy")
+            @Html.DisplayFor(model => model.EndUser!.DateOfBirth)
         </dd>
-        </dl>
-        <dl class="col-6">
-        <dt class = "col-sm-4">
-            Email
+    </dl>
+    <dl class="col-6">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.EndUser!.Email)
         </dt>
-        <dd class = "col-sm-8">
-            @EndUser.Email
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.EndUser!.Email)
         </dd>
         <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Grade)
         </dt>
         <dd class="col-sm-8">
-            @Nurse.Grade
+            @Html.DisplayFor(model => model.Grade)
         </dd>
-        <dt class = "col-sm-4">
-            Gender
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.EndUser!.Gender)
         </dt>
-        <dd class = "col-sm-8">
-            @EndUser.Gender
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.EndUser!.Gender)
         </dd>
-        <dt class = "col-sm-4">
-            Contact Number
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.EndUser!.ContactNumber)
         </dt>
-        <dd class = "col-sm-8">
-            @EndUser.ContactNumber
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.EndUser!.ContactNumber)
         </dd>
-        <dt class = "col-sm-4">
-            ID Number
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.EndUser!.Idnumber)
         </dt>
-        <dd class = "col-sm-8">
-            @EndUser.IDNumber
-        </dd>
-        <dt class = "col-sm-4">
-            Profile Picture
-        </dt>
-        <dd class = "col-sm-8">
-            @EndUser.ProfilePicture
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.EndUser!.Idnumber)
         </dd>
     </dl>
 </div>
-@if ( User.IsInRole("N") || User.IsInRole("A"))
+@if (User.IsInRole("N") || User.IsInRole("A"))
 {
     <div class="btn-group" role="group" aria-label="Control Panel">
-        <a asp-action="Edit" asp-route-id="@Nurse.NurseId" class="btn btn-success">Edit Nurse Info</a>
-        <a asp-action="Edit" asp-controller="EndUser" asp-route-id="@Nurse.NurseId" class="btn btn-success">Edit User Info</a>
-        <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Nurse.NurseId" class="btn btn-success">ChangePassword</a>
+        <a asp-action="Edit" asp-route-id="@Model?.NurseId" class="btn btn-success">Edit Nurse Info</a>
+        <a asp-action="Edit" asp-controller="EndUser" asp-route-id="@Model?.NurseId" class="btn btn-success">Edit User Info</a>
+        <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Model?.NurseId" class="btn btn-success">ChangePassword</a>
         <form asp-action="Delete">
-            <input asp-for="NurseId" value="@Nurse.NurseId" type="hidden" />
-            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Nurse.Firstname @Nurse.Lastname?')" class="btn btn-danger" />
+            <input asp-for="NurseId" value="@Model?.NurseId" type="hidden" />
+            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Model?.EndUser!.Firstname @Model?.EndUser!.Lastname')" class="btn btn-danger" />
         </form>
     </div>
 

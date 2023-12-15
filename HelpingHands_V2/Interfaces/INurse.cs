@@ -4,9 +4,9 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface INurse
     {
-        public Task<IEnumerable<dynamic>> GetNurses();
+        public Task<IEnumerable<Nurse>> GetNurses();
 
-        public Task<object> GetNurse(int? id);
+        public Task<Nurse> GetNurse(int? id);
 
         public Task<dynamic> AddNurse(Nurse nurse);
 

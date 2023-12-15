@@ -32,40 +32,40 @@ namespace HelpingHands_V2.Controllers
         
         public async Task<IActionResult> Dashboard(int id)
         {
-            List<dynamic> assignedContracts = new List<dynamic> { };
-            List<dynamic> contractVisits = new List<dynamic> { };
-            List<dynamic> nextVisit = new List<dynamic> { };
+            //List<dynamic> assignedContracts = new List<dynamic> { };
+            //List<dynamic> contractVisits = new List<dynamic> { };
+            //List<dynamic> nextVisit = new List<dynamic> { };
             try
             {
-                DateTime currentDate = DateTime.Now;
-                assignedContracts = await _report.NurseAssignedContracts(id);
-                if (assignedContracts.Count > 0)
-                {
-                    foreach (var contract in assignedContracts)
-                    {
-                        contractVisits = await _report.ContractVisits(contract.ContractId);
-                        if (contractVisits.Count > 0)
-                        {
-                            foreach (var visit in contractVisits)
-                            {
-                                nextVisit.Add(visit);
-                            }
-                        }
-                    }
-                }
-                if (nextVisit.Count > 0)
-                {
-                    for (int i = 0; i < nextVisit.Count - 1; i++)
-                        for (int j = 0; j < nextVisit.Count - i - 1; j++)
-                            if (nextVisit[j].VisitDate > nextVisit[j + 1].VisitDate)
-                            {
-                                var tempVar = nextVisit[j];
-                                nextVisit[j] = nextVisit[j + 1];
-                                nextVisit[j + 1] = tempVar;
-                            }
-                }
-                ViewBag.NextVisits = nextVisit;
-                ViewBag.Contracts = assignedContracts;
+                //DateTime currentDate = DateTime.Now;
+                //assignedContracts = await _report.NurseAssignedContracts(id);
+                //if (assignedContracts.Count > 0)
+                //{
+                //    foreach (var contract in assignedContracts)
+                //    {
+                //        contractVisits = await _report.ContractVisits(contract.ContractId);
+                //        if (contractVisits.Count > 0)
+                //        {
+                //            foreach (var visit in contractVisits)
+                //            {
+                //                nextVisit.Add(visit);
+                //            }
+                //        }
+                //    }
+                //}
+                //if (nextVisit.Count > 0)
+                //{
+                //    for (int i = 0; i < nextVisit.Count - 1; i++)
+                //        for (int j = 0; j < nextVisit.Count - i - 1; j++)
+                //            if (nextVisit[j].VisitDate > nextVisit[j + 1].VisitDate)
+                //            {
+                //                var tempVar = nextVisit[j];
+                //                nextVisit[j] = nextVisit[j + 1];
+                //                nextVisit[j + 1] = tempVar;
+                //            }
+                //}
+                //ViewBag.NextVisits = nextVisit;
+                //ViewBag.Contracts = assignedContracts;
                 return View();
             }
             catch (Exception ex)
@@ -85,7 +85,7 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.Nurses = nurses;
+                //ViewBag.Nurses = nurses;
                 return View(nurses);
             }
             catch (Exception ex)
@@ -105,15 +105,14 @@ namespace HelpingHands_V2.Controllers
                 }
 
                 var nurse = await _nurse.GetNurse(id);
-                var user = await _user.GetUserById(id);
                 if (nurse == null)
                 {
                     return NotFound();
                 }
 
-                ViewBag.Nurse = nurse;
-                ViewBag.User = user;
-                return View();
+                //ViewBag.Nurse = nurse;
+                //ViewBag.User = user;
+                return View(nurse);
             }
             catch (Exception ex)
             {
@@ -175,15 +174,14 @@ namespace HelpingHands_V2.Controllers
                 }
 
                 var nurse = await _nurse.GetNurse(id);
-                var user = await _user.GetUserById(id);
                 if (nurse == null)
                 {
                     return NotFound();
                 }
 
-                ViewBag.Nurse = nurse;
-                ViewBag.User = user;
-                return View();
+                //ViewBag.Nurse = nurse;
+                //ViewBag.User = user;
+                return View(nurse);
             }
             catch (Exception ex)
             {
@@ -200,12 +198,9 @@ namespace HelpingHands_V2.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    var user = await _user.GetUserById(nurse.NurseId);
-                    ViewBag.Nurse = nurse;
-                    ViewBag.User = user;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View();
+                    return View(nurse);
                 }
                 await _nurse.UpdateNurse(nurse);
                 return RedirectToAction(nameof(Profile), new { id = nurse.NurseId });
@@ -213,7 +208,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return View();
+                return View(nurse);
                 //return new JsonResult(new { error = ex.Message });
             }
         }

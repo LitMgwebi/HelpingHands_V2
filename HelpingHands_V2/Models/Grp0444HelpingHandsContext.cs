@@ -142,7 +142,7 @@ public partial class Grp0444HelpingHandsContext : DbContext
             entity.Property(e => e.NurseId).ValueGeneratedNever();
             entity.Property(e => e.Grade).HasMaxLength(5);
 
-            entity.HasOne(d => d.NurseNavigation).WithOne(p => p.Nurse)
+            entity.HasOne(d => d.EndUser).WithOne(p => p.Nurse)
                 .HasForeignKey<Nurse>(d => d.NurseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Nurse_EndUser");

@@ -39,5 +39,5 @@ public partial class Visit
 
     public bool Active { get; set; } = true;
 
-    public virtual CareContract Contract { get; set; } = null!;
+    public virtual CareContract? Contract { get; set; }
 }

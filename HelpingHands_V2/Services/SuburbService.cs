@@ -7,7 +7,7 @@ using System.Data.SqlTypes;
 
 namespace HelpingHands_V2.Services
 {
-    public class SuburbService: ISuburb
+    public class SuburbService : ISuburb
     {
         private readonly IConfiguration _config;
         string sql = "CRUDSuburb";
@@ -20,12 +20,17 @@ namespace HelpingHands_V2.Services
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
 
-                var suburbs = await conn.QueryAsync<Suburb, City, Suburb>(sql, (suburb, city) =>
+                var suburbs = await conn.QueryAsync<Suburb, City, Suburb>(
+                    sql,
+                    (suburb, city) =>
                 {
                     suburb.City = city;
                     suburb.CityId = city.CityId;
                     return suburb;
-                }, splitOn: "CityId", param: param, commandType: CommandType.StoredProcedure);
+                },
+                    splitOn: "CityId",
+                    param: param,
+                    commandType: CommandType.StoredProcedure);
 
                 if (suburbs != null)
                     return suburbs;
