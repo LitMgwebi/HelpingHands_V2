@@ -13,7 +13,6 @@ public partial class Nurse
 
     public bool Active { get; set; } = true;
 
-    public virtual ICollection<CareContract> CareContracts { get; set; } = new List<CareContract>();
 
     public virtual EndUser? EndUser { get; set; }
 }

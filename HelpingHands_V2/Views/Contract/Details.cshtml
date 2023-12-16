@@ -1,8 +1,6 @@
 ﻿@model HelpingHands_V2.Models.CareContract
 @{
     ViewData["Title"] = "Details";
-    var Contract = ViewBag.Contract;
-    var Visits = ViewBag.Visits;
     var Message = ViewBag.Message;
 }
 
@@ -32,112 +30,110 @@ else
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.ContractStatus)
         </dt>
-        <dd class = "col-sm-8">
-            @Contract.ContractStatus
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.ContractStatus)
         </dd>
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.ContractDate)
         </dt>
-        <dd class = "col-sm-8">
-            @Contract.ContractDate.Day @Contract.ContractDate.ToString("dddd") @Contract.ContractDate.ToString("MMM")
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.ContractDate)
         </dd>
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.AddressLineOne)
         </dt>
-        <dd class = "col-sm-8">
-            @Contract.AddressLineOne
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.AddressLineOne)
         </dd>
-        @if (Contract.AddressLineTwo != null)
+        @if (Model?.AddressLineTwo != null)
         {
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.AddressLineTwo)
             </dt>
             <dd class="col-sm-8">
-                @Contract.AddressLineTwo
+                @Html.DisplayFor(model => model.AddressLineTwo)
             </dd>
         }
-        @if (Contract.StartDate != null)
+        @if (Model?.StartDate != null)
         {
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.StartDate)
             </dt>
             <dd class="col-sm-8">
-                @Contract.StartDate.Day @Contract.StartDate.ToString("dddd") @Contract.StartDate.ToString("MMM")
+                @Html.DisplayFor(model => model.StartDate)
             </dd>
         }
-        @if (Contract.EndDate != null)
+        @if (Model?.EndDate != null)
         {
 
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.EndDate)
             </dt>
             <dd class="col-sm-8">
-                @Contract.EndDate.Day @Contract.EndDate.ToString("dddd") @Contract.EndDate.ToString("MMM")
+                @Html.DisplayFor(model => model.EndDate)
             </dd>
         }
         </dl>
         <dl class="col-6">
-        @if (Contract.ContractComment != null)
+        @if (Model?.ContractComment != null)
         {
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.ContractComment)
             </dt>
             <dd class="col-sm-8">
-                @Contract.ContractComment
+                @Html.DisplayFor(model => model.ContractComment)
             </dd>
         }
-        @if (Contract.NurseFirstname != null)
+        @if (Model?.Nurse != null)
         {
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Nurse)
             </dt>
             <dd class="col-sm-8">
-                @Contract.NurseFirstname @Contract.NurseLastname
+                @Html.DisplayFor(model => model.Nurse!.FullName)
             </dd>
         }
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Patient)
         </dt>
-        <dd class = "col-sm-8">
-            @Contract.PatientFirstname @Contract.PatientLastname
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Patient!.FullName)
         </dd>
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Suburb)
         </dt>
-        <dd class = "col-sm-8">
-            @Contract.SuburbName
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Suburb!.SuburbName)
         </dd>
         <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Wound)
         </dt>
-        <dd class = "col-sm-8">
-            @Contract.WoundName
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Wound!.WoundName)
         </dd>
     </dl>
 </div>
 <div class="btn-group" role="group" aria-label="Control Panel">
     @if(User.IsInRole("N"))
     {
-        @if (Contract.StartDate != null)
+        @if (Model?.StartDate != null)
         {
 
-            <a asp-action="Create" asp-controller="Visit" asp-route-id="@Contract.ContractId" class="btn btn-success">Add Visit</a>
-            <a asp-action="IndexForUser" asp-controller="Visit" asp-route-id="@Contract.ContractId" asp-route-command="nurse" class="btn btn-success">View Visits</a>
-            <a asp-action="Edit" asp-route-id="@Contract.ContractId" class="btn btn-danger">Close</a>
+            <a asp-action="Create" asp-controller="Visit" asp-route-id="@Model?.ContractId" class="btn btn-success">Add Visit</a>
+            <a asp-action="IndexForUser" asp-controller="Visit" asp-route-id="@Model?.ContractId" asp-route-command="nurse" class="btn btn-success">View Visits</a>
+            <a asp-action="Edit" asp-route-id="@Model?.ContractId" class="btn btn-success">Edit</a>
         }
     }
     else if (User.IsInRole("O") || User.IsInRole("P"))
     {
-        <a asp-action="Edit" asp-route-id="@Contract.ContractId" class="btn btn-success">Assign</a>
-
         <form asp-action="Delete">
-            <input asp-for="ContractId" value="@Contract.ContractId" type="hidden" />
-            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete contract: #@Contract.ContractId?')" class="btn btn-danger" />
+            <input asp-for="ContractId" value="@Model?.ContractId" type="hidden" />
+            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete contract: #@Model?.ContractId?')" class="btn btn-danger" />
         </form>
     }
     
 </div>
- @if (Contract.StartDate != null)
+ @*@if (Contract.StartDate != null)
         {
 <div class="row">
     <table class="table" id="myTable">
@@ -224,4 +220,4 @@ else
         </tbody>
     </table>
 
-</div>}
+</div>}*@

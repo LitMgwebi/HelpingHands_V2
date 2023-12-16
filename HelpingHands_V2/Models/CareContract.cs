@@ -57,9 +57,9 @@ public partial class CareContract
 
     public bool Active { get; set; } = true;
 
-    public virtual Nurse? Nurse { get; set; }
+    public virtual EndUser? Nurse { get; set; }
 
-    public virtual Patient? Patient { get; set; }
+    public virtual EndUser? Patient { get; set; }
 
     public virtual Suburb? Suburb { get; set; }
 

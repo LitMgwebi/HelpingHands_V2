@@ -37,14 +37,12 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                ViewBag.Contracts = contracts;
-                return View();
+                return View(contracts);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -88,26 +86,21 @@ namespace HelpingHands_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            List<Visit> visits = new List<Visit> { };
+            //List<Visit> visits = new List<Visit> { };
             try
             {
                 var contract = await _contract.GetContract(id);
-                visits = await _report.ContractVisits(id);
+                //visits = await _report.ContractVisits(id);
 
                 if (contract == null)
                     return NotFound();
 
-                ViewBag.Contract = contract;
-                ViewBag.Visits = visits;
-                return View();
+                return View(contract);
             }
             catch (Exception ex)
             {
-                ViewBag.Contract = new { };
-                ViewBag.Visits = visits;
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -117,49 +110,35 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 DateTime currentDate = DateTime.Now;
-                var nurses = await _nurse.GetNurses();
                 var wounds = await _wound.GetWounds();
                 var suburbs = await _suburb.GetSuburbs();
 
                 ViewBag.CurrentDate = DateTime.Now;
-                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
-                ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
-                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                ViewData["Wounds"] = new SelectList(wounds, "WoundId", "WoundName");
+                ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 return View();
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ContractStatus, ContractDate, PatientId, NurseId, WoundId, AddressLineOne, AddressLineTwo, SuburbId, StartDate, EndDate, ContractComment, Active")] CareContract contract)
         {
+            DateTime currentDate = DateTime.Now;
+            var wounds = await _wound.GetWounds();
+            var suburbs = await _suburb.GetSuburbs();
             try
             {
-                ModelState.Remove("StartDate");
-                ModelState.Remove("EndDate");
-                ModelState.Remove("Nurse");
-                ModelState.Remove("Patient");
-                ModelState.Remove("Suburb");
-                ModelState.Remove("Wound");
                 if (!ModelState.IsValid)
                 {
+                    ViewBag.CurrentDate = currentDate;
+                    ViewData["Wounds"] = new SelectList(wounds, "WoundId", "WoundName");
+                    ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
 
-                    DateTime currentDate = DateTime.Now;
-                    var nurses = await _nurse.GetNurses();
-                    var wounds = await _wound.GetWounds();
-                    var suburbs = await _suburb.GetSuburbs();
-
-                    ViewBag.CurrentDate = DateTime.Now;
-                    ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
-                    ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
-                    ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-
-                    var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
@@ -169,13 +148,14 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
+                ViewBag.CurrentDate = currentDate;
+                ViewData["Wounds"] = new SelectList(wounds, "WoundId", "WoundName");
+                ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
-        [Authorize(Roles = "O, A, N")]
         public async Task<IActionResult> Edit(int? id)
         {
             try
@@ -196,15 +176,15 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
 
                 ViewBag.CurrentDate = DateTime.Now;
-                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
-                ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
-                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                ViewBag.Contract = contract;
-                return View();
+                ViewData["Nurses"] = new SelectList(nurses, "NurseId", "Fullname");
+                ViewData["Wounds"] = new SelectList(wounds, "WoundId", "WoundName");
+                ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
+                return View(contract);
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
         [HttpPost]
@@ -225,16 +205,12 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
 
-                    ViewBag.CurrentDate = DateTime.Now;
-                    ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
-                    ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
-                    ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                    ViewBag.Contract = contract;
-
-                    var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    //return new JsonResult(new { errors, contract });
+                    ViewBag.CurrentDate = currentDate;
+                    ViewData["Nurses"] = new SelectList(nurses, "NurseId", "Fullname");
+                    ViewData["Wounds"] = new SelectList(wounds, "WoundId", "WoundName");
+                    ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View();
+                    return View(contract);
                 }
                 await _contract.UpdateContract(contract);
                 if (HttpContext.User.IsInRole("N"))
@@ -247,96 +223,10 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.CurrentDate = DateTime.Now;
-                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
-                ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
-                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                ViewBag.Contract = contract;
-                return new JsonResult(new { error = ex.Message, contract });
-                ViewBag.Message = ex.Message;
-                return View();
-            }
-        }
-
-        [Authorize(Roles = "O, A, N")]
-        public async Task<IActionResult> Close(int? id)
-        {
-            try
-            {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                DateTime currentDate = DateTime.Now;
-                var contract = await _contract.GetContract(id);
-                var patients = await _patient.GetPatients();
-                var nurses = await _nurse.GetNurses();
-                var wounds = await _wound.GetWounds();
-                var suburbs = await _suburb.GetSuburbs();
-
-                if (contract == null || patients == null || nurses == null || wounds == null || suburbs == null)
-                    return NotFound();
-
-                ViewBag.CurrentDate = DateTime.Now;
-                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
-                ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
-                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                ViewBag.Contract = contract;
-                return View();
-            }
-            catch (Exception ex)
-            {
-                return new JsonResult(new { error = ex.Message });
-            }
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Close([Bind("ContractId, ContractStatus, ContractDate, PatientId, NurseId, WoundId, AddressLineOne, AddressLineTwo, SuburbId, StartDate, EndDate, ContractComment, Active")] CareContract contract)
-        {
-
-            DateTime currentDate = DateTime.Now;
-            var nurses = await _nurse.GetNurses();
-            var wounds = await _wound.GetWounds();
-            var suburbs = await _suburb.GetSuburbs();
-            try
-            {
-                ModelState.Remove("Nurse");
-                ModelState.Remove("Patient");
-                ModelState.Remove("Suburb");
-                ModelState.Remove("Wound");
-                if (!ModelState.IsValid)
-                {
-
-                    ViewBag.CurrentDate = DateTime.Now;
-                    ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
-                    ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
-                    ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                    ViewBag.Contract = contract;
-
-                    var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    //return new JsonResult(new { errors, contract });
-                    ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View();
-                }
-                await _contract.UpdateContract(contract);
-                if (HttpContext.User.IsInRole("N"))
-                {
-                    return RedirectToAction("Dashboard", "Nurse", new { id = contract.NurseId });
-                }
-                else
-                {
-                    return RedirectToAction("NewContracts", "Manager");
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.CurrentDate = DateTime.Now;
-                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
-                ViewData["WoundId"] = new SelectList(wounds, "WoundId", "WoundName");
-                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                ViewBag.Contract = contract;
-                return new JsonResult(new { error = ex.Message, contract });
+                ViewBag.CurrentDate = currentDate;
+                ViewData["Nurses"] = new SelectList(nurses, "NurseId", "Fullname");
+                ViewData["Wounds"] = new SelectList(wounds, "WoundId", "WoundName");
+                ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 ViewBag.Message = ex.Message;
                 return View();
             }

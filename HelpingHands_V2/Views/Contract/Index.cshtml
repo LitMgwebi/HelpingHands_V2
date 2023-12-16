@@ -25,9 +25,6 @@
                 @Html.DisplayNameFor(model => model.ContractDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ContractComment)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Nurse)
             </th>
             <th>
@@ -36,30 +33,33 @@
             <th>
                 @Html.DisplayNameFor(model => model.Wound)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suburb)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.Contracts)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @item.ContractStatus
+                    @Html.DisplayFor(modelItem => item.ContractStatus)
                 </td>
                 <td>
-                    @item.ContractDate.Day @item.ContractDate.ToString("MMM")
+                    @Html.DisplayFor(modelItem => item.ContractDate)
                 </td>
                 <td>
-                    @item.ContractComment
+                    @Html.DisplayFor(modelItem => item.Nurse!.FullName)
                 </td>
                 <td>
-                    @item.NurseFirstname @item.NurseLastname
+                    @Html.DisplayFor(modelItem => item.Patient!.FullName)
                 </td>
                 <td>
-                    @item.PatientFirstname @item.PatientLastname
+                    @Html.DisplayFor(modelItem => item.Wound!.WoundName)
                 </td>
                 <td>
-                    @item.WoundName
+                    @Html.DisplayFor(modelItem => item.Suburb!.SuburbName)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.ContractId" class="btn btn-info">View</a>

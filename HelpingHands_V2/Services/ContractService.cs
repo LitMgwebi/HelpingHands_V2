@@ -3,6 +3,7 @@ using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Data.SqlTypes;
 
 namespace HelpingHands_V2.Services
 {
@@ -12,19 +13,31 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDCareContract";
         public ContractService(IConfiguration config) => _config = config;
 
-        public async Task<IEnumerable<dynamic>> GetContracts()
+        public async Task<IEnumerable<CareContract>> GetContracts()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("Command", "GetAll");
-                var result = await conn.QueryAsync(sql, param, commandType:  CommandType.StoredProcedure);
+                var result = await conn.QueryAsync<CareContract, EndUser, EndUser, Suburb, Wound, CareContract>(
+                    sql,
+                    (contract, nurse, patient, suburb, wound)=>
+                    {
+                        contract.Nurse = nurse;
+                        contract.Patient = patient;
+                        contract.Suburb = suburb;
+                        contract.Wound = wound;
+                        return contract;
+                    },
+                    splitOn: "UserId, SuburbId, WoundId",
+                    param: param,
+                    commandType:  CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public async Task<object> GetContract(int? id)
+        public async Task<CareContract> GetContract(int? id)
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -32,8 +45,26 @@ namespace HelpingHands_V2.Services
                 param.Add("ContractId", id);
                 param.Add("Command", "GetOne");
 
-                var result = await conn.QuerySingleOrDefaultAsync(sql, param, commandType: CommandType.StoredProcedure);
-                return result;
+                var results = await conn.QueryAsync<CareContract, EndUser, EndUser, Suburb, Wound, CareContract>(
+                    sql,
+                    (contract, nurse, patient, suburb, wound) =>
+                    {
+                        contract.Nurse = nurse;
+                        contract.Patient = patient;
+                        contract.Suburb = suburb;
+                        contract.Wound = wound;
+                        return contract;
+                    },
+                    splitOn: "UserId, SuburbId, WoundId",
+                    param: param,
+                    commandType: CommandType.StoredProcedure);
+
+                var contract = results.SingleOrDefault();
+
+                if(contract != null)
+                    return contract;
+                else
+                    throw new SqlNullValueException("There are no Contract in the system with the corresponding ID");
             }
         }
 

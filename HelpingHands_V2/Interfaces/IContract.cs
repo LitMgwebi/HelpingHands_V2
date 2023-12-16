@@ -4,9 +4,9 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface IContract
     {
-        public Task<IEnumerable<dynamic>> GetContracts();
+        public Task<IEnumerable<CareContract>> GetContracts();
 
-        public Task<object> GetContract(int? id);
+        public Task<CareContract> GetContract(int? id);
 
         public Task<dynamic> AddContract(CareContract contract);
 
