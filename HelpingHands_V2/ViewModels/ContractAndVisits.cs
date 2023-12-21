@@ -7,5 +7,7 @@ namespace HelpingHands_V2.ViewModels
         public CareContract? Contract { get; set; }
 
         public IEnumerable<Visit>? Visits { get; set; }
+
+        public Visit? Visit { get; set; }
     }
 }
