@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics.Contracts;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -26,12 +27,32 @@ namespace HelpingHands_V2.Controllers
             _report = report;
         }
 
-        [Authorize(Roles = "O, A")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id, string? command)
         {
             try
             {
-                var contracts = await _contract.GetContracts();
+                IEnumerable<CareContract> contracts;
+
+                if (command == "patient")
+                {
+                    contracts = await _report.PatientContract(id);
+                }
+                else if (command == "current")
+                {
+                    contracts = await _report.NurseAssignedContracts(id);
+                }
+                else if (command == "unassigned")
+                {
+                    contracts = await _report.ContractStatus("N");
+                }
+                else if (command == "past")
+                {
+                    contracts = await _report.NurseContractType(id, "C");
+                }
+                else
+                {
+                    contracts = await _contract.GetContracts();
+                }
 
                 if (contracts == null)
                 {
@@ -46,43 +67,6 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public async Task<IActionResult> IndexForUser(int id, string command)
-        {
-            try
-            {
-                List<dynamic> contracts = new List<dynamic> { };
-                
-                if (command == "patient")
-                {
-                    contracts = await _report.PatientContract(id);
-                } 
-                else if(command == "current")
-                {
-                    contracts = await _report.NurseAssignedContracts(id);
-                } 
-                else if (command == "unassigned")
-                {
-                    contracts = await _report.ContractStatus("N");
-                } 
-                else if (command == "past")
-                {
-                    contracts = await _report.NurseContractType(id, "C");
-                }
-
-                //if (contracts == null)
-                //{
-                //    return NotFound();
-                //}
-                ViewBag.Contracts = contracts;
-                return View();
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View();
-                //return new JsonResult(new { error = ex.Message });
-            }
-        }
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
@@ -247,7 +231,7 @@ namespace HelpingHands_V2.Controllers
                 await _contract.DeleteContract(ContractId);
                 if (HttpContext.User.IsInRole("P"))
                 {
-                    return RedirectToAction(nameof(IndexForUser), new {id = HttpContext.User.FindFirst("UserId")!.Value, command = "patient"});
+                    return RedirectToAction(nameof(Index), new {id = HttpContext.User.FindFirst("UserId")!.Value, command = "patient"});
                 } else
                 {
                     return RedirectToAction(nameof(Index));

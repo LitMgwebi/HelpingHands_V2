@@ -1,8 +1,7 @@
-﻿@model IEnumerable<HelpingHands_V2.Models.Visit>
+﻿@model IEnumerable<HelpingHands_V2.ViewModels.VisitRange>
 @using System.Linq;
 @{
     ViewData["Title"] = "VisitRange";
-    var Range = ViewBag.VisitRange;
     var Message = ViewBag.Message;
 }
 
@@ -15,10 +14,10 @@
 
 <section class="row">
     <form asp-action="VisitRange">
-        <input name="NurseId" value="@User.FindFirst("UserId")!.Value" hidden/>
+        <input name="NurseId" value="@User.FindFirst("UserId")!.Value" hidden />
         <div class="form-group">
             <label class="control-label">Start</label>
-            <input name="StartDate" type="date" class="form-control" required/>
+            <input name="StartDate" type="date" class="form-control" required />
         </div>
         <div class="form-group">
             <label class="control-label">End</label>
@@ -36,67 +35,45 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.VisitDate)
+                    @Html.DisplayNameFor(model => model.Visit!.VisitDate)
                 </th>
                 <th>
-                    Patient
+                    @Html.DisplayNameFor(model => model.Patient)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ApproxTime)
+                    @Html.DisplayNameFor(model => model.Visit!.ApproxTime)
                 </th>
                 <th>
-                    Wound
+                    @Html.DisplayNameFor(model => model.Wound)
                 </th>
                 <th>
-                    Suburb
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Arrival)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.WoundCondition)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Contract)
+                    @Html.DisplayNameFor(model => model.Visit!.Arrival)
                 </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @if (Range.Count > 0)
+            @if (Model != null)
             {
-                @foreach (var item in Range)
+                @foreach (var item in Model)
                 {
                     <tr>
                         <td>
-                            @item.VisitDate.Day @item.VisitDate.ToString("MMM")
+                            @Html.DisplayFor(modelItem => item.Visit!.VisitDate)
                         </td>
                         <td>
-                            @item.PatientFirstname @item.PatientLastname
+                            @Html.DisplayFor(model => item.Patient!.FullName)
                         </td>
                         <td>
-                            @item.ApproxTime
+                            @Html.DisplayFor(model => item.Visit!.ApproxTime)
                         </td>
                         <td>
-                            @item.WoundName
+                            @Html.DisplayFor(model => item.Wound!.WoundName)
                         </td>
-                        <td>
-                            @item.SuburbName
-                        </td>
-                        @if (item.Arrival != null)
+                        @if (item.Visit!.Arrival != null)
                         {
                             <td>
-                                @item.Arrival
-                            </td>
-                        }
-                        else
-                        {
-                            <td>N/A</td>
-                        }
-                        @if (item.WoundCondition != null)
-                        {
-                            <td>
-                                @item.WoundCondition
+                                @Html.DisplayFor(model => item.Visit!.Arrival)
                             </td>
                         }
                         else
@@ -104,17 +81,10 @@
                             <td>N/A</td>
                         }
                         <td>
-                            @item.ContractId
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
+                            <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.Visit!.VisitId" class="btn btn-info">View</a>
                         </td>
                     </tr>
                 }
-            }
-            else
-            {
-                <h5>No Visits were found</h5>
             }
         </tbody>
     </table>

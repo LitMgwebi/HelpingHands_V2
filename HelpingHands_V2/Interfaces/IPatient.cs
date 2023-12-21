@@ -6,6 +6,8 @@ namespace HelpingHands_V2.Interfaces
     {
         public Task<IEnumerable<Patient>> GetPatients();
 
+        public Task<IEnumerable<EndUser>> GetUsersByIDs(IEnumerable<Patient> Patients);
+
         public Task<Patient> GetPatient(int? id);
 
         public Task<dynamic> AddPateint(Patient patient);

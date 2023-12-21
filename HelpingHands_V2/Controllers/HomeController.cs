@@ -1,4 +1,4 @@
-﻿using HelpingHands_V2.Models;
+﻿using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;

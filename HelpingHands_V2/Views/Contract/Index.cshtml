@@ -27,14 +27,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nurse)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Patient)
-            </th>
+            @if (!User.IsInRole("P"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Patient)
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.Wound)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Suburb)
             </th>
             <th></th>
         </tr>
@@ -49,17 +49,26 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ContractDate)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nurse!.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Patient!.FullName)
-                </td>
+                @if (item.Nurse != null)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nurse!.FullName)
+                    </td>
+                } else
+                {
+                    <td>
+                        N/A
+                    </td>
+                }
+                @if (!User.IsInRole("P"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patient!.FullName)
+                    </td>
+
+                }
                 <td>
                     @Html.DisplayFor(modelItem => item.Wound!.WoundName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Suburb!.SuburbName)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.ContractId" class="btn btn-info">View</a>

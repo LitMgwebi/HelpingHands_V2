@@ -10,10 +10,12 @@ namespace HelpingHands_V2.Services
     public class NurseService : INurse
     {
         private readonly IConfiguration _config;
+        private readonly IEndUser _endUser;
         string sql = "CRUDNurse";
-        public NurseService(IConfiguration config)
+        public NurseService(IConfiguration config, IEndUser endUser)
         {
             _config = config;
+            _endUser = endUser;
         }
 
         public async Task<IEnumerable<Nurse>> GetNurses()
@@ -38,6 +40,17 @@ namespace HelpingHands_V2.Services
                 else
                     throw new SqlNullValueException("There are no Nurses in the system");
             }
+        }
+
+        public async Task<IEnumerable<EndUser>> GetUsersByIDs(IEnumerable<Nurse> Nurses)
+        {
+            List<EndUser> users = new List<EndUser> { };
+            foreach (Nurse nurse in Nurses)
+            {
+                var user = await _endUser.GetUserById(nurse.NurseId);
+                users.Add(user);
+            }
+            return users;
         }
 
         public async Task<Nurse> GetNurse(int? id)

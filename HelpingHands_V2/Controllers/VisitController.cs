@@ -17,23 +17,26 @@ namespace HelpingHands_V2.Controllers
             _report = report;
         }
 
-        [Authorize(Roles = "N, O, A")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id, string? command)
         {
             try
             {
-                var visits = await _visit.GetVisits();
+                IEnumerable<Visit> visits;
+                DateTime currentDate = DateTime.Now;
+
+                if (command == "nurse")
+                    visits = await _report.ContractVisits(id);
+                else
+                    visits = await _visit.GetVisits();
 
                 if (visits == null)
                 {
                     return NotFound();
                 }
-                //ViewBag.Visits = visits;
                 return View(visits);
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -42,55 +45,56 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                List<dynamic> contracts = new List<dynamic> { };
+                List<CareContract> contracts = new List<CareContract> { };
                 List<Visit> contractVisits = new List<Visit> { };
                 List<Visit> nextVisit = new List<Visit> { };
 
                 if (command == "nurse")
                 {
                     contractVisits = await _report.ContractVisits(id);
+                    return new JsonResult(new { contractVisits });
                     //ViewBag.Visits = contractVisits;
                     return View(contractVisits);
                 }
                 else
                 {
-                    contracts = await _report.PatientContract(id);
-                    if (contracts.Count > 0)
-                    {
-                        foreach (var contract in contracts)
-                        {
-                            contractVisits = _report.ContractVisits(contract.ContractId);
-                            if (contractVisits.Count > 0)
-                            {
-                                foreach (var visit in contractVisits)
-                                {
-                                    nextVisit.Add(visit);
-                                }
-                            }
-                        }
-                    }
-                    if (nextVisit.Count > 0)
-                    {
-                        for (int i = 0; i < nextVisit.Count - 1; i++)
-                            for (int j = 0; j < nextVisit.Count - i - 1; j++)
-                                if (nextVisit[j].VisitDate > nextVisit[j + 1].VisitDate)
-                                {
-                                    var tempVar = nextVisit[j];
-                                    nextVisit[j] = nextVisit[j + 1];
-                                    nextVisit[j + 1] = tempVar;
-                                }
-                    }
-                    //ViewBag.Visits = nextVisit;
-                    return View(nextVisit);
+                    //contracts = await _report.PatientContract(id);
+                    //if (contracts.Count > 0)
+                    //{
+                    //    foreach (var contract in contracts)
+                    //    {
+                    //        contractVisits = _report.ContractVisits(contract.ContractId);
+                    //        if (contractVisits.Count > 0)
+                    //        {
+                    //            foreach (var visit in contractVisits)
+                    //            {
+                    //                nextVisit.Add(visit);
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                    //if (nextVisit.Count > 0)
+                    //{
+                    //    for (int i = 0; i < nextVisit.Count - 1; i++)
+                    //        for (int j = 0; j < nextVisit.Count - i - 1; j++)
+                    //            if (nextVisit[j].VisitDate > nextVisit[j + 1].VisitDate)
+                    //            {
+                    //                var tempVar = nextVisit[j];
+                    //                nextVisit[j] = nextVisit[j + 1];
+                    //                nextVisit[j + 1] = tempVar;
+                    //            }
+                    //}
+                    ////ViewBag.Visits = nextVisit;
+                    return View();
                 }
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
         }
+        
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {

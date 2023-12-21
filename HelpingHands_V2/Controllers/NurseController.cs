@@ -10,6 +10,7 @@ using HelpingHands_V2.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Authentication;
+using HelpingHands_V2.ViewModels;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -244,22 +245,19 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                List<dynamic> visitRange = new List<dynamic> { };
-                ViewBag.VisitRange = visitRange;
                 return View();
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VisitRange(int NurseId, DateTime StartDate, DateTime EndDate)
         {
-            List<dynamic> visitRange = new List<dynamic> { };
+            IEnumerable<VisitRange> visitRange = new List<VisitRange> { };
             try
             {
                 if (!ModelState.IsValid)
@@ -269,24 +267,21 @@ namespace HelpingHands_V2.Controllers
                     return View();
                 }
                 visitRange = await _report.NurseVisitRange(NurseId, StartDate, EndDate);
-                ViewBag.VisitRange = visitRange;
-                return View();
+                return View(visitRange);
             }
             catch (Exception ex)
             {
-                ViewBag.VisitRange = visitRange;
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
 
         public async Task<IActionResult> Visits(int id, string command)
         {
+            IEnumerable<VisitRange> visits = new List<VisitRange> { };
             try
             {
-                List<dynamic> visits = new List<dynamic> { };
                 DateTime currentDate = DateTime.Now;
                 if (command == "upcoming")
                 {
@@ -296,14 +291,12 @@ namespace HelpingHands_V2.Controllers
                 {
                     visits = await _report.NurseVisitRange(id, currentDate.AddYears(-20), currentDate);
                 }
-                ViewBag.Visits = visits;
-                return View();
+                return View(visits);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
     }

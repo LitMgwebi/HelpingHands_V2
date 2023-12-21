@@ -11,7 +11,15 @@
     <p class="text-decoration-underline text-danger">@Message</p>
 }
 <hr />
-<a asp-action="Create" class="btn btn-primary">Create New</a>
+@if (User.IsInRole("P"))
+{
+    <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+}
+else if (User.IsInRole("N"))
+{
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+}
 <table class="table" id="myTable">
     <thead>
         <tr>

@@ -1,5 +1,6 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,22 +16,24 @@ namespace HelpingHands_V2.Controllers
         private readonly IReport _report;
         private readonly IVisit _visit;
         private readonly INurse _nurse;
+        private readonly IPatient _patient;
         private readonly IContract _contract;
 
-        public ManagerController(IReport report, IVisit visit, INurse nurse, IContract contract)
+        public ManagerController(IReport report, IVisit visit, INurse nurse, IContract contract, IPatient patient)
         {
             _report = report;
             _visit = visit;
             _nurse = nurse;
             _contract = contract;
+            _patient = patient;
         }
 
         public async Task<IActionResult> Dashboard()
         {
             try
             {
-                List<dynamic> newContracts = new List<dynamic> { };
-                List<dynamic> assignedContracts = new List<dynamic> { };
+                List<CareContract> newContracts = new List<CareContract> { };
+                List<CareContract> assignedContracts = new List<CareContract> { };
                 List<dynamic> visits = new List<dynamic> { };
 
                 newContracts = await _report.ContractStatus("N");
@@ -58,35 +61,31 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                List<dynamic> contracts = new List<dynamic> { };
+                List<CareContract> contracts = new List<CareContract> { };
 
                 contracts = await _report.ContractStatus("N");
-
-                ViewBag.Contracts = contracts;
-                return View();
+                return View(contracts);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> VisitRange()
         {
-            List<dynamic> visitRange = new List<dynamic> { };
-            var nurses = await _nurse.GetNurses();
             try
             {
-                ViewBag.VisitRange = visitRange;
-                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
+                IEnumerable<Nurse> nurses = await _nurse.GetNurses();
+                IEnumerable<EndUser> users = await _nurse.GetUsersByIDs(nurses);
+
+                ViewData["Nurses"] = new SelectList(users, "UserId", "FullName");
                 return View();
             }
             catch (Exception ex)
             {
-                ViewBag.VisitRange = visitRange;
-                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -95,51 +94,50 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VisitRange(int NurseId, DateTime StartDate, DateTime EndDate)
         {
-            List<dynamic> visitRange = new List<dynamic> { };
-            var nurses = await _nurse.GetNurses();
+            IEnumerable<VisitRange> visitRange = new List<VisitRange> { };
+            IEnumerable<Nurse> nurses = await _nurse.GetNurses();
+            IEnumerable<EndUser> users = await _nurse.GetUsersByIDs(nurses);
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.VisitRange = visitRange;
-                    ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
+                    ViewData["Nurses"] = new SelectList(users, "UserId", "FullName");
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
                 visitRange = await _report.NurseVisitRange(NurseId, StartDate, EndDate);
-                ViewBag.VisitRange = visitRange;
-                return View();
+                return View(visitRange);
             }
             catch (Exception ex)
             {
-                ViewBag.VisitRange = visitRange;
-                ViewData["NurseId"] = new SelectList(nurses, "NurseId", "Fullname");
+                ViewData["Nurses"] = new SelectList(users, "UserId", "FullName");
                 ViewBag.Message = ex.Message;
                 return View();
             }
         }
 
-        public IActionResult ContractRange()
+        public async Task<IActionResult> ContractRange()
         {
-            List<dynamic> contractRange = new List<dynamic> { };
             try
             {
-                ViewBag.ContractRange = contractRange;
+
+                IEnumerable<Patient> patients = await _patient.GetPatients();
+                IEnumerable<EndUser> users = await _patient.GetUsersByIDs(patients);
+
+                ViewData["Patients"] = new SelectList(users, "UserId", "FullName");
                 return View();
             }
             catch (Exception ex)
             {
-                ViewBag.ContractRange = contractRange;
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ContractRange(DateTime StartDate, DateTime EndDate)
+        public async Task<IActionResult> ContractRange(int PatientId, DateTime StartDate, DateTime EndDate)
         {
-            List<dynamic> contractRange = new List<dynamic> { };
+            IEnumerable<CareContract> contractRange;
             try
             {
                 if (!ModelState.IsValid)
@@ -148,16 +146,13 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
-                contractRange = await _report.CareVisits(StartDate, EndDate);
-                ViewBag.ContractRange = contractRange;
-                return View();
+                contractRange = await _report.CareVisits(PatientId, StartDate, EndDate);
+                return View(contractRange);
             }
             catch (Exception ex)
             {
-                ViewBag.ContractRange = contractRange;
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 

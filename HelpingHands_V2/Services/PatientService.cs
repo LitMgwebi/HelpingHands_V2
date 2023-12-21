@@ -10,8 +10,13 @@ namespace HelpingHands_V2.Services
     public class PatientService: IPatient
     {
         private readonly IConfiguration _config;
+        private readonly IEndUser _endUser;
         string sql = "CRUDPatient";
-        public PatientService(IConfiguration config) => _config = config;
+        public PatientService(IConfiguration config, IEndUser endUser) 
+        { 
+            _config = config;
+            _endUser = endUser;
+        }
 
         public async Task<IEnumerable<Patient>> GetPatients()
         {
@@ -36,6 +41,17 @@ namespace HelpingHands_V2.Services
                 else
                     throw new SqlNullValueException("There are no Patients in the system");
             }
+        }
+
+        public async Task<IEnumerable<EndUser>> GetUsersByIDs(IEnumerable<Patient> Patients)
+        {
+            List<EndUser> users = new List<EndUser> { };
+            foreach (Patient patient in Patients)
+            {
+                var user = await _endUser.GetUserById(patient.PatientId);
+                users.Add(user);
+            }
+            return users;
         }
 
         public async Task<Patient> GetPatient(int? id)

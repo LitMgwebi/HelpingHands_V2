@@ -7,6 +7,7 @@ using BC = BCrypt.Net.BCrypt;
 using HelpingHands_V2.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using HelpingHands_V2.ViewModels;
 
 namespace HelpingHands_V2.Controllers
 {

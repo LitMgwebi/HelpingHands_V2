@@ -1,8 +1,7 @@
-﻿@model IEnumerable<HelpingHands_V2.Models.Visit>
+﻿@model IEnumerable<HelpingHands_V2.ViewModels.VisitRange>
 
 @{
     ViewData["Title"] = "Visits";
-    var Visits = ViewBag.Visits;
     var Message = ViewBag.Message;
 }
 
@@ -20,84 +19,53 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.VisitDate)
+                @Html.DisplayNameFor(model => model.Visit!.VisitDate)
             </th>
             <th>
-                Patient
+                @Html.DisplayNameFor(model => model.Patient)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApproxTime)
+                @Html.DisplayNameFor(model => model.Visit!.ApproxTime)
             </th>
             <th>
-                Wound
+                @Html.DisplayNameFor(model => model.Wound)
             </th>
             <th>
-                Suburb
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Arrival)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WoundCondition)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contract)
+                @Html.DisplayNameFor(model => model.Visit!.Arrival)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @if(Visits.Count > 0)
+        @foreach (var item in Model)
         {
-            @foreach (var item in Visits)
-            {
-                <tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Visit!.VisitDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Patient!.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Visit!.ApproxTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Wound!.WoundName)
+                </td>
+                @if (item.Visit!.Arrival != null)
+                {
                     <td>
-                        @item.VisitDate.Day @item.VisitDate.ToString("MMM")
+                        @Html.DisplayFor(model => item.Visit!.Arrival)
                     </td>
-                    <td>
-                        @item.PatientFirstname @item.PatientLastname
-                    </td>
-                    <td>
-                        @item.ApproxTime
-                    </td>
-                    <td>
-                        @item.WoundName
-                    </td>
-                    <td>
-                        @item.SuburbName
-                    </td>
-                    @if (item.Arrival != null)
-                    {
-                        <td>
-                            @item.Arrival
-                        </td>
-                    } else
-                    {
-                        <td>N/A</td>
-                    }
-                    @if (item.WoundCondition != null)
-                    {
-                        <td>
-                            @item.WoundCondition
-                        </td>
-                    }
-                    else
-                    {
-                        <td>N/A</td>
-                    }
-                    <td>
-                        @item.ContractId
-                    </td>
-                    <td>
-                        <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
-                    </td>
-                </tr>
-            }
-        }
-        else
-        {
-            <h5>No Visits were found</h5>
+                }
+                else
+                {
+                    <td>N/A</td>
+                }
+                <td>
+                    <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.Visit!.VisitId" class="btn btn-info">View</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

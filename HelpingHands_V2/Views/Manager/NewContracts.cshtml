@@ -2,7 +2,6 @@
 @using System.Linq
 @{
     ViewData["Title"] = "New Contracts";
-    var Contracts = ViewBag.Contracts;
     var Message = ViewBag.Message;
 }
 
@@ -19,21 +18,11 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ContractStatus)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ContractDate)
             </th>
-            @* @if (User.IsInRole("P"))
-            {
-            <th>
-            @Html.DisplayNameFor(model => model.Nurse)
-            </th>
-            } *@
             <th>
                 @Html.DisplayNameFor(model => model.Patient)
             </th>
-           
             <th>
                 @Html.DisplayNameFor(model => model.Wound)
             </th>
@@ -41,33 +30,22 @@
         </tr>
     </thead>
     <tbody>
-        @if (Contracts.Count > 0)
+        @foreach (var item in Model)
         {
-            @foreach (var item in Contracts)
-            {
-                <tr>
-                    <td>
-                        @item.ContractStatus
-                    </td>
-                    <td>
-                        @item.ContractDate.Day @item.ContractDate.ToString("MMMM")
-                    </td>
-                    <td>
-                        @item.PatientFirstname @item.PatientLastname
-                    </td>
-                    
-                    <td>
-                        @item.WoundName
-                    </td>
-                    <td>
-                        <a asp-action="ContractDetails" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
-                    </td>
-                </tr>
-            }
-        }
-        else
-        {
-            <h5>No Contracts were found</h5>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContractDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patient!.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Wound!.WoundName)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

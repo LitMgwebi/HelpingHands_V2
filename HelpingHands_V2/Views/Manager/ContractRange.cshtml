@@ -2,7 +2,6 @@
 @using System.Linq;
 @{
     ViewData["Title"] = "ContractRange";
-    var Contracts = ViewBag.ContractRange;
     var Message = ViewBag.Message;
 }
 
@@ -23,6 +22,12 @@
             <input name="EndDate" type="date" class="form-control" required />
         </div>
         <div class="form-group">
+            <label class="control-label">Patient</label>
+            <select name="PatientId" class="form-control" asp-items="ViewBag.Patients" required>
+                <option disabled selected>--- SELECT ---</option>
+            </select>
+        </div>
+        <div class="form-group">
             <input type="submit" value="Search" class="btn btn-primary" />
         </div>
     </form>
@@ -39,13 +44,7 @@
                     @Html.DisplayNameFor(model => model.ContractDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ContractComment)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Nurse)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Patient)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Wound)
@@ -54,24 +53,21 @@
             </tr>
         </thead>
         <tbody>
-            @if (Contracts.Count > 0)
+            @if(Model != null)
             {
-                @foreach (var item in Contracts)
+                @foreach (var item in Model)
                 {
                     <tr>
                         <td>
-                            @item.ContractStatus
+                            @Html.DisplayFor(modelItem => item.ContractStatus)
                         </td>
                         <td>
-                            @item.ContractDate.Day @item.ContractDate.ToString("MMM")
+                            @Html.DisplayFor(modelItem => item.ContractDate)
                         </td>
-                        <td>
-                            @item.ContractComment
-                        </td>
-                        @if (item.NurseFirstname != null)
+                        @if (item.Nurse != null)
                         {
                             <td>
-                                @item.NurseFirstname @item.NurseLastname
+                                @Html.DisplayFor(modelItem => item.Nurse!.FullName)
                             </td>
                         }
                         else
@@ -81,20 +77,13 @@
                             </td>
                         }
                         <td>
-                            @item.PatientFirstname @item.PatientLastname
+                            @Html.DisplayFor(modelItem => item.Wound!.WoundName)
                         </td>
                         <td>
-                            @item.WoundName
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-controller="Contract" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
+                            <a asp-action="Details" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
                         </td>
                     </tr>
                 }
-            }
-            else
-            {
-                <h5>No Contracts were found</h5>
             }
         </tbody>
     </table>
