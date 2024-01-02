@@ -1,21 +1,17 @@
-﻿{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:18794",
-      "sslPort": 44349
-    }
-  },
+{
   "profiles": {
     "HelpingHands_V2": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7084;http://localhost:5144",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "API_KEY": "831484216565648",
+        "API_SECRET": "7CatA60JYjU-BhW-zRnX83n4OlU",
+        "CLOUD_NAME": "dgr6pknv1",
+        "CLOUDINARY_URL": "CLOUDINARY_URL=cloudinary://831484216565648:7CatA60JYjU-BhW-zRnX83n4OlU@dgr6pknv1"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7084;http://localhost:5144"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -23,6 +19,14 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:18794",
+      "sslPort": 44349
     }
   }
 }

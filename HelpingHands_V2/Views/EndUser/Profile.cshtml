@@ -80,6 +80,12 @@ else
         <dd class="col-sm-8">
             @Html.DisplayFor(model => model.Idnumber)
         </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.ProfilePicture)
+        </dt>
+        <dd class="col-sm-8">
+            <img src={@Model.ProfilePicture} alt={@Model?.ProfilePictureName} />
+        </dd>
     </dl>
 </div>
 <div class="btn-group" role="group" aria-label="Control Panel">

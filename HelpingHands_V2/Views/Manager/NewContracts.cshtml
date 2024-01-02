@@ -43,7 +43,7 @@
                     @Html.DisplayFor(modelItem => item.Wound!.WoundName)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
+                    <a asp-action="Details" asp-controller="Contract" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
                 </td>
             </tr>
         }

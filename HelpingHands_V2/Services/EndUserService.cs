@@ -86,14 +86,13 @@ namespace HelpingHands_V2.Services
                     param.Add("DateOfBirth", user.DateOfBirth);
                     param.Add("Email", user.Email);
                     param.Add("Password", user.Password);
-                    //param.Add("Password", BC.HashPassword(user.Password));
                     param.Add("Gender", user.Gender);
                     param.Add("ContactNumber", user.ContactNumber);
                     param.Add("IDNumber", user.Idnumber);
                     param.Add("UserType", user.UserType);
                     param.Add("ApplicationType", user.ApplicationType);
-                    //param.Add("ProfilePicture", user.ProfilePicture);
-                    //param.Add("ProfilePictureName", user.ProfilePictureName);
+                    param.Add("ProfilePicture", user.ProfilePicture);
+                    param.Add("ProfilePictureName", user.ProfilePictureName);
                     param.Add("Active", user.Active);
                     param.Add("Command", "Insert");
 

@@ -34,6 +34,7 @@ builder.Services.AddScoped<IPatient, PatientService>();
 builder.Services.AddScoped<IPrefferedSuburb, PrefferedSuburbService>();
 builder.Services.AddScoped<IPatientCondition, PatientConditionService>();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

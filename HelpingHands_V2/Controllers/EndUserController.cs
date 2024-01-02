@@ -8,6 +8,9 @@ using HelpingHands_V2.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using HelpingHands_V2.ViewModels;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using HelpingHands_V2.Services;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -73,11 +76,14 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                var api_key = Environment.GetEnvironmentVariable("API_KEY");
+                var api_secret = Environment.GetEnvironmentVariable("API_SECRET");
+
                 return View();
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
                 return View();
             }
         }
@@ -141,7 +147,6 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message, model });
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -171,10 +176,24 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password,ConfirmPassword, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user, string? returnUrl = null)
+        public async Task<IActionResult> Register([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password,ConfirmPassword, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user, IFormFile file, string? returnUrl = null)
         {
             try
             {
+                if (file.Length > 0)
+                {
+                    CloudinaryService cloudinary = new CloudinaryService();
+
+                    var public_id = $"{user.Firstname.ToLower()}_{user.Lastname.ToUpper()}_{user.DateOfBirth.Day}-{user.DateOfBirth.Month}-{user.DateOfBirth.Year}";
+                    UploadResult uploadResult = await cloudinary.UploadToCloudinary(file, public_id);
+
+                    user.ProfilePicture = uploadResult.SecureUrl.ToString();
+                    user.ProfilePictureName = uploadResult.PublicId;
+
+                }else
+                {
+                    throw new Exception("No file were uploaded onto system");
+                }
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
@@ -184,14 +203,6 @@ namespace HelpingHands_V2.Controllers
                     ViewData["Genders"] = new SelectList(genders);
                     return View();
                 }
-                //var fileName = Path.GetFileName(file.FileName);
-
-                //user.ProfilePictureName = fileName;
-                //using (var target = new MemoryStream())
-                //{
-                //    file.CopyTo(target);
-                //    user.ProfilePicture = target.ToArray();
-                //}
 
                 string tempPassword = user.Password;
                 user.Password = BC.HashPassword(user.Password);
@@ -230,10 +241,10 @@ namespace HelpingHands_V2.Controllers
                             return RedirectToAction("Dashboard", "Admin");
                     }
                 }
-                else
-                {
-                    return new JsonResult(new { error = "User is not validated" });
-                }
+
+
+                ViewBag.Message = "User is not validated";
+                return View();
             }
             catch (Exception ex)
             {
@@ -278,14 +289,7 @@ namespace HelpingHands_V2.Controllers
                     ViewData["Genders"] = new SelectList(genders);
                     return View();
                 }
-                //var fileName = Path.GetFileName(file.FileName);
-
-                //user.ProfilePictureName = fileName;
-                //using (var target = new MemoryStream())
-                //{
-                //    file.CopyTo(target);
-                //    user.ProfilePicture = target.ToArray();
-                //}
+                
                 string tempPassword = user.Password;
                 user.Password = BC.HashPassword(user.Password);
                 await _account.AddUser(user);
@@ -353,13 +357,6 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    //var account = await _account.GetUserById(user.UserId);
-
-                    //if (account == null)
-                    //    return NotFound();
-
-                    //ViewBag.User = account;
-
                     ViewData["Genders"] = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
                     return View(user);
                 }

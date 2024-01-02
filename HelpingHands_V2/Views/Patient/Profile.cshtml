@@ -10,24 +10,28 @@
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
+<div class="row">
 
-@if (User.IsInRole("P"))
-{
-    <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
-}
-else if (User.IsInRole("N"))
-{
-    <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
-}
-else if (User.IsInRole("O"))
-{
-    <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Back</a>
-}
-else
-{
-    <a asp-action="Index" asp-controller="Patient" class="btn btn-secondary">Back</a>
-}
-
+    @if (User.IsInRole("P"))
+    {
+        <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+    }
+    else if (User.IsInRole("N"))
+    {
+        <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+    }
+    else if (User.IsInRole("O"))
+    {
+        <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Back</a>
+    }
+    else
+    {
+        <a asp-action="Index" asp-controller="Patient" class="btn btn-secondary">Back</a>
+    }
+    <div class="img-thumbnail">
+        <img src="@Model.EndUser!.ProfilePicture" alt="@Model.EndUser!.ProfilePictureName" />
+    </div>
+</div>
 <hr />
 <div class="row">
     <dl class="col-6">

@@ -12,7 +12,7 @@
 }
 
 <hr />
-<form asp-action="Register">
+<form enctype="multipart/form-data" asp-action="Register">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
         <div class="col-5">
@@ -83,11 +83,11 @@
 
             <input asp-for="UserType" type="hidden" value="P" />
 
-            @*<div class="form-group">
+            <div class="form-group">
             <label asp-for="ProfilePicture" class="control-label"></label>
-            <input asp-for="ProfilePicture" accept="image/* class="form-control" type="file" />
+            <input asp-for="ProfilePicture" name="file" accept="image/*" class="form-control" type="file" />
             <span asp-validation-for="ProfilePicture" class="text-danger"></span>
-            </div> *@
+            </div>
         </div>
     </div>
     <div class="form-group">
