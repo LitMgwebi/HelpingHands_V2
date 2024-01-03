@@ -3,6 +3,8 @@
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
     using dotenv.net;
+    using NuGet.Protocol;
+
     public class CloudinaryService
     {
         private Cloudinary _cloudinary;
@@ -22,28 +24,31 @@
                 File = new FileDescription(file.FileName, stream),
                 Folder = "Helping Hands",
                 PublicId = public_id,
-                
+
             };
             try
             {
                 _cloudinary.Api.Secure = true;
                 UploadResult uploadResult = await _cloudinary.UploadAsync(uploadParamas);
                 return uploadResult;
-            } catch
+            }
+            catch
             {
                 throw new Exception("System could not save image to the cloud");
             }
         }
 
-        public async Task<dynamic> RemoveFromCloudinary(string public_id)
+        public async Task<DeletionResult> RemoveFromCloudinary(string public_id)
         {
+            DeletionParams deletionParams = new DeletionParams(public_id)
+            {
+                PublicId = public_id,
+                ResourceType = ResourceType.Image,
+            };
             try
             {
-                DeletionParams deletionParams = new DeletionParams(public_id)
-                {
-                    PublicId = public_id
-                };
-                var deletionResult = await _cloudinary.DestroyAsync(deletionParams);
+                _cloudinary.Api.Secure = true;
+                DeletionResult deletionResult = await _cloudinary.DestroyAsync(deletionParams);
                 return deletionResult;
             }
             catch

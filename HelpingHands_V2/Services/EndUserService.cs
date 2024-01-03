@@ -126,8 +126,8 @@ namespace HelpingHands_V2.Services
                     param.Add("IDNumber", user.Idnumber);
                     param.Add("UserType", user.UserType);
                     param.Add("ApplicationType", user.ApplicationType);
-                    //param.Add("ProfilePicture", user.ProfilePicture);
-                    //param.Add("ProfilePictureName", user.ProfilePictureName);
+                    param.Add("ProfilePicture", user.ProfilePicture);
+                    param.Add("ProfilePictureName", user.ProfilePictureName);
                     param.Add("Active", user.Active);
                     param.Add("Command", "Update");
 
