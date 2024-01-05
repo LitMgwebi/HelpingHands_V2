@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9UwUpspsfUUM62U4/NrNn/E844sD2pUBo3T/PL26zAc=",
+  "Hash": "iHD3nkqfGBOVh83VL6enLPaITPwFPJXse78iCnuhlE8=",
   "Source": "HelpingHands_V2",
   "BasePath": "_content/HelpingHands_V2",
   "Mode": "Default",
@@ -1307,6 +1307,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Media\\contract.png"
+    },
+    {
+      "Identity": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\DefaultProfile.jpeg",
+      "SourceId": "HelpingHands_V2",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\",
+      "BasePath": "_content/HelpingHands_V2",
+      "RelativePath": "Media/DefaultProfile.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Media\\DefaultProfile.jpeg"
     },
     {
       "Identity": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\HelpingHands.png",

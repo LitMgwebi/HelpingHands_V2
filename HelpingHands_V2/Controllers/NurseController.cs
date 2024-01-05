@@ -14,7 +14,7 @@ using HelpingHands_V2.ViewModels;
 
 namespace HelpingHands_V2.Controllers
 {
-    //[Authorize(Roles = "N, A, O")]
+    [Authorize(Roles = "N, A, O, W")]
     public class NurseController : Controller
     {
         private readonly Grp0444HelpingHandsContext _context;
@@ -30,7 +30,7 @@ namespace HelpingHands_V2.Controllers
             _user = user;
         }
 
-        
+        [Authorize(Roles = "N")]
         public async Task<IActionResult> Dashboard(int id)
         {
             //List<dynamic> assignedContracts = new List<dynamic> { };
@@ -77,6 +77,7 @@ namespace HelpingHands_V2.Controllers
         }
 
 
+        [Authorize(Roles = "N, A, O")]
         public async Task<IActionResult> Index()
         {
             try
@@ -96,6 +97,8 @@ namespace HelpingHands_V2.Controllers
                 //return new JsonResult(new { error = ex.Message });
             }
         }
+
+        [Authorize(Roles = "N")]
         public async Task<IActionResult> Profile(int? id)
         {
             try
@@ -123,6 +126,7 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
+        [Authorize(Roles ="W")]
         public IActionResult Create(int? id)
         {
             try
@@ -153,18 +157,18 @@ namespace HelpingHands_V2.Controllers
                 }
                 await _nurse.AddNurse(nurse);
                 ViewBag.Message = "Record Added successfully;";
-                return RedirectToAction("Dashboard", "Admin", new { id = HttpContext.User.FindFirst("UserId")!.Value });
+                return RedirectToAction("Pending", "Home");
             }
             catch (Exception ex)
             {
                 ViewBag.NurseId = nurse.NurseId;
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
 
+        [Authorize(Roles = "N")]
         public async Task<IActionResult> Edit(int? id)
         {
             try
@@ -215,6 +219,7 @@ namespace HelpingHands_V2.Controllers
         }
 
 
+        [Authorize(Roles = "N, A, O")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete([Bind("NurseId")] int NurseId)
@@ -241,6 +246,7 @@ namespace HelpingHands_V2.Controllers
         }
 
 
+        [Authorize(Roles = "N")]
         public IActionResult VisitRange()
         {
             try
@@ -277,6 +283,7 @@ namespace HelpingHands_V2.Controllers
         }
 
 
+        [Authorize(Roles = "N")]
         public async Task<IActionResult> Visits(int id, string command)
         {
             IEnumerable<VisitRange> visits = new List<VisitRange> { };

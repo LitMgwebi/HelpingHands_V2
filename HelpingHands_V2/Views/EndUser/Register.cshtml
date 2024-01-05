@@ -71,12 +71,20 @@
                 <span asp-validation-for="Idnumber" class="text-danger"></span>
             </div>
 
-            <input asp-for="UserType" type="hidden" value="P" />
+            <div class="form-group">
+                <label asp-for="ApplicationType" class="control-label"></label>
+                <select asp-for="ApplicationType" class="form-control">
+                    <option disabled selected>--- SELECT ---</option>
+                    <option value="N">Nurse</option>
+                    <option value="P">Patient</option>
+                </select>
+                <span asp-validation-for="ApplicationType" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
-            <label asp-for="ProfilePicture" class="control-label"></label>
-            <input asp-for="ProfilePicture" name="file" accept="image/*" class="form-control" type="file" />
-            <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+                <label asp-for="ProfilePicture" class="control-label"></label>
+                <input asp-for="ProfilePicture" name="file" accept="image/*" class="form-control" type="file" />
+                <span asp-validation-for="ProfilePicture" class="text-danger"></span>
             </div>
         </div>
     </div>

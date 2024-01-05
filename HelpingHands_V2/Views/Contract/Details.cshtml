@@ -24,6 +24,11 @@ else
 {
     <a asp-action="Index" class="btn btn-secondary">Back</a>
 }
+<form action="GeneratePDF">
+    <input asp-for="Contract" hidden/>
+    <input asp-for="Visits" hidden/>
+    <input type="submit" value="Generate Pdf" class="btn btn-primary"/>
+</form>
 <hr />
 <div class="row">
     <dl class="col-6">

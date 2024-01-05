@@ -4,8 +4,12 @@ using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using iText; 
 using System.Diagnostics.Contracts;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -250,6 +254,67 @@ namespace HelpingHands_V2.Controllers
                 ViewBag.Message = ex.Message;
                 return RedirectToAction(nameof(Details), new {id = ContractId});
                 //return new JsonResult(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult GeneratePDF(ContractAndVisits contractAndVisits)
+        {
+            var outputFileName = Path.GetTempFileName();
+            PdfDocument pdfDocument = new PdfDocument(new PdfWriter(new FileStream(outputFileName, FileMode.Create, FileAccess.Write)));
+            Document document = new Document(pdfDocument);
+
+            try
+            {
+                Paragraph heading = new Paragraph("Contract");
+                heading.SetUnderline(2f, -1f);
+                Paragraph contractDetails = new Paragraph(contractAndVisits.Contract!.ContractStatus);
+                document.Add(heading);
+                document.Add(contractDetails);
+
+                Table table = new Table(2, true);
+                IEnumerable<Visit> Visits = contractAndVisits.Visits!;
+
+                Cell cell = new Cell().Add(new Paragraph("Visit Date"));
+                cell.SetBold();
+                table.AddCell(cell);
+                cell = new Cell().Add(new Paragraph("Wound Condition"));
+                cell.SetBold();
+                table.AddCell(cell);
+                foreach (var x in Visits)
+                {
+                    var visitDate = new Paragraph(x.VisitDate.ToString());
+                    var woundCondition = new Paragraph(x.WoundCondition);
+
+                    var column1 = new Cell().Add(visitDate);
+                    var column2 = new Cell().Add(woundCondition);
+                    table.AddCell(column1);
+                    table.AddCell(column2);
+                }
+                DateTime currentDate = DateTime.Now;
+                Paragraph dateParagraph = new Paragraph("Created Date: " + currentDate.ToString("yyyy-MM-dd"));
+                dateParagraph.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.LEFT);
+                document.Add(dateParagraph);
+                document.Add(table);
+
+                Paragraph disclaimer = new Paragraph("Disclaimer: The contents of this pdf are for reference only.");
+                document.Add(disclaimer);
+
+                return RedirectToAction(nameof(Details), new {id = contractAndVisits.Contract!.ContractId});
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Message = ex.Message;
+                return RedirectToAction(nameof(Details), new { id = contractAndVisits.Contract!.ContractId });
+            }
+            finally
+            {
+                document.Close();
+                Response.ContentType = "application/pdf";
+                Response.AppendTrailer("content-disposition",
+                    "attachment;filename=Suppliers.pdf");
+                Response.SendFileAsync(outputFileName);
             }
         }
     }

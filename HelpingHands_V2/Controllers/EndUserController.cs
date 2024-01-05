@@ -8,19 +8,22 @@ using HelpingHands_V2.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using HelpingHands_V2.ViewModels;
-using CloudinaryDotNet;
+using Microsoft.AspNetCore.Hosting;
 using CloudinaryDotNet.Actions;
 using HelpingHands_V2.Services;
+using CloudinaryDotNet;
 
 namespace HelpingHands_V2.Controllers
 {
     public class EndUserController : Controller
     {
         private readonly IEndUser _account;
+        private readonly IWebHostEnvironment _host;
 
-        public EndUserController(IEndUser account)
+        public EndUserController(IEndUser account, IWebHostEnvironment host)
         {
             _account = account;
+            _host = host;
         }
 
         public async Task<IActionResult> Index()
@@ -190,28 +193,35 @@ namespace HelpingHands_V2.Controllers
             genders = data.ToList();
             try
             {
+                ModelState.Remove("UserType");
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     ViewData["Genders"] = new SelectList(genders);
+                    return new JsonResult(new { errors });
                     return View();
                 }
+                CloudinaryService cloudinary = new CloudinaryService();
+                UploadResult uploadResult;
+                var public_id = $"{user.Firstname.ToLower()}_{user.Lastname.ToUpper()}_{user.DateOfBirth.Day}-{user.DateOfBirth.Month}-{user.DateOfBirth.Year}";
                 if (file.Length > 0)
                 {
-                    CloudinaryService cloudinary = new CloudinaryService();
-
-                    var public_id = $"{user.Firstname.ToLower()}_{user.Lastname.ToUpper()}_{user.DateOfBirth.Day}-{user.DateOfBirth.Month}-{user.DateOfBirth.Year}";
-                    UploadResult uploadResult = await cloudinary.UploadToCloudinary(file, public_id);
+                    uploadResult = await cloudinary.UploadToCloudinary(file, public_id);
 
                     user.ProfilePicture = uploadResult.SecureUrl.ToString();
                     user.ProfilePictureName = uploadResult.PublicId;
-
                 }
                 else
                 {
-                    throw new Exception("No file were uploaded onto system");
+                    /*IFormFile file = _host.WebRootFileProvider.GetFileInfo("Media/DefaultProfile.jpeg");*/
+                    throw new Exception("No profile photo was uploaded onto system, please upload photo");
                 }
+                if (user.ApplicationType == "P")
+                    user.UserType = user.ApplicationType;
+                else if (user.ApplicationType == "N")
+                    user.UserType = "W";
+
                 string tempPassword = user.Password;
                 user.Password = BC.HashPassword(user.Password);
                 await _account.AddUser(user);
@@ -241,7 +251,7 @@ namespace HelpingHands_V2.Controllers
                     }
                     else
                     {
-                        if (user.UserType == "N")
+                        if (user.UserType == "W")
                             return RedirectToAction("Create", "Nurse", new { id = user.UserId });
                         else if (user.UserType == "P")
                             return RedirectToAction("Create", "Patient", new { id = user.UserId });
@@ -265,16 +275,23 @@ namespace HelpingHands_V2.Controllers
         [Authorize(Roles = "A")]
         public IActionResult AddUser()
         {
+            List<SelectListItem> genders = new List<SelectListItem>();
+            var data = new[]{
+                 new SelectListItem{ Value="1",Text="Male"},
+                 new SelectListItem{ Value="2",Text="Female"},
+                 new SelectListItem{ Value="3",Text="Non-Binary"},
+                 new SelectListItem{ Value="4",Text="Gender-fluid"},
+                 new SelectListItem{ Value="5",Text="Other"},
+             };
+            genders = data.ToList();
             try
             {
-                IEnumerable<string> genders = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
-
                 ViewData["Genders"] = new SelectList(genders);
                 return View();
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
+                ViewData["Genders"] = new SelectList(genders);
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -283,40 +300,58 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUser([Bind("Username, Firstname, Lastname, DateOfBirth, Email, Password,ConfirmPassword, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user, string? returnUrl = null)
         {
+            List<SelectListItem> genders = new List<SelectListItem>();
+            var data = new[]{
+                 new SelectListItem{ Value="1",Text="Male"},
+                 new SelectListItem{ Value="2",Text="Female"},
+                 new SelectListItem{ Value="3",Text="Non-Binary"},
+                 new SelectListItem{ Value="4",Text="Gender-fluid"},
+                 new SelectListItem{ Value="5",Text="Other"},
+             };
+            genders = data.ToList();
             try
             {
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    IEnumerable<string> genders = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
-
                     ViewData["Genders"] = new SelectList(genders);
                     return View();
                 }
+                CloudinaryService cloudinary = new CloudinaryService();
+                UploadResult uploadResult;
+                var public_id = $"{user.Firstname.ToLower()}_{user.Lastname.ToUpper()}_{user.DateOfBirth.Day}-{user.DateOfBirth.Month}-{user.DateOfBirth.Year}";
+                var localFile = File("Media/DefaultProfile.jpeg", "image/jpeg");
+                uploadResult = await cloudinary.UploadToCloudinary((IFormFile)localFile, public_id);
 
+                user.ProfilePicture = uploadResult.SecureUrl.ToString();
+                user.ProfilePictureName = uploadResult.PublicId;
                 string tempPassword = user.Password;
                 user.Password = BC.HashPassword(user.Password);
+                
                 await _account.AddUser(user);
+                
                 ViewBag.Message = "Record Added successfully;";
-                if (await RegisterValidateUser(user, tempPassword))
+                if (Url.IsLocalUrl(returnUrl))
                 {
-                    if (user.UserType == "N")
-                        return RedirectToAction("Create", "Nurse", new { id = user.UserId });
+                    return Redirect("/");
+                }
+                else if (await RegisterValidateUser(user, tempPassword))
+                {
+                    if (user.UserType == "O")
+                        return RedirectToAction("Dashboard", "Manager");
                     else
                         return RedirectToAction("Dashboard", "Admin");
                 }
                 else
                 {
-                    return new JsonResult(new { error = "User is not validated" });
+                    ViewBag.Message = "User was not able to be validated";
+                    return View(); ;
                 }
 
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
-                IEnumerable<string> genders = new List<string> { "Male", "Female", "Non-Binary", "Gender-fluid", "Other" };
-
                 ViewData["Genders"] = new SelectList(genders);
                 ViewBag.Message = ex.Message;
                 return View();

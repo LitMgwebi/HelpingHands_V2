@@ -16,8 +16,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 {
     options.ExpireTimeSpan = TimeSpan.FromHours(2);
     options.SlidingExpiration = true;
-    options.AccessDeniedPath = "/account/login";
-    options.LoginPath = "/account/login";
+    options.AccessDeniedPath = "/Pending";
+    options.LoginPath = "/EndUser/Login";
 });
 builder.Services.AddScoped<IEndUser, EndUserService>();
 builder.Services.AddScoped<IReport, ReportService>();

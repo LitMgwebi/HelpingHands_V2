@@ -26,7 +26,8 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { error = ex.Message });
+                ViewBag.Message = ex.Message;
+                return View();
             }
         }
 
@@ -39,6 +40,19 @@ namespace HelpingHands_V2.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Pending()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View();
+            }
         }
     }
 }
