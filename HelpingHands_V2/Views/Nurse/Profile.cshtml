@@ -100,5 +100,25 @@ else
             <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Model?.EndUser!.Firstname @Model?.EndUser!.Lastname')" class="btn btn-danger" />
         </form>
     </div>
-
+} else if(User.IsInRole("O"))
+{
+    <form asp-controller="Manager" asp-action="ApproveNurse" method="post">
+        <input asp-for="EndUser!.UserId" name="UserId" type="hidden" />
+        <input asp-for="EndUser!.Username" name="Username" type="hidden" />
+        <input asp-for="EndUser!.Firstname" name="Firstname" type="hidden" />
+        <input asp-for="EndUser!.Lastname" name="Lastname" type="hidden" />
+        <input asp-for="EndUser!.DateOfBirth" name="DateOfBirth" type="hidden" />
+        <input asp-for="EndUser!.Email" name="Email" type="hidden" />
+        <input asp-for="EndUser!.Password" name="Password" type="hidden" />
+        <input asp-for="EndUser!.ConfirmPassword" name="ConfirmPassword" type="hidden" />
+        <input asp-for="EndUser!.Gender" name="Gender" type="hidden" />
+        <input asp-for="EndUser!.ContactNumber" name="ContactNumber" type="hidden" />
+        <input asp-for="EndUser!.Idnumber" name="Idnumber" type="hidden" />
+        <input asp-for="EndUser!.UserType" name="UserType" type="hidden" />
+        <input asp-for="EndUser!.ApplicationType" name="ApplicationType" type="hidden" />
+        <input asp-for="EndUser!.ProfilePicture" name="ProfilePicture" type="hidden" />
+        <input asp-for="EndUser!.ProfilePictureName" name="ProfilePictureName" type="hidden" />
+        <input asp-for="EndUser!.Active" name="Active" type="hidden" />
+        <input type="submit" value="Approve Nurse" class="btn btn-primary" />
+    </form>
 }

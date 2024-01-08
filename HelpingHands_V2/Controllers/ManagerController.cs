@@ -1,4 +1,5 @@
-﻿using HelpingHands_V2.Interfaces;
+﻿using CloudinaryDotNet.Actions;
+using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -18,14 +19,16 @@ namespace HelpingHands_V2.Controllers
         private readonly INurse _nurse;
         private readonly IPatient _patient;
         private readonly IContract _contract;
+        private readonly IEndUser _user;
 
-        public ManagerController(IReport report, IVisit visit, INurse nurse, IContract contract, IPatient patient)
+        public ManagerController(IReport report, IVisit visit, INurse nurse, IContract contract, IPatient patient, IEndUser user)
         {
             _report = report;
             _visit = visit;
             _nurse = nurse;
             _contract = contract;
             _patient = patient;
+            _user = user;
         }
 
         public async Task<IActionResult> Dashboard()
@@ -210,6 +213,31 @@ namespace HelpingHands_V2.Controllers
                 ViewBag.Contract = contract;
                 ViewBag.Message = ex.Message;
                 return View();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        // Can't send model via input tag from Nurse Profile to this action method
+        public async Task<IActionResult> ApproveNurse([Bind("UserId, Username, Firstname, Lastname, DateOfBirth, Email, Password, ConfirmPassword, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user)
+        {
+            try
+            {
+                ModelState.Remove("Password");
+                ModelState.Remove("ConfirmPassword");
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
+                    return RedirectToAction("Profile", "Nurse", new { id = user.UserId });
+                }
+                user.UserType = "N";
+                await _user.UpdateUser(user);
+                return RedirectToAction("Index", "Nurse", new { command = "waiting" });
+            } catch(Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return RedirectToAction("Profile", "Nurse", new { id = user.UserId });
             }
         }
     }

@@ -199,7 +199,6 @@ namespace HelpingHands_V2.Controllers
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     ViewData["Genders"] = new SelectList(genders);
-                    return new JsonResult(new { errors });
                     return View();
                 }
                 CloudinaryService cloudinary = new CloudinaryService();

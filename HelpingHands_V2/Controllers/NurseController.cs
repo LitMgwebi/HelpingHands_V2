@@ -77,28 +77,31 @@ namespace HelpingHands_V2.Controllers
         }
 
 
-        [Authorize(Roles = "N, A, O")]
-        public async Task<IActionResult> Index()
+        [Authorize(Roles = "A, O")]
+        public async Task<IActionResult> Index(string? command)
         {
             try
             {
-                var nurses = await _nurse.GetNurses();
+                IEnumerable<Nurse> nurses;
+                if (command == "waiting")
+                    nurses = await _nurse.GetNursesWaiting();
+                else
+                    nurses = await _nurse.GetNurses();
+
                 if (nurses == null)
                 {
                     return NotFound();
                 }
-                //ViewBag.Nurses = nurses;
                 return View(nurses);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
-        [Authorize(Roles = "N")]
+        [Authorize(Roles = "N, A, O")]
         public async Task<IActionResult> Profile(int? id)
         {
             try
@@ -168,7 +171,7 @@ namespace HelpingHands_V2.Controllers
         }
 
 
-        [Authorize(Roles = "N")]
+        [Authorize(Roles = "N, A, O")]
         public async Task<IActionResult> Edit(int? id)
         {
             try

@@ -42,6 +42,30 @@ namespace HelpingHands_V2.Services
             }
         }
 
+        public async Task<IEnumerable<Nurse>> GetNursesWaiting()
+        {
+            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("Command", "Waiting");
+                var result = await conn.QueryAsync<Nurse, EndUser, Nurse>(
+                    sql,
+                    (nurse, endUser) =>
+                    {
+                        nurse.EndUser = endUser;
+                        return nurse;
+                    },
+                    splitOn: "UserId",
+                    param: param,
+                    commandType: CommandType.StoredProcedure);
+
+                if (result != null)
+                    return result;
+                else
+                    throw new SqlNullValueException("There are no Nurses in the system");
+            }
+        }
+
         public async Task<IEnumerable<EndUser>> GetUsersByIDs(IEnumerable<Nurse> Nurses)
         {
             List<EndUser> users = new List<EndUser> { };

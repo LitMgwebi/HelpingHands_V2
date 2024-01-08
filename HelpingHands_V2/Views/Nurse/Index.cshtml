@@ -9,6 +9,10 @@
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
+@if (User.IsInRole("O"))
+{
+<a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Back</a>
+}
 <hr />
 <table class="table" id="myTable">
     <thead>
