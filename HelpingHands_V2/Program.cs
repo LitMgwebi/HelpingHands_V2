@@ -8,17 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var emailer = builder.Configuration.GetSection("Emailer").Get<Emailer>();
+
 builder.Services.AddDbContext<Grp0444HelpingHandsContext>(options =>
     options.UseSqlServer(connectionString));
-//builder.Services.AddSingleton<Grp0444HelpingHandsContext>();
+builder.Services.AddSingleton(emailer);
 builder.Services.AddControllersWithViews();
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-{
-    options.ExpireTimeSpan = TimeSpan.FromHours(2);
-    options.SlidingExpiration = true;
-    options.AccessDeniedPath = "/Pending";
-    options.LoginPath = "/EndUser/Login";
-});
 builder.Services.AddScoped<IEndUser, EndUserService>();
 builder.Services.AddScoped<IReport, ReportService>();
 builder.Services.AddScoped<INurse, NurseService>();
@@ -33,7 +28,14 @@ builder.Services.AddScoped<IContract, ContractService>();
 builder.Services.AddScoped<IPatient, PatientService>();
 builder.Services.AddScoped<IPrefferedSuburb, PrefferedSuburbService>();
 builder.Services.AddScoped<IPatientCondition, PatientConditionService>();
-
+builder.Services.AddScoped<IEmailSender, EmailSenderService>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromHours(2);
+    options.SlidingExpiration = true;
+    options.AccessDeniedPath = "/Pending";
+    options.LoginPath = "/EndUser/Login";
+});
 
 var app = builder.Build();
 

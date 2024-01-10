@@ -8,22 +8,25 @@ using HelpingHands_V2.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using HelpingHands_V2.ViewModels;
-using Microsoft.AspNetCore.Hosting;
 using CloudinaryDotNet.Actions;
 using HelpingHands_V2.Services;
-using CloudinaryDotNet;
+using MailKit;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace HelpingHands_V2.Controllers
 {
     public class EndUserController : Controller
     {
         private readonly IEndUser _account;
+        private readonly IEmailSender _email;
         private readonly IWebHostEnvironment _host;
 
-        public EndUserController(IEndUser account, IWebHostEnvironment host)
+        public EndUserController(IEndUser account, IWebHostEnvironment host, IEmailSender email)
         {
             _account = account;
             _host = host;
+            _email = email;
         }
 
         public async Task<IActionResult> Index()
@@ -122,9 +125,12 @@ namespace HelpingHands_V2.Controllers
 
                     var claimsIdentity = new ClaimsIdentity(
                     claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
+                    
                     await HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
                     HttpContext.User.AddIdentity(claimsIdentity);
+
+                    var message = new Message(new string[] { model.Email! }, "Test Mail", "Hopefully this works", model.FullName);
+                    _email.SendEmail(message);
 
                     if (Url.IsLocalUrl(returnUrl))
                     {

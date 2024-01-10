@@ -317,3 +317,7 @@ C:\Users\lithi\OneDrive\Documents\Github\HelpingHands_V2\HelpingHands_V2\bin\Deb
 C:\Users\lithi\OneDrive\Documents\Github\HelpingHands_V2\HelpingHands_V2\bin\Debug\net6.0\itext.svg.dll
 C:\Users\lithi\OneDrive\Documents\Github\HelpingHands_V2\HelpingHands_V2\bin\Debug\net6.0\itext.commons.dll
 C:\Users\lithi\OneDrive\Documents\Github\HelpingHands_V2\HelpingHands_V2\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\lithi\OneDrive\Documents\Github\HelpingHands_V2\HelpingHands_V2\bin\Debug\net6.0\MailKit.dll
+C:\Users\lithi\OneDrive\Documents\Github\HelpingHands_V2\HelpingHands_V2\bin\Debug\net6.0\MimeKit.dll
+C:\Users\lithi\OneDrive\Documents\Github\HelpingHands_V2\HelpingHands_V2\bin\Debug\net6.0\NETCore.MailKit.dll
+C:\Users\lithi\OneDrive\Documents\Github\HelpingHands_V2\HelpingHands_V2\bin\Debug\net6.0\BouncyCastle.Crypto.dll
