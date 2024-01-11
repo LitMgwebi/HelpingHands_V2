@@ -9,17 +9,20 @@
     {
         public List<MailboxAddress>? To { get; set; }
         
-        public string? Subject { get; set; }
+        public string? FullName { get; set; }
 
-        public string? Content { get; set; }
+        public string? Username { get; set; }   
 
-        public Message(IEnumerable<string> to, string subject, string content, string receiverName)
+        public string? EmailType { get; set; }
+
+        public Message(IEnumerable<string> to, string fullName, string username, string emailType)
         {
             To = new List<MailboxAddress>();
 
-            To.AddRange(to.Select(x => new MailboxAddress(receiverName, x)));
-            Subject = subject;
-            Content = content;
+            To.AddRange(to.Select(x => new MailboxAddress(fullName, x)));
+            FullName = fullName;
+            Username = username;
+            EmailType = emailType;
         }
     }
 }

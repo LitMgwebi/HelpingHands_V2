@@ -10,6 +10,8 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
+using System.Net.Mail;
+using System.Security.Claims;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -21,8 +23,9 @@ namespace HelpingHands_V2.Controllers
         private readonly IWound _wound;
         private readonly ISuburb _suburb;
         private readonly IReport _report;
+        private readonly IEmailSender _email;
 
-        public ContractController(IContract contract, IPatient patient, INurse nurse, IWound wound, ISuburb suburb, IReport report)
+        public ContractController(IContract contract, IPatient patient, INurse nurse, IWound wound, ISuburb suburb, IReport report, IEmailSender email)
         {
             _contract = contract;
             _patient = patient;
@@ -30,6 +33,7 @@ namespace HelpingHands_V2.Controllers
             _wound = wound;
             _suburb = suburb;
             _report = report;
+            _email = email;
         }
 
         public async Task<IActionResult> Index(int? id, string? command)
@@ -139,6 +143,13 @@ namespace HelpingHands_V2.Controllers
                     return View();
                 }
                 await _contract.AddContract(contract);
+
+                string email = HttpContext.User.FindFirst(ClaimTypes.Email)!.Value;
+                string fullName = HttpContext.User.FindFirst(ClaimTypes.Name)!.Value;
+                string username = HttpContext.User.FindFirst("Username")!.Value;
+
+                Message emailMessage = new Message(new string[] { email }, fullName, username, "patient_contract");
+                _email.SendEmail(emailMessage);
                 ViewBag.Message = "Record Added successfully;";
                 return RedirectToAction("Dashboard", "Patient", new {id = contract.PatientId});
             }
@@ -208,9 +219,17 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View(contract);
                 }
+                
                 await _contract.UpdateContract(contract);
+                
                 if (HttpContext.User.IsInRole("N"))
                 {
+                    string email = HttpContext.User.FindFirst(ClaimTypes.Email)!.Value;
+                    string fullName = HttpContext.User.FindFirst(ClaimTypes.Name)!.Value;
+                    string username = HttpContext.User.FindFirst("Username")!.Value; ;
+
+                    Message emailMessage = new Message(new string[] { email }, fullName, username, "nurse_contract");
+                    _email.SendEmail(emailMessage);
                     return RedirectToAction("Dashboard", "Nurse", new { id = contract.NurseId });
                 } else
                 {

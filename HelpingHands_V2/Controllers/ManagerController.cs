@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics.Contracts;
+using System.Net.Mail;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -20,8 +21,9 @@ namespace HelpingHands_V2.Controllers
         private readonly IPatient _patient;
         private readonly IContract _contract;
         private readonly IEndUser _user;
+        private readonly IEmailSender _email;
 
-        public ManagerController(IReport report, IVisit visit, INurse nurse, IContract contract, IPatient patient, IEndUser user)
+        public ManagerController(IReport report, IVisit visit, INurse nurse, IContract contract, IPatient patient, IEndUser user, IEmailSender email)
         {
             _report = report;
             _visit = visit;
@@ -29,6 +31,7 @@ namespace HelpingHands_V2.Controllers
             _contract = contract;
             _patient = patient;
             _user = user;
+            _email = email;
         }
 
         public async Task<IActionResult> Dashboard()
@@ -233,6 +236,9 @@ namespace HelpingHands_V2.Controllers
                 }
                 user.UserType = "N";
                 await _user.UpdateUser(user);
+
+                Message emailMessage = new Message(new string[] { user.Email! }, user.FullName, user.Username, "patient_registering");
+                _email.SendEmail(emailMessage);
                 return RedirectToAction("Index", "Nurse", new { command = "waiting" });
             } catch(Exception ex)
             {

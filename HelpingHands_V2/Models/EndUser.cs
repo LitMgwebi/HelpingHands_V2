@@ -10,8 +10,14 @@ public partial class EndUser
 {
     public int UserId { get; set; }
 
-    [Required(ErrorMessage ="Please enter a username")]
-    public string Username { get; set; } = null!;
+    [Required(ErrorMessage = "Please enter a username")]
+    public string Username
+    {
+        get
+        {
+            return Firstname.Substring(0, 3) + Lastname.Substring(0, 3);
+        }
+    }
 
     [Required(ErrorMessage = "Please enter your first name")]
     [DisplayName("First Name")]

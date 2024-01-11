@@ -115,12 +115,12 @@ namespace HelpingHands_V2.Controllers
                 {
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, model.Username!),
+                        new Claim(ClaimTypes.Name, model.FullName),
                         new Claim("FullName", model.FullName),
                         new Claim(ClaimTypes.Role, model.UserType!),
                         new Claim("UserId", model.UserId.ToString()),
-                        new Claim("Username", model.Username!)
-
+                        new Claim("Username", model.Username!),
+                        new Claim(ClaimTypes.Email, model.Email!),
                     };
 
                     var claimsIdentity = new ClaimsIdentity(
@@ -128,9 +128,6 @@ namespace HelpingHands_V2.Controllers
                     
                     await HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
                     HttpContext.User.AddIdentity(claimsIdentity);
-
-                    var message = new Message(new string[] { model.Email! }, "Test Mail", "Hopefully this works", model.FullName);
-                    _email.SendEmail(message);
 
                     if (Url.IsLocalUrl(returnUrl))
                     {
@@ -236,13 +233,14 @@ namespace HelpingHands_V2.Controllers
                 {
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, user.Username!),
+                        new Claim(ClaimTypes.Name, user.FullName),
                         new Claim("FullName", user.FullName),
                         new Claim(ClaimTypes.Role, user.UserType!),
                         new Claim("UserId", user.UserId.ToString()),
-                        new Claim("Username", user.Username!)
-
+                        new Claim("Username", user.Username!),
+                        new Claim(ClaimTypes.Email, user.Email!),
                     };
+                    Message emailMessage;
 
                     var claimsIdentity = new ClaimsIdentity(
                     claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -256,10 +254,18 @@ namespace HelpingHands_V2.Controllers
                     }
                     else
                     {
-                        if (user.UserType == "W")
+                        if (user.UserType == "W") 
+                        {
+                            emailMessage = new Message(new string[] { user.Email! }, user.FullName, user.Username, "nurse_registering");
+                            _email.SendEmail(emailMessage);
                             return RedirectToAction("Create", "Nurse", new { id = user.UserId });
+                        }
                         else if (user.UserType == "P")
+                        {
+                            emailMessage = new Message(new string[] { user.Email! }, user.FullName, user.Username, "patient_registering");
+                            _email.SendEmail(emailMessage);
                             return RedirectToAction("Create", "Patient", new { id = user.UserId });
+                        }
                         else
                             return RedirectToAction("Dashboard", "Admin");
                     }
