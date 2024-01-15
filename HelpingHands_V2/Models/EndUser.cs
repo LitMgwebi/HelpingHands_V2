@@ -15,7 +15,7 @@ public partial class EndUser
     {
         get
         {
-            return Firstname.Substring(0, 3) + Lastname.Substring(0, 3);
+            return Firstname.Length > 4 && Lastname.Length > 4  ? Firstname.Substring(0, 3) + Lastname.Substring(0, 3): "";
         }
     }
 

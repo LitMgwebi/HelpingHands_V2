@@ -11,7 +11,7 @@
 }
 @if (User.IsInRole("N"))
 {
-    <a asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="current" class="btn btn-secondary">Back</a>
+    <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="current" class="btn btn-secondary">Back</a>
 } else if(User.IsInRole("P"))
 {
     <a asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient" class="btn btn-secondary">Back</a>

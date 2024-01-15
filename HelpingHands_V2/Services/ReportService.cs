@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using System.Data;
-using System.Configuration;
-using System.Diagnostics.Contracts;
 
 namespace HelpingHands_V2.Services
 {
@@ -109,6 +107,28 @@ namespace HelpingHands_V2.Services
                     splitOn: "UserId, SuburbId, WoundId, VisitId",
                     param: param,
                     commandType: CommandType.StoredProcedure);
+                return result.AsList();
+            }
+        }
+        public async Task<List<CareContract>> NurseContractsByGrades(int? NurseId)
+        {
+            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                var sql = "NurseContractsByGrades";
+                DynamicParameters param = new DynamicParameters();
+                param.Add("NurseId", NurseId);
+                var result = await conn.QueryAsync<CareContract, EndUser, Suburb, Wound, CareContract>(
+                   sql,
+                   (contract, endUser, suburb, wound) =>
+                   {
+                       contract.Patient = endUser;
+                       contract.Suburb = suburb;
+                       contract.Wound = wound;
+                       return contract;
+                   },
+                   splitOn: "UserId, SuburbId, WoundId",
+                   param: param,
+                   commandType: CommandType.StoredProcedure);
                 return result.AsList();
             }
         }

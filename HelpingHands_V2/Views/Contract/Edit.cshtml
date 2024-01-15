@@ -4,14 +4,7 @@
     ViewData["Title"] = "Edit";
     var Message = ViewBag.Message;
 }
-@if (User.IsInRole("N"))
-{
-    <h2 class="display-4 text-center">Close Care Contract</h2>
-}
-else
-{
     <h2 class="display-4 text-center">Edit Care Contract</h2>
-}
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
@@ -28,9 +21,9 @@ else
             <input asp-for="AddressLineTwo" value="@Model?.AddressLineTwo" hidden />
             <input asp-for="SuburbId" value="@Model?.SuburbId" hidden />
             <input asp-for="ContractComment" value="@Model?.ContractComment" hidden />
+            <input asp-for="ContractStatus" value="A" class="form-control" readonly type="hidden" />
             <div class="form-group">
                 <label asp-for="ContractStatus" class="control-label"></label>
-                <input asp-for="ContractStatus" value="A" class="form-control" readonly />
                 <span asp-validation-for="ContractStatus" class="text-danger"></span>
             </div>
             <div class="form-group">

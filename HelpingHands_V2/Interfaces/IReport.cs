@@ -9,6 +9,7 @@ namespace HelpingHands_V2.Interfaces
         public Task<List<CareContract>> NurseAssignedContracts(int? id);
         public Task<List<CareContract>> NurseContractType(int? id, string? status);
         public Task<List<VisitRange>> NurseVisitRange(int? id, DateTime? startDate, DateTime? endDate);
+        public Task<List<CareContract>> NurseContractsByGrades(int? NurseId);
         public Task<List<dynamic>> AvailableNurses(int? suburbId);
         public Task<List<CareContract>> CareVisits(int? id, DateTime? startDate, DateTime? endDate);
         public Task<List<CareContract>> ContractStatus(string? status);

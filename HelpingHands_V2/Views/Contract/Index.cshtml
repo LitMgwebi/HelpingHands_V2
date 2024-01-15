@@ -24,9 +24,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.ContractDate)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nurse)
-            </th>
+            @if (!User.IsInRole("N"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Nurse)
+                </th>
+            }
             @if (!User.IsInRole("P"))
             {
                 <th>
@@ -49,16 +52,20 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ContractDate)
                 </td>
-                @if (item.Nurse != null)
+                @if (!User.IsInRole("N"))
                 {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nurse!.FullName)
-                    </td>
-                } else
-                {
-                    <td>
-                        N/A
-                    </td>
+                    @if (item.Nurse == null)
+                    {
+                        <td>
+                            N/A
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nurse!.FullName)
+                        </td>
+                    }
                 }
                 @if (!User.IsInRole("P"))
                 {

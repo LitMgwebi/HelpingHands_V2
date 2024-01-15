@@ -52,7 +52,7 @@ namespace HelpingHands_V2.Controllers
                 }
                 else if (command == "unassigned")
                 {
-                    contracts = await _report.ContractStatus("N");
+                    contracts = await _report.NurseContractsByGrades(id);
                 }
                 else if (command == "past")
                 {
