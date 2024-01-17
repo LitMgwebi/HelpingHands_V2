@@ -1,16 +1,11 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
-using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using iText; 
-using System.Diagnostics.Contracts;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
-using System.Net.Mail;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
 using System.Security.Claims;
 
 namespace HelpingHands_V2.Controllers
@@ -81,21 +76,12 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                List<Visit> visits = new List<Visit> { };
-                CareContract contract = await _contract.GetContract(id);
+                CareContract contract = await GetContract(id);
 
                 if (contract == null)
                     return NotFound();
 
-                visits = await _report.ContractVisits(contract.ContractId);
-
-                ContractAndVisits cAndV = new ContractAndVisits
-                {
-                    Contract = contract,
-                    Visits = visits
-                };
-
-                return View(cAndV);
+                return View(contract);
             }
             catch (Exception ex)
             {
@@ -151,7 +137,7 @@ namespace HelpingHands_V2.Controllers
                 Message emailMessage = new Message(new string[] { email }, fullName, username, "patient_contract");
                 _email.SendEmail(emailMessage);
                 ViewBag.Message = "Record Added successfully;";
-                return RedirectToAction("Dashboard", "Patient", new {id = contract.PatientId});
+                return RedirectToAction("Dashboard", "Patient", new { id = contract.PatientId });
             }
             catch (Exception ex)
             {
@@ -179,7 +165,7 @@ namespace HelpingHands_V2.Controllers
                 var wounds = await _wound.GetWounds();
                 var suburbs = await _suburb.GetSuburbs();
 
-                if (contract == null || patients == null || nurses == null|| wounds == null|| suburbs == null)
+                if (contract == null || patients == null || nurses == null || wounds == null || suburbs == null)
                     return NotFound();
 
                 ViewBag.CurrentDate = DateTime.Now;
@@ -219,9 +205,9 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View(contract);
                 }
-                
+
                 await _contract.UpdateContract(contract);
-                
+
                 if (HttpContext.User.IsInRole("N"))
                 {
                     string email = HttpContext.User.FindFirst(ClaimTypes.Email)!.Value;
@@ -231,7 +217,8 @@ namespace HelpingHands_V2.Controllers
                     Message emailMessage = new Message(new string[] { email }, fullName, username, "nurse_contract");
                     _email.SendEmail(emailMessage);
                     return RedirectToAction("Dashboard", "Nurse", new { id = contract.NurseId });
-                } else
+                }
+                else
                 {
                     return RedirectToAction("NewContracts", "Manager");
                 }
@@ -262,8 +249,9 @@ namespace HelpingHands_V2.Controllers
                 await _contract.DeleteContract(ContractId);
                 if (HttpContext.User.IsInRole("P"))
                 {
-                    return RedirectToAction(nameof(Index), new {id = HttpContext.User.FindFirst("UserId")!.Value, command = "patient"});
-                } else
+                    return RedirectToAction(nameof(Index), new { id = HttpContext.User.FindFirst("UserId")!.Value, command = "patient" });
+                }
+                else
                 {
                     return RedirectToAction(nameof(Index));
                 }
@@ -271,70 +259,76 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Details), new {id = ContractId});
+                return RedirectToAction(nameof(Details), new { id = ContractId });
                 //return new JsonResult(new { error = ex.Message });
             }
         }
 
         [HttpPost]
-        public IActionResult GeneratePDF(ContractAndVisits contractAndVisits)
+        public async Task<IActionResult> GeneratePDF(int ContractId)
         {
-            var outputFileName = Path.GetTempFileName();
-            PdfDocument pdfDocument = new PdfDocument(new PdfWriter(new FileStream(outputFileName, FileMode.Create, FileAccess.Write)));
-            Document document = new Document(pdfDocument);
+            CareContract contract = await GetContract(ContractId);
 
+            if (contract == null)
+                return NotFound();
+             
             try
             {
-                Paragraph heading = new Paragraph("Contract");
-                heading.SetUnderline(2f, -1f);
-                Paragraph contractDetails = new Paragraph(contractAndVisits.Contract!.ContractStatus);
-                document.Add(heading);
-                document.Add(contractDetails);
-
-                Table table = new Table(2, true);
-                IEnumerable<Visit> Visits = contractAndVisits.Visits!;
-
-                Cell cell = new Cell().Add(new Paragraph("Visit Date"));
-                cell.SetBold();
-                table.AddCell(cell);
-                cell = new Cell().Add(new Paragraph("Wound Condition"));
-                cell.SetBold();
-                table.AddCell(cell);
-                foreach (var x in Visits)
+                Document.Create(container =>
                 {
-                    var visitDate = new Paragraph(x.VisitDate.ToString());
-                    var woundCondition = new Paragraph(x.WoundCondition);
+                    container.Page(page =>
+                    {
+                        page.Size(PageSizes.A4);
+                        page.Margin((float)0.5, Unit.Centimetre);
+                        page.PageColor(Colors.White);
+                        page.DefaultTextStyle(x => x.FontSize(20));
 
-                    var column1 = new Cell().Add(visitDate);
-                    var column2 = new Cell().Add(woundCondition);
-                    table.AddCell(column1);
-                    table.AddCell(column2);
-                }
-                DateTime currentDate = DateTime.Now;
-                Paragraph dateParagraph = new Paragraph("Created Date: " + currentDate.ToString("yyyy-MM-dd"));
-                dateParagraph.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.LEFT);
-                document.Add(dateParagraph);
-                document.Add(table);
+                        page.Header()
+                        .Height(100)
 
-                Paragraph disclaimer = new Paragraph("Disclaimer: The contents of this pdf are for reference only.");
-                document.Add(disclaimer);
+                            .Text("Hello PDF!")
+                            .SemiBold().FontSize(36).FontColor(Colors.Blue.Medium);
 
-                return RedirectToAction(nameof(Details), new {id = contractAndVisits.Contract!.ContractId});
+                        page.Content()
+                            .PaddingVertical(1, Unit.Centimetre)
+                            .Column(x =>
+                            {
+                                x.Spacing(20);
+
+                                x.Item().Text(Placeholders.LoremIpsum());
+                                x.Item().Image(Placeholders.Image(200, 100));
+                            });
+
+                        page.Footer()
+                            .AlignCenter()
+                            .Text(x =>
+                            {
+                                x.Span("Page ");
+                                x.CurrentPageNumber();
+                            });
+                    });
+                }).GeneratePdf($"C:/Users/lithi/Downloads/{contract.Patient!.FullName}-Contract-{contract.ContractId}.pdf");
+
+               
+
+                return new JsonResult("Working");
             }
             catch (Exception ex)
             {
+                return new JsonResult(new { Ass = ex.Message });
+            }
+        }
 
-                ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Details), new { id = contractAndVisits.Contract!.ContractId });
-            }
-            finally
-            {
-                document.Close();
-                Response.ContentType = "application/pdf";
-                Response.AppendTrailer("content-disposition",
-                    "attachment;filename=Suppliers.pdf");
-                Response.SendFileAsync(outputFileName);
-            }
+        public async Task<CareContract> GetContract(int id)
+        {
+            List<Visit> visits = new List<Visit> { };
+            CareContract contract = await _contract.GetContract(id);
+
+            visits = await _report.ContractVisits(contract.ContractId);
+
+            contract.Visits = visits;
+
+            return contract;
         }
     }
 }

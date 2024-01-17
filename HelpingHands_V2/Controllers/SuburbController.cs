@@ -48,7 +48,9 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var suburb = await _suburb.GetSuburb(id);
+                Suburb suburb = await _suburb.GetSuburb(id);
+
+                suburb.City = await _city.GetCity(suburb.CityId);
 
                 if (suburb == null)
                     return NotFound();

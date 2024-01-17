@@ -3,12 +3,14 @@ using HelpingHands_V2.Models;
 using HelpingHands_V2.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var emailer = builder.Configuration.GetSection("Emailer").Get<Emailer>();
+QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddDbContext<Grp0444HelpingHandsContext>(options =>
     options.UseSqlServer(connectionString));
