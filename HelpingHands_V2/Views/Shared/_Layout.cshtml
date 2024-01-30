@@ -23,8 +23,8 @@
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
-<body>
-    <header>
+<body class="d-flex flex-column min-vh-100">
+    <header class="header">
         <nav class="navbar nav-pills navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <div class="nav col-3">
@@ -208,17 +208,20 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted" style="margin-top: 10rem;">
-        <div class="container">
-            &copy;<a>PoweredByLithi</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    <div class="sticky-lg-top" style="background-color:khaki">
+        <footer class="text-center text-lg-start text-white">
+            <section class="d-flex justify-content-between p-4">
+                &copy;<a>PoweredByLithi</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </section>
+        </footer>
+    </div>
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>

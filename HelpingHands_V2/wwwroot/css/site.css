@@ -25,14 +25,6 @@ nav > li:hover{
     color: red;
 }
 
-body {
-    position: relative;
-    height:auto;
-    overflow-y:scroll;
-    min-height: 100vh;
-    background-image: linear-gradient(to bottom right, var(--darkred), var(--paleRed)), url("../Media//background.webp");
-    background-blend-mode: screen;
-}
 
 
 .divider:after,
@@ -53,10 +45,7 @@ body {
     }
 }
 
-.card {
-    width: 28rem;
-    margin: 1.5rem;
-}
+
 
 footer {
     background-image: linear-gradient(to top left, var(--paleRed), var(--orange))
