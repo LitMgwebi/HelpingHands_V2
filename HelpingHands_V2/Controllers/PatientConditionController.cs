@@ -1,5 +1,6 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -48,57 +49,25 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                return View(pc);
 
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View();
-            }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Details(int? patientId, int? conditionId)
-        {
-            try
-            {
-                if (patientId == null && conditionId == null)
-                {
-                    return NotFound();
-                }
-
-                var pc = await _pc.GetOnePatientCondition(patientId, conditionId);
-
-                if (pc == null)
-                    return NotFound();
-
-                return View(pc);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View();
-            }
-        }
-
-        public async Task<IActionResult> Create(int id)
-        {
-            try
-            {
                 var conditions = await _condition.GetConditions();
 
+                PatientConditionViewModel pcViewModel = new PatientConditionViewModel
+                {
+                    PatientId = id,
+                    Conditions = pc
+                };
+
                 ViewData["Conditions"] = new SelectList(conditions, "ConditionId", "ConditionName");
-                ViewData["PatientId"] = id;
-                return View();
+                return View(pcViewModel);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PatientId, ConditionId, Active")] PatientCondition patientCondition)
@@ -114,7 +83,7 @@ namespace HelpingHands_V2.Controllers
                     ViewData["PatientId"] = patientCondition.PatientId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View(patientCondition);
+                    return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
                 }
                 await _pc.AddPatientCondition(patientCondition);
                 ViewBag.Message = "Record Added successfully;";
@@ -125,7 +94,7 @@ namespace HelpingHands_V2.Controllers
                 ViewData["Conditions"] = new SelectList(conditions, "ConditionId", "ConditionName");
                 ViewData["PatientId"] = patientCondition.PatientId;
                 ViewBag.Message = ex.Message;
-                return View(patientCondition);
+                return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
             }
         }
 
@@ -141,7 +110,7 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
-                    return RedirectToAction(nameof(Details), new { patientId = patientCondition.PatientId, conditionId = patientCondition.ConditionId });
+                    return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
                 }
                 await _pc.DeletePatientCondition(patientCondition);
                 return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
@@ -149,8 +118,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Details), new {patientId = patientCondition.PatientId, conditionId = patientCondition.ConditionId});
-                //return new JsonResult(new { error = ex.Message });
+                return RedirectToAction(nameof(IndexForPatient), new { id = patientCondition.PatientId });
             }
         }
     }

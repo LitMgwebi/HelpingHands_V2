@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HelpingHands_V2.Models.PatientCondition>
+﻿@model HelpingHands_V2.ViewModels.PatientConditionViewModel
 
 @{
     ViewData["Title"] = "Patient's Conditions";
@@ -12,32 +12,59 @@
 }
 <hr />
 <a asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-primary">Create New</a>
-<table class="table" id="myTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Condition!.ConditionName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Condition!.ConditionDescription)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Condition!.ConditionName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Condition!.ConditionDescription)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-patientId="@item.PatientId" asp-route-conditionId="@item.ConditionId" class="btn btn-info">View</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container-fluid">
+    <div class="row row-cols-lg-2 row-cols-auto">
+        <div class="col">
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Condition!.ConditionName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Condition!.ConditionDescription)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Conditions!)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Condition!.ConditionName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Condition!.ConditionDescription)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <form asp-action="Delete">
+                                        <input asp-for="@item!.PatientId"  name="PatientId" type="hidden"/>
+                                        <input asp-for="@item!.ConditionId"  name="ConditionId" type="hidden"/>
+                                        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <h2 class="display-5 text-center">Add Condition</h2>
+            <hr/>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="PatientId" type="hidden"/>
+                <div class="form-group">
+                    <label asp-for="Condition!.ConditionName" class="control-label"></label>
+                    <select asp-for="Condition!.ConditionId" name="ConditionId" class="form-control" asp-items="ViewBag.Conditions"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
