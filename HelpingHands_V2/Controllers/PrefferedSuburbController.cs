@@ -1,5 +1,6 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -48,49 +49,18 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                return View(ps);
-
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View();
-            }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Details(int? nurseId, int? suburbId)
-        {
-            try
-            {
-                if (nurseId == null && suburbId == null)
-                {
-                    return NotFound();
-                }
-
-                var ps = await _ps.GetPrefferedSuburb(nurseId, suburbId);
-
-                if (ps == null)
-                    return NotFound();
-
-                return View(ps);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View();
-            }
-        }
-
-        public async Task<IActionResult> Create(int id)
-        {
-            try
-            {
+                
                 var suburbs = await _suburb.GetSuburbs();
 
+                PrefferedSuburbViewModel psViewModel = new PrefferedSuburbViewModel
+                {
+                    NurseId = id,
+                    Suburbs = ps
+                };
+
                 ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                ViewData["NurseId"] = id;
-                return View();
+                return View(psViewModel);
+
             }
             catch (Exception ex)
             {
@@ -98,6 +68,7 @@ namespace HelpingHands_V2.Controllers
                 return View();
             }
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NurseId, SuburbId, Active")] PrefferedSuburb prefferedSuburb)
@@ -112,7 +83,7 @@ namespace HelpingHands_V2.Controllers
                     ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     ViewData["NurseId"] = prefferedSuburb.NurseId;
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View(prefferedSuburb);
+                    return RedirectToAction(nameof(IndexForNurse), new { id = prefferedSuburb.NurseId });
                 }
                 await _ps.AddPrefferedSuburb(prefferedSuburb);
                 ViewBag.Message = "Record Added successfully;";
@@ -123,7 +94,7 @@ namespace HelpingHands_V2.Controllers
                 ViewData["Suburbs"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 ViewData["NurseId"] = prefferedSuburb.NurseId;
                 ViewBag.Message = ex.Message;
-                return View(prefferedSuburb);
+                return RedirectToAction(nameof(IndexForNurse), new { id = prefferedSuburb.NurseId });
             }
         }
 
@@ -137,7 +108,7 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
-                    return RedirectToAction(nameof(Details), new { nurseId = prefferedSuburb.NurseId, suburbId = prefferedSuburb.SuburbId });
+                    return RedirectToAction(nameof(IndexForNurse), new { id = prefferedSuburb.NurseId });
                 }
                 await _ps.DeletePrefferedSuburb(prefferedSuburb);
                 return RedirectToAction(nameof(IndexForNurse), new { id = prefferedSuburb.NurseId });
@@ -145,7 +116,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Details), new { nurseId = prefferedSuburb.NurseId, suburbId = prefferedSuburb.SuburbId });
+                return RedirectToAction(nameof(IndexForNurse), new { id = prefferedSuburb.NurseId });
             }
         }
     }
