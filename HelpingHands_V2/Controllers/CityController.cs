@@ -25,11 +25,11 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                CitiesAndCity citiesAndCity = new CitiesAndCity
+                CitiesViewModel citiesViewModel = new CitiesViewModel
                 {
                     Cities = cities
                 };
-                return View(citiesAndCity);
+                return View(citiesViewModel);
             }
             catch (Exception ex)
             {
@@ -54,13 +54,13 @@ namespace HelpingHands_V2.Controllers
                 if (city == null || cities == null)
                     return NotFound();
 
-                CitiesAndCity citiesAndCity = new CitiesAndCity
+                CitiesViewModel citiesViewModel = new CitiesViewModel
                 {
                     Cities = cities,
                     City = city
                 };
 
-                return View(citiesAndCity);
+                return View(citiesViewModel);
             }
             catch (Exception ex)
             {

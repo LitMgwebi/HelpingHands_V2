@@ -1,5 +1,6 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -26,43 +27,50 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                //ViewBag.Suburbs = suburbs;
-                return View(suburbs);
 
+                SuburbsViewModel suburbsViewModel = new SuburbsViewModel
+                {
+                    Suburbs = suburbs
+                };
+
+                return View(suburbsViewModel);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
-
-        [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index([Bind("SuburbId")]int? SuburbId)
         {
             try
             {
-                if (id == null)
+                if (SuburbId == null)
                 {
                     return NotFound();
                 }
 
-                Suburb suburb = await _suburb.GetSuburb(id);
+                var cities = await _city.GetCities();
+                var suburb = await _suburb.GetSuburb(SuburbId);
+                var suburbs = await _suburb.GetSuburbs();
 
-                suburb.City = await _city.GetCity(suburb.CityId);
-
-                if (suburb == null)
+                if (suburb == null || suburbs == null)
                     return NotFound();
-                
-                //ViewBag.Suburb = suburb;
-                return View(suburb);
-            }
-            catch (Exception ex)
+
+                SuburbsViewModel suburbsViewModel = new SuburbsViewModel
+                {
+                    Suburbs = suburbs,
+                    Suburb = suburb
+                };
+
+                ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
+                return View(suburbsViewModel);
+            } catch(Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -108,32 +116,6 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            try
-            {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                var cities = await _city.GetCities();
-                var suburb = await _suburb.GetSuburb(id);
-
-                if (suburb == null)
-                    return NotFound();
-
-                ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
-                //ViewBag.Suburb = suburb;
-                return View(suburb);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View();
-                //return new JsonResult(new { error = ex.Message });
-            }
-        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("SuburbId, SuburbName, PostalCode, CityId, Active")] Suburb suburb)
@@ -141,29 +123,27 @@ namespace HelpingHands_V2.Controllers
             var cities = await _city.GetCities();
             try
             {
-                ModelState.Remove("City");
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
-                    return View(suburb);
+                    return RedirectToAction(nameof(Index));
                 }
                 await _suburb.UpdateSuburb(suburb);
-                return RedirectToAction(nameof(Details), new {id = suburb.SuburbId});
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
-                return View(suburb);
-                //return new JsonResult(new { error = ex.Message });
+                return RedirectToAction(nameof(Index));
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete([Bind("SuburbId")] int SuburbId)
+        public async Task<IActionResult> Delete([Bind("SuburbId")]int SuburbId)
         {
             try
             {
@@ -171,7 +151,7 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
-                    return RedirectToAction(nameof(Details), new { id = SuburbId });
+                    return RedirectToAction(nameof(Index));
                 }
                 await _suburb.DeleteSuburb(SuburbId);
                 return RedirectToAction(nameof(Index));
@@ -179,8 +159,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Details), new {id = SuburbId});
-                //return new JsonResult(new { error = ex.Message });
+                return RedirectToAction(nameof(Index));
             }
         }
     }

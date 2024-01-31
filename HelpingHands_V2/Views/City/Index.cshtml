@@ -1,4 +1,4 @@
-﻿@model HelpingHands_V2.ViewModels.CitiesAndCity
+﻿@model HelpingHands_V2.ViewModels.CitiesViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -42,11 +42,11 @@
                             <td>
                                 <div class="btn-group">
                                     <form asp-action="Index">
-                                        <input asp-for="@item.CityId" name="CityId" value="@item.CityId" type="hidden" />
+                                        <input asp-for="@item.CityId" name="CityId"  type="hidden" />
                                         <input type="submit" value="Edit" class="btn btn-success" />
                                     </form>
                                     <form asp-action="Delete">
-                                        <input asp-for="@item.CityId" name="CityId" value="@item.CityId" type="hidden" />
+                                        <input asp-for="@item.CityId" name="CityId"  type="hidden" />
                                         <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @item.CityName?')" class="btn btn-danger" />
                                     </form>
                                 </div>
@@ -59,7 +59,7 @@
         <div class="col-lg-4">
             @if (Model.City != null)
             {
-                <h2 class="display-4 text-center">Edit @Model?.City!.CityName</h2>
+                <h2 class="display-5 text-center">Edit @Model?.City!.CityName</h2>
                 @if (Message != null)
                 {
                     <p class="text-decoration-underline text-danger">@Message</p>
