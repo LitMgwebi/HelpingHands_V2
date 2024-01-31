@@ -1,5 +1,6 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
@@ -23,44 +24,50 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                //ViewBag.Conditions = condition;
-                return View(conditions);
 
+                ConditionsViewModel conditionsViewModel = new ConditionsViewModel
+                {
+                    Conditions = conditions
+                };
+                return View(conditionsViewModel);
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
         }
-
-        [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index([Bind("ConditionId")]int? ConditionId)
         {
             try
             {
-                if (id == null)
+                if (ConditionId == null)
                 {
                     return NotFound();
                 }
 
-                var condition = await _condition.GetCondition(id);
+                var condition = await _condition.GetCondition(ConditionId);
+                var conditions = await _condition.GetConditions();
 
-                if (condition == null)
+                if (condition == null || conditions == null)
                     return NotFound();
 
-                //ViewBag.Condition = condition;
-                return View(condition);
-            }
-            catch (Exception ex)
+                ConditionsViewModel conditionsViewModel = new ConditionsViewModel
+                {
+                    Conditions = conditions,
+                    Condition = condition
+                };
+
+                return View(conditionsViewModel);
+            } catch(Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
         }
-
+    
         public IActionResult Create()
         {
             try
@@ -98,30 +105,6 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            try
-            {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                var condition = await _condition.GetCondition(id);
-
-                if (condition == null)
-                    return NotFound();
-
-                //ViewBag.Condition = condition;
-                return View(condition);
-            }
-            catch (Exception ex)
-            {
-                //return new JsonResult(new { error = ex.Message });
-                ViewBag.Message = ex.Message;
-                return View();
-            }
-        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("ConditionId, ConditionName, ConditionDescription, Active")] Condition condition)
@@ -133,14 +116,13 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Condition = condition;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View(condition);
+                    return RedirectToAction(nameof(Index));
                 }
                 await _condition.UpdateCondition(condition);
-                return RedirectToAction(nameof(Details), new {id = condition.ConditionId});
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -156,7 +138,7 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
-                    return RedirectToAction(nameof(Details), new { id = ConditionId });
+                    return RedirectToAction(nameof(Index));
                 }
                 await _condition.DeleteCondition(ConditionId);
                 return RedirectToAction(nameof(Index));
@@ -164,8 +146,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Details), new { id = ConditionId });
-                //return new JsonResult(new { error = ex.Message });
+                return RedirectToAction(nameof(Index));
             }
         }
     }
