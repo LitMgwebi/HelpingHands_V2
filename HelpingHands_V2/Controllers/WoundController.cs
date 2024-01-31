@@ -1,5 +1,6 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands_V2.Controllers
@@ -23,39 +24,46 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                //ViewBag.Wounds = wounds;
-                return View(wounds);
 
+                WoundsViewModel woundsViewModel = new WoundsViewModel
+                {
+                    Wounds = wounds
+                };
+
+                return View(woundsViewModel);
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
         }
-
-        [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index([Bind("WoundId")]int? WoundId)
         {
             try
             {
-                if (id == null)
+                if (WoundId == null)
                 {
                     return NotFound();
                 }
 
-                var wound = await _wound.GetWound(id);
+                var wound = await _wound.GetWound(WoundId);
+                var wounds = await _wound.GetWounds();
 
-                if (wound == null)
+                if (wound == null || wounds == null)
                     return NotFound();
 
-                //ViewBag.Wound = wound;
-                return View(wound);
+                WoundsViewModel woundsViewModel = new WoundsViewModel { 
+                    Wounds = wounds,
+                    Wound = wound
+                };
+
+                return View(woundsViewModel);
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -69,7 +77,6 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -93,37 +100,11 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
         }
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            try
-            {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                var wound = await _wound.GetWound(id);
-
-                if (wound == null)
-                    return NotFound();
-
-                //ViewBag.Wound = wound;
-                return View(wound);
-            }
-            catch (Exception ex)
-            {
-                //return new JsonResult(new { error = ex.Message });
-                ViewBag.Message = ex.Message;
-                return View();
-            }
-        }
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("WoundId, WoundName, Grade, WoundDescription, Active")] Wound wound)
         {
@@ -133,10 +114,10 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below";
-                    return View(wound);
+                    return RedirectToAction(nameof(Index));
                 }
                 await _wound.UpdateWound(wound);
-                return RedirectToAction(nameof(Details), new {id = wound.WoundId});
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -156,16 +137,15 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
-                    return RedirectToAction(nameof(Details), new { id = WoundId });
+                    return RedirectToAction(nameof(Index));
                 }
                 await _wound.DeleteWound(WoundId);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Details), new {id = WoundId});
+                return RedirectToAction(nameof(Index));
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HelpingHands_V2.Models.Wound>
+﻿@model HelpingHands_V2.ViewModels.WoundsViewModel
 
 @{
     ViewData["Title"] = "Wounds";
@@ -12,38 +12,99 @@
 }
 <hr />
 <a asp-action="Create" class="btn btn-primary">Create New</a>
-<table class="table" id="myTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.WoundName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Grade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WoundDescription)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WoundName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Grade)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WoundDescription)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.WoundId" class="btn btn-info">View</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container-fluid">
+    <div class="row row-cols-auto">
+        <div class="col-lg-8">
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Wound!.WoundName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Wound!.Grade)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Wound!.WoundDescription)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Wounds)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.WoundName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Grade)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.WoundDescription)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <form asp-action="Index">
+                                        <input asp-for="@item.WoundId" name="WoundId" type="hidden" />
+                                        <input type="submit" value="Edit" class="btn btn-success" />
+                                    </form>
+                                    <form asp-action="Delete">
+                                        <input asp-for="@item.WoundId" name="WoundId" type="hidden" />
+                                        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @item?.WoundName?')" class="btn btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="col-lg-4">
+            @if(Model.Wound != null)
+            {
+                <h2 class="display-5 text-center">Edit @Model?.Wound.WoundName</h2>
+               
+                <hr />
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Wound!.WoundId" type="hidden" />
+                    <div class="col-12">
+                        <div class="input-group-sm">
+                            <label asp-for="Wound!.WoundName" class="form-label"></label>
+                            <input asp-for="Wound!.WoundName" class="form-control" />
+                            <span asp-validation-for="Wound!.WoundName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-sm">
+                            <label asp-for="Wound!.Grade" class="form-label"></label>
+                            <input asp-for="Wound!.Grade" class="form-control" />
+                            <span asp-validation-for="Wound!.Grade" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-sm">
+                            <label asp-for="Wound!.WoundDescription" class="form-label"></label>
+                            <textarea asp-for="Wound!.WoundDescription" class="form-control" rows="3" autofocus>
+                    </textarea>
+                            <span asp-validation-for="Wound!.WoundDescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="btn-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+            } else
+            {
+                <span>
+                    Select Wound to edit
+                </span>
+            }
+        </div>
+    </div>
+</div>
