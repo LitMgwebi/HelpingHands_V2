@@ -9,7 +9,7 @@ public partial class City
 {
     public int CityId { get; set; }
 
-    [Display(Name = "City")]
+    [Display(Name = "Name")]
     [DataType(DataType.Text)]
     [Required(ErrorMessage ="Please enter the name of the city.")]
     public string CityName { get; set; } = null!;

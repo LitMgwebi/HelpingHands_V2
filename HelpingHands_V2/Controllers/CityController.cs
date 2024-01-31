@@ -1,6 +1,7 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using Microsoft.AspNetCore.Mvc;
+using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HelpingHands_V2.Controllers
@@ -13,52 +14,58 @@ namespace HelpingHands_V2.Controllers
         {
             _city = city;
         }
+        
         public async Task<IActionResult> Index()
         {
             try
             {
-                var city = await _city.GetCities();
+                var cities = await _city.GetCities();
 
-                if (city == null)
+                if (cities == null)
                 {
                     return NotFound();
                 }
-                //ViewBag.Cities = city;
-                return View(city);
-
+                CitiesAndCity citiesAndCity = new CitiesAndCity
+                {
+                    Cities = cities
+                };
+                return View(citiesAndCity);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
-
-        [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index([Bind("CityId")]int? CityId)
         {
             try
             {
-                if (id == null)
+                if (CityId == null)
                 {
                     return NotFound();
                 }
 
-                var city = await _city.GetCity(id);
+                var city = await _city.GetCity(CityId);
+                var cities = await _city.GetCities();
 
-                if (city == null)
+                if (city == null || cities == null)
                     return NotFound();
 
-                //ViewBag.City = city;
-                return View(city);
+                CitiesAndCity citiesAndCity = new CitiesAndCity
+                {
+                    Cities = cities,
+                    City = city
+                };
+
+                return View(citiesAndCity);
             }
             catch (Exception ex)
             {
-
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -93,36 +100,11 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
         }
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            try
-            {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                var city = await _city.GetCity(id);
-
-                if (city == null)
-                    return NotFound();
-
-                //ViewBag.City = city;
-                return View(city);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View();
-                //return new JsonResult(new { error = ex.Message });
-            }
-        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("CityId, CityName, CityAbbreviation, Active")] City city)
@@ -137,13 +119,12 @@ namespace HelpingHands_V2.Controllers
                     return View(city);
                 }
                 await _city.UpdateCity(city);
-                return RedirectToAction(nameof(Details), new {id = city.CityId});
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View(city);
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -157,15 +138,14 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
-                    return RedirectToAction(nameof(Details), new { id = CityId });
+                    return RedirectToAction(nameof(Index));
                 }
                 await _city.DeleteCity(CityId);
                 return RedirectToAction(nameof(Index));
             } catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Details), new { id = CityId });
-                //return new JsonResult(new { error = ex.Message });
+                return RedirectToAction(nameof(Index));
             }
         }
     }

@@ -10,8 +10,10 @@
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-<hr />
-<div class="container-fluid p-lg-5 p-sm-2 my-5">
+<section class="px-5 py-4">
+    <hr />
+</section>
+<div class="container-fluid p-lg-5 p-sm-2 my-2">
     <div class="row row-cols-auto d-flex align-items-center justify-content-center g-5">
         <div class="col-md-3 mx-lg-5">
             <form asp-action="Create">
@@ -32,11 +34,11 @@
                 </div>
                 <div class="col-12">
                     <div class="row justify-content-center g-2 py-4">
-                    <div class="btn-group col-auto">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        <div class="btn-group col-auto">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        </div>
                     </div>
-                </div>
                 </div>
             </form>
         </div>
