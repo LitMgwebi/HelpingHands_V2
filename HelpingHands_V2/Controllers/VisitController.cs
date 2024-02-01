@@ -121,21 +121,6 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        [Authorize(Roles = "N")]
-        public IActionResult Create(int id)
-        {
-            try
-            {
-                ViewBag.ContractId = id;
-                return View();
-            }
-            catch (Exception ex)
-            {
-                //return new JsonResult(new { error = ex.Message });
-                ViewBag.Message = ex.Message;
-                return View();
-            }
-        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ContractId, VisitDate, ApproxTime, Arrival, Departure, WoundCondition, Note, Active")] Visit visit)
@@ -147,18 +132,16 @@ namespace HelpingHands_V2.Controllers
                 {
                     ViewBag.ContractId = visit.ContractId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    return new JsonResult(new { visit, errors });
                     ViewBag.Message = $"Not all the information required was entered. Please look below";
                     return View();
                 }
                 var userId = HttpContext.User.FindFirst("UserId")!.Value;
                 await _visit.AddVisit(visit);
                 ViewBag.Message = "Record Added successfully;";
-                return RedirectToAction("Dashboard", "Nurse", new { id = userId });
+                return RedirectToAction("Details", "Contract", new { id = visit.ContractId });
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }

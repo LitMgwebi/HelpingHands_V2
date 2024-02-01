@@ -1,5 +1,6 @@
 ﻿using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
+using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -81,7 +82,12 @@ namespace HelpingHands_V2.Controllers
                 if (contract == null)
                     return NotFound();
 
-                return View(contract);
+                ContractAndVisit contractAndVisit = new ContractAndVisit
+                {
+                    Contract = contract
+                };
+
+                return View(contractAndVisit);
             }
             catch (Exception ex)
             {
