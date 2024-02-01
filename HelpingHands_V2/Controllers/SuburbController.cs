@@ -19,6 +19,7 @@ namespace HelpingHands_V2.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var cities = await _city.GetCities();
             try
             {
                 var suburbs = await _suburb.GetSuburbs();
@@ -33,6 +34,7 @@ namespace HelpingHands_V2.Controllers
                     Suburbs = suburbs
                 };
 
+                ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
                 return View(suburbsViewModel);
             }
             catch (Exception ex)
@@ -45,6 +47,7 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index([Bind("SuburbId")]int? SuburbId)
         {
+            var cities = await _city.GetCities();
             try
             {
                 if (SuburbId == null)
@@ -52,7 +55,6 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var cities = await _city.GetCities();
                 var suburb = await _suburb.GetSuburb(SuburbId);
                 var suburbs = await _suburb.GetSuburbs();
 
@@ -69,26 +71,12 @@ namespace HelpingHands_V2.Controllers
                 return View(suburbsViewModel);
             } catch(Exception ex)
             {
+                ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
                 ViewBag.Message = ex.Message;
                 return View();
             }
         }
 
-        public async Task<IActionResult> Create()
-        {
-            try
-            {
-                var cities = await _city.GetCities();
-                ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
-                return View();
-            }
-            catch (Exception ex)
-            {
-                //return new JsonResult(new { error = ex.Message });
-                ViewBag.Message = ex.Message;
-                return View();
-            }
-        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SuburbName, PostalCode, CityId, Active")] Suburb suburb)
@@ -102,7 +90,7 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     var cities = await _city.GetCities();
                     ViewData["CityId"] = new SelectList(cities, "CityId", "CityName");
-                    return View(suburb);
+                    return RedirectToAction(nameof(Index));
                 }
                 await _suburb.AddSuburb(suburb);
                 ViewBag.Message = "Record Added successfully;";
@@ -110,7 +98,6 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }

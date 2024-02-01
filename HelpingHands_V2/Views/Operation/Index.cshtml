@@ -10,11 +10,10 @@
     <p class="text-decoration-underline text-danger">@Message</p>
 }
 <hr />
-<a asp-action="Create" class="btn btn-primary">Create New</a>
 
 <div class="container-fluid">
-    <div class="row row-cols-auto">
-        <div class="col-lg-8">
+    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly">
+        <div class="col-md-6">
             <table class="table" id="myTable">
                 <thead>
                     <tr>
@@ -60,51 +59,76 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-lg-4">
-            @if(Model.OperationHour != null)
-            {
-                <h2 class="display-4 text-center">Edit @Model?.OperationHour.OperationDay Hours</h2>
-                <section class="px-5 py-4">
-                    <hr />
-                </section>
-                <div class="row">
-                    <form asp-action="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input asp-for="OperationHour!.OperationHoursId" type="hidden" />
-                        <div class="col-12">
-                            <div class="input-group-sm">
-                                <label asp-for="OperationHour!.OperationDay" class="form-label"></label>
-                                <input asp-for="OperationHour!.OperationDay" type="text" class="form-control" />
-                                <span asp-validation-for="OperationHour!.OperationDay" class="text-danger"></span>
+        <div class="col-md-3">
+            <div class="row justify-content-center">
+                <h2 class="h3 text-center">Add Operation Hours</h2>
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="OperationHour!.OperationDay" class="control-label"></label>
+                        <input name="OperationDay" class="form-control" />
+                        <span asp-validation-for="OperationHour!.OperationDay" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OperationHour!.OpenTime" class="control-label"></label>
+                        <input name="OpenTime" type="time" class="form-control" />
+                        <span asp-validation-for="OperationHour!.OpenTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OperationHour!.CloseTime" class="control-label"></label>
+                        <input name="CloseTime" type="time" class="form-control" />
+                        <span asp-validation-for="OperationHour!.CloseTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+            <div class="row justify-content-center">
+                @if (Model.OperationHour != null)
+                {
+                    <h2 class="h3 text-center">Edit @Model?.OperationHour.OperationDay Hours</h2>
+                    <section class="px-5 py-4">
+                        <hr />
+                    </section>
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="OperationHour!.OperationHoursId" type="hidden" />
+                            <div class="col-12">
+                                <div class="input-group-sm">
+                                    <label asp-for="OperationHour!.OperationDay" class="form-label"></label>
+                                    <input asp-for="OperationHour!.OperationDay" type="text" class="form-control" />
+                                    <span asp-validation-for="OperationHour!.OperationDay" class="text-danger"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="input-group-sm">
-                                <label asp-for="OperationHour!.OpenTime" class="form-label"></label>
-                                <input asp-for="OperationHour!.OpenTime" type="time" class="form-control" />
-                                <span asp-validation-for="OperationHour!.OpenTime" class="text-danger"></span>
+                            <div class="col-12">
+                                <div class="input-group-sm">
+                                    <label asp-for="OperationHour!.OpenTime" class="form-label"></label>
+                                    <input asp-for="OperationHour!.OpenTime" type="time" class="form-control" />
+                                    <span asp-validation-for="OperationHour!.OpenTime" class="text-danger"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="input-group-sm">
-                                <label asp-for="OperationHour!.CloseTime" class="form-label"></label>
-                                <input asp-for="OperationHour!.CloseTime" type="time" class="form-control" />
-                                <span asp-validation-for="OperationHour!.CloseTime" class="text-danger"></span>
+                            <div class="col-12">
+                                <div class="input-group-sm">
+                                    <label asp-for="OperationHour!.CloseTime" class="form-label"></label>
+                                    <input asp-for="OperationHour!.CloseTime" type="time" class="form-control" />
+                                    <span asp-validation-for="OperationHour!.CloseTime" class="text-danger"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="btn-group">
-                                <input type="submit" value="Save" class="btn btn-primary" />
+                            <div class="col-12">
+                                <div class="btn-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-            } else
-            {
-                <span>
-                    Select record to edit
-                </span>
-            }
+                        </form>
+                }
+                else
+                {
+                    <span>
+                        Select record to edit
+                    </span>
+                }
+            </div>
         </div>
     </div>
 </div>

@@ -73,19 +73,6 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult Create()
-        {
-            try
-            {
-                return View();
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View();
-                //return new JsonResult(new { error = ex.Message });
-            }
-        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("OperationDay, OpenTime, CloseTime, BusinessId, Active")] OperationHour operationHour)
