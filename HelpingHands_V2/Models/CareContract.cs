@@ -52,7 +52,7 @@ public partial class CareContract
     public DateTime? EndDate { get; set; } = null;
 
     [DataType(DataType.MultilineText)]
-    [DisplayName("Contract Comment")]
+    [DisplayName("Wound Description")]
     public string? ContractComment { get; set; }
 
     public bool Active { get; set; } = true;

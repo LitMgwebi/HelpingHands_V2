@@ -121,7 +121,7 @@ else
 </div>
 <div class="btn-group" role="group" aria-label="Control Panel">
     <a asp-action="Index" asp-controller="Visit" asp-route-id="@Model?.ContractId" asp-route-command="nurse" class="btn btn-success">View Visits</a>
-    <a asp-action="Edit" asp-route-id="@Model?.ContractId" class="btn btn-success">Edit</a>
+    @* <a asp-action="Edit" asp-route-id="@Model?.ContractId" class="btn btn-success">Edit</a> *@
     @if(User.IsInRole("N"))
     {
         @if (Model?.StartDate != null)

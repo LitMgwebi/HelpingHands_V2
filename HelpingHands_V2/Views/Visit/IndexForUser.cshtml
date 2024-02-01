@@ -40,28 +40,31 @@ else if (User.IsInRole("N"))
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if(Model != null)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VisitDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ApproxTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Arrival)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Departure)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WoundCondition)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
-                </td>
-            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VisitDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApproxTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Arrival)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Departure)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WoundCondition)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>

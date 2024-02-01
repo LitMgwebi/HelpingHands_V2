@@ -10,50 +10,56 @@
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
+<section class="px-5 py-3">
+    <hr />
+</section>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="PatientId" value="@User.FindFirst("UserId")!.Value" class="form-control" hidden readonly />
-            <input asp-for="ContractStatus" value="N" class="form-control" hidden readonly />
-            <div class="form-group">
-                <label asp-for="ContractDate" class="control-label"></label>
-                <input asp-for="ContractDate" type="date" class="form-control" value="@ViewBag.CurrentDate.ToString("yyyy-MM-dd")" readonly />
-                <span asp-validation-for="ContractDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WoundId" class="control-label"></label>
-                <select asp-for="WoundId" class="form-control" asp-items="ViewBag.Wounds">
-                    <option disabled selected>--- SELECT ---</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddressLineOne" class="control-label"></label>
-                <input asp-for="AddressLineOne" class="form-control" />
-                <span asp-validation-for="AddressLineOne" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddressLineTwo" class="control-label"></label>
-                <input asp-for="AddressLineTwo" class="form-control" />
-                <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SuburbId" class="control-label"></label>
-                <select asp-for="SuburbId" class="form-control" asp-items="ViewBag.Suburbs">
-                    <option disabled selected>--- SELECT ---</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContractComment" class="control-label"></label>
-                <textarea asp-for="ContractComment" class="form-control" rows="3" autofocus></textarea>
-                <span asp-validation-for="ContractComment" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <a asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
+<div class="container-fluid">
+    <div class="row row-cols-auto justify-content-center align-items-center p-1">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="PatientId" value="@User.FindFirst("UserId")!.Value" type="hidden" />
+                <input asp-for="ContractStatus" value="N" type="hidden"/>
+                <div class="input-group-sm">
+                    <label asp-for="ContractDate" class="control-label"></label>
+                    <input asp-for="ContractDate" type="date" class="form-control" value="@ViewBag.CurrentDate.ToString("yyyy-MM-dd")" readonly />
+                    <span asp-validation-for="ContractDate" class="text-danger"></span>
+                </div>
+                <div class="input-group-sm">
+                    <label asp-for="WoundId" class="control-label"></label>
+                    <select asp-for="WoundId" class="form-control" asp-items="ViewBag.Wounds">
+                        <option disabled selected>--- SELECT ---</option>
+                    </select>
+                </div>
+                <div class="input-group-sm">
+                    <label asp-for="ContractComment" class="control-label"></label>
+                    <textarea asp-for="ContractComment" class="form-control" rows="3" autofocus></textarea>
+                    <span asp-validation-for="ContractComment" class="text-danger"></span>
+                </div>
+                <div class="input-group-sm">
+                    <label asp-for="AddressLineOne" class="control-label"></label>
+                    <input asp-for="AddressLineOne" class="form-control" />
+                    <span asp-validation-for="AddressLineOne" class="text-danger"></span>
+                </div>
+                <div class="input-group-sm">
+                    <label asp-for="AddressLineTwo" class="control-label"></label>
+                    <input asp-for="AddressLineTwo" class="form-control" />
+                    <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
+                </div>
+                <div class="input-group-sm">
+                    <label asp-for="SuburbId" class="control-label"></label>
+                    <select asp-for="SuburbId" class="form-control" asp-items="ViewBag.Suburbs">
+                        <option disabled selected>--- SELECT ---</option>
+                    </select>
+                </div>
+                <div class="row justify-content-center row-cols-auto py-4">
+                    <div class="btn-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
