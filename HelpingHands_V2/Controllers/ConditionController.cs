@@ -18,17 +18,11 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                var conditions = await _condition.GetConditions();
+                ConditionsViewModel conditionsViewModel = await CreateModel();
 
-                if (conditions == null)
-                {
+                if (conditionsViewModel == null)
                     return NotFound();
-                }
 
-                ConditionsViewModel conditionsViewModel = new ConditionsViewModel
-                {
-                    Conditions = conditions
-                };
                 return View(conditionsViewModel);
             }
             catch (Exception ex)
@@ -48,17 +42,10 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var condition = await _condition.GetCondition(ConditionId);
-                var conditions = await _condition.GetConditions();
+                ConditionsViewModel conditionsViewModel = await CreateModel(ConditionId);
 
-                if (condition == null || conditions == null)
+                if (conditionsViewModel == null)
                     return NotFound();
-
-                ConditionsViewModel conditionsViewModel = new ConditionsViewModel
-                {
-                    Conditions = conditions,
-                    Condition = condition
-                };
 
                 return View(conditionsViewModel);
             } catch(Exception ex)
@@ -68,30 +55,18 @@ namespace HelpingHands_V2.Controllers
             }
         }
     
-        public IActionResult Create()
-        {
-            try
-            {
-                return View();
-            }
-            catch (Exception ex)
-            {
-                //return new JsonResult(new { error = ex.Message });
-                ViewBag.Message = ex.Message;
-                return View();
-            }
-        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ConditionName, ConditionDescription, Active")] Condition condition)
         {
+            ConditionsViewModel conditionsViewModel = await CreateModel(condition.ConditionId);
             try
             {
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View(condition);
+                    return View(nameof(Index), conditionsViewModel);
                 }
                 await _condition.AddCondition(condition);
                 ViewBag.Message = "Record Added successfully;";
@@ -99,9 +74,8 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
-                return View(condition);
+                return View(nameof(Index), conditionsViewModel);
             }
         }
 
@@ -109,6 +83,7 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("ConditionId, ConditionName, ConditionDescription, Active")] Condition condition)
         {
+            ConditionsViewModel conditionsViewModel = await CreateModel(condition.ConditionId);
             try
             {
                 if (!ModelState.IsValid)
@@ -116,7 +91,7 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.Condition = condition;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return RedirectToAction(nameof(Index));
+                    return View(nameof(Index), conditionsViewModel);
                 }
                 await _condition.UpdateCondition(condition);
                 return RedirectToAction(nameof(Index));
@@ -124,7 +99,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return View();
+                return View(nameof(Index), conditionsViewModel);
             }
         }
 
@@ -132,13 +107,14 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete([Bind("ConditionId")] int ConditionId)
         {
+            ConditionsViewModel conditionsViewModel = await CreateModel(ConditionId);
             try
             {
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
-                    return RedirectToAction(nameof(Index));
+                    return View(nameof(Index), conditionsViewModel);
                 }
                 await _condition.DeleteCondition(ConditionId);
                 return RedirectToAction(nameof(Index));
@@ -146,8 +122,25 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Index));
+                return View(nameof(Index), conditionsViewModel);
             }
+        }
+
+        public async Task<ConditionsViewModel> CreateModel(int? id = null)
+        {
+            Condition condition = await _condition.GetCondition(id);
+            IEnumerable<Condition> conditions = await _condition.GetConditions();
+
+            if (conditions == null)
+                throw new NullReferenceException("Could not retrieve cities from the database");
+
+            ConditionsViewModel conditionsViewModel = new ConditionsViewModel
+            {
+                Conditions = conditions,
+                Condition = condition
+            };
+
+            return conditionsViewModel;
         }
     }
 }

@@ -14,52 +14,89 @@
 <a asp-action="Create" class="btn btn-primary">Create New</a>
 
 <div class="container-fluid">
-    <div class="row row-cols-auto">
-        <div class="col-lg-8">
-            <table class="table" id="myTable">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Condition!.ConditionName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Condition!.ConditionDescription)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Conditions!)
-                    {
+    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly">
+        <div class="col-md-6">
+            <div class="row border border-3 rounded-3 p-2 m-2">
+                <table class="table" id="myTable">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(model => item.ConditionName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.ConditionDescription)
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <form asp-action="Index">
-                                        <input asp-for="@item.ConditionId" name="ConditionId" type="hidden" />
-                                        <input type="submit" value="Edit" class="btn btn-success" />
-                                    </form>
-                                    <form asp-action="Delete">
-                                        <input asp-for="@item.ConditionId" name="ConditionId" type="hidden" />
-                                        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @item.ConditionName?')" class="btn btn-danger" />
-                                    </form>
-                                </div>
-                            </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Condition!.ConditionName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Condition!.ConditionDescription)
+                            </th>
+                            <th></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Conditions!)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => item.ConditionName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.ConditionDescription)
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <form asp-action="Index">
+                                            <input asp-for="@item.ConditionId" name="ConditionId" type="hidden" />
+                                            <input type="submit" value="Edit" class="btn btn-success" />
+                                        </form>
+                                        <form asp-action="Delete">
+                                            <input asp-for="@item.ConditionId" name="ConditionId" type="hidden" />
+                                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @item.ConditionName?')" class="btn btn-danger" />
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="col-lg-4">
-            @if(Model.Condition != null)
-            {
-                <h2 class="display-5 text-center">Edit @Model?.Condition!.ConditionName</h2>
+        <div class="col-md-4">
+            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
+                <h2 class="h3 text-center">Add Condition</h2>
+                <section class="px-5">
+                    <hr />
+                </section>
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col-12">
+                        <div class="input-group-sm">
+                            <label asp-for="Condition!.ConditionName" class="form-label"></label>
+                            <input name="ConditionName" class="form-control" />
+                            <span asp-validation-for="Condition!.ConditionName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-sm">
+                            <label asp-for="Condition!.ConditionDescription" class="form-label"></label>
+                            <textarea name="ConditionDescription" class="form-control" rows="3" autofocus></textarea>
+                            <span asp-validation-for="Condition!.ConditionDescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row justify-content-center g-2 py-4">
+                            <div class="btn-group col-auto">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
+                @if (Model.Condition != null)
+                {
+                    <h2 class="h3 text-center">Edit @Model?.Condition!.ConditionName</h2>
+                }
+                else
+                {
+                    <h2 class="h3 text-center">Select condition to edit</h2>
+                }
                 <div class="row">
                     <form asp-action="Edit">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -75,7 +112,7 @@
                             <div class="input-group-sm">
                                 <label asp-for="Condition!.ConditionDescription" class="form-label"></label>
                                 <textarea asp-for="Condition!.ConditionDescription" class="form-control" rows="3" autofocus>
-                    </textarea>
+                        </textarea>
                                 <span asp-validation-for="Condition!.ConditionDescription" class="text-danger"></span>
                             </div>
                         </div>
@@ -86,12 +123,7 @@
                         </div>
                     </form>
                 </div>
-            } else
-            {
-                <span>
-                    Select Condition to edit
-                </span>
-            }
+            </div>
         </div>
     </div>
 </div>
