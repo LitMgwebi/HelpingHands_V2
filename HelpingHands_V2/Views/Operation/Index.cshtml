@@ -14,54 +14,59 @@
 <div class="container-fluid">
     <div class="row row-cols-md-2 row-cols-auto justify-content-evenly">
         <div class="col-md-6">
-            <table class="table" id="myTable">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            @Html.DisplayNameFor(model => model.OperationHour!.OperationDay)
-                        </th>
-                        <th scope="col">
-                            @Html.DisplayNameFor(model => model.OperationHour!.OpenTime)
-                        </th>
-                        <th scope="col">
-                            @Html.DisplayNameFor(model => model.OperationHour!.CloseTime)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                    @foreach (var item in Model.OperationHours!)
-                    {
-                        <tr scope="row">
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OperationDay)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OpenTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CloseTime)
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <form asp-action="Index">
-                                        <input asp-for="@item.OperationHoursId" name="OperationHoursId" type="hidden" />
-                                        <input type="submit" value="Edit" class="btn btn-success" />
-                                    </form>
-                                    <form asp-action="Delete">
-                                        <input asp-for="@item.OperationHoursId" name="OperationHoursId" type="hidden" />
-                                        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" />
-                                    </form>
-                                </div>
-                            </td>
+            <div class="row border border-3 rounded-3 p-2 m-2">
+                <table class="table" id="myTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.OperationHour!.OperationDay)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.OperationHour!.OpenTime)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.OperationHour!.CloseTime)
+                            </th>
+                            <th></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        @foreach (var item in Model.OperationHours!)
+                        {
+                            <tr scope="row">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OperationDay)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OpenTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CloseTime)
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <form asp-action="Index">
+                                            <input asp-for="@item.OperationHoursId" name="OperationHoursId" type="hidden" />
+                                            <input type="submit" value="Edit" class="btn btn-success" />
+                                        </form>
+                                        <form asp-action="Delete">
+                                            <input asp-for="@item.OperationHoursId" name="OperationHoursId" type="hidden" />
+                                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" />
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="col-md-3">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
                 <h2 class="h3 text-center">Add Operation Hours</h2>
+                <section class="px-5">
+                    <hr />
+                </section>
                 <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
@@ -84,7 +89,7 @@
                     </div>
                 </form>
             </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
                 @if (Model.OperationHour != null)
                 {
                     <h2 class="h3 text-center">Edit @Model?.OperationHour.OperationDay Hours</h2>
@@ -93,7 +98,7 @@
                 {
                     <h2 class="h3 text-center">Select Day to edit</h2>
                 }
-                <section class="px-5 py-4">
+                <section class="px-5">
                     <hr />
                 </section>
                 <form asp-action="Edit">

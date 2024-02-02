@@ -20,17 +20,10 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                var operations = await _op.GetOperationHours();
+                OperationsViewModel operationsViewModel = await CreateModel();
 
-                if (operations == null)
-                {
+                if(operationsViewModel == null)
                     return NotFound();
-                }
-
-                OperationsViewModel operationsViewModel = new OperationsViewModel
-                {
-                    OperationHours = operations
-                };
 
                 return View(operationsViewModel);
             }
@@ -52,17 +45,10 @@ namespace HelpingHands_V2.Controllers
                     return NotFound();
                 }
 
-                var op = await _op.GetOperation(OperationHoursId);
-                var operations = await _op.GetOperationHours();
+                OperationsViewModel operationsViewModel = await CreateModel(OperationHoursId);
 
-
-                if (op == null || operations == null)
+                if (operationsViewModel == null)
                     return NotFound();
-
-                OperationsViewModel operationsViewModel = new OperationsViewModel { 
-                    OperationHours = operations,
-                    OperationHour = op
-                };  
 
                 return View(operationsViewModel);
             }
@@ -77,13 +63,14 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("OperationDay, OpenTime, CloseTime, BusinessId, Active")] OperationHour operationHour)
         {
+            OperationsViewModel operationsViewModel = await CreateModel();
             try
             {
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View();
+                    return View(nameof(Index), operationsViewModel);
                 }
                 await _op.AddOperationHours(operationHour);
                 ViewBag.Message = "Record Added successfully;";
@@ -92,8 +79,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return View();
-                //return new JsonResult(new { error = ex.Message });
+                return View(nameof(Index), operationsViewModel);
             }
         }
 
@@ -101,13 +87,14 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("OperationHoursId, OperationDay, OpenTime, CloseTime, BusinessId, Active")] OperationHour operationHour)
         {
+            OperationsViewModel operationsViewModel = await CreateModel();
             try
             {
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return RedirectToAction(nameof(Index));
+                    return View(nameof(Index), operationsViewModel);
                 }
                 await _op.UpdateOperationHour(operationHour);
                 return RedirectToAction(nameof(Index));
@@ -116,7 +103,7 @@ namespace HelpingHands_V2.Controllers
             {
 
                 ViewBag.Message = ex.Message;
-                return View(operationHour);
+                return View(nameof(Index), operationsViewModel);
             }
         }
 
@@ -124,13 +111,14 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete([Bind("OperationHoursId")] int OperationHoursId)
         {
+            OperationsViewModel operationsViewModel = await CreateModel();
             try
             {
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
-                    return RedirectToAction(nameof(Index));
+                    return View(nameof(Index), operationsViewModel);
                 }
                 await _op.DeleteOperationHour(OperationHoursId);
                 return RedirectToAction(nameof(Index));
@@ -138,8 +126,31 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Index));
+                return View(nameof(Index), operationsViewModel);
             }
+        }
+
+        public async Task<OperationsViewModel> CreateModel(int? id = null)
+        {
+            OperationsViewModel operationsViewModel;
+            OperationHour operation;
+            IEnumerable<OperationHour> operations;
+
+            operations = await _op.GetOperationHours();
+            operation = await _op.GetOperation(id);
+
+            if (operations == null)
+            {
+                throw new NullReferenceException("Could not retrieve cities from the database");
+            }
+
+            operationsViewModel = new OperationsViewModel
+            {
+                OperationHours = operations,
+                OperationHour = operation
+            };
+
+            return operationsViewModel;
         }
     }
 }

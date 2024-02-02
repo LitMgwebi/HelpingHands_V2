@@ -19,16 +19,13 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                var cities = await _city.GetCities();
+                CitiesViewModel citiesViewModel = await CreateModel();
 
-                if (cities == null)
+                if (citiesViewModel == null)
                 {
                     return NotFound();
-                }
-                CitiesViewModel citiesViewModel = new CitiesViewModel
-                {
-                    Cities = cities
-                };
+                } 
+
                 return View(citiesViewModel);
             }
             catch (Exception ex)
@@ -44,21 +41,12 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 if (CityId == null)
-                {
                     return NotFound();
-                }
+               
+                CitiesViewModel citiesViewModel = await CreateModel(CityId);
 
-                var city = await _city.GetCity(CityId);
-                var cities = await _city.GetCities();
-
-                if (city == null || cities == null)
+                if (citiesViewModel == null)
                     return NotFound();
-
-                CitiesViewModel citiesViewModel = new CitiesViewModel
-                {
-                    Cities = cities,
-                    City = city
-                };
 
                 return View(citiesViewModel);
             }
@@ -73,19 +61,13 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken] 
         public async Task<IActionResult> Create([Bind("CityName, CityAbbreviation, Active")] City city)
         {
+            CitiesViewModel citiesViewModel = await CreateModel(city.CityId);
             try
             {
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below";
-
-                    var cities = await _city.GetCities();
-                    CitiesViewModel citiesViewModel = new CitiesViewModel
-                    {
-                        City = city,
-                        Cities = cities
-                    };
                     return View(nameof(Index), citiesViewModel);
                 }
                 await _city.AddCity(city);
@@ -95,7 +77,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Index));
+                return View(nameof(Index), citiesViewModel);
             }
         }
 
@@ -103,6 +85,7 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("CityId, CityName, CityAbbreviation, Active")] City city)
         {
+            CitiesViewModel citiesViewModel = await CreateModel(city.CityId);
             try
             {
                 if (!ModelState.IsValid)
@@ -110,7 +93,7 @@ namespace HelpingHands_V2.Controllers
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.City = city;
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View(city);
+                    return View(nameof(Index), citiesViewModel);
                 }
                 await _city.UpdateCity(city);
                 return RedirectToAction(nameof(Index));
@@ -118,7 +101,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return View(city);
+                return View(nameof(Index), citiesViewModel);
             }
         }
 
@@ -126,21 +109,44 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete([Bind("CityId")]int CityId)
         {
+            CitiesViewModel citiesViewModel = await CreateModel(CityId);
             try
             {
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Something went wrong with the delete function. Please hold on.";
-                    return RedirectToAction(nameof(Index));
+                    return View(nameof(Index), citiesViewModel);
                 }
                 await _city.DeleteCity(CityId);
                 return RedirectToAction(nameof(Index));
             } catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Index));
+                return View(nameof(Index), citiesViewModel);
             }
+        }
+
+        public async Task<CitiesViewModel> CreateModel(int? id = null)
+        {
+            CitiesViewModel citiesViewModel;
+            City city;
+            IEnumerable<City> cities;
+
+            cities = await _city.GetCities();
+            city = await _city.GetCity(id);
+           
+            if (cities == null)
+            {
+                throw new NullReferenceException("Could not retrieve cities from the database");
+            }
+            citiesViewModel = new CitiesViewModel
+            {
+                Cities = cities,
+                City = city
+            };
+
+            return citiesViewModel;
         }
     }
 }
