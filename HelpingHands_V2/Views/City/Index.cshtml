@@ -12,57 +12,90 @@
     <p class="text-decoration-underline text-danger">@Message</p>
 }
 <hr />
-<a asp-action="Create" class="btn btn-primary">Add New</a>
 
 <div class="container-fluid">
-    <div class="row row-cols-auto">
-        <div class="col-lg-8">
-            <table class="table" id="myTable">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.City!.CityName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.City!.CityAbbreviation)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Cities!)
-                    {
+    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly">
+        <div class="col-md-8">
+            <div class="row border border-3 rounded-3 p-2 m-2">
+                <table class="table" id="myTable">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CityName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CityAbbreviation)
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <form asp-action="Index">
-                                        <input asp-for="@item.CityId" name="CityId"  type="hidden" />
-                                        <input type="submit" value="Edit" class="btn btn-success" />
-                                    </form>
-                                    <form asp-action="Delete">
-                                        <input asp-for="@item.CityId" name="CityId"  type="hidden" />
-                                        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @item.CityName?')" class="btn btn-danger" />
-                                    </form>
-                                </div>
-                            </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model.City!.CityName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.City!.CityAbbreviation)
+                            </th>
+                            <th></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Cities!)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CityName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CityAbbreviation)
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <form asp-action="Index">
+                                            <input asp-for="@item.CityId" name="CityId" type="hidden" />
+                                            <input type="submit" value="Edit" class="btn btn-success" />
+                                        </form>
+                                        <form asp-action="Delete">
+                                            <input asp-for="@item.CityId" name="CityId" type="hidden" />
+                                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @item.CityName?')" class="btn btn-danger" />
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="col-lg-4">
-            @if (Model.City != null)
-            {
-                <h2 class="display-5 text-center">Edit @Model?.City!.CityName</h2>
-                @if (Message != null)
+            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
+                <h2 class="h3 text-center">Add City</h2>
+                <section class="px-5">
+                    <hr />
+                </section>
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col-12">
+                        <div class="input-group-sm">
+                            <label asp-for="City!.CityName" class="form-label"></label>
+                            <input name="CityName" class="form-control" />
+                            <span asp-validation-for="City!.CityName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-sm">
+                            <label asp-for="City!.CityAbbreviation" class="form-label"></label>
+                            <input name="CityAbbreviation" class="form-control" />
+                            <span asp-validation-for="City!.CityAbbreviation" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row justify-content-center g-2 py-4">
+                            <div class="btn-group col-auto">
+                                <input type="submit" value="Add" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
+                @if (Model.City != null)
                 {
-                    <p class="text-decoration-underline text-danger">@Message</p>
+                    <h2 class="display-5 text-center">Edit @Model?.City!.CityName</h2>
+                }
+                else
+                {
+                    <h2 class="h3 text-center">Select City to edit</h2>
                 }
                 <section class="px-5 py-4">
                     <hr />
@@ -94,11 +127,7 @@
                         </div>
                     </form>
                 </div>
-            }
-            else
-            {
-                <span>Select City to edit</span>
-            }
+            </div>
         </div>
     </div>
 </div>

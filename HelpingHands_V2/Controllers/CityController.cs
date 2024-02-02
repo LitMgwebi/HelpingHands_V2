@@ -69,19 +69,6 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public IActionResult Create()
-        {
-            try
-            {
-                return View();
-            }
-            catch (Exception ex)
-            {
-                //return new JsonResult(new { error = ex.Message });
-                ViewBag.Message = ex.Message;
-                return View();
-            }
-        }
         [HttpPost]
         [ValidateAntiForgeryToken] 
         public async Task<IActionResult> Create([Bind("CityName, CityAbbreviation, Active")] City city)
@@ -92,7 +79,14 @@ namespace HelpingHands_V2.Controllers
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below";
-                    return View();
+
+                    var cities = await _city.GetCities();
+                    CitiesViewModel citiesViewModel = new CitiesViewModel
+                    {
+                        City = city,
+                        Cities = cities
+                    };
+                    return View(nameof(Index), citiesViewModel);
                 }
                 await _city.AddCity(city);
                 ViewBag.Message = "Record Added successfully.";
@@ -101,7 +95,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 

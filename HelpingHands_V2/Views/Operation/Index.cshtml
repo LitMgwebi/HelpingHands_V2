@@ -88,46 +88,44 @@
                 @if (Model.OperationHour != null)
                 {
                     <h2 class="h3 text-center">Edit @Model?.OperationHour.OperationDay Hours</h2>
-                    <section class="px-5 py-4">
-                        <hr />
-                    </section>
-                        <form asp-action="Edit">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input asp-for="OperationHour!.OperationHoursId" type="hidden" />
-                            <div class="col-12">
-                                <div class="input-group-sm">
-                                    <label asp-for="OperationHour!.OperationDay" class="form-label"></label>
-                                    <input asp-for="OperationHour!.OperationDay" type="text" class="form-control" />
-                                    <span asp-validation-for="OperationHour!.OperationDay" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="input-group-sm">
-                                    <label asp-for="OperationHour!.OpenTime" class="form-label"></label>
-                                    <input asp-for="OperationHour!.OpenTime" type="time" class="form-control" />
-                                    <span asp-validation-for="OperationHour!.OpenTime" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="input-group-sm">
-                                    <label asp-for="OperationHour!.CloseTime" class="form-label"></label>
-                                    <input asp-for="OperationHour!.CloseTime" type="time" class="form-control" />
-                                    <span asp-validation-for="OperationHour!.CloseTime" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="btn-group">
-                                    <input type="submit" value="Save" class="btn btn-primary" />
-                                </div>
-                            </div>
-                        </form>
                 }
                 else
                 {
-                    <span>
-                        Select record to edit
-                    </span>
+                    <h2 class="h3 text-center">Select Day to edit</h2>
                 }
+                <section class="px-5 py-4">
+                    <hr />
+                </section>
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="OperationHour!.OperationHoursId" type="hidden" />
+                    <div class="col-12">
+                        <div class="input-group-sm">
+                            <label asp-for="OperationHour!.OperationDay" class="form-label"></label>
+                            <input asp-for="OperationHour!.OperationDay" type="text" class="form-control" />
+                            <span asp-validation-for="OperationHour!.OperationDay" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-sm">
+                            <label asp-for="OperationHour!.OpenTime" class="form-label"></label>
+                            <input asp-for="OperationHour!.OpenTime" type="time" class="form-control" />
+                            <span asp-validation-for="OperationHour!.OpenTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-sm">
+                            <label asp-for="OperationHour!.CloseTime" class="form-label"></label>
+                            <input asp-for="OperationHour!.CloseTime" type="time" class="form-control" />
+                            <span asp-validation-for="OperationHour!.CloseTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="btn-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
