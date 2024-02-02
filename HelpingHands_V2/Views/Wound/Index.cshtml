@@ -11,100 +11,132 @@
     <p class="text-decoration-underline text-danger">@Message</p>
 }
 <hr />
-<a asp-action="Create" class="btn btn-primary">Create New</a>
 <div class="container-fluid">
-    <div class="row row-cols-auto">
-        <div class="col-lg-8">
-            <table class="table" id="myTable">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Wound!.WoundName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Wound!.Grade)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Wound!.WoundDescription)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Wounds)
-                    {
+    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly align-items-start">
+        <div class="col-md-7">
+            <div class="row border border-3 rounded-3 p-2 m-2">
+                <table class="table" id="myTable">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.WoundName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Grade)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.WoundDescription)
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <form asp-action="Index">
-                                        <input asp-for="@item.WoundId" name="WoundId" type="hidden" />
-                                        <input type="submit" value="Edit" class="btn btn-success" />
-                                    </form>
-                                    <form asp-action="Delete">
-                                        <input asp-for="@item.WoundId" name="WoundId" type="hidden" />
-                                        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @item?.WoundName?')" class="btn btn-danger" />
-                                    </form>
-                                </div>
-                            </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Wound!.WoundName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Wound!.Grade)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Wound!.WoundDescription)
+                            </th>
+                            <th></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Wounds)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.WoundName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Grade)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.WoundDescription)
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <form asp-action="Index">
+                                            <input asp-for="@item.WoundId" name="WoundId" type="hidden" />
+                                            <input type="submit" value="Edit" class="btn btn-success" />
+                                        </form>
+                                        <form asp-action="Delete">
+                                            <input asp-for="@item.WoundId" name="WoundId" type="hidden" />
+                                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @item?.WoundName?')" class="btn btn-danger" />
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
         </div>
 
-        <div class="col-lg-4">
-            @if(Model.Wound != null)
-            {
-                <h2 class="display-5 text-center">Edit @Model?.Wound.WoundName</h2>
-               
-                <hr />
-                <form asp-action="Edit">
+        <div class="col-md-4">
+            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
+                <h2 class="h3 text-center">Add Wound</h2>
+                <section class="px-5">
+                    <hr />
+                </section>
+                <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input asp-for="Wound!.WoundId" type="hidden" />
-                    <div class="col-12">
-                        <div class="input-group-sm">
-                            <label asp-for="Wound!.WoundName" class="form-label"></label>
-                            <input asp-for="Wound!.WoundName" class="form-control" />
-                            <span asp-validation-for="Wound!.WoundName" class="text-danger"></span>
-                        </div>
+                    <div class="form-group">
+                        <label asp-for="Wound!.WoundName" class="control-label"></label>
+                        <input name="WoundName" class="form-control" />
+                        <span asp-validation-for="Wound!.WoundName" class="text-danger"></span>
                     </div>
-                    <div class="col-12">
-                        <div class="input-group-sm">
-                            <label asp-for="Wound!.Grade" class="form-label"></label>
-                            <input asp-for="Wound!.Grade" class="form-control" />
-                            <span asp-validation-for="Wound!.Grade" class="text-danger"></span>
-                        </div>
+                    <div class="form-group">
+                        <label asp-for="Wound!.Grade" class="control-label"></label>
+                        <input name="Grade" class="form-control" />
+                        <span asp-validation-for="Wound!.Grade" class="text-danger"></span>
                     </div>
-                    <div class="col-12">
-                        <div class="input-group-sm">
-                            <label asp-for="Wound!.WoundDescription" class="form-label"></label>
-                            <textarea asp-for="Wound!.WoundDescription" class="form-control" rows="3" autofocus>
-                    </textarea>
-                            <span asp-validation-for="Wound!.WoundDescription" class="text-danger"></span>
-                        </div>
+                    <div class="form-group">
+                        <label asp-for="Wound!.WoundDescription" class="control-label"></label>
+                        <textarea name="WoundDescription" class="form-control" rows="3" autofocus></textarea>
+                        <span asp-validation-for="Wound!.WoundDescription" class="text-danger"></span>
                     </div>
-                    <div class="col-12">
-                        <div class="btn-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
-                        </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add" class="btn btn-primary" />
                     </div>
                 </form>
-            } else
-            {
-                <span>
-                    Select Wound to edit
-                </span>
-            }
+            </div>
+            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
+                @if (Model.Wound != null)
+                {
+                    <h2 class="h3 text-center">Edit @Model?.Wound.WoundName</h2>
+                }
+                else
+                {
+                    <h2 class="h3 text-center">Select Wound to edit</h2>
+                }
+                <section class="px-5">
+                    <hr />
+                </section>
+                <div class="row">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="Wound!.WoundId" type="hidden" />
+                        <div class="col-12">
+                            <div class="input-group-sm">
+                                <label asp-for="Wound!.WoundName" class="form-label"></label>
+                                <input asp-for="Wound!.WoundName" class="form-control" />
+                                <span asp-validation-for="Wound!.WoundName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group-sm">
+                                <label asp-for="Wound!.Grade" class="form-label"></label>
+                                <input asp-for="Wound!.Grade" class="form-control" />
+                                <span asp-validation-for="Wound!.Grade" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group-sm">
+                                <label asp-for="Wound!.WoundDescription" class="form-label"></label>
+                                <textarea asp-for="Wound!.WoundDescription" class="form-control" rows="3" autofocus>
+                        </textarea>
+                                <span asp-validation-for="Wound!.WoundDescription" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="btn-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
