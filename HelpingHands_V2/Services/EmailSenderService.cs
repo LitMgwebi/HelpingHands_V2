@@ -29,6 +29,8 @@ namespace HelpingHands_V2.Services
                 emailMessage = NurseContract(message);
             else if(emailType == "nurse_approval")
                 emailMessage = NurseApproval(message);
+            else if(emailType == "manager")
+                emailMessage = ManagerMessage(message);
 
             Send(emailMessage);
         }
@@ -81,9 +83,21 @@ namespace HelpingHands_V2.Services
             return emailMessage;
         }
 
+        private MimeMessage ManagerMessage(Message message)
+        {
+            string content = $"Hello {message.FullName}.\n\nnWe at Helping Hands are extremely happy to have you join our family.\n\nThe user you have been allocated is: {message.Username}.\nYour current password is: password\nPlease use this email and password to log on to the system.\nRemember to change your password as soon as possible\n\nKind Regards,\nHelping Hands Team.\n\n*This is an automated response*";
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress("Helping Hands Automated Service", _email.From));
+            emailMessage.To.AddRange(message.To);
+            emailMessage.Subject = "Welcome to Helping Hands";
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = content };
+
+            return emailMessage;
+        }
+
         private MimeMessage NurseApproval(Message message)
         {
-            string content = $"Hello {message.FullName}.\n\nWe at Helping Hands are extremely happy to have you join our family.\n\nThe user you have been allocated is: {message.Username}.\nPlease user this email and the password you created to log on to the system.\n\nKind Regards,\nHelping Hands Team.\n\n*This is an automated response*";
+            string content = $"Hello {message.FullName}.\n\nWe at Helping Hands are extremely happy to have you join our family.\n\nThe user you have been allocated is: {message.Username}.\nPlease use this email and the password you created to log on to the system.\n\nKind Regards,\nHelping Hands Team.\n\n*This is an automated response*";
             var emailMessage = new MimeMessage();
             emailMessage.From.Add(new MailboxAddress("Helping Hands Automated Service", _email.From));
             emailMessage.To.AddRange(message.To);

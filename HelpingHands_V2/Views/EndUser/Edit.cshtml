@@ -4,89 +4,106 @@
     ViewData["Title"] = "Edit";
     var Message = ViewBag.Message;
 }
-@if (User.IsInRole("A"))
-{
-    <h2 class="display-4 text-center">Edit @Model?.Firstname Details</h2>
-}
-else
-{
-    <h2 class="display-4 text-center">Edit @Model?.Firstname @Model?.Lastname Details</h2>
-}
+
+<h2 class="display-4 text-center">Edit Profile Details</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
 
 <hr />
-<form enctype="multipart/form-data" asp-action="Edit">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="row">
-        <div class="col-5">
+<div class="container-fluid">
+    <form enctype="multipart/form-data" asp-action="Edit">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="container px-5 ">
             <input asp-for="UserId" type="hidden" />
             <input asp-for="UserType" type="hidden" />
             <input asp-for="ApplicationType" type="hidden" />
             <input asp-for="Password" type="hidden" />
             <input asp-for="ConfirmPassword" type="hidden" />
-            <input asp-for="Username"  type="hidden"/>
-            <div class="input-group">
-                <span class="input-group-text">First and Last name</span>
-                <input asp-for="Firstname" type="text" aria-label="First name" class="form-control">
-                <input asp-for="Lastname" type="text" aria-label="Last name" class="form-control">
+            <input asp-for="Username" type="hidden" />
+            <input asp-for="ProfilePicture" type="hidden" />
+            <input asp-for="ProfilePictureName" type="hidden" />
+            <div class="row row-cols-auto px-5 g-3 py-4 justify-content-start">
+                <div class="col-12">
+                    <h4 class="display-6">Personal Information</h4>
+                </div>
+                <div class="col-5">
+                    <div class="input-group-sm">
+                        <label asp-for="Firstname" class="form-label"></label>
+                        <input asp-for="Firstname" class="form-control" type="text" />
+                        <span asp-validation-for="Firstname" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="input-group-sm">
+                        <label asp-for="Lastname" class="form-label"></label>
+                        <input asp-for="Lastname" class="form-control" type="text" />
+                        <span asp-validation-for="Lastname" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="input-group-sm">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" type="email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group-sm">
+                        <label asp-for="ProfilePicture" class="form-label"></label>
+                        <input asp-for="ProfilePicture" name="file" accept="image/*" class="form-control" type="file" />
+                        <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group-sm">
+                        <label asp-for="Idnumber" class="form-label"></label>
+                        <input asp-for="Idnumber" class="form-control" />
+                        <span asp-validation-for="Idnumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="input-group-sm">
+                        <label asp-for="ContactNumber" class="form-label"></label>
+                        <input asp-for="ContactNumber" class="form-control" />
+                        <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group-sm">
+                        <label asp-for="DateOfBirth" class="form-label"></label>
+                        <input asp-for="DateOfBirth" class="form-control" type="date" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group-sm">
+                        <label asp-for="Gender" class="form-label"></label>
+                        <select asp-for="Gender" class="form-select" asp-items="ViewBag.Genders">
+                            <option disabled selected>--- SELECT ---</option>
+                        </select>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="DateOfBirth" class="control-label"></label>
-                <input asp-for="DateOfBirth" class="form-control" type="date" />
-                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="row justify-content-center g-2 py-4">
+                <div class="btn-group col-2">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    @if (User.IsInRole("A") || User.IsInRole("O"))
+                    {
+                        <a asp-action="Profile" asp-route-id="@Model?.UserId" class="btn btn-secondary">Cancel</a>
+                    }
+                    else if (User.IsInRole("N"))
+                    {
+                        <a asp-action="Profile" asp-controller="Nurse" asp-route-id="@Model?.UserId" class="btn btn-secondary">Cancel</a>
+                    }
+                    else if (User.IsInRole("P"))
+                    {
+                        <a asp-action="Profile" asp-controller="Patient" asp-route-id="@Model?.UserId" class="btn btn-secondary">Cancel</a>
+                    }
+                </div>
             </div>
         </div>
-        <div class="col-5">
-            <input asp-for="Password" class="form-control" hidden />
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="form-control" asp-items="ViewBag.Genders">
-                </select>
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContactNumber" class="control-label"></label>
-                <input asp-for="ContactNumber" class="form-control" />
-                <span asp-validation-for="ContactNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Idnumber" class="control-label"></label>
-                <input asp-for="Idnumber" class="form-control" />
-                <span asp-validation-for="Idnumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @* <div class="img-thumbnail">
-                    <img src="@Model!.ProfilePicture" alt="@Model!.ProfilePictureName" />
-                </div> *@
-                <label asp-for="ProfilePicture" class="control-label"></label>
-                <input asp-for="ProfilePicture" name="file" accept="image/*" class="form-control" type="file" />
-                <span asp-validation-for="ProfilePicture" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary" />
-            @if (User.IsInRole("A") || User.IsInRole("O"))
-            {
-                <a asp-action="Profile" asp-route-id="@Model?.UserId" class="btn btn-secondary">Cancel</a>
-            }
-            else if (User.IsInRole("N"))
-            {
-
-                <a asp-action="Profile" asp-controller="Nurse" asp-route-id="@Model?.UserId" class="btn btn-secondary">Cancel</a>
-            }
-            else if (User.IsInRole("P"))
-            {
-
-                <a asp-action="Profile" asp-controller="Patient" asp-route-id="@Model?.UserId" class="btn btn-secondary">Cancel</a>
-            }
-        </div>
-    </div>
-</form>
+    </form>
+</div>
