@@ -48,7 +48,7 @@
             <h2 class="display-5 text-center">Add Suburb</h2>
             <hr/>
             <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <input asp-for="NurseId" type="hidden"/>
                 <div class="input-group-sm">
                     <label asp-for="Suburb!.SuburbName" class="control-label"></label>

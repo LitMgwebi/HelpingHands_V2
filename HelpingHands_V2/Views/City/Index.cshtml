@@ -64,7 +64,7 @@
                     <hr />
                 </section>
                 <form asp-action="Create">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="col-12">
                         <div class="input-group-sm">
                             <label asp-for="City!.CityName" class="form-label"></label>
@@ -102,7 +102,7 @@
                 </section>
                 <div class="row">
                     <form asp-action="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div asp-validation-summary="All" class="text-danger"></div>
                         <input type="hidden" asp-for="City!.CityId" />
                         <div class="col-12">
                             <div class="input-group-sm">

@@ -14,6 +14,7 @@
 
 <section class="row">
     <form asp-action="VisitRange">
+        <div asp-validation-summary="All" class="text-danger"></div>
         <input name="NurseId" value="@User.FindFirst("UserId")!.Value" hidden />
         <div class="form-group">
             <label class="control-label">Start</label>

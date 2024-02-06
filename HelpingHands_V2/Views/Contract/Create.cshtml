@@ -18,7 +18,7 @@
     <div class="row row-cols-auto justify-content-center align-items-center p-1">
         <div class="col-md-4">
             <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <input asp-for="PatientId" value="@User.FindFirst("UserId")!.Value" type="hidden" />
                 <input asp-for="ContractStatus" value="N" type="hidden"/>
                 <div class="input-group-sm">

@@ -41,6 +41,7 @@ namespace HelpingHands_V2.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
+            var suburbs = await _suburb.GetSuburbs();
             try
             {
                 if (id == null)
@@ -49,36 +50,31 @@ namespace HelpingHands_V2.Controllers
                 }
 
                 var businessInfo = await _business.GetBusinessInfo();
-                var suburbs = await _suburb.GetSuburbs();
 
                 if (businessInfo == null)
                     return NotFound();
 
-                //ViewBag.BusinessInfo = businessInfo;
                 ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 return View(businessInfo);
             }
             catch (Exception ex)
             {
+                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("BusinessId, OrganizationName, Nponumber, AddressLineOne, AddressLineTwo, SuburbId, ContactNumber, Email, Active")] BusinessInformation bi)
         {
+            var suburbs = await _suburb.GetSuburbs();
             try
             {
                 ModelState.Remove("Suburb");
                 if (!ModelState.IsValid)
                 {
-                    var suburbs = await _suburb.GetSuburbs();
-                    //ViewBag.BusinessInfo = bi;
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                    //var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    //return new JsonResult(new { bi, errors });
                     ViewBag.Message = $"Not all the information required was entered. Please look below";
                     return View(bi);
                 }
@@ -87,9 +83,9 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
+                ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
     }
