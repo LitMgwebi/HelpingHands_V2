@@ -29,9 +29,7 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                //ViewBag.BusinessInfo = businessInfo;
                 return View(businessInfo);
-
             } catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
