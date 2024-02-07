@@ -11,6 +11,7 @@ public partial class Condition
 
     [DisplayName("Condition Name")]
     [Required(ErrorMessage ="Please enter the name of the condition")]
+    [MinLength(2, ErrorMessage ="Condition name has to be more than 2 characters")]
     public string ConditionName { get; set; } = null!;
 
     [DisplayName("Description")]
