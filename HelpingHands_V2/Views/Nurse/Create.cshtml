@@ -11,22 +11,85 @@
     <p class="text-decoration-underline text-danger">@Message</p>
 }
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <input asp-for="NurseId" placeholder="@ViewBag.NurseId" value="@ViewBag.NurseId" type="hidden" />
+
+<div class="container-fluid">
+    <form enctype="multipart/form-data" asp-action="Create">
+        <input asp-for="NurseId" type="hidden" />
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="container px-5 ">
+            <input asp-for="EndUser!.Username" type="hidden" />
+            <div class="row row-cols-auto px-5 g-3 py-4 justify-content-start">
+                <div class="col-12">
+                    <h4 class="display-6">Personal Information</h4>
+                </div>
+                <div class="col-5">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Firstname" class="form-label"></label>
+                        <input asp-for="EndUser!.Firstname" class="form-control" type="text" readonly/>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Lastname" class="form-label"></label>
+                        <input asp-for="EndUser!.Lastname" class="form-control" type="text" readonly />
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Email" class="form-label"></label>
+                        <input asp-for="EndUser!.Email" class="form-control" type="email" readonly />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group-sm">
+                        <div class="img-thumbnail">
+                            <img src="@Model.EndUser!.ProfilePicture" alt="@Model?.EndUser!.ProfilePictureName" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Idnumber" class="form-label"></label>
+                        <input asp-for="EndUser!.Idnumber" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.ContactNumber" class="form-label"></label>
+                        <input asp-for="EndUser!.ContactNumber" class="form-control" readonly />
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.DateOfBirth" class="form-label"></label>
+                        <input asp-for="EndUser!.DateOfBirth" class="form-control" type="date" readonly />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Gender" class="form-label"></label>
+                        <input asp-for="EndUser!.Gender" class="form-control" readonly />
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Grade" class="control-label"></label>
-                <input asp-for="Grade" class="form-control" />
-                <span asp-validation-for="Grade" class="text-danger"></span>
+            <hr />
+            <div class="row px-5 g-2 justify-content-start row-cols-auto py-4">
+                <div class="col-12">
+                    <h1 class="display-6">Nurse Information</h1>
+                </div>
+                <div class="input-group-sm">
+                    <label asp-for="Grade" class="form-label"></label>
+                    <input asp-for="Grade" class="form-control" />
+                    <span asp-validation-for="Grade" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+
+            <div class="row justify-content-center g-2 py-4">
+                <div class="btn-group col-2">
+                    <input type="submit" value="Register" class="btn btn-primary" />
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

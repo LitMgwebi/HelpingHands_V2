@@ -210,7 +210,6 @@ namespace HelpingHands_V2.Controllers
                 }
                 else
                 {
-                    /*IFormFile file = _host.WebRootFileProvider.GetFileInfo("Media/DefaultProfile.jpeg");*/
                     throw new Exception("No profile photo was uploaded onto system, please upload photo");
                 }
                 if (user.ApplicationType == "P")
@@ -252,7 +251,7 @@ namespace HelpingHands_V2.Controllers
                         {
                             emailMessage = new Message(new string[] { user.Email! }, user.FullName, user.Username, "nurse_registering");
                             _email.SendEmail(emailMessage);
-                            return RedirectToAction("Create", "Nurse", new { id = user.UserId });
+                            return RedirectToAction("Create", "Nurse", new { nurse = user });
                         }
                         else if (user.UserType == "P")
                         {
@@ -439,8 +438,6 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-
-                //ViewBag.UserId = id;
                 ChangePasswordViewModel change = new ChangePasswordViewModel();
                 change.UserId = id;
 
@@ -448,7 +445,6 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -487,7 +483,6 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View(changePassword);
             }

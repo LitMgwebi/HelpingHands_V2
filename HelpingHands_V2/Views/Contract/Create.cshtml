@@ -5,61 +5,61 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Care Contract Form</h2>
+<h2 class="display-4 text-center p-2">Care Contract Form</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-<section class="px-5 py-3">
-    <hr />
-</section>
-
-<div class="container-fluid">
-    <div class="row row-cols-auto justify-content-center align-items-center p-1">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <input asp-for="PatientId" value="@User.FindFirst("UserId")!.Value" type="hidden" />
-                <input asp-for="ContractStatus" value="N" type="hidden"/>
-                <div class="input-group-sm">
+<div class="px-5"><hr /></div>
+<div class="container-fluid p-2">
+    <form asp-action="Create">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input asp-for="PatientId" value="@User.FindFirst("UserId")!.Value" type="hidden" />
+        <input asp-for="ContractStatus" value="N" type="hidden" />
+        <div class="row row-cols-auto d-flex justify-content-evenly align-items-center">
+            <div class="col-md-3">
+                <div class="input-group-sm p-md-1 p-1">
                     <label asp-for="ContractDate" class="control-label"></label>
                     <input asp-for="ContractDate" type="date" class="form-control" value="@ViewBag.CurrentDate.ToString("yyyy-MM-dd")" readonly />
                     <span asp-validation-for="ContractDate" class="text-danger"></span>
                 </div>
-                <div class="input-group-sm">
+                <div class="input-group-sm p-md-1 p-1">
                     <label asp-for="WoundId" class="control-label"></label>
                     <select asp-for="WoundId" class="form-control" asp-items="ViewBag.Wounds">
                         <option disabled selected>--- SELECT ---</option>
                     </select>
                 </div>
-                <div class="input-group-sm">
+                <div class="input-group-sm p-md-1 p-1">
                     <label asp-for="ContractComment" class="control-label"></label>
                     <textarea asp-for="ContractComment" class="form-control" rows="3" autofocus></textarea>
                     <span asp-validation-for="ContractComment" class="text-danger"></span>
                 </div>
-                <div class="input-group-sm">
+                <div class="input-group-sm p-md-1 p-1">
                     <label asp-for="AddressLineOne" class="control-label"></label>
                     <input asp-for="AddressLineOne" class="form-control" />
                     <span asp-validation-for="AddressLineOne" class="text-danger"></span>
                 </div>
-                <div class="input-group-sm">
+                <div class="input-group-sm p-md-1 p-1">
                     <label asp-for="AddressLineTwo" class="control-label"></label>
                     <input asp-for="AddressLineTwo" class="form-control" />
                     <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
                 </div>
-                <div class="input-group-sm">
+                <div class="input-group-sm p-md-1 p-1">
                     <label asp-for="SuburbId" class="control-label"></label>
                     <select asp-for="SuburbId" class="form-control" asp-items="ViewBag.Suburbs">
                         <option disabled selected>--- SELECT ---</option>
                     </select>
                 </div>
-                <div class="row justify-content-center row-cols-auto py-4">
-                    <div class="btn-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                        <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient" class="btn btn-secondary">Cancel</a>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
+
+        <div class="row my-md-2 my-2 py-0">
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <div class="btn-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient" class="btn btn-secondary">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>

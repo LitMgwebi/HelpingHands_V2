@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Authentication;
 using HelpingHands_V2.ViewModels;
+using NuGet.Protocol.Plugins;
+using CloudinaryDotNet.Actions;
+using HelpingHands_V2.Services;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -21,6 +24,14 @@ namespace HelpingHands_V2.Controllers
         private readonly INurse _nurse;
         private readonly IReport _report;
         private readonly IEndUser _user;
+        public List<SelectListItem> genders = new List<SelectListItem>
+        {
+            new SelectListItem("Male", "Male"),
+            new SelectListItem("Female", "Female"),
+            new SelectListItem("Non-Binary", "Non-Binary"),
+            new SelectListItem("Gender-fluid", "Gender-fluid"),
+            new SelectListItem("Other", "Other"),
+        };
 
         public NurseController(Grp0444HelpingHandsContext context, INurse nurse, IReport report, IEndUser user)
         {
@@ -129,13 +140,15 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        [Authorize(Roles ="W")]
-        public IActionResult Create(int? id)
+        [Authorize(Roles = "W, A")]
+        public IActionResult Create(EndUser user)
         {
             try
             {
-                ViewBag.NurseId = id;
-                return View();
+                Nurse nurse = new Nurse();
+                nurse.EndUser = user;
+                nurse.NurseId = user.UserId;
+                return View(nurse);
             }
             catch (Exception ex)
             {
@@ -182,42 +195,64 @@ namespace HelpingHands_V2.Controllers
                 }
 
                 var nurse = await _nurse.GetNurse(id);
-                if (nurse == null)
+                var user = await _user.GetUserById(id);
+
+                if (nurse == null || user == null)
                 {
                     return NotFound();
                 }
 
-                //ViewBag.Nurse = nurse;
-                //ViewBag.User = user;
+                ViewData["Genders"] = genders;
+                nurse.EndUser = user;
                 return View(nurse);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("NurseId,Grade,Active")] Nurse nurse)
+        public async Task<IActionResult> Edit([Bind("NurseId,Grade,Active")] Nurse nurse, IFormFile? file, [Bind("UserId, Username, Firstname, Lastname, DateOfBirth, Email, Password, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user)
         {
             try
             {
+                ModelState.Remove("ConfirmPassword");
+                ModelState.Remove("Password");
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
+                    ViewData["Genders"] = genders;
                     return View(nurse);
                 }
+                if (file != null)
+                {
+                    if (file.Length > 0)
+                    {
+                        CloudinaryService cloudinary = new CloudinaryService();
+
+                        if (user.ProfilePictureName != null)
+                        {
+                            var removalResult = await cloudinary.RemoveFromCloudinary(user.ProfilePictureName!);
+                        }
+                        var public_id = $"{user.Firstname.ToLower()}_{user.Lastname.ToUpper()}_{user.DateOfBirth.Day}-{user.DateOfBirth.Month}-{user.DateOfBirth.Year}";
+                        UploadResult uploadResult = await cloudinary.UploadToCloudinary(file, public_id);
+
+                        user.ProfilePicture = uploadResult.SecureUrl.ToString();
+                        user.ProfilePictureName = uploadResult.PublicId;
+                    }
+                }
                 await _nurse.UpdateNurse(nurse);
+                await _user.UpdateUser(user);
                 return RedirectToAction(nameof(Profile), new { id = nurse.NurseId });
             }
             catch (Exception ex)
             {
+                ViewData["Genders"] = genders;
                 ViewBag.Message = ex.Message;
                 return View(nurse);
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -243,7 +278,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction(nameof(Profile), new {id = NurseId});
+                return RedirectToAction(nameof(Profile), new { id = NurseId });
                 //return new JsonResult(new { error = ex.Message });
             }
         }

@@ -135,8 +135,7 @@
 <div class="btn-group" role="group" aria-label="Control Panel">
     @if (User.IsInRole("A") || User.IsInRole("P"))
     {
-        <a asp-action="Edit" asp-route-id="@Model?.PatientId" class="btn btn-success">Edit Patient Info</a>
-        <a asp-action="Edit" asp-controller="EndUser" asp-route-id="@Model?.PatientId" class="btn btn-success">Edit User Info</a>
+        <a asp-action="Edit" asp-route-id="@Model?.PatientId" class="btn btn-success">Edit Info</a>
         <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Model?.PatientId" class="btn btn-success">ChangePassword</a>
         <form asp-action="Delete">
             <input asp-for="PatientId" value="@@Model?.PatientId" type="hidden" />
