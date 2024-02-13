@@ -10,20 +10,15 @@ public partial class EndUser
 {
     public int UserId { get; set; }
 
-    [Required(ErrorMessage = "Please enter a username")]
-    public string Username
-    {
-        get
-        {
-            return Firstname.Length > 4 && Lastname.Length > 4  ? Firstname.Substring(0, 3) + Lastname.Substring(0, 3): "";
-        }
-    }
+    public string? Username { get; set; }
 
     [Required(ErrorMessage = "Please enter your first name")]
+    [MinLength(3,ErrorMessage ="Please enter a name with more than 3 characters")]
     [DisplayName("First Name")]
     public string Firstname { get; set; } = null!;
 
     [Required(ErrorMessage = "Please enter your last name")]
+    [MinLength(3, ErrorMessage = "Please enter a last name with more than 3 characters")]
     [Display(Name = "Last Name")]
     public string Lastname { get; set; } = null!;
 

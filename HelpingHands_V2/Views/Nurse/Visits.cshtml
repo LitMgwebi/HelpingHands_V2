@@ -5,67 +5,75 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Visits</h2>
+<h2 class="display-4 text-center p-2">Visits</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
 
-@if (User.IsInRole("N"))
-{
-    <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
-}
-<table class="table" id="myTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Visit!.VisitDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Patient)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Visit!.ApproxTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Wound)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Visit!.Arrival)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Visit!.VisitDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.Patient!.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.Visit!.ApproxTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.Wound!.WoundName)
-                </td>
-                @if (item.Visit!.Arrival != null)
+<div class="px-5">
+    @if (User.IsInRole("N"))
+    {
+        <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+    }
+</div>
+<div class="px-5"><hr /></div>
+
+<section class="container-fluid p-md-5 my-5 px-5">
+    <div class="row p-md-5">
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Visit!.VisitDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Patient)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Visit!.ApproxTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Wound)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Visit!.Arrival)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
                 {
-                    <td>
-                        @Html.DisplayFor(model => item.Visit!.Arrival)
-                    </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Visit!.VisitDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Patient!.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Visit!.ApproxTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Wound!.WoundName)
+                        </td>
+                        @if (item.Visit!.Arrival != null)
+                        {
+                            <td>
+                                @Html.DisplayFor(model => item.Visit!.Arrival)
+                            </td>
+                        }
+                        else
+                        {
+                            <td>N/A</td>
+                        }
+                        <td>
+                            <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.Visit!.VisitId" class="btn btn-info">View</a>
+                        </td>
+                    </tr>
                 }
-                else
-                {
-                    <td>N/A</td>
-                }
-                <td>
-                    <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.Visit!.VisitId" class="btn btn-info">View</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -4,54 +4,62 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Nurses</h2>
+<h2 class="display-4 text-center p-2">Nurses</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-@if (User.IsInRole("O"))
-{
-<a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Back</a>
-}
-<hr />
-<table class="table" id="myTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EndUser!.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndUser!.Firstname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndUser!.Lastname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Grade)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndUser!.Username)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndUser!.Firstname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndUser!.Lastname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Grade)
-                </td>
-                <td>
-                    <a asp-action="Profile" asp-route-id="@item.NurseId" class="btn btn-info">View</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="px-5">
+    @if (User.IsInRole("O"))
+    {
+        <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Back</a>
+    }
+</div>
+<div class="px-5">
+    <hr />
+</div>
+<section class="container-fluid px-md-5 my-2 px-3">
+    <div class="row px-md-5">
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndUser!.Username)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndUser!.Firstname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndUser!.Lastname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Grade)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndUser!.Username)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndUser!.Firstname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndUser!.Lastname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Grade)
+                        </td>
+                        <td>
+                            <a asp-action="Profile" asp-route-id="@item.NurseId" class="btn btn-info">View</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

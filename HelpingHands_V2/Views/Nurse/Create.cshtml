@@ -15,14 +15,20 @@
 <div class="container-fluid">
     <form enctype="multipart/form-data" asp-action="Create">
         <input asp-for="NurseId" type="hidden" />
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <input asp-for="EndUser!.Password" type="hidden"/>
+        <input asp-for="EndUser!.ConfirmPassword" type="hidden"/>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="container px-5 ">
-            <input asp-for="EndUser!.Username" type="hidden" />
             <div class="row row-cols-auto px-5 g-3 py-4 justify-content-start">
                 <div class="col-12">
                     <h4 class="display-6">Personal Information</h4>
                 </div>
                 <div class="col-5">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Username" class="form-label"></label>
+                        <input asp-for="EndUser!.Username" class="form-control" type="text" readonly />
+                    </div>
+                </div><div class="col-5">
                     <div class="input-group-sm">
                         <label asp-for="EndUser!.Firstname" class="form-label"></label>
                         <input asp-for="EndUser!.Firstname" class="form-control" type="text" readonly/>
@@ -41,11 +47,9 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="input-group-sm">
                         <div class="img-thumbnail">
                             <img src="@Model.EndUser!.ProfilePicture" alt="@Model?.EndUser!.ProfilePictureName" />
                         </div>
-                    </div>
                 </div>
                 <div class="col-6">
                     <div class="input-group-sm">

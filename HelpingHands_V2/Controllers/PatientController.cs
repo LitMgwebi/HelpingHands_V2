@@ -150,9 +150,8 @@ namespace HelpingHands_V2.Controllers
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     ViewData["PatientId"] = patient.PatientId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    return new JsonResult(new {patient,  errors});
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View();
+                    return View(patient);
                 }
                 await _patient.AddPateint(patient);
                 ViewBag.Message = "Record Added successfully;";
@@ -161,8 +160,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return View();
-                //return new JsonResult(new { error = ex.Message });
+                return View(patient);
             }
         }
 

@@ -146,8 +146,10 @@ namespace HelpingHands_V2.Controllers
                             return RedirectToAction("Dashboard", "Nurse", new { id = model.UserId });
                         else if (model.UserType == "P")
                             return RedirectToAction("Dashboard", "Patient", new { id = model.UserId });
-                        else
+                        else if (model.UserType == "O")
                             return RedirectToAction("Dashboard", "Manager");
+                        else
+                            return RedirectToAction("Pending", "Home");
                     }
                 }
                 else
@@ -191,6 +193,8 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 ModelState.Remove("UserType");
+                user.Username = user.Firstname.Substring(0, 3) + user.Lastname.Substring(0, 3);
+
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
@@ -251,7 +255,9 @@ namespace HelpingHands_V2.Controllers
                         {
                             emailMessage = new Message(new string[] { user.Email! }, user.FullName, user.Username, "nurse_registering");
                             _email.SendEmail(emailMessage);
-                            return RedirectToAction("Create", "Nurse", new { nurse = user });
+                            user.Password = "";
+                            user.ConfirmPassword = "";
+                            return RedirectToAction("Create", "Nurse", user);
                         }
                         else if (user.UserType == "P")
                         {

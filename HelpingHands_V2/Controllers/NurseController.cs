@@ -154,7 +154,6 @@ namespace HelpingHands_V2.Controllers
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -169,7 +168,7 @@ namespace HelpingHands_V2.Controllers
                     ViewBag.NurseId = nurse.NurseId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return View();
+                    return View(nurse);
                 }
                 await _nurse.AddNurse(nurse);
                 ViewBag.Message = "Record Added successfully;";
@@ -177,9 +176,8 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.NurseId = nurse.NurseId;
                 ViewBag.Message = ex.Message;
-                return View();
+                return View(nurse);
             }
         }
 

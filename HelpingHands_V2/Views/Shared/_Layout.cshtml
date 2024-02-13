@@ -30,7 +30,7 @@
                 <div class="nav col-3">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src="/Media/HelpingHands.png" width="55" height="50" class="d-inline-block align-top" alt="Helping Hands">
-                        
+
                     </a>
                     @if (User.Identity!.IsAuthenticated)
                     {
@@ -49,50 +49,44 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Employees
+                                    Employee Management
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" asp-controller="EndUser" asp-action="AddUser">Add Employee</a></li>
+                                    <li><a class="dropdown-item" asp-controller="EndUser" asp-action="AddUser">Add Manaager</a></li>
                                     <li><a class="dropdown-item" asp-controller="EndUser" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Managers</a></li>
                                     <li><a class="dropdown-item" asp-controller="Nurse" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">Nurses</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Conditions
+                                    System Details
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" asp-controller="Condition" asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value">Add New</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Condition" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">View All</a></li>
+
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Condition" asp-action="Index">Conditions</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="City" asp-action="Index">Cities</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Suburb" asp-action="Index">Suburbs</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Wound" asp-action="Index">Wounds</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Cities
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" asp-controller="City" asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value">Add New</a></li>
-                                    <li><a class="dropdown-item" asp-controller="City" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">View All</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Suburbs
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" asp-controller="Suburb" asp-action="Create" asp-route-id="@User.FindFirst("UserId")!.Value">Add New</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Suburb" asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value">View All</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="btn dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Business
+                                    Business Operations
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" asp-controller="Business" asp-action="Details">Business Information</a></li>
+                                    <li> <a class="dropdown-item" asp-controller="Operation" asp-action="Index">Operational Hours</a></li>
                                 </ul>
                             </li>
-                        } 
+                        }
                         else if (User.IsInRole("P"))
                         {
                             <li class="nav-item">
@@ -113,7 +107,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="PatientCondition" asp-action="IndexForPatient" asp-route-id=@User.FindFirst("UserId")!.Value>Chronic Conditions</a>
                             </li>
-                        } 
+                        }
                         else if (User.IsInRole("N"))
                         {
                             <li class="nav-item">
@@ -142,7 +136,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="PrefferedSuburb" asp-action="IndexForNurse" asp-route-id="@User.FindFirst("UserId")!.Value">Prefered Suburbs</a>
                             </li>
-                        } 
+                        }
                         else if (User.IsInRole("O"))
                         {
                             <li class="nav-item">
@@ -161,7 +155,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Nurse" asp-action="Index" asp-route-command="waiting">Pending Nurses</a>
                             </li>
-                        } 
+                        }
                         else
                         {
                             <li class="nav-item">
@@ -179,12 +173,14 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Nurse" asp-action="Profile" asp-route-id="@User.FindFirst("UserId")!.Value">Profile</a>
                                 </li>
-                            } else if (User.IsInRole("P"))
+                            }
+                            else if (User.IsInRole("P"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Profile" asp-route-id="@User.FindFirst("UserId")!.Value">Profile</a>
                                 </li>
-                            } else
+                            }
+                            else
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="EndUser" asp-action="Profile" asp-route-id="@User.FindFirst("UserId")!.Value">Profile</a>

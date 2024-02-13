@@ -5,39 +5,38 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Preferred Suburbs</h2>
+<h2 class="display-4 text-center p-2">Nurse Preferred Suburbs</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-<hr />
-<a asp-action="Create" class="btn btn-primary">Create New</a>
-<table class="table" id="myTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nurse)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Suburb)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nurse!.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Suburb!.SuburbName)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-nurseId="@item.NurseId" asp-route-suburbId="@item.SuburbId" class="btn btn-info">View</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="px-5"><hr /></div>
+<section class="container-fluid px-md-5 my-2 px-3">
+    <div class="row px-md-5">
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nurse)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Suburb)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nurse!.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Suburb!.SuburbName)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
