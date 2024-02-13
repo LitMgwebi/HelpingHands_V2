@@ -5,82 +5,92 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Contracts</h2>
+<h2 class="display-4 text-center p-2">Contracts</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-<hr />
-@* @if (User.IsInRole("P"))
-{
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-} *@
-<table class="table" id="myTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ContractStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContractDate)
-            </th>
-            @if (!User.IsInRole("N"))
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model.Nurse)
-                </th>
-            }
-            @if (!User.IsInRole("P"))
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model.Patient)
-                </th>
-            }
-            <th>
-                @Html.DisplayNameFor(model => model.Wound)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContractStatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContractDate)
-                </td>
-                @if (!User.IsInRole("N"))
-                {
-                    @if (item.Nurse == null)
+<div class="px-5">
+    @if (User.IsInRole("N"))
+    {
+        <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+    }
+    else if (User.IsInRole("P"))
+    {
+        <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+    }
+</div>
+<div class="px-5"><hr /></div>
+<section class="container-fluid px-md-5">
+    <div class="row p-md-4">
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContractStatus)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContractDate)
+                    </th>
+                    @if (!User.IsInRole("N"))
                     {
-                        <td>
-                            N/A
-                        </td>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nurse)
+                        </th>
                     }
-                    else
+                    @if (!User.IsInRole("P"))
                     {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nurse!.FullName)
-                        </td>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Patient)
+                        </th>
                     }
-                }
-                @if (!User.IsInRole("P"))
+                    <th>
+                        @Html.DisplayNameFor(model => model.Wound)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
                 {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Patient!.FullName)
-                    </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContractStatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContractDate)
+                        </td>
+                        @if (!User.IsInRole("N"))
+                        {
+                            @if (item.Nurse == null)
+                            {
+                                <td>
+                                    N/A
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nurse!.FullName)
+                                </td>
+                            }
+                        }
+                        @if (!User.IsInRole("P"))
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Patient!.FullName)
+                            </td>
 
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Wound!.WoundName)
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
+                        </td>
+                    </tr>
                 }
-                <td>
-                    @Html.DisplayFor(modelItem => item.Wound!.WoundName)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.ContractId" class="btn btn-info">View</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</section>

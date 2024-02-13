@@ -10,8 +10,11 @@
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
+<div class="px-5">
+    <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Dashboard</a>
+</div>
 <div class="px-5"><hr /></div>
-<section class="container-fluid p-md-3 p-1">
+<section class="container-fluid p-md-1">
     <form asp-action="VisitRange">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row d-flex justify-content-center">
@@ -34,14 +37,13 @@
                 <div class="row d-flex justify-content-center p-2">
                     <div class="btn-group col-5">
                         <input type="submit" value="Search" class="btn btn-primary" />
-                        <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Dashboard</a>
                     </div>
                 </div>
             </div>
         </div>
     </form>
 
-    <div class="row p-md-5 p-2">
+    <div class="row px-md-5">
         <table class="table" id="myTable">
             <thead>
                 <tr>
