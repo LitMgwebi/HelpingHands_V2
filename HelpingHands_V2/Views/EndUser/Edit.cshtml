@@ -5,13 +5,30 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Edit Profile Details</h2>
+<h2 class="display-4 text-center p-2">Edit Profile Details</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-
-<hr />
+<div class="px-5">
+    @if (User.IsInRole("P"))
+    {
+        <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+    }
+    else if (User.IsInRole("N"))
+    {
+        <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+    }
+    else if (User.IsInRole("O"))
+    {
+        <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Dashboard</a>
+    }
+    else
+    {
+        <a asp-action="Dashboard" asp-controller="Admin" class="btn btn-secondary">Dashboard</a>
+    }
+</div>
+<div class="px-5"><hr /></div>
 <div class="container-fluid">
     <form enctype="multipart/form-data" asp-action="Edit">
         <div asp-validation-summary="All" class="text-danger"></div>

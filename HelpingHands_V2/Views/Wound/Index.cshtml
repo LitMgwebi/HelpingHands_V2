@@ -5,14 +5,20 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Wounds</h2>
+<h2 class="display-4 text-center p-2">Wounds</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-<hr />
+<div class="px-5">
+    <a asp-action="Dashboard" asp-controller="Admin" class="btn btn-secondary">Dashboard</a>
+</div>
+<div class="px-5">
+    <hr />
+</div>
+
 <div class="container-fluid">
-    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly align-items-start">
+    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-md-3">
         <div class="col-md-7">
             <div class="row border border-3 rounded-3 p-2 m-2">
                 <table class="table" id="myTable">
@@ -76,17 +82,17 @@
                         <input name="WoundName" class="form-control" />
                         <span asp-validation-for="Wound!.WoundName" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="input-group-sm">
                         <label asp-for="Wound!.Grade" class="control-label"></label>
                         <input name="Grade" class="form-control" />
                         <span asp-validation-for="Wound!.Grade" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="input-group-sm">
                         <label asp-for="Wound!.WoundDescription" class="control-label"></label>
                         <textarea name="WoundDescription" class="form-control" rows="3" autofocus></textarea>
                         <span asp-validation-for="Wound!.WoundDescription" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="input-group-sm">
                         <input type="submit" value="Add" class="btn btn-primary" />
                     </div>
                 </form>

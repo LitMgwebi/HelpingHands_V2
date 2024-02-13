@@ -5,12 +5,12 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Nurse Form</h2>
+<h2 class="display-4 text-center p-2">Nurse Form</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-<hr />
+<div class="px-5"><hr /></div>
 
 <div class="container-fluid">
     <form enctype="multipart/form-data" asp-action="Create">
@@ -47,8 +47,8 @@
                     </div>
                 </div>
                 <div class="col-4">
-                        <div class="img-thumbnail">
-                            <img src="@Model.EndUser!.ProfilePicture" alt="@Model?.EndUser!.ProfilePictureName" />
+                        <div>
+                        <img src="@Model.EndUser!.ProfilePicture" class="img-thumbnail img-fluid" alt="@Model?.EndUser!.ProfilePictureName" />
                         </div>
                 </div>
                 <div class="col-6">
@@ -78,7 +78,7 @@
                 </div>
             </div>
             <hr />
-            <div class="row px-5 g-2 justify-content-start row-cols-auto py-4">
+            <div class="row px-md-5 px-2 g-2 justify-content-start row-cols-auto py-md-4">
                 <div class="col-12">
                     <h1 class="display-6">Nurse Information</h1>
                 </div>

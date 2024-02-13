@@ -121,19 +121,21 @@ namespace HelpingHands_V2.Controllers
             }
         }
 
-        public async Task<IActionResult> Create(int id)
+        public async Task<IActionResult> Create(EndUser user)
         {
             try
             {
                 var suburbs = await _suburb.GetSuburbs();
                 ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                ViewData["PatientId"] = id;
-                return View();
+
+                Patient patient = new Patient();
+                patient.EndUser = user;
+                patient.PatientId = user.UserId;
+                return View(patient);
             } catch (Exception ex) {
 
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
         [HttpPost]
@@ -148,9 +150,9 @@ namespace HelpingHands_V2.Controllers
                 {
                     var suburbs = await _suburb.GetSuburbs();
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
-                    ViewData["PatientId"] = patient.PatientId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
+                    return new JsonResult(patient, errors);
                     return View(patient);
                 }
                 await _patient.AddPateint(patient);
@@ -160,6 +162,7 @@ namespace HelpingHands_V2.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
+                return new JsonResult(patient, ex.Message);
                 return View(patient);
             }
         }

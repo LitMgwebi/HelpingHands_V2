@@ -5,56 +5,128 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Patient Form</h2>
+<h2 class="display-4 text-center p-2">Patient Form</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
 <div class="px-5"><hr /></div>
-
-<div class="container-fluid p-md-4 p-1">
+<p>@Model.EndUser</p>
+<div class="container-fluid">
     <form asp-action="Create">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <input asp-for="PatientId" type="hidden" value="@ViewBag.PatientId" />
-        <div class="row row-cols-1 d-flex justify-content-center align-items-center">
-            <div class="col-md-4">
-                <div class="input-group-sm">
-                    <label asp-for="AddressLineOne" class="form-label"></label>
-                    <input asp-for="AddressLineOne" class="form-control" />
-                    <span asp-validation-for="AddressLineOne" class="text-danger"></span>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="PatientId" type="hidden" />
+        <input asp-for="EndUser!.Password" type="hidden" />
+        <input asp-for="EndUser!.ConfirmPassword" type="hidden" />
+        <div class="container px-5 ">
+            <div class="row row-cols-auto px-5 g-3 py-4 justify-content-start">
+                <div class="col-12">
+                    <h4 class="display-6">Personal Information</h4>
                 </div>
-                <div class="input-group-sm">
-                    <label asp-for="AddressLineTwo" class="form-label"></label>
-                    <input asp-for="AddressLineTwo" class="form-control" />
-                    <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
+                <div class="col-5">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Username" class="form-label"></label>
+                        <input asp-for="EndUser!.Username" class="form-control" type="text" readonly />
+                    </div>
+                </div><div class="col-5">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Firstname" class="form-label"></label>
+                        <input asp-for="EndUser!.Firstname" class="form-control" type="text" readonly />
+                    </div>
                 </div>
-                <div class="input-group-sm">
-                    <label asp-for="SuburbId" class="form-label"></label>
-                    <select asp-for="SuburbId" class="form-control" asp-items="ViewBag.SuburbId"></select>
+                <div class="col-5">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Lastname" class="form-label"></label>
+                        <input asp-for="EndUser!.Lastname" class="form-control" type="text" readonly />
+                    </div>
                 </div>
-                <div class="input-group-sm">
-                    <label asp-for="Icename" class="form-label"></label>
-                    <input asp-for="Icename" class="form-control" />
-                    <span asp-validation-for="Icename" class="text-danger"></span>
+                <div class="col-7">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Email" class="form-label"></label>
+                        <input asp-for="EndUser!.Email" class="form-control" type="email" readonly />
+                    </div>
                 </div>
-                <div class="input-group-sm">
-                    <label asp-for="Icenumber" class="form-label"></label>
-                    <input asp-for="Icenumber" class="form-control" />
-                    <span asp-validation-for="Icenumber" class="text-danger"></span>
+                <div class="col-4">
+                    <img src="@Model.EndUser!.ProfilePicture" class="img-thumbnail img-fluid" alt="@Model?.EndUser!.ProfilePictureName" />
                 </div>
-                <div class="input-group-sm">
-                    <label asp-for="AdditionalInfo" class="form-label"></label>
-                    <textarea asp-for="AdditionalInfo" class="form-control" rows="3" autofocus></textarea>
-                    <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
+                <div class="col-6">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Idnumber" class="form-label"></label>
+                        <input asp-for="EndUser!.Idnumber" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.ContactNumber" class="form-label"></label>
+                        <input asp-for="EndUser!.ContactNumber" class="form-control" readonly />
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.DateOfBirth" class="form-label"></label>
+                        <input asp-for="EndUser!.DateOfBirth" class="form-control" type="date" readonly />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group-sm">
+                        <label asp-for="EndUser!.Gender" class="form-label"></label>
+                        <input asp-for="EndUser!.Gender" class="form-control" readonly />
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row px-md-5 px-2 g-2 justify-content-start row-cols-auto py-md-4">
+                <div class="col-12">
+                    <h1 class="display-6">Nurse Information</h1>
+                </div>
+                <div class="col-6">
+                    <div class="input-group-sm">
+                        <label asp-for="AddressLineOne" class="form-label"></label>
+                        <input asp-for="AddressLineOne" class="form-control" />
+                        <span asp-validation-for="AddressLineOne" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group-sm">
+                        <label asp-for="AddressLineTwo" class="form-label"></label>
+                        <input asp-for="AddressLineTwo" class="form-control" />
+                        <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group-sm">
+                        <label asp-for="SuburbId" class="form-label"></label>
+                        <select asp-for="SuburbId" class="form-control" asp-items="ViewBag.SuburbId"></select>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group-sm">
+                        <label asp-for="Icename" class="form-label"></label>
+                        <input asp-for="Icename" class="form-control" />
+                        <span asp-validation-for="Icename" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group-sm">
+                        <label asp-for="Icenumber" class="form-label"></label>
+                        <input asp-for="Icenumber" class="form-control" />
+                        <span asp-validation-for="Icenumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group-sm">
+                        <label asp-for="AdditionalInfo" class="form-label"></label>
+                        <textarea asp-for="AdditionalInfo" class="form-control" rows="3" autofocus></textarea>
+                        <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row p-md-3 p-1">
-            <div class="col-12 d-flex align-items-center justify-content-center">
-                <div class="btn-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                    <a asp-action="Profile" asp-route-id="@ViewBag.PatientId" class="btn btn-secondary">Cancel</a>
-                </div>
+        <div class="row justify-content-center g-2 py-4">
+            <div class="btn-group col-2">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Profile" asp-route-id="@ViewBag.PatientId" class="btn btn-secondary">Cancel</a>
             </div>
         </div>
     </form>

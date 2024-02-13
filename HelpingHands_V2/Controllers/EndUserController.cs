@@ -207,10 +207,16 @@ namespace HelpingHands_V2.Controllers
                 var public_id = $"{user.Firstname.ToLower()}_{user.Lastname.ToUpper()}_{user.DateOfBirth.Day}-{user.DateOfBirth.Month}-{user.DateOfBirth.Year}";
                 if (file.Length > 0)
                 {
-                    uploadResult = await cloudinary.UploadToCloudinary(file, public_id);
+                    try
+                    {
+                        uploadResult = await cloudinary.UploadToCloudinary(file, public_id);
 
-                    user.ProfilePicture = uploadResult.SecureUrl.ToString();
-                    user.ProfilePictureName = uploadResult.PublicId;
+                        user.ProfilePicture = uploadResult.SecureUrl.ToString();
+                        user.ProfilePictureName = uploadResult.PublicId;
+                    } catch(Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
                 }
                 else
                 {
@@ -263,7 +269,9 @@ namespace HelpingHands_V2.Controllers
                         {
                             emailMessage = new Message(new string[] { user.Email! }, user.FullName, user.Username, "patient_registering");
                             _email.SendEmail(emailMessage);
-                            return RedirectToAction("Create", "Patient", new { id = user.UserId });
+                            user.Password = "";
+                            user.ConfirmPassword = "";
+                            return RedirectToAction("Create", "Patient", user);
                         }
                         else
                             return RedirectToAction("Dashboard", "Admin");

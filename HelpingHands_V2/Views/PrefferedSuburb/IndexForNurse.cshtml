@@ -5,61 +5,78 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="text-center display-4">Your Suburbs of Operation</h2>
+<h2 class="text-center display-4 p-2">Your Suburbs of Operation</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-<hr />
+<div class="px-5">
+    <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+</div>
+<div class="px-5">
+    <hr />
+</div>
 <div class="container-fluid">
-    <div class="row row-cols-lg-2 row-cols-auto">
-        <div class="col">
-            <table class="table" id="myTable">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Suburb)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Suburbs!)
-                    {
+    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-md-3">
+        <div class="col-md-4">
+            <div class="row border border-3 rounded-3 p-2 m-2">
+                <table class="table" id="myTable">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Suburb!.SuburbName)
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <form asp-action="Delete">
-                                        <input asp-for="@item.NurseId" name="NurseId" type="hidden" />
-                                        <input asp-for="@item!.SuburbId" name="SuburbId" type="hidden" />
-                                        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" />
-                                    </form>
-                                </div>
-                            </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Suburb)
+                            </th>
+                            <th></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Suburbs!)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Suburb!.SuburbName)
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <form asp-action="Delete">
+                                            <input asp-for="@item.NurseId" name="NurseId" type="hidden" />
+                                            <input asp-for="@item!.SuburbId" name="SuburbId" type="hidden" />
+                                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" />
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="col">
-            <h2 class="display-5 text-center">Add Suburb</h2>
-            <hr/>
+        <div class="col-md-3">
             <form asp-action="Create">
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <input asp-for="NurseId" type="hidden"/>
-                <div class="input-group-sm">
-                    <label asp-for="Suburb!.SuburbName" class="control-label"></label>
-                    <select asp-for="Suburb!.SuburbId" name="SuburbId" class="form-control" asp-items="ViewBag.Suburbs">
-                        <option disabled selected>--- SELECT ---</option>
-                    </select>
+                <input asp-for="NurseId" type="hidden" />
+                <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-3">
+                    <h2 class="h3 text-center">Add Suburb</h2>
+                    <section class="px-5">
+                        <hr />
+                    </section>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="col-7">
+                        <div class="input-group-sm">
+                            <label asp-for="Suburb!.SuburbName" class="form-label"></label>
+                            <select asp-for="Suburb!.SuburbId" name="SuburbId" class="form-select form-select-sm" asp-items="ViewBag.Suburbs">
+                                <option disabled selected>--- SELECT ---</option>
+                            </select>
 
-                    <span asp-validation-for="Suburb!.SuburbId" class="text-danger"></span>
-                </div>
-                <div class="btn-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                            <span asp-validation-for="Suburb!.SuburbId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="row justify-content-center g-2 p-4">
+                            <div class="btn-group">
+                                <input type="submit" value="Add" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
