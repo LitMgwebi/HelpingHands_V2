@@ -4,35 +4,38 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Contract Details</h2>
+<h2 class="display-4 text-center p-2">Contract Details</h2>
 @if (Message != null)
 {
     <p class="text-decoration-underline text-danger">@Message</p>
 }
-@if (User.IsInRole("N"))
-{
-    <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="current" class="btn btn-secondary">Back</a>
-} 
-else if(User.IsInRole("P"))
-{
-    <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient" class="btn btn-secondary">Back</a>
-}
-else if (User.IsInRole("O"))
-{
-    <a asp-action="NewContracts" asp-controller="Manager" class="btn btn-secondary">Back</a>
-}
-else
-{
-    <a asp-action="Index" class="btn btn-secondary">Back</a>
-}
+<div class="px-5">
+    @if (User.IsInRole("N"))
+    {
+        <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="current" class="btn btn-secondary">Back</a>
+    }
+    else if (User.IsInRole("P"))
+    {
+        <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient" class="btn btn-secondary">Back</a>
+    }
+    else if (User.IsInRole("O"))
+    {
+        <a asp-action="NewContracts" asp-controller="Manager" class="btn btn-secondary">Back</a>
+    }
+    else
+    {
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    }
+</div>
 @* <form asp-action="GeneratePDF">
     <input asp-for="ContractId" hidden />
     <input type="submit" value="Download Contract" class="btn btn-primary"/>
 </form> *@
-
-<hr />
+<div class="px-5">
+    <hr />
+</div>
 <div class="container-fluid">
-    <div class="row">
+    <div class="row row-cols-md-2 justify-content-evenly p-md-5 p-2">
         <dl class="col-6">
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Contract!.ContractStatus)
@@ -142,83 +145,98 @@ else
         </div> *@
     </div>
 
-    <div class="row row-cols-auto justify-content-evenly">
-        <div class="col-md-7">
-            <table class="table" id="myTable">
-                <thead>
-                    <tr>
-                        <th>
-                            Visit Date
-                        </th>
-                        <th>
-                            Approximate Time
-                        </th>
-                        <th>
-                            Arrival
-                        </th>
-                        <th>
-                            Departure
-                        </th>
-                        <th>
-                            Wound Condition
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model?.Contract!.Visits != null)
-                    {
-                        @foreach (var item in Model.Contract!.Visits!)
+
+    <br />
+    <h1 class="display-6 text-center p-2">Visit Information</h1>
+    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-md-3">
+        <div class="col-md-8">
+            <div class="row border border-3 rounded-3 p-2 m-2">
+                <table class="table" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                Visit Date
+                            </th>
+                            <th>
+                                Approximate Time
+                            </th>
+                            <th>
+                                Arrival
+                            </th>
+                            <th>
+                                Departure
+                            </th>
+                            <th>
+                                Wound Condition
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model?.Contract!.Visits != null)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.VisitDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ApproxTime)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Arrival)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Departure)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.WoundCondition)
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
-                                    </div>
-                                </td>
-                            </tr>
+                            @foreach (var item in Model.Contract!.Visits!)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.VisitDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ApproxTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Arrival)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Departure)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.WoundCondition)
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
         @if (User.IsInRole("N"))
         {
-            <div class="col-md-4">
-                <h2 class="display-6 text-center">Visit Form</h2>
-                <hr />
+            <div class="col-md-3">
                 <form asp-controller="Visit" asp-action="Create">
-                    <div asp-validation-summary="All" class="text-danger"></div>
                     <input asp-for="Contract!.ContractId" name="ContractId" hidden />
-                    <div class="form-group">
-                        <label asp-for="@Model!.Visit!.VisitDate" class="form-label"></label>
-                        <input asp-for="@Model!.Visit!.VisitDate" type="date" name="VisitDate" class="form-control" />
-                        <span asp-validation-for="@Model!.Visit!.VisitDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@Model!.Visit!.ApproxTime" class="form-label"></label>
-                        <input asp-for="@Model!.Visit!.ApproxTime" name="ApproxTime" type="time" class="form-control" />
-                        <span asp-validation-for="@Model!.Visit!.ApproxTime" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Schedule" class="btn btn-primary" />
-                        @* <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Cancel</a> *@
-
+                    <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-3">
+                        <h2 class="h3 text-center">Schedule Visit</h2>
+                        <section class="px-5">
+                            <hr />
+                        </section>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="col-7">
+                            <div class="input-group-sm">
+                                <label asp-for="@Model!.Visit!.VisitDate" class="form-label"></label>
+                                <input asp-for="@Model!.Visit!.VisitDate" type="date" name="VisitDate" class="form-control" />
+                                <span asp-validation-for="@Model!.Visit!.VisitDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="input-group-sm">
+                                <label asp-for="@Model!.Visit!.ApproxTime" class="form-label"></label>
+                                <input asp-for="@Model!.Visit!.ApproxTime" name="ApproxTime" type="time" class="form-control" />
+                                <span asp-validation-for="@Model!.Visit!.ApproxTime" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="row justify-content-center g-2 p-4">
+                                <div class="btn-group">
+                                    <input type="submit" value="Schedule" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
