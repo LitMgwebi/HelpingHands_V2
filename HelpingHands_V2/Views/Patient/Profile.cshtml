@@ -50,25 +50,25 @@ else
             <h1 class="h3 text-start">Personal Information</h1>
             <div class="row row-cols-md-2 row-cols-2 p-3">
                 <dl class="col-6">
-                    <dt class="col-sm-4">
+                    <dt class="col-sm-8">
                         @Html.DisplayNameFor(model => model.EndUser!.Username)
                     </dt>
                     <dd class="col-sm-8">
                         @Html.DisplayFor(model => model.EndUser!.Username)
                     </dd>
-                    <dt class="col-sm-4">
+                    <dt class="col-sm-8">
                         @Html.DisplayNameFor(model => model.EndUser!.Firstname)
                     </dt>
                     <dd class="col-sm-8">
                         @Html.DisplayFor(model => model.EndUser!.Firstname)
                     </dd>
-                    <dt class="col-sm-4">
+                    <dt class="col-sm-8">
                         @Html.DisplayNameFor(model => model.EndUser!.Lastname)
                     </dt>
                     <dd class="col-sm-8">
                         @Html.DisplayFor(model => model.EndUser!.Lastname)
                     </dd>
-                    <dt class="col-sm-4">
+                    <dt class="col-sm-8">
                         @Html.DisplayNameFor(model => model.EndUser!.DateOfBirth)
                     </dt>
                     <dd class="col-sm-8">
@@ -76,25 +76,25 @@ else
                     </dd>
                 </dl>
                 <dl class="col-6">
-                    <dt class="col-sm-4">
+                    <dt class="col-sm-8">
                         @Html.DisplayNameFor(model => model.EndUser!.Email)
                     </dt>
                     <dd class="col-sm-8">
                         @Html.DisplayFor(model => model.EndUser!.Email)
                     </dd>
-                    <dt class="col-sm-4">
+                    <dt class="col-sm-8">
                         @Html.DisplayNameFor(model => model.EndUser!.Gender)
                     </dt>
                     <dd class="col-sm-8">
                         @Html.DisplayFor(model => model.EndUser!.Gender)
                     </dd>
-                    <dt class="col-sm-4">
+                    <dt class="col-sm-8">
                         @Html.DisplayNameFor(model => model.EndUser!.ContactNumber)
                     </dt>
                     <dd class="col-sm-8">
                         @Html.DisplayFor(model => model.EndUser!.ContactNumber)
                     </dd>
-                    <dt class="col-sm-4">
+                    <dt class="col-sm-8">
                         @Html.DisplayNameFor(model => model.EndUser!.Idnumber)
                     </dt>
                     <dd class="col-sm-8">
@@ -109,7 +109,7 @@ else
 
                     @if (Model!.AddressLineOne != null)
                     {
-                        <dt class="col-sm-4">
+                        <dt class="col-sm-8">
                             @Html.DisplayNameFor(model => model.AddressLineOne)
                         </dt>
                         <dd class="col-sm-8">
@@ -118,14 +118,14 @@ else
                     }
                     @if (Model.AddressLineTwo != null)
                     {
-                        <dt class="col-sm-4">
+                        <dt class="col-sm-8">
                             @Html.DisplayNameFor(model => model.AddressLineTwo)
                         </dt>
                         <dd class="col-sm-8">
                             @Html.DisplayFor(model => model.AddressLineTwo)
                         </dd>
                     }
-                    <dt class="col-sm-4">
+                    <dt class="col-sm-8">
                         @Html.DisplayNameFor(model => model.Suburb)
                     </dt>
                     <dd class="col-sm-8">
@@ -134,13 +134,13 @@ else
                 </dl>
 
                 <dl class="col-6">
-                    <dt class="col-sm-4">
+                    <dt class="col-sm-8">
                         @Html.DisplayNameFor(model => model.Icename)
                     </dt>
                     <dd class="col-sm-8">
                         @Html.DisplayFor(model => model.Icename)
                     </dd>
-                    <dt class="col-sm-4">
+                    <dt class="col-sm-8">
                         @Html.DisplayNameFor(model => model.Icenumber)
                     </dt>
                     <dd class="col-sm-8">
@@ -148,7 +148,7 @@ else
                     </dd>
                     @if (Model.AdditionalInfo != null)
                     {
-                        <dt class="col-sm-4">
+                        <dt class="col-sm-8">
                             @Html.DisplayNameFor(model => model.AdditionalInfo)
                         </dt>
                         <dd class="col-sm-8">
