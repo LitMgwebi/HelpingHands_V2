@@ -15,10 +15,12 @@ public partial class OperationHour
 
     [Display(Name = "Opening Time")]
     [DataType(DataType.Time)]
+    [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
     [Required(ErrorMessage = "Please enter the opening time.")]
     public TimeSpan? OpenTime { get; set; }
 
     [Display(Name = "Closing Time")]
+    [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
     [DataType(DataType.Time)]
     [Required(ErrorMessage = "Please enter the closing time.")]
     public TimeSpan? CloseTime { get; set; }

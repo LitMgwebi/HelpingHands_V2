@@ -24,7 +24,7 @@ public partial class EndUser
 
     [Required(ErrorMessage = "Please enter your date of birth")]
     [DisplayName("Date of Birth")]
-    [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
+    [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", ApplyFormatInEditMode = true)]
     [DataType(DataType.Date, ErrorMessage = "Please enter a valid date")]
     public DateTime DateOfBirth { get; set; }
 

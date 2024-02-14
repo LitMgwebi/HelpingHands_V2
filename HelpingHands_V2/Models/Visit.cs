@@ -13,7 +13,7 @@ public partial class Visit
     public int ContractId { get; set; }
 
     [DisplayName("Visit Date")]
-    [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
+    [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", ApplyFormatInEditMode = true)]
     [DataType(DataType.Date)]
     [Required(ErrorMessage ="Please enter the date of the visit")]
     public DateTime? VisitDate { get; set; }
@@ -24,10 +24,12 @@ public partial class Visit
     public TimeSpan? ApproxTime { get; set; }
 
     [DisplayName("Arrival Time")]
+    [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
     [DataType(DataType.Time)]
     public TimeSpan? Arrival { get; set; } = null;
 
     [DisplayName("Departure Time")]
+    [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
     [DataType(DataType.Time)]
     public TimeSpan? Departure { get; set; } = null;
 

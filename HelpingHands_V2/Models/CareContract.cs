@@ -13,7 +13,7 @@ public partial class CareContract
     public string? ContractStatus { get; set; }
 
     [DisplayName("Contract Date")]
-    [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
+    [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}")]
     [DataType(DataType.Date, ErrorMessage = "Please enter a valid date")]
     [Required(ErrorMessage ="Please enter the contract's date")]
     public DateTime ContractDate { get; set; }
@@ -42,12 +42,12 @@ public partial class CareContract
     public int? SuburbId { get; set; }
 
     [DisplayName("Start Date")]
-    [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
+    [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", ApplyFormatInEditMode = true)]
     [DataType(DataType.Date, ErrorMessage ="Please enter a valid date")]
     public DateTime? StartDate { get; set; } = null;
 
     [DisplayName("End Date")]
-    [DisplayFormat(DataFormatString = "{0:dd:MM:yyyy}")]
+    [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", ApplyFormatInEditMode = true)]
     [DataType(DataType.Date, ErrorMessage = "Please enter a valid date")]
     public DateTime? EndDate { get; set; } = null;
 
