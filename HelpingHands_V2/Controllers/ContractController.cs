@@ -290,8 +290,7 @@ namespace HelpingHands_V2.Controllers
                         page.DefaultTextStyle(x => x.FontSize(20));
 
                         page.Header()
-                        .Height(100)
-
+                            .Height(100)
                             .Text("Hello PDF!")
                             .SemiBold().FontSize(36).FontColor(Colors.Blue.Medium);
 
@@ -314,10 +313,7 @@ namespace HelpingHands_V2.Controllers
                             });
                     });
                 }).GeneratePdf($"C:/Users/lithi/Downloads/{contract.Patient!.FullName}-Contract-{contract.ContractId}.pdf");
-
-               
-
-                return new JsonResult("Working");
+                return RedirectToAction("Details", new {id = contract.ContractId});
             }
             catch (Exception ex)
             {

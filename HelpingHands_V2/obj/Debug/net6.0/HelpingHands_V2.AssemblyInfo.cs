@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HelpingHands_V2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+db57cd12819c3c2eedab2c26cad3d2720107d1ff")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0e3af05fdb7831938ad06a018260e1efbe4c19d")]
 [assembly: System.Reflection.AssemblyProductAttribute("HelpingHands_V2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HelpingHands_V2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

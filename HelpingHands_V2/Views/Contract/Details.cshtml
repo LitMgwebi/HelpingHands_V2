@@ -28,28 +28,28 @@
     }
 </div>
 @* <form asp-action="GeneratePDF">
-    <input asp-for="ContractId" hidden />
+    <input asp-for="Contract!.ContractId" type="hidden" name="ContractId" />
     <input type="submit" value="Download Contract" class="btn btn-primary"/>
 </form> *@
 <div class="px-5">
     <hr />
 </div>
 <div class="container-fluid">
-    <div class="row row-cols-md-2 justify-content-evenly p-md-5 p-2">
+    <div class="row row-cols-md-2 justify-content-evenly p-md-5 p-2 mx-md-5 mx-2">
         <dl class="col-6">
-            <dt class="col-sm-4">
+            <dt class="col-sm-8">
                 @Html.DisplayNameFor(model => model.Contract!.ContractStatus)
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Contract!.ContractStatus)
             </dd>
-            <dt class="col-sm-4">
+            <dt class="col-sm-8">
                 @Html.DisplayNameFor(model => model.Contract!.ContractDate)
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Contract!.ContractDate)
             </dd>
-            <dt class="col-sm-4">
+            <dt class="col-sm-8">
                 @Html.DisplayNameFor(model => model.Contract!.AddressLineOne)
             </dt>
             <dd class="col-sm-8">
@@ -57,7 +57,7 @@
             </dd>
             @if (Model?.Contract!.AddressLineTwo != null)
             {
-                <dt class="col-sm-4">
+                <dt class="col-sm-8">
                     @Html.DisplayNameFor(model => model.Contract!.AddressLineTwo)
                 </dt>
                 <dd class="col-sm-8">
@@ -66,7 +66,7 @@
             }
             @if (Model?.Contract!.StartDate != null)
             {
-                <dt class="col-sm-4">
+                <dt class="col-sm-8">
                     @Html.DisplayNameFor(model => model.Contract!.StartDate)
                 </dt>
                 <dd class="col-sm-8">
@@ -75,8 +75,7 @@
             }
             @if (Model?.Contract!.EndDate != null)
             {
-
-                <dt class="col-sm-4">
+                <dt class="col-sm-8">
                     @Html.DisplayNameFor(model => model.Contract!.EndDate)
                 </dt>
                 <dd class="col-sm-8">
@@ -87,7 +86,7 @@
         <dl class="col-6">
             @if (Model?.Contract!.ContractComment != null)
             {
-                <dt class="col-sm-4">
+                <dt class="col-sm-8">
                     @Html.DisplayNameFor(model => model.Contract!.ContractComment)
                 </dt>
                 <dd class="col-sm-8">
@@ -96,61 +95,38 @@
             }
             @if (Model?.Contract!.Nurse != null)
             {
-                <dt class="col-sm-4">
+                <dt class="col-sm-8">
                     @Html.DisplayNameFor(model => model.Contract!.Nurse)
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Contract!.Nurse!.FullName)
                 </dd>
             }
-            <dt class="col-sm-4">
+            <dt class="col-sm-8">
                 @Html.DisplayNameFor(model => model.Contract!.Patient)
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Contract!.Patient!.FullName)
             </dd>
-            <dt class="col-sm-4">
+            <dt class="col-sm-8">
                 @Html.DisplayNameFor(model => model.Contract!.Suburb)
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Contract!.Suburb!.SuburbName)
             </dd>
-            <dt class="col-sm-4">
+            <dt class="col-sm-8">
                 @Html.DisplayNameFor(model => model.Contract!.Wound)
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Contract!.Wound!.WoundName)
             </dd>
         </dl>
-
-        @* <div class="btn-group" role="group" aria-label="Control Panel">
-        <a asp-action="Index" asp-controller="Visit" asp-route-id="@Model?.ContractId" asp-route-command="nurse" class="btn btn-success">View Visits</a>
-        <a asp-action="Edit" asp-route-id="@Model?.ContractId" class="btn btn-success">Edit</a>
-        @if(User.IsInRole("N"))
-        {
-        @if (Model?.StartDate != null)
-        {
-
-        <a asp-action="Create" asp-controller="Visit" asp-route-id="@Model?.ContractId" class="btn btn-success">Add Visit</a>
-        }
-        }
-        else if (User.IsInRole("O") || User.IsInRole("P"))
-        {
-        <form asp-action="Delete">
-        <input asp-for="ContractId" value="@Model?.ContractId" type="hidden" />
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete contract: #@Model?.ContractId?')" class="btn btn-danger" />
-        </form>
-        }
-
-        </div> *@
     </div>
-
-
     <br />
     <h1 class="display-6 text-center p-2">Visit Information</h1>
     <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-md-3">
         <div class="col-md-8">
-            <div class="row border border-3 rounded-3 p-2 m-2">
+            <div class="row border border-3 rounded-3 p-2">
                 <table class="table" id="myTable">
                     <thead>
                         <tr>
@@ -210,7 +186,7 @@
             <div class="col-md-3">
                 <form asp-controller="Visit" asp-action="Create">
                     <input asp-for="Contract!.ContractId" name="ContractId" hidden />
-                    <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-3">
+                    <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-1">
                         <h2 class="h3 text-center">Schedule Visit</h2>
                         <section class="px-5">
                             <hr />
