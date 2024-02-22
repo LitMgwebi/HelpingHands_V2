@@ -9,215 +9,215 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = HelpingHands_V2
 build_property.RootNamespace = HelpingHands_V2
-build_property.ProjectDir = C:\Users\lithi\OneDrive\Documents\Github\HelpingHands_V2\HelpingHands_V2\
+build_property.ProjectDir = C:\Users\lithi\OneDrive\Documentos\Github\HelpingHands_V2\HelpingHands_V2\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\lithi\OneDrive\Documents\Github\HelpingHands_V2\HelpingHands_V2
+build_property.MSBuildProjectDirectory = C:\Users\lithi\OneDrive\Documentos\Github\HelpingHands_V2\HelpingHands_V2
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Admin/Dashboard.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Admin/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGFzaGJvYXJkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Business/Details.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Business/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzaW5lc3NcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Business/Edit.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Business/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzaW5lc3NcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/City/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/City/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2l0eVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Condition/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Condition/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uZGl0aW9uXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Contract/Create.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Contract/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhY3RcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Contract/Details.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Contract/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhY3RcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Contract/Edit.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Contract/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhY3RcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Contract/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Contract/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhY3RcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/AddUser.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/AddUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kVXNlclxBZGRVc2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/ChangePassword.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/ChangePassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kVXNlclxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Edit.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kVXNlclxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kVXNlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Login.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kVXNlclxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Profile.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kVXNlclxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Register.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/EndUser/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5kVXNlclxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Home/About.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Home/About.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Home/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Home/Pending.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Home/Pending.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQZW5kaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/ContractRange.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/ContractRange.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxDb250cmFjdFJhbmdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/Dashboard.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxEYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/NewContracts.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/NewContracts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxOZXdDb250cmFjdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/VisitRange.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/VisitRange.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxWaXNpdFJhbmdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Create.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Dashboard.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcRGFzaGJvYXJkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Edit.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Profile.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/VisitRange.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/VisitRange.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcVmlzaXRSYW5nZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Visits.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Visits.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcVmlzaXRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Operation/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Operation/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3BlcmF0aW9uXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/PatientCondition/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/PatientCondition/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudENvbmRpdGlvblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/PatientCondition/IndexForPatient.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/PatientCondition/IndexForPatient.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudENvbmRpdGlvblxJbmRleEZvclBhdGllbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Create.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Dashboard.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxEYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Edit.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Profile.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Patient/Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/PrefferedSuburb/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/PrefferedSuburb/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlZmZlcmVkU3VidXJiXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/PrefferedSuburb/IndexForNurse.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/PrefferedSuburb/IndexForNurse.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlZmZlcmVkU3VidXJiXEluZGV4Rm9yTnVyc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Shared/Error.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Suburb/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Suburb/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VidXJiXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Visit/Details.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Visit/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmlzaXRcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Visit/Edit.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Visit/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmlzaXRcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Visit/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Visit/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmlzaXRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Visit/IndexForUser.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Visit/IndexForUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmlzaXRcSW5kZXhGb3JVc2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Wound/Index.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Wound/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV291bmRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/_ViewImports.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/_ViewStart.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documents/Github/HelpingHands_V2/HelpingHands_V2/Views/Shared/_Layout.cshtml]
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-f4y3n4any9

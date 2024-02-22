@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using HelpingHands_V2.Models;
 using HelpingHands_V2.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using System.ComponentModel;
 using Microsoft.AspNetCore.Authentication;
 using HelpingHands_V2.ViewModels;
-using NuGet.Protocol.Plugins;
 using CloudinaryDotNet.Actions;
 using HelpingHands_V2.Services;
 
@@ -127,16 +120,12 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-
-                //ViewBag.Nurse = nurse;
-                //ViewBag.User = user;
                 return View(nurse);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -158,16 +147,18 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NurseId,Grade,Active")] Nurse nurse)
+        public async Task<IActionResult> Create([Bind("NurseId,Grade,Active")] Nurse nurse, [Bind("UserId, Username, Firstname, Lastname, DateOfBirth, Email, Password, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user)
         {
             try
             {
                 ModelState.Remove("NurseNavigation");
+                ModelState.Remove("Password");
+                ModelState.Remove("ConfirmPassword");
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.NurseId = nurse.NurseId;
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
+                    nurse.EndUser = user;
                     return View(nurse);
                 }
                 await _nurse.AddNurse(nurse);
@@ -176,6 +167,7 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
+                nurse.EndUser = user;
                 ViewBag.Message = ex.Message;
                 return View(nurse);
             }
@@ -277,7 +269,6 @@ namespace HelpingHands_V2.Controllers
             {
                 ViewBag.Message = ex.Message;
                 return RedirectToAction(nameof(Profile), new { id = NurseId });
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 

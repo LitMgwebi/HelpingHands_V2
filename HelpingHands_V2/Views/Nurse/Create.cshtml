@@ -11,13 +11,17 @@
     <p class="text-decoration-underline text-danger">@Message</p>
 }
 <div class="px-5"><hr /></div>
-
 <div class="container-fluid">
     <form enctype="multipart/form-data" asp-action="Create">
-        <input asp-for="NurseId" type="hidden" />
-        <input asp-for="EndUser!.Password" type="hidden"/>
-        <input asp-for="EndUser!.ConfirmPassword" type="hidden"/>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="NurseId" type="hidden" />
+        <input asp-for="EndUser!.UserId" name="UserId" type="hidden" />
+        <input asp-for="EndUser!.Password" name="Password" type="hidden" />
+        <input asp-for="EndUser!.ConfirmPassword" name="ConfirmPassword" type="hidden" />
+        <input asp-for="EndUser!.ProfilePicture" name="ProfilePicture" type="hidden" />
+        <input asp-for="EndUser!.ProfilePictureName" name="ProfilePictureName" type="hidden" />
+        <input asp-for="EndUser!.UserType" name="UserType" type="hidden" />
+        <input asp-for="EndUser!.ApplicationType" name="ApplicationType" type="hidden" />
         <div class="container px-5 ">
             <div class="row row-cols-auto px-5 g-3 py-4 justify-content-start">
                 <div class="col-12">
@@ -26,54 +30,52 @@
                 <div class="col-5">
                     <div class="input-group-sm">
                         <label asp-for="EndUser!.Username" class="form-label"></label>
-                        <input asp-for="EndUser!.Username" class="form-control" type="text" readonly />
+                        <input asp-for="EndUser!.Username" name="Username" class="form-control" type="text" readonly />
                     </div>
                 </div><div class="col-5">
                     <div class="input-group-sm">
                         <label asp-for="EndUser!.Firstname" class="form-label"></label>
-                        <input asp-for="EndUser!.Firstname" class="form-control" type="text" readonly/>
+                        <input asp-for="EndUser!.Firstname" name="Firstname" class="form-control" type="text" readonly />
                     </div>
                 </div>
                 <div class="col-5">
                     <div class="input-group-sm">
                         <label asp-for="EndUser!.Lastname" class="form-label"></label>
-                        <input asp-for="EndUser!.Lastname" class="form-control" type="text" readonly />
+                        <input asp-for="EndUser!.Lastname" name="Lastname" class="form-control" type="text" readonly />
                     </div>
                 </div>
                 <div class="col-7">
                     <div class="input-group-sm">
                         <label asp-for="EndUser!.Email" class="form-label"></label>
-                        <input asp-for="EndUser!.Email" class="form-control" type="email" readonly />
+                        <input asp-for="EndUser!.Email" name="Email" class="form-control" type="email" readonly />
                     </div>
                 </div>
-                <div class="col-4">
-                        <div>
-                        <img src="@Model.EndUser!.ProfilePicture" class="img-thumbnail img-fluid" alt="@Model?.EndUser!.ProfilePictureName" />
-                        </div>
+                <div class="col-3">
+                    <img src="@Model.EndUser!.ProfilePicture" class="img-fluid" alt="@Model?.EndUser!.ProfilePictureName" />
                 </div>
                 <div class="col-6">
                     <div class="input-group-sm">
                         <label asp-for="EndUser!.Idnumber" class="form-label"></label>
-                        <input asp-for="EndUser!.Idnumber" class="form-control" readonly />
+                        <input asp-for="EndUser!.Idnumber" name="Idnumber" class="form-control" readonly />
                     </div>
                 </div>
                 <div class="col-5">
                     <div class="input-group-sm">
                         <label asp-for="EndUser!.ContactNumber" class="form-label"></label>
-                        <input asp-for="EndUser!.ContactNumber" class="form-control" readonly />
+                        <input asp-for="EndUser!.ContactNumber" name="ContactNumber" class="form-control" readonly />
                     </div>
                 </div>
 
                 <div class="col-3">
                     <div class="input-group-sm">
                         <label asp-for="EndUser!.DateOfBirth" class="form-label"></label>
-                        <input asp-for="EndUser!.DateOfBirth" class="form-control" type="date" readonly />
+                        <input asp-for="EndUser!.DateOfBirth" name="DateOfBirth" class="form-control" type="text" readonly />
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="input-group-sm">
                         <label asp-for="EndUser!.Gender" class="form-label"></label>
-                        <input asp-for="EndUser!.Gender" class="form-control" readonly />
+                        <input asp-for="EndUser!.Gender" name="Gender" class="form-control" readonly />
                     </div>
                 </div>
             </div>

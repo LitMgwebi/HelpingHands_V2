@@ -44,13 +44,11 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                //ViewBag.Accounts = accounts;
                 return View(accounts);
 
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -71,12 +69,10 @@ namespace HelpingHands_V2.Controllers
                 if (user == null)
                     return NotFound();
 
-                //ViewBag.User = user;
                 return View(user);
             }
             catch (Exception ex)
             {
-                //return new JsonResult(new { error = ex.Message });
                 ViewBag.Message = ex.Message;
                 return View();
             }
@@ -106,7 +102,6 @@ namespace HelpingHands_V2.Controllers
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    //return new JsonResult(new { errors });
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
                     return View();
                 }
@@ -154,7 +149,6 @@ namespace HelpingHands_V2.Controllers
                 }
                 else
                 {
-                    //return new JsonResult( new {model, message = "could not validate user"});
                     ViewBag.Message = "Could not validate user. Username or Password is incorrect";
                     return View();
                 }
@@ -193,7 +187,7 @@ namespace HelpingHands_V2.Controllers
             try
             {
                 ModelState.Remove("UserType");
-                user.Username = user.Firstname.Substring(0, 3) + user.Lastname.Substring(0, 3);
+                ModelState.Remove("Username");
 
                 if (!ModelState.IsValid)
                 {
@@ -229,6 +223,7 @@ namespace HelpingHands_V2.Controllers
 
                 string tempPassword = user.Password;
                 user.Password = BC.HashPassword(user.Password);
+                user.Username = user.Firstname.Substring(0, 3) + user.Lastname.Substring(0, 3);
                 await _account.AddUser(user);
                 ViewBag.Message = "Record Added successfully;";
 

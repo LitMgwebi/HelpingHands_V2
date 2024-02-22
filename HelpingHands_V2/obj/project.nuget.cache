@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6VR74vooaUU9PUmdYieks2H3+fr8TNSWLREt+jYgoBz71ue7t71RKwH/slqT4PZK25U4cgXbziJdM7VWHhO2+w==",
+  "dgSpecHash": "wF5S67Vl9kT305KiVHpGipakPQAf2Ihe3ERRtzkvpF9FMC4vLiaIKSoLROYM5zd2zQxkUnEEbQJnnNLG1ADaFQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\HelpingHands_V2.csproj",
+  "projectFilePath": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\HelpingHands_V2\\HelpingHands_V2\\HelpingHands_V2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lithi\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\lithi\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

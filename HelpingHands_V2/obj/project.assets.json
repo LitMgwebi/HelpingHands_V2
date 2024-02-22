@@ -12695,11 +12695,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\HelpingHands_V2.csproj",
+      "projectUniqueName": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\HelpingHands_V2\\HelpingHands_V2\\HelpingHands_V2.csproj",
       "projectName": "HelpingHands_V2",
-      "projectPath": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\HelpingHands_V2.csproj",
+      "projectPath": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\HelpingHands_V2\\HelpingHands_V2\\HelpingHands_V2.csproj",
       "packagesPath": "C:\\Users\\lithi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lithi\\OneDrive\\Documents\\Github\\HelpingHands_V2\\HelpingHands_V2\\obj\\",
+      "outputPath": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\HelpingHands_V2\\HelpingHands_V2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\lithi\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -4,7 +4,6 @@ using HelpingHands_V2.Models;
 using HelpingHands_V2.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -82,7 +81,6 @@ namespace HelpingHands_V2.Controllers
                 {
                     return NotFound();
                 }
-                //ViewBag.Patients = patients;
                 return View(patients);
 
             }
@@ -90,7 +88,6 @@ namespace HelpingHands_V2.Controllers
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -107,17 +104,12 @@ namespace HelpingHands_V2.Controllers
 
                 if (patient == null)
                     return NotFound();
-
-                //ViewBag.Patient = patient;
-                //ViewBag.User = user;
-
                 return View(patient);
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
                 return View();
-                //return new JsonResult(new { error = ex.Message });
             }
         }
 
@@ -140,19 +132,21 @@ namespace HelpingHands_V2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PatientId, AddressLineOne, AddressLineTwo, SuburbId, Icename, Icenumber, AdditionalInfo, Active")]Patient patient)
+        public async Task<IActionResult> Create([Bind("PatientId, AddressLineOne, AddressLineTwo, SuburbId, Icename, Icenumber, AdditionalInfo, Active")]Patient patient, [Bind("UserId, Username, Firstname, Lastname, DateOfBirth, Email, Password, Gender, ContactNumber, Idnumber, UserType, ApplicationType, ProfilePicture, ProfilePictureName, Active")] EndUser user)
         {
             try
             {
                 ModelState.Remove("PatientNavigation");   
-                ModelState.Remove("Suburb");   
+                ModelState.Remove("Suburb");
+                ModelState.Remove("Password");
+                ModelState.Remove("ConfirmPassword");
                 if (!ModelState.IsValid)
                 {
                     var suburbs = await _suburb.GetSuburbs();
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
-                    return new JsonResult(patient, errors);
+                    patient.EndUser = user;
                     return View(patient);
                 }
                 await _patient.AddPateint(patient);
@@ -161,8 +155,8 @@ namespace HelpingHands_V2.Controllers
             }
             catch (Exception ex)
             {
+                patient.EndUser = user;
                 ViewBag.Message = ex.Message;
-                return new JsonResult(patient, ex.Message);
                 return View(patient);
             }
         }
@@ -265,7 +259,6 @@ namespace HelpingHands_V2.Controllers
             {
                 ViewBag.Message = ex.Message;
                 return RedirectToAction(nameof(Profile), new { id = PatientId });
-                //return new JsonResult(new { error = ex.Message });
             }
         }
     }
