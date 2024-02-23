@@ -19,7 +19,7 @@
 
 <div class="container-fluid">
     <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-md-3">
-        <div class="col-md-8">
+        <section class="col-md-6">
             <div class="row border border-3 rounded-3 p-2 m-2">
                 <table class="table" id="myTable">
                     <thead>
@@ -67,30 +67,30 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="col-md-3">
+        </section>
+        <aside class="col-md-3">
             <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
                 <h2 class="h3 text-center">Add Suburb</h2>
                 <section class="px-5">
                     <hr />
                 </section>
-                <form asp-action="Create">
+                <form asp-action="Create" class="row justify-content-center">
                     <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="col-6">
+                    <div class="col-md-11 p-md-1">
                         <div class="input-group-sm">
                             <label asp-for="Suburb!.SuburbName" class="form-label"></label>
                             <input name="SuburbName" class="form-control" />
                             <span asp-validation-for="Suburb!.SuburbName" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-md-11 p-md-1">
                         <div class="input-group-sm">
                             <label asp-for="Suburb!.PostalCode" class="form-label"></label>
                             <input name="PostalCode" type="text" class="form-control" />
                             <span asp-validation-for="Suburb!.PostalCode" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-md-11 p-md-1">
                         <div class="input-group-sm">
                             <label asp-for="Suburb!.CityId" class="form-label"></label>
                             <select name="CityId" class="form-select form-select-sm" asp-items="ViewBag.CityId">
@@ -99,9 +99,9 @@
                             <span asp-validation-for="Suburb!.CityId" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="row justify-content-center g-2 py-4">
-                            <div class="btn-group">
+                            <div class="btn-group col-auto">
                                 <input type="submit" value="Add" class="btn btn-primary" />
                             </div>
                         </div>
@@ -122,31 +122,41 @@
                     <hr />
                 </section>
                 <div class="row">
-                    <form asp-action="Edit">
+                    <form asp-action="Edit" class="row justify-content-center">
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <input asp-for="Suburb!.SuburbId" type="hidden" />
-                        <div class="input-group-sm">
-                            <label asp-for="Suburb!.SuburbName" class="form-label"></label>
-                            <input asp-for="Suburb!.SuburbName" class="form-control" />
-                            <span asp-validation-for="Suburb!.SuburbName" class="text-danger"></span>
+                        <div class="col-md-11 p-md-1">
+                            <div class="input-group-sm">
+                                <label asp-for="Suburb!.SuburbName" class="form-label"></label>
+                                <input asp-for="Suburb!.SuburbName" class="form-control" />
+                                <span asp-validation-for="Suburb!.SuburbName" class="text-danger"></span>
+                            </div>
                         </div>
-                        <div class="input-group-sm">
-                            <label asp-for="Suburb!.PostalCode" class="form-label"></label>
-                            <input asp-for="Suburb!.PostalCode" class="form-control" />
-                            <span asp-validation-for="Suburb!.PostalCode" class="text-danger"></span>
+                        <div class="col-md-11 p-md-1">
+                            <div class="input-group-sm">
+                                <label asp-for="Suburb!.PostalCode" class="form-label"></label>
+                                <input asp-for="Suburb!.PostalCode" class="form-control" />
+                                <span asp-validation-for="Suburb!.PostalCode" class="text-danger"></span>
+                            </div>
                         </div>
-                        <div class="input-group-sm">
-                            <label asp-for="Suburb!.CityId" class="form-label"></label>
-                            <select asp-for="Suburb!.CityId" class="form-control" asp-items="ViewBag.CityId">
-                            </select>
-                            <span asp-validation-for="Suburb!.CityId" class="text-danger"></span>
+                        <div class="col-md-11 p-md-1">
+                            <div class="input-group-sm">
+                                <label asp-for="Suburb!.CityId" class="form-label"></label>
+                                <select asp-for="Suburb!.CityId" class="form-control" asp-items="ViewBag.CityId">
+                                </select>
+                                <span asp-validation-for="Suburb!.CityId" class="text-danger"></span>
+                            </div>
                         </div>
-                        <div class="row justify-content-center g-2 py-4">
-                            <input type="submit" value="Save" class="btn btn-primary" />
+                        <div class="col-12">
+                            <div class="row justify-content-center g-2 py-4">
+                                <div class="btn-group col-auto">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
+        </aside>
     </div>
 </div>

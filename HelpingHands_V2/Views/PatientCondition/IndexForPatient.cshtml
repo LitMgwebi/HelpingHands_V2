@@ -18,7 +18,7 @@
 </div>
 <div class="container-fluid">
     <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-md-3">
-        <div class="col-md-7">
+        <section class="col-md-7">
             <div class="row border border-3 rounded-3 p-2 m-2">
                 <table class="table" id="myTable">
                     <thead>
@@ -56,17 +56,17 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="col-md-3">
-            <form asp-action="Create">
+        </section>
+        <aside class="col-md-3">
+            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-3">
+                <form asp-action="Create" class="row justify-content-center">
                 <input asp-for="PatientId" type="hidden" />
-                <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-3">
                     <h2 class="h3 text-center">Add Condition</h2>
                     <section class="px-5">
                         <hr />
                     </section>
                     <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="col-7">
+                    <div class="col-md-11 p-md-1">
                         <div class="input-group-sm">
                             <label asp-for="Condition!.ConditionName" class="form-label"></label>
                             <select asp-for="Condition!.ConditionId" name="ConditionId" class="form-select form-select-sm" asp-items="ViewBag.Conditions">
@@ -74,15 +74,15 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-7">
-                        <div class="row justify-content-center g-2 p-4">
-                            <div class="btn-group">
+                    <div class="col-12">
+                        <div class="row justify-content-center g-2 py-4">
+                            <div class="btn-group col-auto">
                                 <input type="submit" value="Add" class="btn btn-primary" />
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        </aside>
     </div>
 </div>
