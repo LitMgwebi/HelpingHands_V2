@@ -86,7 +86,14 @@
                 </div>
                 <div class="input-group-sm">
                     <label asp-for="Grade" class="form-label"></label>
-                    <input asp-for="Grade" class="form-control" />
+                    <select asp-for="Grade" class="form-control" data-bs-toggle="tooltip" data-bs-title="Grade of the wounds you can help one">
+                        <option disabled selected>--- SELECT ---</option>
+                        <option>5 (Most difficult)</option>
+                        <option>4</option>
+                        <option>3</option>
+                        <option>2</option>
+                        <option>1 (Least difficult)</option>
+                    </select>
                     <span asp-validation-for="Grade" class="text-danger"></span>
                 </div>
             </div>
