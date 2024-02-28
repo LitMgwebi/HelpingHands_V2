@@ -61,11 +61,11 @@
                 </div>
             </article>
             <aside class="col-md-3">
-                <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
+                <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2">
                     <h2 class="h3 text-center">Add Condition</h2>
-                    <section class="px-5">
+                    <div class="px-5">
                         <hr />
-                    </section>
+                    </div>
                     <form asp-action="Create" class="row justify-content-center">
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="col-md-11 p-md-1">
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <div class="row justify-content-center g-2 py-4">
+                            <div class="row justify-content-center g-2 py-2">
                                 <div class="btn-group col-auto">
                                     <input type="submit" value="Create" class="btn btn-primary" />
                                 </div>
@@ -91,7 +91,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
+                <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2">
                     @if (Model.Condition != null)
                     {
                         <h2 class="h3 text-center">Edit @Model?.Condition!.ConditionName</h2>
@@ -100,6 +100,9 @@
                     {
                         <h2 class="h3 text-center">Select condition to edit</h2>
                     }
+                    <div class="px-5">
+                        <hr />
+                    </div>
                     <div class="row">
                         <form asp-action="Edit" class="row justify-content-center">
                             <div asp-validation-summary="All" class="text-danger"></div>
@@ -120,7 +123,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="row justify-content-center g-2 py-4">
+                                <div class="row justify-content-center g-2 py-2">
                                     <div class="btn-group col-auto">
                                         <input type="submit" value="Save" class="btn btn-primary" />
                                     </div>
