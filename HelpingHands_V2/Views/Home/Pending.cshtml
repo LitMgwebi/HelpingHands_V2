@@ -3,11 +3,17 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Pending Authorization</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<div>
-    <p>You have been added to a waiting list. Please await manager authorization</p>
-</div>
+<section class="container-fluid" id="Pending">
+    <h2 class="display-4 text-center p-4">Pending Authorization</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+
+    <div class="px-5">
+        <hr />
+    </div>
+    <div class="container-fluid">
+        <p>You have been added to a waiting list. Please await manager authorization</p>
+    </div>
+</section>

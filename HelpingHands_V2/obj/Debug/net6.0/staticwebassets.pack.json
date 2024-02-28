@@ -45,6 +45,10 @@
       "PackagePath": "staticwebassets\\Media\\mern.png"
     },
     {
+      "Id": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\nurseAndPatient.jpg",
+      "PackagePath": "staticwebassets\\Media\\nurseAndPatient.jpg"
+    },
+    {
       "Id": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\plus.png",
       "PackagePath": "staticwebassets\\Media\\plus.png"
     },

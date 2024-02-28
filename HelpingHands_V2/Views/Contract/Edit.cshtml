@@ -4,74 +4,76 @@
     ViewData["Title"] = "Edit";
     var Message = ViewBag.Message;
 }
-    <h2 class="display-4 text-center">Edit Care Contract</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <input asp-for="ContractId" value="@Model?.ContractId" type="hidden" />
-            <input asp-for="PatientId" hidden value="@Model?.PatientId" />
-            <input asp-for="WoundId" hidden value="@Model?.WoundId" />
-            <input asp-for="AddressLineOne" value="@Model?.AddressLineOne" hidden />
-            <input asp-for="AddressLineTwo" value="@Model?.AddressLineTwo" hidden />
-            <input asp-for="SuburbId" value="@Model?.SuburbId" hidden />
-            <input asp-for="ContractComment" value="@Model?.ContractComment" hidden />
-            <input asp-for="ContractStatus" value="A" class="form-control" readonly type="hidden" />
-            <div class="form-group">
-                <label asp-for="ContractStatus" class="control-label"></label>
-                <span asp-validation-for="ContractStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContractDate" class="control-label"></label>
-                <input asp-for="ContractDate" type="date" class="form-control" readonly />
-                <span asp-validation-for="ContractDate" class="text-danger"></span>
-            </div>
-            @if (Model?.NurseId != null)
-            {
+<section class="container-fluid" id="Edit">
+    <h2 class="display-4 text-center p-2">Edit Care Contract</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5"><hr /></div>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input asp-for="ContractId" value="@Model?.ContractId" type="hidden" />
+                <input asp-for="PatientId" hidden value="@Model?.PatientId" />
+                <input asp-for="WoundId" hidden value="@Model?.WoundId" />
+                <input asp-for="AddressLineOne" value="@Model?.AddressLineOne" hidden />
+                <input asp-for="AddressLineTwo" value="@Model?.AddressLineTwo" hidden />
+                <input asp-for="SuburbId" value="@Model?.SuburbId" hidden />
+                <input asp-for="ContractComment" value="@Model?.ContractComment" hidden />
+                <input asp-for="ContractStatus" value="A" class="form-control" readonly type="hidden" />
                 <div class="form-group">
-                    <label asp-for="NurseId" class="control-label"></label>
-                    <input asp-for="Nurse.FullName!" type="text" class="form-control" readonly />
-                    <span asp-validation-for="NurseId" class="text-danger"></span>
-                </div>
-            }
-            else if (User.IsInRole("N"))
-            {
-                <input asp-for="NurseId" value="@User.FindFirst("UserId")!.Value" hidden />
-            }
-            @if (User.IsInRole("N"))
-            {
-                <div class="form-group">
-                    <label asp-for="StartDate" class="control-label"></label>
-                    <input asp-for="StartDate" type="date" class="form-control" />
-                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                    <label asp-for="ContractStatus" class="control-label"></label>
+                    <span asp-validation-for="ContractStatus" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="EndDate" class="control-label"></label>
-                    <input asp-for="EndDate" type="date" class="form-control" />
-                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                    <label asp-for="ContractDate" class="control-label"></label>
+                    <input asp-for="ContractDate" type="date" class="form-control" readonly />
+                    <span asp-validation-for="ContractDate" class="text-danger"></span>
                 </div>
-            }
-            else
-            {
-                <input asp-for="StartDate" hidden />
-                <input asp-for="EndDate" hidden />
-            }
-            <div class="form-group">
+                @if (Model?.NurseId != null)
+                {
+                    <div class="form-group">
+                        <label asp-for="NurseId" class="control-label"></label>
+                        <input asp-for="Nurse.FullName!" type="text" class="form-control" readonly />
+                        <span asp-validation-for="NurseId" class="text-danger"></span>
+                    </div>
+                }
+                else if (User.IsInRole("N"))
+                {
+                    <input asp-for="NurseId" value="@User.FindFirst("UserId")!.Value" hidden />
+                }
                 @if (User.IsInRole("N"))
                 {
-                    <input type="submit" value="Undertake" class="btn btn-primary" />
+                    <div class="form-group">
+                        <label asp-for="StartDate" class="control-label"></label>
+                        <input asp-for="StartDate" type="date" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EndDate" class="control-label"></label>
+                        <input asp-for="EndDate" type="date" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
                 }
                 else
                 {
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input asp-for="StartDate" hidden />
+                    <input asp-for="EndDate" hidden />
                 }
-                <a asp-action="Details" asp-route-id="@Model?.ContractId" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
+                <div class="form-group">
+                    @if (User.IsInRole("N"))
+                    {
+                        <input type="submit" value="Undertake" class="btn btn-primary" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    }
+                    <a asp-action="Details" asp-route-id="@Model?.ContractId" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</section>

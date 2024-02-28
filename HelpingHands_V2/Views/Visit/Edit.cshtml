@@ -5,63 +5,65 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center p-4">Edit Visit</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<div class="px-5"><hr /></div>
-<div class="container-fluid p-2">
-    <form asp-action="Edit">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <input asp-for="VisitId" type="hidden" />
-        <input asp-for="ContractId" type="hidden" />
-        <div class="row row-cols-md-2 row-cols-auto d-flex justify-content-evenly align-items-center">
-            <div class="col-md-4">
-                <div class="input-group-sm p-md-2 p-1">
-                    <label asp-for="VisitDate" class="control-label"></label>
-                    <input asp-for="VisitDate" class="form-control" type="date" />
-                    <span asp-validation-for="VisitDate" class="text-danger"></span>
+<section class="container-fluid" id="Edit">
+    <h2 class="display-4 text-center p-2">Edit Visit</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5"><hr /></div>
+    <div class="container-fluid p-2">
+        <form asp-action="Edit">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input asp-for="VisitId" type="hidden" />
+            <input asp-for="ContractId" type="hidden" />
+            <div class="row row-cols-md-2 row-cols-auto d-flex justify-content-evenly align-items-center">
+                <div class="col-md-4">
+                    <div class="input-group-sm p-md-2 p-1">
+                        <label asp-for="VisitDate" class="control-label"></label>
+                        <input asp-for="VisitDate" class="form-control" type="date" />
+                        <span asp-validation-for="VisitDate" class="text-danger"></span>
+                    </div>
+                    <div class="input-group-sm p-md-2 p-1">
+                        <label asp-for="ApproxTime" class="control-label"></label>
+                        <input asp-for="ApproxTime" type="time" class="form-control" />
+                        <span asp-validation-for="ApproxTime" class="text-danger"></span>
+                    </div>
+                    <div class="input-group-sm p-md-2 p-1">
+                        <label asp-for="Arrival" class="control-label"></label>
+                        <input asp-for="Arrival" type="time" class="form-control" />
+                        <span asp-validation-for="Arrival" class="text-danger"></span>
+                    </div>
+                    <div class="input-group-sm p-md-2 p-1">
+                        <label asp-for="Departure" class="control-label"></label>
+                        <input asp-for="Departure" type="time" class="form-control" />
+                        <span asp-validation-for="Departure" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="input-group-sm p-md-2 p-1">
-                    <label asp-for="ApproxTime" class="control-label"></label>
-                    <input asp-for="ApproxTime" type="time" class="form-control" />
-                    <span asp-validation-for="ApproxTime" class="text-danger"></span>
-                </div>
-                <div class="input-group-sm p-md-2 p-1">
-                    <label asp-for="Arrival" class="control-label"></label>
-                    <input asp-for="Arrival" type="time" class="form-control" />
-                    <span asp-validation-for="Arrival" class="text-danger"></span>
-                </div>
-                <div class="input-group-sm p-md-2 p-1">
-                    <label asp-for="Departure" class="control-label"></label>
-                    <input asp-for="Departure" type="time" class="form-control" />
-                    <span asp-validation-for="Departure" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="input-group-sm p-md-2 p-1">
-                    <label asp-for="WoundCondition" class="control-label"></label>
-                    <textarea asp-for="WoundCondition" class="form-control" rows="3" autofocus>
+                <div class="col-md-4">
+                    <div class="input-group-sm p-md-2 p-1">
+                        <label asp-for="WoundCondition" class="control-label"></label>
+                        <textarea asp-for="WoundCondition" class="form-control" rows="3" autofocus>
                 </textarea>
-                    <span asp-validation-for="WoundCondition" class="text-danger"></span>
-                </div>
-                <div class="input-group-sm p-md-2 p-1">
-                    <label asp-for="Note" class="control-label"></label>
-                    <textarea asp-for="Note" class="form-control" rows="3" autofocus>
+                        <span asp-validation-for="WoundCondition" class="text-danger"></span>
+                    </div>
+                    <div class="input-group-sm p-md-2 p-1">
+                        <label asp-for="Note" class="control-label"></label>
+                        <textarea asp-for="Note" class="form-control" rows="3" autofocus>
                 </textarea>
-                    <span asp-validation-for="Note" class="text-danger"></span>
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
 
-        </div>
-        <div class="row my-md-5 my-2 py-0">
-            <div class="col-12 d-flex align-items-center justify-content-center">
-                <div class="btn-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                    <a asp-action="Details" asp-route-id="@Model?.VisitId" class="btn btn-secondary">Cancel</a>
+            </div>
+            <div class="row my-md-5 my-2 py-0">
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <div class="btn-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <a asp-action="Details" asp-route-id="@Model?.VisitId" class="btn btn-secondary">Cancel</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+</section>

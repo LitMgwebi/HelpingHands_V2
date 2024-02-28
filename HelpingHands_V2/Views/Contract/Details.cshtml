@@ -4,218 +4,218 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center p-2">Contract Details</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<div class="px-5">
-    @if (User.IsInRole("N"))
+<section class="container-fluid" id="Details">
+    <h2 class="display-4 text-center p-2">Contract Details</h2>
+    @if (Message != null)
     {
-        <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="current" class="btn btn-secondary">Back</a>
+        <p class="text-decoration-underline text-danger">@Message</p>
     }
-    else if (User.IsInRole("P"))
-    {
-        <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient" class="btn btn-secondary">Back</a>
-    }
-    else if (User.IsInRole("O"))
-    {
-        <a asp-action="NewContracts" asp-controller="Manager" class="btn btn-secondary">Back</a>
-    }
-    else
-    {
-        <a asp-action="Index" class="btn btn-secondary">Back</a>
-    }
-</div>
-@* <form asp-action="GeneratePDF">
-    <input asp-for="Contract!.ContractId" type="hidden" name="ContractId" />
-    <input type="submit" value="Download Contract" class="btn btn-primary"/>
-</form> *@
-<div class="px-5">
-    <hr />
-</div>
-<div class="container-fluid">
-    <div class="row row-cols-md-2 justify-content-evenly p-md-5 p-2 mx-md-5 mx-2">
-        <dl class="col-6">
-            <dt class="col-sm-8">
-                @Html.DisplayNameFor(model => model.Contract!.ContractStatus)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Contract!.ContractStatus)
-            </dd>
-            <dt class="col-sm-8">
-                @Html.DisplayNameFor(model => model.Contract!.ContractDate)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Contract!.ContractDate)
-            </dd>
-            <dt class="col-sm-8">
-                @Html.DisplayNameFor(model => model.Contract!.AddressLineOne)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Contract!.AddressLineOne)
-            </dd>
-            @if (Model?.Contract!.AddressLineTwo != null)
-            {
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.Contract!.AddressLineTwo)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Contract!.AddressLineTwo)
-                </dd>
-            }
-            @if (Model?.Contract!.StartDate != null)
-            {
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.Contract!.StartDate)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Contract!.StartDate)
-                </dd>
-            }
-            @if (Model?.Contract!.EndDate != null)
-            {
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.Contract!.EndDate)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Contract!.EndDate)
-                </dd>
-            }
-        </dl>
-        <dl class="col-6">
-            @if (Model?.Contract!.ContractComment != null)
-            {
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.Contract!.ContractComment)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Contract!.ContractComment)
-                </dd>
-            }
-            @if (Model?.Contract!.Nurse != null)
-            {
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.Contract!.Nurse)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Contract!.Nurse!.FullName)
-                </dd>
-            }
-            <dt class="col-sm-8">
-                @Html.DisplayNameFor(model => model.Contract!.Patient)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Contract!.Patient!.FullName)
-            </dd>
-            <dt class="col-sm-8">
-                @Html.DisplayNameFor(model => model.Contract!.Suburb)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Contract!.Suburb!.SuburbName)
-            </dd>
-            <dt class="col-sm-8">
-                @Html.DisplayNameFor(model => model.Contract!.Wound)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Contract!.Wound!.WoundName)
-            </dd>
-        </dl>
-    </div>
-    <br />
-    <h1 class="display-6 text-center p-2">Visit Information</h1>
-    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-md-3">
-        <div class="col-md-8">
-            <div class="row border border-3 rounded-3 p-2">
-                <table class="table" id="myTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                Visit Date
-                            </th>
-                            <th>
-                                Approximate Time
-                            </th>
-                            <th>
-                                Arrival
-                            </th>
-                            <th>
-                                Departure
-                            </th>
-                            <th>
-                                Wound Condition
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model?.Contract!.Visits != null)
-                        {
-                            @foreach (var item in Model.Contract!.Visits!)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.VisitDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ApproxTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Arrival)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Departure)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.WoundCondition)
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="px-5">
         @if (User.IsInRole("N"))
         {
-            <div class="col-md-3">
-                <form asp-controller="Visit" asp-action="Create">
-                    <input asp-for="Contract!.ContractId" name="ContractId" hidden />
-                    <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-1">
-                        <h2 class="h3 text-center">Schedule Visit</h2>
-                        <section class="px-5">
-                            <hr />
-                        </section>
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="col-7">
-                            <div class="input-group-sm">
-                                <label asp-for="@Model!.Visit!.VisitDate" class="form-label"></label>
-                                <input asp-for="@Model!.Visit!.VisitDate" type="date" name="VisitDate" class="form-control" />
-                                <span asp-validation-for="@Model!.Visit!.VisitDate" class="text-danger"></span>
+            <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="current" class="btn btn-secondary">Back</a>
+        }
+        else if (User.IsInRole("P"))
+        {
+            <a asp-action="Index" asp-route-id="@User.FindFirst("UserId")!.Value" asp-route-command="patient" class="btn btn-secondary">Back</a>
+        }
+        else if (User.IsInRole("O"))
+        {
+            <a asp-action="NewContracts" asp-controller="Manager" class="btn btn-secondary">Back</a>
+        }
+        else
+        {
+            <a asp-action="Index" class="btn btn-secondary">Back</a>
+        }
+    </div>
+    @* <form asp-action="GeneratePDF">
+    <input asp-for="Contract!.ContractId" type="hidden" name="ContractId" />
+    <input type="submit" value="Download Contract" class="btn btn-primary"/>
+    </form> *@
+    <div class="px-5"><hr /></div>
+    <div class="container-fluid">
+        <div class="row row-cols-md-2 justify-content-evenly p-md-5 p-2 mx-md-5 mx-2">
+            <dl class="col-6">
+                <dt class="col-sm-8">
+                    @Html.DisplayNameFor(model => model.Contract!.ContractStatus)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Contract!.ContractStatus)
+                </dd>
+                <dt class="col-sm-8">
+                    @Html.DisplayNameFor(model => model.Contract!.ContractDate)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Contract!.ContractDate)
+                </dd>
+                <dt class="col-sm-8">
+                    @Html.DisplayNameFor(model => model.Contract!.AddressLineOne)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Contract!.AddressLineOne)
+                </dd>
+                @if (Model?.Contract!.AddressLineTwo != null)
+                {
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.Contract!.AddressLineTwo)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Contract!.AddressLineTwo)
+                    </dd>
+                }
+                @if (Model?.Contract!.StartDate != null)
+                {
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.Contract!.StartDate)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Contract!.StartDate)
+                    </dd>
+                }
+                @if (Model?.Contract!.EndDate != null)
+                {
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.Contract!.EndDate)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Contract!.EndDate)
+                    </dd>
+                }
+            </dl>
+            <dl class="col-6">
+                @if (Model?.Contract!.ContractComment != null)
+                {
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.Contract!.ContractComment)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Contract!.ContractComment)
+                    </dd>
+                }
+                @if (Model?.Contract!.Nurse != null)
+                {
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.Contract!.Nurse)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Contract!.Nurse!.FullName)
+                    </dd>
+                }
+                <dt class="col-sm-8">
+                    @Html.DisplayNameFor(model => model.Contract!.Patient)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Contract!.Patient!.FullName)
+                </dd>
+                <dt class="col-sm-8">
+                    @Html.DisplayNameFor(model => model.Contract!.Suburb)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Contract!.Suburb!.SuburbName)
+                </dd>
+                <dt class="col-sm-8">
+                    @Html.DisplayNameFor(model => model.Contract!.Wound)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Contract!.Wound!.WoundName)
+                </dd>
+            </dl>
+        </div>
+        <br />
+        <h1 class="display-6 text-center p-2">Visit Information</h1>
+        <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-md-3">
+            <div class="col-md-8">
+                <div class="row border border-3 rounded-3 p-2">
+                    <table class="table" id="myTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Visit Date
+                                </th>
+                                <th>
+                                    Approximate Time
+                                </th>
+                                <th>
+                                    Arrival
+                                </th>
+                                <th>
+                                    Departure
+                                </th>
+                                <th>
+                                    Wound Condition
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model?.Contract!.Visits != null)
+                            {
+                                @foreach (var item in Model.Contract!.Visits!)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.VisitDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ApproxTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Arrival)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Departure)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.WoundCondition)
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @if (User.IsInRole("N"))
+            {
+                <div class="col-md-3">
+                    <form asp-controller="Visit" asp-action="Create">
+                        <input asp-for="Contract!.ContractId" name="ContractId" hidden />
+                        <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-1">
+                            <h2 class="h3 text-center">Schedule Visit</h2>
+                            <section class="px-5">
+                                <hr />
+                            </section>
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="col-7">
+                                <div class="input-group-sm">
+                                    <label asp-for="@Model!.Visit!.VisitDate" class="form-label"></label>
+                                    <input asp-for="@Model!.Visit!.VisitDate" type="date" name="VisitDate" class="form-control" />
+                                    <span asp-validation-for="@Model!.Visit!.VisitDate" class="text-danger"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-7">
-                            <div class="input-group-sm">
-                                <label asp-for="@Model!.Visit!.ApproxTime" class="form-label"></label>
-                                <input asp-for="@Model!.Visit!.ApproxTime" name="ApproxTime" type="time" class="form-control" />
-                                <span asp-validation-for="@Model!.Visit!.ApproxTime" class="text-danger"></span>
+                            <div class="col-7">
+                                <div class="input-group-sm">
+                                    <label asp-for="@Model!.Visit!.ApproxTime" class="form-label"></label>
+                                    <input asp-for="@Model!.Visit!.ApproxTime" name="ApproxTime" type="time" class="form-control" />
+                                    <span asp-validation-for="@Model!.Visit!.ApproxTime" class="text-danger"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-7">
-                            <div class="row justify-content-center g-2 p-4">
-                                <div class="btn-group">
-                                    <input type="submit" value="Schedule" class="btn btn-primary" />
+                            <div class="col-7">
+                                <div class="row justify-content-center g-2 p-4">
+                                    <div class="btn-group">
+                                        <input type="submit" value="Schedule" class="btn btn-primary" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        }
+                    </form>
+                </div>
+            }
+        </div>
     </div>
-</div>
+</section>

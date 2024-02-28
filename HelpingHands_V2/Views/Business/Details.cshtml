@@ -5,77 +5,79 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center p-2">Business Information</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<div class="px-5">
-    <a asp-action="Dashboard" asp-controller="Admin" class="btn btn-secondary">Dashboard</a>
-</div>
-<div class="px-5">
-    <hr />
-</div>
-<section class="container-fluid my-md-5 my-2" id="Profile">
-    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly p-md-5 p-2">
-        <div class="col col-md-3">
-            <div>
-                <img src="/Media/HelpingHands.png" class="img-fluid" alt="Helping hands">
+<section class="container-fluid" id="Detail">
+    <h2 class="display-4 text-center p-2">Business Information</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5">
+        <a asp-action="Dashboard" asp-controller="Admin" class="btn btn-secondary">Dashboard</a>
+    </div>
+    <div class="px-5">
+        <hr />
+    </div>
+    <div class="container-fluid my-md-5 my-2">
+        <div class="row row-cols-md-2 row-cols-auto justify-content-evenly p-md-5 p-2">
+            <div class="col col-md-3">
+                <div>
+                    <img src="/Media/HelpingHands.png" class="img-fluid" alt="Helping hands">
+                </div>
+            </div>
+            <div class="row row-cols-md-2 row-cols-auto">
+                <dl class="col-6">
+                    <dt class="col-sm-12">
+                        @Html.DisplayNameFor(model => model.OrganizationName)
+                    </dt>
+                    <dd class="col-sm-12">
+                        @Html.DisplayFor(model => model.OrganizationName)
+                    </dd>
+                    <dt class="col-sm-12">
+                        @Html.DisplayNameFor(model => model.Nponumber)
+                    </dt>
+                    <dd class="col-sm-12">
+                        @Html.DisplayFor(model => model.Nponumber)
+                    </dd>
+                    <dt class="col-sm-12">
+                        @Html.DisplayNameFor(model => model.ContactNumber)
+                    </dt>
+                    <dd class="col-sm-12">
+                        @Html.DisplayFor(model => model.ContactNumber)
+                    </dd>
+                    <dt class="col-sm-12">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+                    <dd class="col-sm-12">
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+                </dl>
+                <dl class="col-6">
+                    <dt class="col-sm-12">
+                        @Html.DisplayNameFor(model => model.AddressLineOne)
+                    </dt>
+                    <dd class="col-sm-12">
+                        @Html.DisplayFor(model => model.AddressLineOne)
+                    </dd>
+                    <dt class="col-sm-12">
+                        @Html.DisplayNameFor(model => model.AddressLineTwo)
+                    </dt>
+                    <dd class="col-sm-12">
+                        @Html.DisplayFor(model => model.AddressLineTwo)
+                    </dd>
+                    <dt class="col-sm-12">
+                        @Html.DisplayNameFor(model => model.Suburb)
+                    </dt>
+                    <dd class="col-sm-12">
+                        @Html.DisplayFor(model => model.Suburb!.SuburbName)
+                    </dd>
+                </dl>
             </div>
         </div>
-        <div class="row row-cols-md-2 row-cols-auto">
-            <dl class="col-6">
-                <dt class="col-sm-12">
-                    @Html.DisplayNameFor(model => model.OrganizationName)
-                </dt>
-                <dd class="col-sm-12">
-                    @Html.DisplayFor(model => model.OrganizationName)
-                </dd>
-                <dt class="col-sm-12">
-                    @Html.DisplayNameFor(model => model.Nponumber)
-                </dt>
-                <dd class="col-sm-12">
-                    @Html.DisplayFor(model => model.Nponumber)
-                </dd>
-                <dt class="col-sm-12">
-                    @Html.DisplayNameFor(model => model.ContactNumber)
-                </dt>
-                <dd class="col-sm-12">
-                    @Html.DisplayFor(model => model.ContactNumber)
-                </dd>
-                <dt class="col-sm-12">
-                    @Html.DisplayNameFor(model => model.Email)
-                </dt>
-                <dd class="col-sm-12">
-                    @Html.DisplayFor(model => model.Email)
-                </dd>
-            </dl>
-            <dl class="col-6">
-                <dt class="col-sm-12">
-                    @Html.DisplayNameFor(model => model.AddressLineOne)
-                </dt>
-                <dd class="col-sm-12">
-                    @Html.DisplayFor(model => model.AddressLineOne)
-                </dd>
-                <dt class="col-sm-12">
-                    @Html.DisplayNameFor(model => model.AddressLineTwo)
-                </dt>
-                <dd class="col-sm-12">
-                    @Html.DisplayFor(model => model.AddressLineTwo)
-                </dd>
-                <dt class="col-sm-12">
-                    @Html.DisplayNameFor(model => model.Suburb)
-                </dt>
-                <dd class="col-sm-12">
-                    @Html.DisplayFor(model => model.Suburb!.SuburbName)
-                </dd>
-            </dl>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <div class="btn-group">
-                <a asp-action="Edit" asp-route-id="@Model?.BusinessId" class="btn btn-success">Edit</a>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="btn-group">
+                    <a asp-action="Edit" asp-route-id="@Model?.BusinessId" class="btn btn-success">Edit</a>
+                </div>
             </div>
         </div>
     </div>

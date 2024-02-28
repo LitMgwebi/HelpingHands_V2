@@ -5,179 +5,181 @@
     var Message = ViewBag.Message;
 }
 
-@if (User.IsInRole("P"))
-{
-    <h2 class="display-4 text-center p-2">Your Profile</h2>
-}
-else
-{
-    <h2 class="display-4 text-center p-2">@User.FindFirst("FullName")!.Value's Profile</h2>
-}
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<div class="px-5">
-
+<section class="container-fluid" id="Profile">
     @if (User.IsInRole("P"))
     {
-        <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
-    }
-    else if (User.IsInRole("N"))
-    {
-        <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
-    }
-    else if (User.IsInRole("O"))
-    {
-        <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Dashboard</a>
+        <h2 class="display-4 text-center p-2">Your Profile</h2>
     }
     else
     {
-        <a asp-action="Index" asp-controller="Patient" class="btn btn-secondary">Back</a>
+        <h2 class="display-4 text-center p-2">@User.FindFirst("FullName")!.Value's Profile</h2>
     }
-</div>
-<div class="px-5">
-    <hr />
-</div>
-<section class="container-fluid my-md-5 my-2" id="Profile">
-    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly p-md-5 p-2">
-        <div class="col col-md-4">
-            <div>
-                <img src="@Model.EndUser!.ProfilePicture" alt="@Model?.EndUser!.ProfilePictureName" class="img-fluid" />
-            </div>
-        </div>
-        <div class="col-md-8">
-            <h1 class="h3 text-start">Personal Information</h1>
-            <div class="row row-cols-md-2 row-cols-2 p-3">
-                <dl class="col-6">
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.EndUser!.Username)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.EndUser!.Username)
-                    </dd>
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.EndUser!.Firstname)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.EndUser!.Firstname)
-                    </dd>
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.EndUser!.Lastname)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.EndUser!.Lastname)
-                    </dd>
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.EndUser!.DateOfBirth)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.EndUser!.DateOfBirth)
-                    </dd>
-                </dl>
-                <dl class="col-6">
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.EndUser!.Email)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.EndUser!.Email)
-                    </dd>
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.EndUser!.Gender)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.EndUser!.Gender)
-                    </dd>
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.EndUser!.ContactNumber)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.EndUser!.ContactNumber)
-                    </dd>
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.EndUser!.Idnumber)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.EndUser!.Idnumber)
-                    </dd>
-                </dl>
-            </div>
-            <br />
-            <h1 class="h3 text-start">Emergency Information</h1>
-            <div class="row row-cols-md-2 row-cols-2 p-3">
-                <dl class="col-6">
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5">
 
-                    @if (Model!.AddressLineOne != null)
-                    {
-                        <dt class="col-sm-8">
-                            @Html.DisplayNameFor(model => model.AddressLineOne)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.AddressLineOne)
-                        </dd>
-                    }
-                    @if (Model.AddressLineTwo != null)
-                    {
-                        <dt class="col-sm-8">
-                            @Html.DisplayNameFor(model => model.AddressLineTwo)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.AddressLineTwo)
-                        </dd>
-                    }
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.Suburb)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.Suburb!.SuburbName)
-                    </dd>
-                </dl>
-
-                <dl class="col-6">
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.Icename)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.Icename)
-                    </dd>
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.Icenumber)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.Icenumber)
-                    </dd>
-                    @if (Model.AdditionalInfo != null)
-                    {
-                        <dt class="col-sm-8">
-                            @Html.DisplayNameFor(model => model.AdditionalInfo)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.AdditionalInfo)
-                        </dd>
-                    }
-                </dl>
-            </div>
-        </div>
+        @if (User.IsInRole("P"))
+        {
+            <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+        }
+        else if (User.IsInRole("N"))
+        {
+            <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+        }
+        else if (User.IsInRole("O"))
+        {
+            <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Dashboard</a>
+        }
+        else
+        {
+            <a asp-action="Index" asp-controller="Patient" class="btn btn-secondary">Back</a>
+        }
     </div>
+    <div class="px-5">
+        <hr />
+    </div>
+    <div class="container-fluid my-md-5 my-2" id="Profile">
+        <div class="row row-cols-md-2 row-cols-auto justify-content-evenly p-md-5 p-2">
+            <div class="col col-md-4">
+                <div>
+                    <img src="@Model.EndUser!.ProfilePicture" alt="@Model?.EndUser!.ProfilePictureName" class="img-fluid" />
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h1 class="h3 text-start">Personal Information</h1>
+                <div class="row row-cols-md-2 row-cols-2 p-3">
+                    <dl class="col-6">
+                        <dt class="col-sm-8">
+                            @Html.DisplayNameFor(model => model.EndUser!.Username)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.EndUser!.Username)
+                        </dd>
+                        <dt class="col-sm-8">
+                            @Html.DisplayNameFor(model => model.EndUser!.Firstname)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.EndUser!.Firstname)
+                        </dd>
+                        <dt class="col-sm-8">
+                            @Html.DisplayNameFor(model => model.EndUser!.Lastname)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.EndUser!.Lastname)
+                        </dd>
+                        <dt class="col-sm-8">
+                            @Html.DisplayNameFor(model => model.EndUser!.DateOfBirth)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.EndUser!.DateOfBirth)
+                        </dd>
+                    </dl>
+                    <dl class="col-6">
+                        <dt class="col-sm-8">
+                            @Html.DisplayNameFor(model => model.EndUser!.Email)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.EndUser!.Email)
+                        </dd>
+                        <dt class="col-sm-8">
+                            @Html.DisplayNameFor(model => model.EndUser!.Gender)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.EndUser!.Gender)
+                        </dd>
+                        <dt class="col-sm-8">
+                            @Html.DisplayNameFor(model => model.EndUser!.ContactNumber)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.EndUser!.ContactNumber)
+                        </dd>
+                        <dt class="col-sm-8">
+                            @Html.DisplayNameFor(model => model.EndUser!.Idnumber)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.EndUser!.Idnumber)
+                        </dd>
+                    </dl>
+                </div>
+                <br />
+                <h1 class="h3 text-start">Emergency Information</h1>
+                <div class="row row-cols-md-2 row-cols-2 p-3">
+                    <dl class="col-6">
 
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <div class="btn-group">
-                @if (User.IsInRole("A") || User.IsInRole("P"))
-                {
-                    <div class="p-1">
-                        <a asp-action="Edit" asp-route-id="@Model?.PatientId" class="btn btn-success">Edit Info</a>
-                    </div>
-                    <div class="p-1">
-                        <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Model?.PatientId" class="btn btn-success">ChangePassword</a>
-                    </div>
-                    <div class="p-1">
-                        <form asp-action="Delete">
-                            <input asp-for="PatientId" value="@@Model?.PatientId" type="hidden" />
-                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @Model?.EndUser!.Firstname @Model?.EndUser!.Lastname?')" class="btn btn-danger" />
-                        </form>
-                    </div>
-                }
+                        @if (Model!.AddressLineOne != null)
+                        {
+                            <dt class="col-sm-8">
+                                @Html.DisplayNameFor(model => model.AddressLineOne)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.AddressLineOne)
+                            </dd>
+                        }
+                        @if (Model.AddressLineTwo != null)
+                        {
+                            <dt class="col-sm-8">
+                                @Html.DisplayNameFor(model => model.AddressLineTwo)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.AddressLineTwo)
+                            </dd>
+                        }
+                        <dt class="col-sm-8">
+                            @Html.DisplayNameFor(model => model.Suburb)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Suburb!.SuburbName)
+                        </dd>
+                    </dl>
+
+                    <dl class="col-6">
+                        <dt class="col-sm-8">
+                            @Html.DisplayNameFor(model => model.Icename)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Icename)
+                        </dd>
+                        <dt class="col-sm-8">
+                            @Html.DisplayNameFor(model => model.Icenumber)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Icenumber)
+                        </dd>
+                        @if (Model.AdditionalInfo != null)
+                        {
+                            <dt class="col-sm-8">
+                                @Html.DisplayNameFor(model => model.AdditionalInfo)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.AdditionalInfo)
+                            </dd>
+                        }
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="btn-group">
+                    @if (User.IsInRole("A") || User.IsInRole("P"))
+                    {
+                        <div class="p-1">
+                            <a asp-action="Edit" asp-route-id="@Model?.PatientId" class="btn btn-success">Edit Info</a>
+                        </div>
+                        <div class="p-1">
+                            <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Model?.PatientId" class="btn btn-success">ChangePassword</a>
+                        </div>
+                        <div class="p-1">
+                            <form asp-action="Delete">
+                                <input asp-for="PatientId" value="@@Model?.PatientId" type="hidden" />
+                                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @Model?.EndUser!.Firstname @Model?.EndUser!.Lastname?')" class="btn btn-danger" />
+                            </form>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>

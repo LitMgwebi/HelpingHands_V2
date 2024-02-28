@@ -4,75 +4,76 @@
     ViewData["Title"] = "Visits";
     var Message = ViewBag.Message;
 }
-
-<h2 class="display-4 text-center p-2">Visits</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-
-<div class="px-5">
-    @if (User.IsInRole("N"))
+<section class="container-fluid" id="List">
+    <h2 class="display-4 text-center p-2">Visits</h2>
+    @if (Message != null)
     {
-        <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+        <p class="text-decoration-underline text-danger">@Message</p>
     }
-</div>
-<div class="px-5"><hr /></div>
-<section class="container-fluid px-md-5">
-    <div class="row p-md-4">
-        <table class="table" id="myTable">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Visit!.VisitDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Patient)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Visit!.ApproxTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Wound)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Visit!.Arrival)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+
+    <div class="px-5">
+        @if (User.IsInRole("N"))
+        {
+            <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+        }
+    </div>
+    <div class="px-5"><hr /></div>
+    <div class="container-fluid px-md-5">
+        <div class="row p-md-4">
+            <table class="table" id="myTable">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Visit!.VisitDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.Patient!.FullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.Visit!.ApproxTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.Wound!.WoundName)
-                        </td>
-                        @if (item.Visit!.Arrival != null)
-                        {
-                            <td>
-                                @Html.DisplayFor(model => item.Visit!.Arrival)
-                            </td>
-                        }
-                        else
-                        {
-                            <td>N/A</td>
-                        }
-                        <td>
-                            <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.Visit!.VisitId" class="btn btn-info">View</a>
-                        </td>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Visit!.VisitDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Patient)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Visit!.ApproxTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Wound)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Visit!.Arrival)
+                        </th>
+                        <th></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Visit!.VisitDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Patient!.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Visit!.ApproxTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Wound!.WoundName)
+                            </td>
+                            @if (item.Visit!.Arrival != null)
+                            {
+                                <td>
+                                    @Html.DisplayFor(model => item.Visit!.Arrival)
+                                </td>
+                            }
+                            else
+                            {
+                                <td>N/A</td>
+                            }
+                            <td>
+                                <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.Visit!.VisitId" class="btn btn-info">View</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </section>

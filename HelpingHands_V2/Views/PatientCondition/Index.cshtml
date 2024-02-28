@@ -4,40 +4,41 @@
     ViewData["Title"] = "Patient Conditions";
     var Message = ViewBag.Message;
 }
+<section class="container-fluid" id="List">
+    <h2 class="display-4 text-center p-2">Patient Conditions</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5"><hr /></div>
 
-<h2 class="display-4 text-center p-2">Patient Conditions</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<div class="px-5"><hr /></div>
-
-<section class="container-fluid px-md-5 my-2 px-3">
-    <div class="row px-md-5">
-        <table class="table" id="myTable">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Patient)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Condition)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+    <div class="container-fluid px-md-5 my-2 px-3">
+        <div class="row px-md-5">
+            <table class="table" id="myTable">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Patient!.FullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Condition!.ConditionName)
-                        </td>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Patient)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Condition)
+                        </th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Patient!.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Condition!.ConditionName)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </section>

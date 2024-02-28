@@ -4,96 +4,97 @@
     ViewData["Title"] = "VisitRange";
     var Message = ViewBag.Message;
 }
-
-<h2 class="display-4 text-center p-2">Visit Range</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<div class="px-5">
-    <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
-</div>
-<div class="px-5"><hr /></div>
-<section class="container-fluid p-md-1">
-    <form asp-action="VisitRange">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="row d-flex justify-content-center">
-            <input name="NurseId" value="@User.FindFirst("UserId")!.Value" hidden />
-            <div class="col-md-3">
-                <div class="input-group-sm p-1">
-                    <label class="form-label">Start</label>
-                    <input name="StartDate" type="date" class="form-control" required />
-                </div>
-                <div class="input-group-sm p-1">
-                    <label class="form-label">End</label>
-                    <input name="EndDate" type="date" class="form-control" required />
-                </div>
-                <div class="row d-flex justify-content-center p-2">
-                    <div class="btn-group col-5">
-                        <input type="submit" value="Search" class="btn btn-primary" />
+<section class="container-fluid" id="Report">
+    <h2 class="display-4 text-center p-2">Visit Range</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5">
+        <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+    </div>
+    <div class="px-5"><hr /></div>
+    <div class="container-fluid p-md-1">
+        <form asp-action="VisitRange">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row d-flex justify-content-center">
+                <input name="NurseId" value="@User.FindFirst("UserId")!.Value" hidden />
+                <div class="col-md-3">
+                    <div class="input-group-sm p-1">
+                        <label class="form-label">Start</label>
+                        <input name="StartDate" type="date" class="form-control" required />
+                    </div>
+                    <div class="input-group-sm p-1">
+                        <label class="form-label">End</label>
+                        <input name="EndDate" type="date" class="form-control" required />
+                    </div>
+                    <div class="row d-flex justify-content-center p-2">
+                        <div class="btn-group col-5">
+                            <input type="submit" value="Search" class="btn btn-primary" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
 
-    <div class="row px-md-5">
-        <table class="table" id="myTable">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Visit!.VisitDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Patient)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Visit!.ApproxTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Wound)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Visit!.Arrival)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null)
-                {
-                    @foreach (var item in Model)
+        <div class="row px-md-5">
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Visit!.VisitDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Patient)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Visit!.ApproxTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Wound)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Visit!.Arrival)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Visit!.VisitDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Patient!.FullName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Visit!.ApproxTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Wound!.WoundName)
-                            </td>
-                            @if (item.Visit!.Arrival != null)
-                            {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
                                 <td>
-                                    @Html.DisplayFor(model => item.Visit!.Arrival)
+                                    @Html.DisplayFor(modelItem => item.Visit!.VisitDate)
                                 </td>
-                            }
-                            else
-                            {
-                                <td>N/A</td>
-                            }
-                            <td>
-                                <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.Visit!.VisitId" class="btn btn-info">View</a>
-                            </td>
-                        </tr>
+                                <td>
+                                    @Html.DisplayFor(model => item.Patient!.FullName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Visit!.ApproxTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Wound!.WoundName)
+                                </td>
+                                @if (item.Visit!.Arrival != null)
+                                {
+                                    <td>
+                                        @Html.DisplayFor(model => item.Visit!.Arrival)
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>N/A</td>
+                                }
+                                <td>
+                                    <a asp-action="Details" asp-controller="Visit" asp-route-id="@item.Visit!.VisitId" class="btn btn-info">View</a>
+                                </td>
+                            </tr>
+                        }
                     }
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </section>

@@ -2,98 +2,15 @@
 @{
     ViewData["Title"] = "Nurse Dashboard";
     var Message = ViewBag.Message;
-    var Visits = ViewBag.NextVisits;
-    var Contracts = ViewBag.Contracts;
 }
-<h2 class="display-4 text-center">Nurse Dashboard</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<hr />
-<div class="container-fluid" style="height: auto">
-   @*  <section class="row">
-        <div class="card col-5" style=" height: auto; border-radius:2rem;">
-            <div class="card-header">Upcoming Visits</div>
-            <div class="card-body">
-                <section class="row mx-3" style="border: 2rem black">
-                    <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction">
-                        @if (Visits.Count > 0)
-                        {
-                            @for (int i = 0; i < ViewBag.NextVisits.Count; i++)
-                            {
-                                <swiper-slide>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">
-                                                @ViewBag.Contracts[i].PatientFirstname
-                                                @ViewBag.Contracts[i].PatientLastname
-                                            </h4>
-                                            <h5 class="card-text">
-                                                @ViewBag.NextVisits[i].VisitDate.Day
-                                                @ViewBag.NextVisits[i].VisitDate.ToString("MMM")
-                                            </h5>
-                                            <h5 class="card-text">
 
-                                                @ViewBag.NextVisits[i].ApproxTime
-                                            </h5>
-                                        </div>
-                                    </div>
-                                </swiper-slide>
-                            }
-                        }
-                        else
-                        {
-                            <div class="card">
-                                <h5>No Upcoming Visits</h5>
-                            </div>
-
-                        }
-                    </swiper-container>
-                </section>
-            </div>
-        </div>
-        <div class="card col-6" style=" height: auto; border-radius:2rem;">
-            <div class="card-header">Latest Contract</div>
-            @if (Contracts.Count > 0)
-            {
-                <div class="card-body">
-                    <section>
-                        <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
-                            @foreach (var Contract in ViewBag.Contracts)
-                            {
-                                <swiper-slide>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">
-                                                Patient:
-                                                @Contract.PatientFirstname @Contract.PatientLastname
-                                            </h4>
-                                            <h6 class="card-subtitle">
-                                                Wound: @Contract.WoundName
-                                            </h6>
-                                            <h6 class="card-text">
-
-                                                Contract Date: @Contract.ContractDate.Day @Contract.ContractDate.ToString("MMMM")
-                                            </h6>
-                                            <div class="card-footer">
-                                                <a asp-controller="Visit" asp-action="Create" asp-route-id="@Contract.ContractId" class="btn btn-outline-primary">Schedule new visit</a>
-                                                <a asp-controller="Contract" asp-action="Details" asp-route-id="@Contract.ContractId" class="btn btn-outline-dark">View Contract</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </swiper-slide>
-                            }
-                        </swiper-container>
-                    </section>
-                </div>
-            }
-            else
-            {
-                <section class="card-body">
-                    <h4>You have no assigned contracts.</h4>
-                </section>
-            }
-        </div>
-    </section> *@
-</div>
+<section class="container-fluid" id="Dashboard">
+    <h2 class="display-4 text-center p-2">Hello @User.Identity?.Name</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5"><hr /></div>
+    <div class="container-fluid">
+    </div>
+</section>

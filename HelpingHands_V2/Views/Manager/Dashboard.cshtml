@@ -2,76 +2,25 @@
 @{
     ViewData["Title"] = "Manager Dashboard";
     var Message = ViewBag.Message;
-    var NewContracts = ViewBag.NewContracts;
-    var AssignedContracts = ViewBag.AssignedContracts;
 }
-<h2 class="display-2 text-center">Hello @User.Identity?.Name</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<hr />
-<div class="container-fluid">
-    <div class="row" style="overflow-y:scroll">
-        <div class="col-3">
-            <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
-                <nav class="nav nav-pills flex-column">
-                    <a asp-controller="Contract" asp-action="Index" class="nav-link">Active Contracts</a>
-                    <a asp-controller="Visit" asp-action="Index" class="nav-link">Visits</a>
+<section class="container-fluid" id="Dashboard">
+    <h2 class="display-2 text-center p-2">Hello @User.Identity?.Name</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5"><hr /></div>
+    <div class="container-fluid">
+        <div class="row" style="overflow-y:scroll">
+            <div class="col-3">
+                <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
+                    <nav class="nav nav-pills flex-column">
+                        <a asp-controller="Contract" asp-action="Index" class="nav-link">Active Contracts</a>
+                        <a asp-controller="Visit" asp-action="Index" class="nav-link">Visits</a>
+                    </nav>
                 </nav>
-            </nav>
 
-        </div>
-        @* <div class="col-5" style="height:100vh;">
-            <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example-2" tabindex="0">
-                <div id="newContract" class="gx-5">
-                    <h3 class="display-5">New Contracts</h3>
-                    <section style="">
-                        <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
-                            @foreach (var item in NewContracts)
-                            {
-                                <swiper-slide>
-                                    <div class="card" style="width: 18rem;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">@item.PatientFirstname @item.PatientLastname</h5>
-                                            <h6 class="card-subtitle mb-2 text-body-secondary">@item.WoundName</h6>
-                                            <p class="card-text">@item.AddressLineOne<br />@item.SuburbName</p>
-                                            
-                                            <p >@item.ContractDate.Day @item.ContractDate.ToString("dddd") @item.ContractDate.ToString("MMM")</p>
-                                            <a href="#" class="btn btn-secondary card-link">Assign</a>
-                                        </div>
-                                    </div>
-                                </swiper-slide>
-                            }
-                        </swiper-container>
-                    </section>
-                </div>
-                
-                <div id="assignedContracts">
-                    <h3 class="display-5">Assigned Contracts</h3>
-                    <section style="">
-                        <swiper-container class="mySwiper d-flex justify-content-start; align-items-center" pagination="true" navigation="true" centered-slides="true" pagination-type="fraction" style="">
-                            @foreach (var item in AssignedContracts)
-                            {
-                                <swiper-slide>
-                                    <div class="card" style="width: 18rem;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Nurse: @item.NurseFirstname @item.NurseLastname</h5>
-                                            <h5 class="card-title">Patient: @item.PatientFirstname @item.PatientLastname</h5>
-                                            <h6 class="card-subtitle mb-2 text-body-secondary">@item.WoundName</h6>
-                                            <p class="card-text">@item.AddressLineOne<br />@item.SuburbName</p>
-
-                                            <p>Started: @item.StartDate.Day @item.StartDate.ToString("dddd") @item.StartDate.ToString("MMM")</p>
-                                            <a href="#" class="btn btn-secondary card-link">View More</a>
-                                        </div>
-                                    </div>
-                                </swiper-slide>
-                            }
-                        </swiper-container>
-                    </section>
-                </div>
-               
             </div>
-        </div> *@
+        </div>
     </div>
-</div>
+</section>

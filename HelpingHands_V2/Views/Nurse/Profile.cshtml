@@ -4,152 +4,153 @@
     ViewData["Title"] = @User.FindFirst("Username")!.Value;
     var Message = ViewBag.Message;
 }
-@if (User.IsInRole("N"))
-{
-    <h2 class="display-4 text-center p-2">Your Profile</h2>
-}
-else
-{
-    <h2 class="display-4 text-center p-2">@User.FindFirst("FullName")!.Value's Profile</h2>
-}
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
 
-<div class="px-5">
-    @if (User.IsInRole("P"))
+<section class="container-fluid" id="Profile">
+    @if (User.IsInRole("N"))
     {
-        <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
-    }
-    else if (User.IsInRole("N"))
-    {
-        <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
-    }
-    else if (User.IsInRole("O"))
-    {
-        <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Back</a>
+        <h2 class="display-4 text-center p-2">Your Profile</h2>
     }
     else
     {
-        <a asp-action="Index" asp-controller="Nurse" class="btn btn-secondary">Back</a>
+        <h2 class="display-4 text-center p-2">@User.FindFirst("FullName")!.Value's Profile</h2>
     }
-</div>
-<div class="px-5">
-    <hr />
-</div>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
 
-<section class="container-fluid my-md-5 my-2" id="Profile">
-    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly p-md-5 p-2">
-        <div class="col col-md-4">
-            <div>
-                <img src="@Model.EndUser!.ProfilePicture" alt="@Model?.EndUser!.ProfilePictureName" class="img-fluid" />
+    <div class="px-5">
+        @if (User.IsInRole("P"))
+        {
+            <a asp-action="Dashboard" asp-controller="Patient" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+        }
+        else if (User.IsInRole("N"))
+        {
+            <a asp-action="Dashboard" asp-controller="Nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Back</a>
+        }
+        else if (User.IsInRole("O"))
+        {
+            <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Back</a>
+        }
+        else
+        {
+            <a asp-action="Index" asp-controller="Nurse" class="btn btn-secondary">Back</a>
+        }
+    </div>
+    <div class="px-5"><hr /></div>
+
+    <div class="container-fluid my-md-5 my-2" id="Profile">
+        <div class="row row-cols-md-2 row-cols-auto justify-content-evenly p-md-5 p-2">
+            <div class="col col-md-4">
+                <div>
+                    <img src="@Model.EndUser!.ProfilePicture" alt="@Model?.EndUser!.ProfilePictureName" class="img-fluid" />
+                </div>
+            </div>
+            <div class="row row-cols-md-2 row-cols-auto">
+                <dl class="col-6">
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.EndUser!.Username)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.EndUser!.Username)
+                    </dd>
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.EndUser!.Firstname)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.EndUser!.Firstname)
+                    </dd>
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.EndUser!.Lastname)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.EndUser!.Lastname)
+                    </dd>
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.EndUser!.DateOfBirth)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.EndUser!.DateOfBirth)
+                    </dd>
+                </dl>
+                <dl class="col-6">
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.EndUser!.Email)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.EndUser!.Email)
+                    </dd>
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.Grade)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Grade)
+                    </dd>
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.EndUser!.Gender)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.EndUser!.Gender)
+                    </dd>
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.EndUser!.ContactNumber)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.EndUser!.ContactNumber)
+                    </dd>
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.EndUser!.Idnumber)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.EndUser!.Idnumber)
+                    </dd>
+                </dl>
             </div>
         </div>
-        <div class="row row-cols-md-2 row-cols-auto">
-            <dl class="col-6">
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.EndUser!.Username)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.EndUser!.Username)
-                </dd>
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.EndUser!.Firstname)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.EndUser!.Firstname)
-                </dd>
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.EndUser!.Lastname)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.EndUser!.Lastname)
-                </dd>
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.EndUser!.DateOfBirth)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.EndUser!.DateOfBirth)
-                </dd>
-            </dl>
-            <dl class="col-6">
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.EndUser!.Email)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.EndUser!.Email)
-                </dd>
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.Grade)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Grade)
-                </dd>
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.EndUser!.Gender)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.EndUser!.Gender)
-                </dd>
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.EndUser!.ContactNumber)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.EndUser!.ContactNumber)
-                </dd>
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.EndUser!.Idnumber)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.EndUser!.Idnumber)
-                </dd>
-            </dl>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <div class="btn-group">
-                @if (User.IsInRole("N") || User.IsInRole("A"))
-                {
-                    <div class="p-1">
-                        <a asp-action="Edit" asp-route-id="@Model?.NurseId" class="btn btn-success">Edit Info</a>
-                    </div>
-                    <div class="p-1">
-                        <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Model?.NurseId" class="btn btn-success">ChangePassword</a>
-                    </div>
-                    <div class="p-1">
-                        <form asp-action="Delete">
-                            <input asp-for="NurseId" value="@Model?.NurseId" type="hidden" />
-                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Model?.EndUser!.Firstname @Model?.EndUser!.Lastname')" class="btn btn-danger" />
-                        </form>
-                    </div>
-                }
-                else if (User.IsInRole("O"))
-                {
-                    <div class="p-1">
-                        <form asp-controller="Manager" asp-action="ApproveNurse" method="post">
-                            <input asp-for="EndUser!.UserId" name="UserId" type="hidden" />
-                            <input asp-for="EndUser!.Username" name="Username" type="hidden" />
-                            <input asp-for="EndUser!.Firstname" name="Firstname" type="hidden" />
-                            <input asp-for="EndUser!.Lastname" name="Lastname" type="hidden" />
-                            <input asp-for="EndUser!.DateOfBirth" name="DateOfBirth" type="hidden" />
-                            <input asp-for="EndUser!.Email" name="Email" type="hidden" />
-                            <input asp-for="EndUser!.Password" name="Password" type="hidden" />
-                            <input asp-for="EndUser!.ConfirmPassword" name="ConfirmPassword" type="hidden" />
-                            <input asp-for="EndUser!.Gender" name="Gender" type="hidden" />
-                            <input asp-for="EndUser!.ContactNumber" name="ContactNumber" type="hidden" />
-                            <input asp-for="EndUser!.Idnumber" name="Idnumber" type="hidden" />
-                            <input asp-for="EndUser!.UserType" name="UserType" type="hidden" />
-                            <input asp-for="EndUser!.ApplicationType" name="ApplicationType" type="hidden" />
-                            <input asp-for="EndUser!.ProfilePicture" name="ProfilePicture" type="hidden" />
-                            <input asp-for="EndUser!.ProfilePictureName" name="ProfilePictureName" type="hidden" />
-                            <input asp-for="EndUser!.Active" name="Active" type="hidden" />
-                            <input type="submit" value="Approve Nurse" class="btn btn-primary" />
-                        </form>
-                    </div>
-                }
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="btn-group">
+                    @if (User.IsInRole("N") || User.IsInRole("A"))
+                    {
+                        <div class="p-1">
+                            <a asp-action="Edit" asp-route-id="@Model?.NurseId" class="btn btn-success">Edit Info</a>
+                        </div>
+                        <div class="p-1">
+                            <a asp-action="ChangePassword" asp-controller="EndUser" asp-route-id="@Model?.NurseId" class="btn btn-success">ChangePassword</a>
+                        </div>
+                        <div class="p-1">
+                            <form asp-action="Delete">
+                                <input asp-for="NurseId" value="@Model?.NurseId" type="hidden" />
+                                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Model?.EndUser!.Firstname @Model?.EndUser!.Lastname')" class="btn btn-danger" />
+                            </form>
+                        </div>
+                    }
+                    else if (User.IsInRole("O"))
+                    {
+                        <div class="p-1">
+                            <form asp-controller="Manager" asp-action="ApproveNurse" method="post">
+                                <input asp-for="EndUser!.UserId" name="UserId" type="hidden" />
+                                <input asp-for="EndUser!.Username" name="Username" type="hidden" />
+                                <input asp-for="EndUser!.Firstname" name="Firstname" type="hidden" />
+                                <input asp-for="EndUser!.Lastname" name="Lastname" type="hidden" />
+                                <input asp-for="EndUser!.DateOfBirth" name="DateOfBirth" type="hidden" />
+                                <input asp-for="EndUser!.Email" name="Email" type="hidden" />
+                                <input asp-for="EndUser!.Password" name="Password" type="hidden" />
+                                <input asp-for="EndUser!.ConfirmPassword" name="ConfirmPassword" type="hidden" />
+                                <input asp-for="EndUser!.Gender" name="Gender" type="hidden" />
+                                <input asp-for="EndUser!.ContactNumber" name="ContactNumber" type="hidden" />
+                                <input asp-for="EndUser!.Idnumber" name="Idnumber" type="hidden" />
+                                <input asp-for="EndUser!.UserType" name="UserType" type="hidden" />
+                                <input asp-for="EndUser!.ApplicationType" name="ApplicationType" type="hidden" />
+                                <input asp-for="EndUser!.ProfilePicture" name="ProfilePicture" type="hidden" />
+                                <input asp-for="EndUser!.ProfilePictureName" name="ProfilePictureName" type="hidden" />
+                                <input asp-for="EndUser!.Active" name="Active" type="hidden" />
+                                <input type="submit" value="Approve Nurse" class="btn btn-primary" />
+                            </form>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>

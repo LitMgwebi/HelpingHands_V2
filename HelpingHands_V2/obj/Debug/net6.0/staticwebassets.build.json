@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "VoYd5g0GTHizq49sMYRiALdj3BSnizBEIe/BgDi4BXw=",
+  "Hash": "gpF5IFmxRbb78akmHz/PT+4XAzAdf2KYTwTQh6gE2eo=",
   "Source": "HelpingHands_V2",
   "BasePath": "_content/HelpingHands_V2",
   "Mode": "Default",
@@ -1383,6 +1383,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Media\\mern.png"
+    },
+    {
+      "Identity": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\nurseAndPatient.jpg",
+      "SourceId": "HelpingHands_V2",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\",
+      "BasePath": "_content/HelpingHands_V2",
+      "RelativePath": "Media/nurseAndPatient.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Media\\nurseAndPatient.jpg"
     },
     {
       "Identity": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\HelpingHands_V2\\HelpingHands_V2\\wwwroot\\Media\\plus.png",

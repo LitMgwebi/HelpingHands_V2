@@ -5,134 +5,133 @@
     var Message = ViewBag.Message;
 }
 
+<section class="container-fluid" id="Index">
+    <h2 class="display-4 text-center p-2">Cities</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5">
+        <a asp-action="Dashboard" asp-controller="Admin" class="btn btn-secondary">Dashboard</a>
+    </div>
+    <div class="px-5"><hr /></div>
 
-<h2 class="display-4 text-center p-2">Cities</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<div class="px-5">
-    <a asp-action="Dashboard" asp-controller="Admin" class="btn btn-secondary">Dashboard</a>
-</div>
-<div class="px-5">
-    <hr />
-</div>
-
-<div class="container-fluid">
-    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-3">
-        <section class="col-md-6">
-            <div class="row border border-3 rounded-3 p-2 m-2">
-                <table class="table" id="myTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.City!.CityName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.City!.CityAbbreviation)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Cities!)
-                        {
+    <div class="container-fluid">
+        <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-3">
+            <article class="col-md-6">
+                <div class="row border border-3 rounded-3 p-2 m-2">
+                    <table class="table" id="myTable">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CityName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CityAbbreviation)
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <form asp-action="Index">
-                                            <input asp-for="@item.CityId" name="CityId" type="hidden" />
-                                            <input type="submit" value="Edit" class="btn btn-success" />
-                                        </form>
-                                        <form asp-action="Delete">
-                                            <input asp-for="@item.CityId" name="CityId" type="hidden" />
-                                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @item.CityName?')" class="btn btn-danger" />
-                                        </form>
-                                    </div>
-                                </td>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.City!.CityName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.City!.CityAbbreviation)
+                                </th>
+                                <th></th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <aside class="col-md-3">
-            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
-                <h2 class="h3 text-center">Add City</h2>
-                <section class="px-5">
-                    <hr />
-                </section>
-                <form asp-action="Create" class="row justify-content-center">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="col-md-11 p-md-1">
-                        <div class="input-group-sm">
-                            <label asp-for="City!.CityName" class="form-label"></label>
-                            <input name="CityName" class="form-control" />
-                            <span asp-validation-for="City!.CityName" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-11 p-md-1">
-                        <div class="input-group-sm">
-                            <label asp-for="City!.CityAbbreviation" class="form-label"></label>
-                            <input name="CityAbbreviation" class="form-control" />
-                            <span asp-validation-for="City!.CityAbbreviation" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="row justify-content-center g-2 py-4">
-                            <div class="btn-group col-auto">
-                                <input type="submit" value="Add" class="btn btn-primary" />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
-                @if (Model.City != null)
-                {
-                    <h2 class="display-5 text-center">Edit @Model?.City!.CityName</h2>
-                }
-                else
-                {
-                    <h2 class="h3 text-center">Select City to edit</h2>
-                }
-                <section class="px-5">
-                    <hr />
-                </section>
-                <div class="row">
-                    <form asp-action="Edit" class="row justify-content-center">
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Cities!)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CityName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CityAbbreviation)
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <form asp-action="Index">
+                                                <input asp-for="@item.CityId" name="CityId" type="hidden" />
+                                                <input type="submit" value="Edit" class="btn btn-success" />
+                                            </form>
+                                            <form asp-action="Delete">
+                                                <input asp-for="@item.CityId" name="CityId" type="hidden" />
+                                                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete: @item.CityName?')" class="btn btn-danger" />
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+            <aside class="col-md-3">
+                <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
+                    <h2 class="h3 text-center">Add City</h2>
+                    <section class="px-5">
+                        <hr />
+                    </section>
+                    <form asp-action="Create" class="row justify-content-center">
                         <div asp-validation-summary="All" class="text-danger"></div>
-                        <input type="hidden" asp-for="City!.CityId" />
                         <div class="col-md-11 p-md-1">
                             <div class="input-group-sm">
                                 <label asp-for="City!.CityName" class="form-label"></label>
-                                <input asp-for="City!.CityName" class="form-control" />
+                                <input name="CityName" class="form-control" />
                                 <span asp-validation-for="City!.CityName" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-11 p-md-1">
                             <div class="input-group-sm">
                                 <label asp-for="City!.CityAbbreviation" class="form-label"></label>
-                                <input asp-for="City!.CityAbbreviation" class="form-control" />
+                                <input name="CityAbbreviation" class="form-control" />
                                 <span asp-validation-for="City!.CityAbbreviation" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="row justify-content-center g-2 py-4">
                                 <div class="btn-group col-auto">
-                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                    <input type="submit" value="Add" class="btn btn-primary" />
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>
-        </aside>
+                <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-2">
+                    @if (Model.City != null)
+                    {
+                        <h2 class="display-5 text-center">Edit @Model?.City!.CityName</h2>
+                    }
+                    else
+                    {
+                        <h2 class="h3 text-center">Select City to edit</h2>
+                    }
+                    <section class="px-5">
+                        <hr />
+                    </section>
+                    <div class="row">
+                        <form asp-action="Edit" class="row justify-content-center">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <input type="hidden" asp-for="City!.CityId" />
+                            <div class="col-md-11 p-md-1">
+                                <div class="input-group-sm">
+                                    <label asp-for="City!.CityName" class="form-label"></label>
+                                    <input asp-for="City!.CityName" class="form-control" />
+                                    <span asp-validation-for="City!.CityName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-11 p-md-1">
+                                <div class="input-group-sm">
+                                    <label asp-for="City!.CityAbbreviation" class="form-label"></label>
+                                    <input asp-for="City!.CityAbbreviation" class="form-control" />
+                                    <span asp-validation-for="City!.CityAbbreviation" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row justify-content-center g-2 py-4">
+                                    <div class="btn-group col-auto">
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </aside>
+        </div>
     </div>
-</div>
+</section>

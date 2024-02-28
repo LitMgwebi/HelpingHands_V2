@@ -4,81 +4,84 @@
     ViewData["Title"] = "Employees";
     var Message = ViewBag.Message;
 }
-<h2 class="display-4 text-center p-2">Employees</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<div class="px-5"><hr /></div>
-<section class="container-fluid px-md-5">
-    <div class="row p-md-4">
-        <table id="myTable" class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Username)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Firstname)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Lastname)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Email)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ContactNumber)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.UserType)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+
+<section class="container-fluid" id="List">
+    <h2 class="display-4 text-center p-2">Employees</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5"><hr /></div>
+    <div class="container-fluid px-md-5">
+        <div class="row p-md-4">
+            <table id="myTable" class="table">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Username)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Firstname)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Lastname)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ContactNumber)
-                        </td>
-                        <td>
-                            @if (@item.UserType == "A")
-                            {
-                                <p>Admin</p>
-                            }
-                            else if (@item.UserType == "P")
-                            {
-                                <p>Patient</p>
-                            }
-                            else if (@item.UserType == "N")
-                            {
-                                <p>Nurse</p>
-                            }
-                            else
-                            {
-                                <p>Manager</p>
-                            }
-                        </td>
-                        <td>
-                            <a asp-action="Profile" asp-route-id="@item.UserId" class="btn btn-info">View</a>
-                        </td>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Username)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Firstname)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Lastname)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ContactNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UserType)
+                        </th>
+                        <th></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Firstname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Lastname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ContactNumber)
+                            </td>
+                            <td>
+                                @if (@item.UserType == "A")
+                                {
+                                    <p>Admin</p>
+                                }
+                                else if (@item.UserType == "P")
+                                {
+                                    <p>Patient</p>
+                                }
+                                else if (@item.UserType == "N")
+                                {
+                                    <p>Nurse</p>
+                                }
+                                else
+                                {
+                                    <p>Manager</p>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Profile" asp-route-id="@item.UserId" class="btn btn-info">View</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </section>

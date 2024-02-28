@@ -2,30 +2,30 @@
     ViewData["Title"] = "Admin Dashboard";
     var Message = ViewBag.Message;
 }
-<h2 class="display-1 text-center">Hello @User.Identity?.Name</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<hr />
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-2">
-            <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
-                <nav class="nav nav-pills flex-column">
-                    <a class="nav-link" asp-controller="EndUser" asp-action="Index">Employees</a>
-                    
-                    <a class="nav-link" asp-controller="Nurse" asp-action="Index">Nurses</a>
+<section class="container-fluid" id="AdminDashboard">
+    <h2 class="display-4 text-center p-2">Hello @User.Identity?.Name</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5"><hr /></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link" asp-controller="EndUser" asp-action="Index">Employees</a>
 
-                    <a class="nav-link" asp-controller="Visit" asp-action="Index">Visits</a>
-                    <a class="nav-link" asp-controller="Patient" asp-action="Index">Patients</a>
-                    <a asp-controller="PatientCondition" asp-action="Index" class="nav-link">Patient Conditions</a>
+                        <a class="nav-link" asp-controller="Nurse" asp-action="Index">Nurses</a>
 
-                    <a asp-controller="PrefferedSuburb" asp-action="Index" class="nav-link">Nurse Preffered Suburbs</a>
+                        <a class="nav-link" asp-controller="Visit" asp-action="Index">Visits</a>
+                        <a class="nav-link" asp-controller="Patient" asp-action="Index">Patients</a>
+                        <a asp-controller="PatientCondition" asp-action="Index" class="nav-link">Patient Conditions</a>
+
+                        <a asp-controller="PrefferedSuburb" asp-action="Index" class="nav-link">Nurse Preffered Suburbs</a>
+                    </nav>
                 </nav>
-            </nav>
-
+            </div>
         </div>
-        
     </div>
-</div>
+</section>

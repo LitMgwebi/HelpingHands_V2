@@ -5,56 +5,72 @@
     var Message = ViewBag.Message;
 }
 
-<h2 class="display-4 text-center">Patients</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-
-<table class="table" id="myTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EndUser!.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndUser!.Firstname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndUser!.Lastname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Icename)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Icenumber)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+<section class="container-fluid" id="List">
+    <h2 class="display-4 text-centerp-2">Patients</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5">
+        @if (User.IsInRole("O"))
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndUser!.Username)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndUser!.Firstname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndUser!.Lastname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Icename)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Icenumber)
-                </td>
-                <td>
-                    <a asp-action="Profile" asp-route-id="@item.PatientId" class="btn btn-info">Details</a>
-                </td>
-            </tr>
+            <a asp-action="Dashboard" asp-controller="Manager" class="btn btn-secondary">Back</a>
         }
-    </tbody>
-</table>
+        else if (User.IsInRole("O"))
+        {
+            <a asp-action="Dashboard" asp-controller="Admin" class="btn btn-secondary">Back</a>
+        }
+    </div>
+    <div class="px-5"><hr /></div>
+    <div class="container-fluid px-md-5">
+        <div class="row p-md-4">
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EndUser!.Username)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EndUser!.Firstname)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EndUser!.Lastname)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Icename)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Icenumber)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndUser!.Username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndUser!.Firstname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndUser!.Lastname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Icename)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Icenumber)
+                            </td>
+                            <td>
+                                <a asp-action="Profile" asp-route-id="@item.PatientId" class="btn btn-info">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

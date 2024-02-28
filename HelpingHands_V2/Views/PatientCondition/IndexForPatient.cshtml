@@ -4,85 +4,86 @@
     ViewData["Title"] = "Patient's Conditions";
     var Message = ViewBag.Message;
 }
-
-<h2 class="display-4 text-center p-2">Your Conditions</h2>
-@if (Message != null)
-{
-    <p class="text-decoration-underline text-danger">@Message</p>
-}
-<div class="px-5">
-    <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
-</div>
-<div class="px-5">
-    <hr />
-</div>
-<div class="container-fluid">
-    <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-md-3">
-        <section class="col-md-7">
-            <div class="row border border-3 rounded-3 p-2 m-2">
-                <table class="table" id="myTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Condition!.ConditionName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Condition!.ConditionDescription)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Conditions!)
-                        {
+<section class="container-fluid" id="Index">
+    <h2 class="display-4 text-center p-2">Your Conditions</h2>
+    @if (Message != null)
+    {
+        <p class="text-decoration-underline text-danger">@Message</p>
+    }
+    <div class="px-5">
+        <a asp-controller="Patient" asp-action="Dashboard" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-secondary">Dashboard</a>
+    </div>
+    <div class="px-5">
+        <hr />
+    </div>
+    <div class="container-fluid">
+        <div class="row row-cols-md-2 row-cols-auto justify-content-evenly py-md-3">
+            <article class="col-md-7">
+                <div class="row border border-3 rounded-3 p-2 m-2">
+                    <table class="table" id="myTable">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Condition!.ConditionName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Condition!.ConditionDescription)
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <form asp-action="Delete">
-                                            <input asp-for="@item!.PatientId" name="PatientId" type="hidden" />
-                                            <input asp-for="@item!.ConditionId" name="ConditionId" type="hidden" />
-                                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" />
-                                        </form>
-                                    </div>
-                                </td>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Condition!.ConditionName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Condition!.ConditionDescription)
+                                </th>
+                                <th></th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <aside class="col-md-3">
-            <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-3">
-                <form asp-action="Create" class="row justify-content-center">
-                <input asp-for="PatientId" type="hidden" />
-                    <h2 class="h3 text-center">Add Condition</h2>
-                    <section class="px-5">
-                        <hr />
-                    </section>
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="col-md-11 p-md-1">
-                        <div class="input-group-sm">
-                            <label asp-for="Condition!.ConditionName" class="form-label"></label>
-                            <select asp-for="Condition!.ConditionId" name="ConditionId" class="form-select form-select-sm" asp-items="ViewBag.Conditions">
-                                <option disabled selected>--- SELECT ---</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="row justify-content-center g-2 py-4">
-                            <div class="btn-group col-auto">
-                                <input type="submit" value="Add" class="btn btn-primary" />
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Conditions!)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Condition!.ConditionName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Condition!.ConditionDescription)
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <form asp-action="Delete">
+                                                <input asp-for="@item!.PatientId" name="PatientId" type="hidden" />
+                                                <input asp-for="@item!.ConditionId" name="ConditionId" type="hidden" />
+                                                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger" />
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+            <aside class="col-md-3">
+                <div class="row justify-content-center row-cols-1 border border-3 rounded-3 p-2 m-3">
+                    <form asp-action="Create" class="row justify-content-center">
+                        <input asp-for="PatientId" type="hidden" />
+                        <h2 class="h3 text-center">Add Condition</h2>
+                        <section class="px-5">
+                            <hr />
+                        </section>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="col-md-11 p-md-1">
+                            <div class="input-group-sm">
+                                <label asp-for="Condition!.ConditionName" class="form-label"></label>
+                                <select asp-for="Condition!.ConditionId" name="ConditionId" class="form-select form-select-sm" asp-items="ViewBag.Conditions">
+                                    <option disabled selected>--- SELECT ---</option>
+                                </select>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </aside>
+                        <div class="col-12">
+                            <div class="row justify-content-center g-2 py-4">
+                                <div class="btn-group col-auto">
+                                    <input type="submit" value="Add" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </aside>
+        </div>
     </div>
-</div>
+</section>
