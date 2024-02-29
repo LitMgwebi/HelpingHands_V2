@@ -28,6 +28,8 @@ nav > li:hover{
 body {
     background-image: linear-gradient(to bottom right, var(--darkred), var(--orange)), url(/Media/nurseAndPatient.jpg);
     background-blend-mode: multiply;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
 }
 
 .divider:after,

@@ -180,7 +180,7 @@
                                             <a class="dropdown-item" asp-controller="Nurse" asp-action="Profile" asp-route-id="@User.FindFirst("UserId")!.Value">Account</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" asp-controller="Patient" asp-action="Edit" asp-route-id="@User.FindFirst("UserId")!.Value">Edit Information</a>
+                                            <a class="dropdown-item" asp-controller="Nurse" asp-action="Edit" asp-route-id="@User.FindFirst("UserId")!.Value">Edit Information</a>
                                         </li>
                                     }
                                     else if (User.IsInRole("P"))
