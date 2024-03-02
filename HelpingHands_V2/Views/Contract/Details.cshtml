@@ -101,12 +101,15 @@
                         @Html.DisplayFor(model => model.Contract!.Nurse!.FullName)
                     </dd>
                 }
-                <dt class="col-sm-8">
-                    @Html.DisplayNameFor(model => model.Contract!.Patient)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Contract!.Patient!.FullName)
-                </dd>
+                @if (!User.IsInRole("P"))
+                {
+                    <dt class="col-sm-8">
+                        @Html.DisplayNameFor(model => model.Contract!.Patient)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Contract!.Patient!.FullName)
+                    </dd>
+                }
                 <dt class="col-sm-8">
                     @Html.DisplayNameFor(model => model.Contract!.Suburb)
                 </dt>

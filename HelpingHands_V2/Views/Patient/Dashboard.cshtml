@@ -1,10 +1,12 @@
-﻿@{
+﻿@model HelpingHands_V2.ViewModels.PatientContractAndVisitsViewModel;
+
+@{
     ViewData["Title"] = "Patient Dashboard";
     var Message = ViewBag.Message;
 }
 
 <section class="container-fluid" id="Dashboard">
-    <h2 class="display-5 text-center p-2">Dashboard</h2>
+    <h2 class="display-5 text-center p-2">Hello @User.Identity?.Name</h2>
     @if (Message != null)
     {
         <p class="text-decoration-underline text-danger">@Message</p>
@@ -40,6 +42,58 @@
                         <h5 class="card-title" style="color:black">View Chronic Conditions</h5>
                     </div>
                 </a>
+            </div>
+        </div>
+        
+        <div class="row row-cols-lg-2 row-cols-auto">
+            <div id="currentContracts" class="col">
+                <h1 class="h3 text-center">Current Contracts</h1>
+                <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
+                                  slides-per-view="auto" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"
+                                  coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
+
+                    @foreach (var item in Model.PatientContracts)
+                    {
+                        <swiper-slide>
+                            <div class="card w-25" style="">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nurse!.FullName)</h5>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">@Html.DisplayFor(modelItem => item.StartDate)</h6>
+
+                                    <p class="card-text">@Html.DisplayFor(modelItem => item.Wound!.WoundName)</p>
+
+                                    <a asp-controller="Contract" asp-action="Details" asp-route-id="@item.ContractId" class="card-link">View Contract</a>
+                                </div>
+
+                            </div>
+                        </swiper-slide>
+                    }
+                </swiper-container>
+            </div>
+            <div id="upcomingVisits" class="col">
+                <h1 class="h3 text-center">Upcoming Visits</h1>
+                <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
+                                  slides-per-view="auto" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"
+                                  coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
+
+                    @foreach (var item in Model.LatestVisits)
+                    {
+                        <swiper-slide>
+                            <div class="card w-25" style="">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        @Html.DisplayFor(modelItem => item.VisitDate)
+                                    </h5>
+                                    <p class="card-text">
+                                        @Html.DisplayFor(modelItem => item.ApproxTime)
+                                    </p>
+                                    <a asp-controller="Contract" asp-action="Details" asp-route-id="@item.ContractId" class="card-link">View Contract</a>
+                                </div>
+                            </div>
+                        </swiper-slide>
+                    }
+                </swiper-container>
             </div>
         </div>
     </div>

@@ -42,9 +42,6 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Departure)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.WoundCondition)
-                        </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -65,10 +62,8 @@
                                 @Html.DisplayFor(modelItem => item.Departure)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.WoundCondition)
-                            </td>
-                            <td>
-                                <a asp-action="Details" asp-route-id="@item.VisitId" class="btn btn-info">View</a>
+                                <a asp-action="Details" asp-route-id="@item.VisitId" class="btn btn-info">Details</a>
+                                <a asp-controller="Contract" asp-action="Details" asp-route-id="@item.VisitId" class="btn btn-info">Contract</a>
                             </td>
                         </tr>
                     }

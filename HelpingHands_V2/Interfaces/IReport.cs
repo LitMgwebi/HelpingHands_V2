@@ -15,5 +15,7 @@ namespace HelpingHands_V2.Interfaces
         public Task<List<CareContract>> ContractStatus(string? status);
         public Task<List<Visit>> ContractVisits(int? contractId);
         public Task<List<CareContract>> PatientContract(int? PatientId);
+        public Task<List<CareContract>> AssignedPatientContract(int? patientId);
+        public Task<List<Visit>> PatientVisits(int? contractId);
     }
 }

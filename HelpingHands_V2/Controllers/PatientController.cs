@@ -2,10 +2,12 @@
 using HelpingHands_V2.Interfaces;
 using HelpingHands_V2.Models;
 using HelpingHands_V2.Services;
+using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace HelpingHands_V2.Controllers
 {
@@ -35,38 +37,32 @@ namespace HelpingHands_V2.Controllers
 
         public async Task<IActionResult> Dashboard(int id)
         {
-            List<dynamic> nextVisit = new List<dynamic> { };
-            List<dynamic>? contractVisits = new List<dynamic> { };
             try
             {
-                //DateTime currentDate = DateTime.Now;
-                //var patientContracts = await _report.PatientContract(id);
-                //if (patientContracts.Count > 0)
-                //{
-                //    var patientContract = patientContracts.FirstOrDefault();
-                //    contractVisits = await _report.ContractVisits(patientContract!.ContractId);
-                //    if(contractVisits.Count > 0)
-                //    {
-                //        var latestVisit = contractVisits.LastOrDefault();
-                //        var result = DateTime.Compare(latestVisit!.VisitDate, currentDate);
+                List<Visit> nextVisit = new List<Visit> { };
+                DateTime currentDate = DateTime.Now;
+                List<Visit> contractVisits = new List<Visit>(); 
+                List<CareContract> patientContracts = await _report.AssignedPatientContract(id);
+                foreach (var contract in patientContracts)
+                {
+                    contractVisits = await _report.ContractVisits(contract!.ContractId);
 
-                //        if (result > 0)
-                //        {
-                //            nextVisit.Add(latestVisit);
-                //            contractVisits.RemoveAt(1);
-                //        }
-                //    }
-                //    ViewBag.PatientContract = patientContract;
-                //}
-                //ViewBag.ContractVisits = contractVisits;
-                //ViewBag.NextVisit = nextVisit;
-                return View();
+                    foreach (var visit in contractVisits)
+                    {
+                        if ((DateTime.Compare((DateTime)visit!.VisitDate!, currentDate)) > 0)
+                            nextVisit.Add(visit);
+                    }
+                }
+                PatientContractAndVisitsViewModel contractsAndVisits = new PatientContractAndVisitsViewModel
+                {
+                    PatientContracts = patientContracts,
+                    LatestVisits = nextVisit
+                };
+                return View(contractsAndVisits);
             }
             catch (Exception ex)
             {
-                //ViewBag.ContractVisits = contractVisits;
-                //ViewBag.NextVisit = nextVisit;
-                //ViewBag.Message = ex.Message + nextVisit + contractVisits;
+                ViewBag.Message = ex.Message;
                 return View();
             }
         }

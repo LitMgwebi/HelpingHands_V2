@@ -13,7 +13,7 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDVisit";
         public VisitService(IConfiguration config) => _config = config;
 
-        public async Task<IEnumerable<Visit>> GetVisits()
+        public async Task<List<Visit>> GetVisits()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -21,7 +21,7 @@ namespace HelpingHands_V2.Services
                 param.Add("Command", "GetAll");
                 var result = await conn.QueryAsync<Visit>(sql, param: param, commandType: CommandType.StoredProcedure);
 
-                return result;
+                return result.AsList();
             }
         }
 

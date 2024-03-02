@@ -103,7 +103,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Visit" asp-action="IndexForUser" asp-route-id="@User.FindFirst("UserId")!.Value">Visits</a>
+                                <a class="nav-link text-dark" asp-controller="Visit" asp-action="Index" asp-route-command="patient" asp-route-id="@User.FindFirst("UserId")!.Value">Visits</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="PatientCondition" asp-action="IndexForPatient" asp-route-id=@User.FindFirst("UserId")!.Value>Chronic Conditions</a>
@@ -257,7 +257,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~.../jquery-validation/dist/jquery.validate.js"></script>
     <script src="~.../jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
-
+    
+    <!--IntroJS scripts-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.min.js.map"></script>
 
