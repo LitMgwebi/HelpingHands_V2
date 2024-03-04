@@ -12,7 +12,7 @@
     }
     else
     {
-        <h2 class="display-4 text-center p-2">@User.FindFirst("FullName")!.Value's Profile</h2>
+        <h2 class="display-4 text-center p-2">@Model.EndUser!.FullName's Profile</h2>
     }
     @if (Message != null)
     {

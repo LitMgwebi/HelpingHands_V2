@@ -37,41 +37,23 @@ namespace HelpingHands_V2.Controllers
         [Authorize(Roles = "N")]
         public async Task<IActionResult> Dashboard(int id)
         {
-            //List<dynamic> assignedContracts = new List<dynamic> { };
-            //List<dynamic> contractVisits = new List<dynamic> { };
-            //List<dynamic> nextVisit = new List<dynamic> { };
             try
             {
-                //DateTime currentDate = DateTime.Now;
-                //assignedContracts = await _report.NurseAssignedContracts(id);
-                //if (assignedContracts.Count > 0)
-                //{
-                //    foreach (var contract in assignedContracts)
-                //    {
-                //        contractVisits = await _report.ContractVisits(contract.ContractId);
-                //        if (contractVisits.Count > 0)
-                //        {
-                //            foreach (var visit in contractVisits)
-                //            {
-                //                nextVisit.Add(visit);
-                //            }
-                //        }
-                //    }
-                //}
-                //if (nextVisit.Count > 0)
-                //{
-                //    for (int i = 0; i < nextVisit.Count - 1; i++)
-                //        for (int j = 0; j < nextVisit.Count - i - 1; j++)
-                //            if (nextVisit[j].VisitDate > nextVisit[j + 1].VisitDate)
-                //            {
-                //                var tempVar = nextVisit[j];
-                //                nextVisit[j] = nextVisit[j + 1];
-                //                nextVisit[j + 1] = tempVar;
-                //            }
-                //}
-                //ViewBag.NextVisits = nextVisit;
-                //ViewBag.Contracts = assignedContracts;
-                return View();
+                List<CareContract> assignedContracts = new List<CareContract>();
+                List<Visit> contractVisits = new List<Visit>();
+                DateTime currentDate = DateTime.Now;
+                assignedContracts = await _report.NurseAssignedContracts(id);
+                foreach (var contract in assignedContracts)
+                {
+                    contractVisits = await _report.ContractVisits(contract.ContractId);
+
+                    foreach (var visit in contractVisits)
+                    {
+                        if ((DateTime.Compare((DateTime)visit!.VisitDate!, currentDate)) > 0)
+                            contract.Visits.Add(visit);
+                    }
+                }
+                return View(assignedContracts);
             }
             catch (Exception ex)
             {

@@ -24,6 +24,7 @@
                 <input asp-for="EndUser!.Password" name="Password" type="hidden" />
                 <input asp-for="EndUser!.ConfirmPassword" name="ConfirmPassword" type="hidden" />
                 <input asp-for="EndUser!.Username" name="Username" type="hidden" />
+                <input asp-for="EndUser!.DateOfBirth" name="DateOfBirth" type="hidden" />
                 <input asp-for="EndUser!.ProfilePicture" name="ProfilePicture" type="hidden" />
                 <input asp-for="EndUser!.ProfilePictureName" name="ProfilePictureName" type="hidden" />
                 <div class="row row-cols-auto px-5 g-3 py-4 justify-content-start">
@@ -75,7 +76,7 @@
                     <div class="col-3">
                         <div class="input-group-sm">
                             <label asp-for="EndUser!.DateOfBirth" class="form-label"></label>
-                            <input asp-for="EndUser!.DateOfBirth" name="DateOfBirth" class="form-control" type="date" />
+                            <input asp-for="EndUser!.DateOfBirth" class="form-control" type="date" />
                             <span asp-validation-for="EndUser!.DateOfBirth" class="text-danger"></span>
                         </div>
                     </div>

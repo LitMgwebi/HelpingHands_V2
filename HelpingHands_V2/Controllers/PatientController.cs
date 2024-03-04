@@ -41,8 +41,11 @@ namespace HelpingHands_V2.Controllers
             {
                 List<Visit> nextVisit = new List<Visit> { };
                 DateTime currentDate = DateTime.Now;
-                List<Visit> contractVisits = new List<Visit>(); 
-                List<CareContract> patientContracts = await _report.AssignedPatientContract(id);
+                List<Visit> contractVisits = new List<Visit>();
+                List<CareContract> patientContracts = new List<CareContract>();
+                
+                patientContracts = await _report.AssignedPatientContract(id);
+                
                 foreach (var contract in patientContracts)
                 {
                     contractVisits = await _report.ContractVisits(contract!.ContractId);
@@ -50,15 +53,10 @@ namespace HelpingHands_V2.Controllers
                     foreach (var visit in contractVisits)
                     {
                         if ((DateTime.Compare((DateTime)visit!.VisitDate!, currentDate)) > 0)
-                            nextVisit.Add(visit);
+                            contract.Visits.Add(visit);
                     }
                 }
-                PatientContractAndVisitsViewModel contractsAndVisits = new PatientContractAndVisitsViewModel
-                {
-                    PatientContracts = patientContracts,
-                    LatestVisits = nextVisit
-                };
-                return View(contractsAndVisits);
+                return View(patientContracts);
             }
             catch (Exception ex)
             {
@@ -200,6 +198,7 @@ namespace HelpingHands_V2.Controllers
                     ViewData["SuburbId"] = new SelectList(suburbs, "SuburbId", "SuburbName");
                     var errors = ModelState.Values.SelectMany(v => v.Errors);
                     ViewBag.Message = $"Not all the information required was entered. Please look below.";
+                    patient.EndUser = user;
                     ViewData["Genders"] = genders;
                     return View(patient);
                 }
@@ -229,6 +228,7 @@ namespace HelpingHands_V2.Controllers
             {
                 ViewData["Genders"] = genders;
                 ViewBag.Message = ex.Message;
+                patient.EndUser = user;
                 return View(patient);
             }
         }

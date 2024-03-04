@@ -1,4 +1,5 @@
-﻿@model HelpingHands_V2.ViewModels.PatientContractAndVisitsViewModel;
+﻿@model IEnumerable<HelpingHands_V2.Models.CareContract>;
+@using System.Linq;
 
 @{
     ViewData["Title"] = "Patient Dashboard";
@@ -44,51 +45,77 @@
                 </a>
             </div>
         </div>
-        
-        <div class="row row-cols-lg-2 row-cols-auto">
-            <div id="currentContracts" class="col">
+
+        <div class="row row-cols-md-2 row-cols-auto">
+            <div id="currentContracts" class="col-md-6">
                 <h1 class="h3 text-center">Current Contracts</h1>
                 <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
                                   slides-per-view="auto" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"
                                   coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
 
-                    @foreach (var item in Model.PatientContracts)
+                    @if (Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <swiper-slide>
+                                <div class="card w-25">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nurse!.FullName)</h5>
+                                        <h6 class="card-subtitle mb-2 text-body-secondary">@Html.DisplayFor(modelItem => item.StartDate)</h6>
+                                        <p class="card-text">@Html.DisplayFor(modelItem => item.Wound!.WoundName)</p>
+                                        <a asp-controller="Contract" asp-action="Details" asp-route-id="@item.ContractId" class="card-link">View Contract</a>
+                                    </div>
+                                </div>
+                            </swiper-slide>
+                        }
+                    }
+                    else
                     {
                         <swiper-slide>
-                            <div class="card w-25" style="">
-                                <img src="..." class="card-img-top" alt="...">
+                            <div class="card w-25">
                                 <div class="card-body">
-                                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nurse!.FullName)</h5>
-                                    <h6 class="card-subtitle mb-2 text-body-secondary">@Html.DisplayFor(modelItem => item.StartDate)</h6>
-
-                                    <p class="card-text">@Html.DisplayFor(modelItem => item.Wound!.WoundName)</p>
-
-                                    <a asp-controller="Contract" asp-action="Details" asp-route-id="@item.ContractId" class="card-link">View Contract</a>
+                                    <h3 class="card-title">No open contracts currently</h3>
+                                    <a asp-controller="Contract" asp-action="Create" class="card-link">Start New Contract</a>
                                 </div>
-
                             </div>
                         </swiper-slide>
                     }
                 </swiper-container>
             </div>
-            <div id="upcomingVisits" class="col">
+            <div id="upcomingVisits" class="col-md-6">
                 <h1 class="h3 text-center">Upcoming Visits</h1>
                 <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
                                   slides-per-view="auto" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"
                                   coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
+                    @if (Model.Any())
+                    {
+                        @foreach (var contract in Model)
+                        {
+                            @foreach (var visit in contract.Visits)
+                            {
+                                <swiper-slide>
+                                    <div class="card w-25" style="">
 
-                    @foreach (var item in Model.LatestVisits)
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                @Html.DisplayFor(modelItem => visit.VisitDate)
+                                            </h5>
+                                            <p class="card-text">
+                                                @Html.DisplayFor(modelItem => visit.ApproxTime)
+                                            </p>
+                                            <a asp-controller="Contract" asp-action="Details" asp-route-id="@visit.ContractId" class="card-link">View Contract</a>
+                                        </div>
+                                    </div>
+                                </swiper-slide>
+                            }
+                        }
+                    }
+                    else
                     {
                         <swiper-slide>
-                            <div class="card w-25" style="">
+                            <div class="card w-25">
                                 <div class="card-body">
-                                    <h5 class="card-title">
-                                        @Html.DisplayFor(modelItem => item.VisitDate)
-                                    </h5>
-                                    <p class="card-text">
-                                        @Html.DisplayFor(modelItem => item.ApproxTime)
-                                    </p>
-                                    <a asp-controller="Contract" asp-action="Details" asp-route-id="@item.ContractId" class="card-link">View Contract</a>
+                                    <h3 class="card-title">No upcoming visits</h3>
                                 </div>
                             </div>
                         </swiper-slide>

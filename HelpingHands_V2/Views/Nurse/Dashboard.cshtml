@@ -1,4 +1,6 @@
-﻿@using System.Linq
+﻿@model IEnumerable<HelpingHands_V2.Models.CareContract>;
+@using System.Linq;
+
 @{
     ViewData["Title"] = "Nurse Dashboard";
     var Message = ViewBag.Message;
@@ -12,5 +14,120 @@
     }
     <div class="px-5"><hr /></div>
     <div class="container-fluid">
+        <div class="row" style="overflow-x:scroll">
+            <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
+                <a asp-controller="Contract" asp-action="Create">
+                    <img src="/Media/plus.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Create Contract</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
+                <img src="/Media/contract.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
+                <div class="card-img-overlay">
+                    <h5 class="card-title" style="color:black">Past Contracts</h5>
+                </div>
+            </div>
+            <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
+                <img src="/Media/plus.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%;object-fit: contain;" />
+                <div class="card-img-overlay">
+                    <h5 class="card-title">Add New Condition</h5>
+                </div>
+            </div>
+            <div class="card bg-dark text-white text-center" style="width: 15rem;height:10rem;">
+                <a asp-controller="PatientCondition" asp-action="IndexForPatient" asp-route-id=@User.FindFirst("UserId")!.Value>
+                    <img src="/Media/condition.png" alt="firstExample" class="card-img" style="background-color: darkgray; background-blend-mode: multiply; height: 100%; width: 100%; object-fit: cover;" />
+                    <div class="card-img-overlay">
+                        <h5 class="card-title" style="color:black">View Chronic Conditions</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <h2 class="h3 text-center">Current Contracts</h2>
+            <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
+                              slides-per-view="auto" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"
+                              coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
+
+                @if (Model.Any())
+                {
+                    @foreach (var contract in Model)
+                    {
+                        <swiper-slide>
+                            <div class="card w-75">
+                                <div class="card-header">@contract.Patient!.FullName</div>
+                                <div class="card-body row row-cols-md-2 row-cols-auto justify-content-evenly">
+                                    <div class="col-md-8 col">
+                                        <div class="col-md-4">
+                                            <div>
+                                                <img src="@contract.Patient!.ProfilePicture" alt="@contract.Patient!.ProfilePictureName" class="img-fluid" />
+                                            </div>
+                                        </div>
+                                        <div class="py-3">
+                                            <h6 class="card-subtitle mb-2 text-body-secondary">@Html.DisplayFor(modelItem => @contract.StartDate)</h6>
+                                            <p class="card-text">@Html.DisplayFor(modelItem => @contract.Wound!.WoundName)</p>
+                                            <p class="card-text">@Html.DisplayFor(modelItem => @contract.ContractComment)</p>
+                                        </div>
+                                        <a asp-controller="Contract" asp-action="Details" asp-route-id="@contract.ContractId" class="card-link">View Contract</a>
+                                    </div>
+                                    <aside class="col-md-4 col">
+                                        <h2 class="h5">Upcoming Visits</h2>
+                                        <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
+                                                          slides-per-view="auto" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"
+                                                          coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
+                                            @if (contract.Visits.Any())
+                                            {
+                                                @foreach (var visit in contract.Visits)
+                                                {
+                                                    <swiper-slide>
+                                                        <div class="card w-100" style="">
+
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">
+                                                                    @Html.DisplayFor(modelItem => visit.VisitDate)
+                                                                </h5>
+                                                                <p class="card-text">
+                                                                    @Html.DisplayFor(modelItem => visit.ApproxTime)
+                                                                </p>
+                                                                <div class="btn-group">
+
+                                                                    <a asp-controller="Contract" asp-action="Details" asp-route-id="@visit.ContractId" class="btn btn-outline-success">View Contract</a>
+                                                                    <a asp-controller="Visit" asp-action="Index" asp-route-command="nurse" asp-route-id="@User.FindFirst("UserId")!.Value" class="btn btn-outline-success">View All Visi</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </swiper-slide>
+                                                }
+                                            } else
+                                            {
+                                                <swiper-slide>
+                                                    <div class="card w-25" style="">
+                                                        <div class="card-body">
+                                                            <h3 class="card-title">No visits scheduled</h3>
+                                                        </div>
+                                                    </div>
+                                                </swiper-slide>
+                                            }
+                                        </swiper-container>
+                                    </aside>
+                                </div>
+                            </div>
+                        </swiper-slide>
+                    }
+                }
+                else
+                {
+                    <swiper-slide>
+                        <div class="card w-75">
+                            <div class="card-body">
+                                <h3 class="card-title">No open contracts currently</h3>
+                            </div>
+                        </div>
+                    </swiper-slide>
+                }
+            </swiper-container>
+        </div>
     </div>
 </section>
