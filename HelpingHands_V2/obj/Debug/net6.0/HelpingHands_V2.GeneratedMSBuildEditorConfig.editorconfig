@@ -18,8 +18,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\lithi\OneDrive\Documentos\Github\HelpingHands_V2\HelpingHands_V2
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Admin/ContractRange.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ29udHJhY3RSYW5nZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Admin/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Admin/NewContracts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTmV3Q29udHJhY3RzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Admin/VisitRange.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlzaXRSYW5nZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Business/Details.cshtml]
@@ -94,20 +106,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQZW5kaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/ContractRange.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxDb250cmFjdFJhbmdlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxEYXNoYm9hcmQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/NewContracts.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxOZXdDb250cmFjdHMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Manager/VisitRange.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxWaXNpdFJhbmdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/lithi/OneDrive/Documentos/Github/HelpingHands_V2/HelpingHands_V2/Views/Nurse/Create.cshtml]

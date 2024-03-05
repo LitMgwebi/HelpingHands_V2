@@ -4,7 +4,7 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface ISuburb
     {
-        public Task<IEnumerable<Suburb>> GetSuburbs();
+        public Task<List<Suburb>> GetSuburbs();
 
         public Task<Suburb> GetSuburb(int? id);
 

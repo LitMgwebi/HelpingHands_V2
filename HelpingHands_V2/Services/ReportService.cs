@@ -281,5 +281,29 @@ namespace HelpingHands_V2.Services
                 return result.AsList();
             }
         }
+        public async Task<List<CareContract>> SuburbContracts(int? suburbId)
+        {
+            using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                var sql = "ManagerSuburbContracts";
+                DynamicParameters param = new DynamicParameters();
+                param.Add("SuburbId", suburbId);
+                var result = await conn.QueryAsync<CareContract, EndUser, EndUser, Suburb, Wound, CareContract>(
+                    sql,
+                    (contract, nurse, patient, suburb, wound) =>
+                    {
+                        contract.Nurse = nurse;
+                        contract.Patient = patient;
+                        contract.Suburb = suburb;
+                        contract.Wound = wound;
+                        return contract;
+                    },
+                    splitOn: "UserId, SuburbId, WoundId",
+                    param: param,
+                    commandType: CommandType.StoredProcedure);
+
+                return result.AsList();
+            }
+        }
     }
 }

@@ -111,7 +111,7 @@
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <div class="btn-group">
-                    @if (User.IsInRole("N") || User.IsInRole("A"))
+                    @if (User.IsInRole("N"))
                     {
                         <div class="p-1">
                             <a asp-action="Edit" asp-route-id="@Model?.NurseId" class="btn btn-success">Edit Info</a>
@@ -122,14 +122,14 @@
                         <div class="p-1">
                             <form asp-action="Delete">
                                 <input asp-for="NurseId" value="@Model?.NurseId" type="hidden" />
-                                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete your account @Model?.EndUser!.Firstname @Model?.EndUser!.Lastname')" class="btn btn-danger" />
+                                <input type="submit" value="Delete Account" onclick="return confirm('Are you sure you want to delete your account @Model?.EndUser!.Firstname @Model?.EndUser!.Lastname')" class="btn btn-danger" />
                             </form>
                         </div>
                     }
-                    else if (User.IsInRole("O"))
+                    else if (User.IsInRole("A"))
                     {
                         <div class="p-1">
-                            <form asp-controller="Manager" asp-action="ApproveNurse" method="post">
+                            <form asp-controller="Admin" asp-action="ApproveNurse" method="post">
                                 <input asp-for="EndUser!.UserId" name="UserId" type="hidden" />
                                 <input asp-for="EndUser!.Username" name="Username" type="hidden" />
                                 <input asp-for="EndUser!.Firstname" name="Firstname" type="hidden" />

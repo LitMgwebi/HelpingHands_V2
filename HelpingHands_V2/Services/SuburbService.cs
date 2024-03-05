@@ -13,7 +13,7 @@ namespace HelpingHands_V2.Services
         string sql = "CRUDSuburb";
         public SuburbService(IConfiguration config) => _config = config;
 
-        public async Task<IEnumerable<Suburb>> GetSuburbs()
+        public async Task<List<Suburb>> GetSuburbs()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -33,7 +33,7 @@ namespace HelpingHands_V2.Services
                     commandType: CommandType.StoredProcedure);
 
                 if (suburbs != null)
-                    return suburbs;
+                    return suburbs.AsList();
                 else
                     throw new SqlNullValueException("There are no suburbs available");
             }
