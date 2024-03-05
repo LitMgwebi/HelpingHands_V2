@@ -2,7 +2,6 @@
 using HelpingHands_V2.Models;
 using HelpingHands_V2.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -38,8 +37,18 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
+                List<CareContract> closedContracts = await _report.ContractStatus("C");
+                List<CareContract> assignedContracts = await _report.ContractStatus("A");
+                List<Nurse> waitingNurses = await _nurse.GetNursesWaiting();
 
-                return View();
+                AdminViewModel admin = new AdminViewModel
+                {
+                    AssignedContracts = assignedContracts,
+                    ClosedContracts = closedContracts,
+                    WaitingNurses = waitingNurses
+                };
+
+                return View(admin);
             } catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
@@ -68,8 +77,8 @@ namespace HelpingHands_V2.Controllers
         {
             try
             {
-                IEnumerable<Nurse> nurses = await _nurse.GetNurses();
-                IEnumerable<EndUser> users = await _nurse.GetUsersByIDs(nurses);
+                List<Nurse> nurses = await _nurse.GetNurses();
+                List<EndUser> users = await _nurse.GetUsersByIDs(nurses);
 
                 ViewData["Nurses"] = new SelectList(users, "UserId", "FullName");
                 return View();
@@ -84,9 +93,9 @@ namespace HelpingHands_V2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VisitRange(int NurseId, DateTime StartDate, DateTime EndDate)
         {
-            IEnumerable<VisitRange> visitRange = new List<VisitRange> { };
-            IEnumerable<Nurse> nurses = await _nurse.GetNurses();
-            IEnumerable<EndUser> users = await _nurse.GetUsersByIDs(nurses);
+            List<VisitRange> visitRange = new List<VisitRange> { };
+            List<Nurse> nurses = await _nurse.GetNurses();
+            List<EndUser> users = await _nurse.GetUsersByIDs(nurses);
             try
             {
                 if (!ModelState.IsValid)
@@ -111,8 +120,8 @@ namespace HelpingHands_V2.Controllers
             try
             {
 
-                IEnumerable<Patient> patients = await _patient.GetPatients();
-                IEnumerable<EndUser> users = await _patient.GetUsersByIDs(patients);
+                List<Patient> patients = await _patient.GetPatients();
+                List<EndUser> users = await _patient.GetUsersByIDs(patients);
 
                 ViewData["Patients"] = new SelectList(users, "UserId", "FullName");
                 return View();
@@ -164,7 +173,7 @@ namespace HelpingHands_V2.Controllers
                 user.UserType = "N";
                 await _user.UpdateUser(user);
 
-                Message emailMessage = new Message(new string[] { user.Email! }, user.FullName, user.Username!, "patient_registering");
+                Message emailMessage = new Message(new string[] { user.Email! }, user.FullName, user.Username!, "nurse_approval");
                 _email.SendEmail(emailMessage);
                 return RedirectToAction("Index", "Nurse", new { command = "waiting" });
             }

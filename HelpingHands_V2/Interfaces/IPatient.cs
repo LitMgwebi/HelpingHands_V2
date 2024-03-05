@@ -4,9 +4,9 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface IPatient
     {
-        public Task<IEnumerable<Patient>> GetPatients();
+        public Task<List<Patient>> GetPatients();
 
-        public Task<IEnumerable<EndUser>> GetUsersByIDs(IEnumerable<Patient> Patients);
+        public Task<List<EndUser>> GetUsersByIDs(List<Patient> Patients);
 
         public Task<Patient> GetPatient(int? id);
 

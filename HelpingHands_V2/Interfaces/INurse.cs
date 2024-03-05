@@ -4,9 +4,9 @@ namespace HelpingHands_V2.Interfaces
 {
     public interface INurse
     {
-        public Task<IEnumerable<Nurse>> GetNurses();
-        public Task<IEnumerable<Nurse>> GetNursesWaiting();
-        public Task<IEnumerable<EndUser>> GetUsersByIDs(IEnumerable<Nurse> Nurses);
+        public Task<List<Nurse>> GetNurses();
+        public Task<List<Nurse>> GetNursesWaiting();
+        public Task<List<EndUser>> GetUsersByIDs(List<Nurse> Nurses);
 
         public Task<Nurse> GetNurse(int? id);
 

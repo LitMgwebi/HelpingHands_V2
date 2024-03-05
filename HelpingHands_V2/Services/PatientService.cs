@@ -18,7 +18,7 @@ namespace HelpingHands_V2.Services
             _endUser = endUser;
         }
 
-        public async Task<IEnumerable<Patient>> GetPatients()
+        public async Task<List<Patient>> GetPatients()
         {
             using (var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
@@ -37,13 +37,13 @@ namespace HelpingHands_V2.Services
                     commandType: CommandType.StoredProcedure);
 
                 if (result != null)
-                    return result;
+                    return result.ToList();
                 else
                     throw new SqlNullValueException("There are no Patients in the system");
             }
         }
 
-        public async Task<IEnumerable<EndUser>> GetUsersByIDs(IEnumerable<Patient> Patients)
+        public async Task<List<EndUser>> GetUsersByIDs(List<Patient> Patients)
         {
             List<EndUser> users = new List<EndUser> { };
             foreach (Patient patient in Patients)
